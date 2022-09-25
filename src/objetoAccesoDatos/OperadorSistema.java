@@ -10,7 +10,7 @@ public class OperadorSistema extends Conexion {
 
 	private static String nombreUsuario;
 	private static String contraseña;
-	private static int nivelAcceso;
+	private static int nivelAcceso = 100;
 	private static int fichaEmpleado;
 		
 	public String getNombreUsuario() {
