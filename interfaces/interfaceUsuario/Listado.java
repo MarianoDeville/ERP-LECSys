@@ -3,7 +3,6 @@ package interfaceUsuario;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -16,72 +15,91 @@ public class Listado extends VentanaModelo {
 	private static final long serialVersionUID = 1L;
 	private JPanel listado;
 	private JScrollPane scrollTabla;
-	public JTextField txtcantAlumn;
-	public JTable tablaAlumnos;
+	public JLabel lbl1;
+	public JLabel lbl2;
+	public JLabel lbl3;
+	public JTextField txt1;
+	public JTable tabla;
 	public JButton btnImprimir;
-	public JCheckBox chckbxActivo;
+	public JCheckBox chckbx1;
 	public JButton btnVolver;
-	public JComboBox<String> comboBoxCriterio;
-	public JComboBox<String> comboBoxItem;
+	public JComboBox<String> comboBox1;
+	public JComboBox<String> comboBox2;
 	
 	public Listado(String nombreVentana) {
 		
 		super(nombreVentana);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		listado = new JPanel();
 		setContentPane(listado);
-		SpringLayout sl_contentPane = new SpringLayout();
-		listado.setLayout(sl_contentPane);
+		SpringLayout contenedor = new SpringLayout();
+		listado.setLayout(contenedor);
 		
-		comboBoxCriterio = new JComboBox<String>();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, comboBoxCriterio, 15, SpringLayout.NORTH, listado);
-		sl_contentPane.putConstraint(SpringLayout.WEST, comboBoxCriterio, 15, SpringLayout.WEST, listado);
-		sl_contentPane.putConstraint(SpringLayout.EAST, comboBoxCriterio, 150, SpringLayout.WEST, comboBoxCriterio);
-		listado.add(comboBoxCriterio);
+		lbl1 = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lbl1, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, lbl1, 15, SpringLayout.WEST, listado);
+		lbl1.setVisible(false);
+		listado.add(lbl1);
 		
-		comboBoxItem = new JComboBox<String>();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, comboBoxItem, 15, SpringLayout.NORTH, listado);
-		sl_contentPane.putConstraint(SpringLayout.WEST, comboBoxItem, 10, SpringLayout.EAST, comboBoxCriterio);
-		sl_contentPane.putConstraint(SpringLayout.EAST, comboBoxItem, 150, SpringLayout.WEST, comboBoxItem);
-		listado.add(comboBoxItem);
+		comboBox1 = new JComboBox<String>();
+		contenedor.putConstraint(SpringLayout.NORTH, comboBox1, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, comboBox1, 5, SpringLayout.EAST, lbl1);
+		contenedor.putConstraint(SpringLayout.EAST, comboBox1, 150, SpringLayout.WEST, comboBox1);
+		comboBox1.setVisible(false);
+		listado.add(comboBox1);
 		
-		JLabel lblCantAlum = new JLabel("Cantidad de alumnos:");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, lblCantAlum, 15, SpringLayout.NORTH, listado);
-		sl_contentPane.putConstraint(SpringLayout.WEST, lblCantAlum, 25, SpringLayout.EAST, comboBoxItem);
-		listado.add(lblCantAlum);
+		lbl2 = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lbl2, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, lbl2, 25, SpringLayout.EAST, comboBox1);
+		lbl2.setVisible(false);
+		listado.add(lbl2);
 		
-		txtcantAlumn = new JTextField();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, txtcantAlumn, 15, SpringLayout.NORTH, listado);
-		sl_contentPane.putConstraint(SpringLayout.WEST, txtcantAlumn, 5, SpringLayout.EAST, lblCantAlum);
-		sl_contentPane.putConstraint(SpringLayout.EAST, txtcantAlumn, 80, SpringLayout.WEST, txtcantAlumn);
-		listado.add(txtcantAlumn);
+		comboBox2 = new JComboBox<String>();
+		contenedor.putConstraint(SpringLayout.NORTH, comboBox2, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, comboBox2, 5, SpringLayout.EAST, lbl2);
+		contenedor.putConstraint(SpringLayout.EAST, comboBox2, 150, SpringLayout.WEST, comboBox2);
+		comboBox2.setVisible(false);
+		listado.add(comboBox2);
+		
+		lbl3 = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lbl3, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, lbl3, 25, SpringLayout.EAST, comboBox2);
+		lbl3.setVisible(false);
+		listado.add(lbl3);
+		
+		txt1 = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txt1, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, txt1, 5, SpringLayout.EAST, lbl3);
+		contenedor.putConstraint(SpringLayout.EAST, txt1, 80, SpringLayout.WEST, txt1);
+		txt1.setVisible(false);
+		listado.add(txt1);
 		
 		scrollTabla = new JScrollPane();
-		sl_contentPane.putConstraint(SpringLayout.NORTH, scrollTabla, 65, SpringLayout.NORTH, listado);
-		sl_contentPane.putConstraint(SpringLayout.WEST, scrollTabla, 15, SpringLayout.WEST, listado);
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, scrollTabla, -10, SpringLayout.SOUTH, listado);
-		sl_contentPane.putConstraint(SpringLayout.EAST, scrollTabla, -120, SpringLayout.EAST, listado);
+		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla, 50, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, scrollTabla, 15, SpringLayout.WEST, listado);
+		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla, -10, SpringLayout.SOUTH, listado);
+		contenedor.putConstraint(SpringLayout.EAST, scrollTabla, -120, SpringLayout.EAST, listado);
 		listado.add(scrollTabla);
-		tablaAlumnos = new JTable();
-		scrollTabla.setViewportView(tablaAlumnos);
+		tabla = new JTable();
+		scrollTabla.setViewportView(tabla);
 		
 		btnImprimir = new JButton("Imprimir");
-		sl_contentPane.putConstraint(SpringLayout.NORTH, btnImprimir, 35, SpringLayout.NORTH, listado);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnImprimir, -10, SpringLayout.EAST, listado);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnImprimir, -90, SpringLayout.EAST, btnImprimir);
+		contenedor.putConstraint(SpringLayout.NORTH, btnImprimir, 50, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.EAST, btnImprimir, -10, SpringLayout.EAST, listado);
+		contenedor.putConstraint(SpringLayout.WEST, btnImprimir, -90, SpringLayout.EAST, btnImprimir);
 		listado.add(btnImprimir);
 		
-		chckbxActivo = new JCheckBox("Activo");
-		chckbxActivo.setSelected(true);
-		sl_contentPane.putConstraint(SpringLayout.NORTH, chckbxActivo, 25, SpringLayout.SOUTH, btnImprimir);
-		sl_contentPane.putConstraint(SpringLayout.EAST, chckbxActivo, 0, SpringLayout.EAST, listado);
-		sl_contentPane.putConstraint(SpringLayout.WEST, chckbxActivo, -90, SpringLayout.EAST, chckbxActivo);
-		listado.add(chckbxActivo);
+		chckbx1 = new JCheckBox();
+		chckbx1.setSelected(true);
+		contenedor.putConstraint(SpringLayout.NORTH, chckbx1, 25, SpringLayout.SOUTH, btnImprimir);
+		contenedor.putConstraint(SpringLayout.EAST, chckbx1, 0, SpringLayout.EAST, listado);
+		contenedor.putConstraint(SpringLayout.WEST, chckbx1, -90, SpringLayout.EAST, chckbx1);
+		chckbx1.setVisible(false);
+		listado.add(chckbx1);
 		
 		btnVolver = new JButton("Volver");
-		sl_contentPane.putConstraint(SpringLayout.SOUTH, btnVolver, -10, SpringLayout.SOUTH, listado);
-		sl_contentPane.putConstraint(SpringLayout.EAST, btnVolver, -10, SpringLayout.EAST, listado);
-		sl_contentPane.putConstraint(SpringLayout.WEST, btnVolver, -85, SpringLayout.EAST, btnVolver);
+		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -10, SpringLayout.SOUTH, listado);
+		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -10, SpringLayout.EAST, listado);
+		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -85, SpringLayout.EAST, btnVolver);
 		listado.add(btnVolver);
 	}
 }

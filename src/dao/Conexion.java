@@ -1,4 +1,4 @@
-package objetoAccesoDatos;
+package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,7 @@ public class Conexion {
 	
 	protected Connection conexion;
 	private static final String CONTROLADOR = "com.mysql.cj.jdbc.Driver";
-	private static final String URL= "jdbc:mysql://localhost:3306/lecsys2.0?serverTimezone=UTC";
+	private static final String URL= "jdbc:mysql://localhost:3306/lecsys1?serverTimezone=UTC";
 	private static final String USUARIO = "aplicacion";
 	private static final String CLAVE = "proyectoLEC";
 

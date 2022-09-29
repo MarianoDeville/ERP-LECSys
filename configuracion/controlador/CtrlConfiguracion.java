@@ -3,6 +3,8 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+
+import interfaceUsuario.ABML;
 import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.Listado;
 
@@ -14,6 +16,7 @@ public class CtrlConfiguracion implements ActionListener {
 		
 		this.ventanaConfiguracion = vista;
 		this.ventanaConfiguracion.btn1A.addActionListener(this);
+		this.ventanaConfiguracion.btn1B.addActionListener(this);
 		this.ventanaConfiguracion.btnVolver.addActionListener(this);
 	}
 	
@@ -41,7 +44,9 @@ public class CtrlConfiguracion implements ActionListener {
 		
 		if(e.getSource() == ventanaConfiguracion.btn1B) {
 			
-			
+			ABML ventanaUsuarios = new ABML("Alta Baja Modificación de usuarios");
+			CtrlABMLUsuarios ctrlABMLUsuarios = new CtrlABMLUsuarios(ventanaUsuarios);
+			ctrlABMLUsuarios.iniciar();
 		}
 
 		if(e.getSource() == ventanaConfiguracion.btnVolver) {

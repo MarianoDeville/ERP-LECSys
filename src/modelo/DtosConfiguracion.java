@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
-public class Configuracion {
+public class DtosConfiguracion {
 
 	static public String LeerConfiguracion(String parametro) {
 		

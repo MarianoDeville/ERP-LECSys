@@ -12,10 +12,10 @@ public class CtrlListado implements ActionListener {
 		
 		this.ventanaListado = vista;
 		this.ventanaListado.btnImprimir.addActionListener(this);
-		this.ventanaListado.chckbxActivo.addActionListener(this);
-		this.ventanaListado.comboBoxCriterio.addActionListener(this);
-		this.ventanaListado.comboBoxItem.addActionListener(this);
-		this.ventanaListado.txtcantAlumn.addActionListener(this);
+		this.ventanaListado.chckbx1.addActionListener(this);
+		this.ventanaListado.comboBox1.addActionListener(this);
+		this.ventanaListado.comboBox2.addActionListener(this);
+		this.ventanaListado.txt1.addActionListener(this);
 		this.ventanaListado.btnVolver.addActionListener(this);
 	}
 

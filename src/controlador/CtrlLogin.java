@@ -2,9 +2,10 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import dao.OperadorSistema;
 import interfaceUsuario.IngresoUsuario;
 import interfaceUsuario.Principal;
-import objetoAccesoDatos.OperadorSistema;
 
 public class CtrlLogin implements ActionListener {
 	

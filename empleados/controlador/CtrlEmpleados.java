@@ -6,11 +6,11 @@ import javax.swing.ImageIcon;
 import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.ABML;
 
-public class CtrlPersonal implements ActionListener {
+public class CtrlEmpleados implements ActionListener {
 
 	private InterfaceBotones ventanaPersonal;
 	
-	public CtrlPersonal(InterfaceBotones vista) {
+	public CtrlEmpleados(InterfaceBotones vista) {
 		
 		this.ventanaPersonal = vista;
 		
@@ -42,8 +42,8 @@ public class CtrlPersonal implements ActionListener {
 		if(e.getSource() == ventanaPersonal.btn1A) {
 			
 			ABML ventanaABML = new ABML("ABML del personal");
-			CtrlABMLPersonal ctrlABMLPersonal = new CtrlABMLPersonal(ventanaABML);
-			ctrlABMLPersonal.iniciar();
+			CtrlABMLEmpleados ctrlABMLEmpleados = new CtrlABMLEmpleados(ventanaABML);
+			ctrlABMLEmpleados.iniciar();
 		}
 		
 		if(e.getSource() == ventanaPersonal.btn1B) {

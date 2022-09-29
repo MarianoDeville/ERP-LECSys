@@ -3,9 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="interfaces"/>
 	<classpathentry kind="src" path="administracion"/>
-	<classpathentry kind="src" path="personal"/>
+	<classpathentry kind="src" path="empleados"/>
 	<classpathentry kind="src" path="configuracion"/>
 	<classpathentry kind="src" path="alumnos"/>
+	<classpathentry kind="src" path="personas"/>
+	<classpathentry kind="src" path="cursos"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
 		<attributes>
 			<attribute name="module" value="true"/>

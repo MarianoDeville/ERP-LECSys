@@ -1,4 +1,4 @@
-package objetoAccesoDatos;
+package dao;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import modelo.Configuracion;
+import modelo.DtosConfiguracion;
 
 public class LogErrores {
 
@@ -14,7 +14,7 @@ public class LogErrores {
 		
 		BufferedWriter bw = null;
 	    FileWriter fw = null;
-	    String nombreArchivo = Configuracion.LeerConfiguracion("LOG:");
+	    String nombreArchivo = DtosConfiguracion.LeerConfiguracion("LOG:");
 		Calendar fechaSistema = new GregorianCalendar();
 	    String dateEvento =  (fechaSistema.get(Calendar.DAY_OF_MONTH)<10? "0" + fechaSistema.get(Calendar.DAY_OF_MONTH):fechaSistema.get(Calendar.DAY_OF_MONTH)) + "/" 
 							 + ((fechaSistema.get(Calendar.MONTH)+1)<10? "0" + (fechaSistema.get(Calendar.MONTH)+1):(fechaSistema.get(Calendar.MONTH)+1)) + "/" 

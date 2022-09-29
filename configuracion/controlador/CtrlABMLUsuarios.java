@@ -4,33 +4,52 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import interfaceUsuario.ABML;
 
-public class CtrlABMLPersonal implements ActionListener {
-
-	private ABML ventanaABML;
+public class CtrlABMLUsuarios implements ActionListener {
 	
-	public CtrlABMLPersonal(ABML vista) {
+	private  ABML ventanaABML;
+
+	public CtrlABMLUsuarios(ABML vista) {
 		
 		this.ventanaABML = vista;
 		this.ventanaABML.btnNuevo.addActionListener(this);
-		this.ventanaABML.btnBuscar.addActionListener(this);
 		this.ventanaABML.btnEditar.addActionListener(this);
+		this.ventanaABML.btnBuscar.addActionListener(this);
 		this.ventanaABML.btnImprimir.addActionListener(this);
 		this.ventanaABML.btnVolver.addActionListener(this);
-		this.ventanaABML.chckbxActivo.addActionListener(this);
-		this.ventanaABML.comboBoxOrden.addActionListener(this);
-		this.ventanaABML.txtFiltrar.addActionListener(this);
 	}
 	
 	public void iniciar() {
 		
+		ventanaABML.btnBuscar.setVisible(true);
+		ventanaABML.chckbx1.setVisible(true);
+		ventanaABML.comboBox1.setVisible(true);
+		ventanaABML.txt1.setVisible(true);
 		ventanaABML.setVisible(true);
 	}
 	
+	
 	public void actionPerformed(ActionEvent e) {
 		
+		if(e.getSource() == ventanaABML.btnNuevo) {
+			
+			
+		}
 		
+		if(e.getSource() == ventanaABML.btnEditar) {
+			
+			
+		}
 		
+		if(e.getSource() == ventanaABML.btnBuscar) {
+			
+			
+		}
 
+		if(e.getSource() == ventanaABML.btnImprimir) {
+			
+			
+		}
+		
 		if(e.getSource() == ventanaABML.btnVolver) {
 			
 			ventanaABML.dispose();

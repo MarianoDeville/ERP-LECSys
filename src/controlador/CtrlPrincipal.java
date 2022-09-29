@@ -3,22 +3,27 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+
+import dao.OperadorSistema;
 import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.Principal;
-import objetoAccesoDatos.OperadorSistema;
+import modelo.DtosActividad;
 
 public class CtrlPrincipal implements ActionListener {
 	
 	private Principal ventanaPrincipal;
 	private OperadorSistema identificacion;
+	private DtosActividad actividad;
 
 	public CtrlPrincipal(Principal vista) {
 		
 		this.ventanaPrincipal = vista;
 		this.identificacion = new OperadorSistema();
+		this.actividad = new DtosActividad();
 		this.ventanaPrincipal.btnAdmin.addActionListener(this);
 		this.ventanaPrincipal.btnAlumnos.addActionListener(this);
 		this.ventanaPrincipal.btnPersonal.addActionListener(this);
+		this.ventanaPrincipal.btnCursos.addActionListener(this);
 		this.ventanaPrincipal.btnConfig.addActionListener(this);
 		this.ventanaPrincipal.btnRelogin.addActionListener(this);
 		this.ventanaPrincipal.btnSalir.addActionListener(this);
@@ -26,6 +31,7 @@ public class CtrlPrincipal implements ActionListener {
 	
 	public void iniciar() {
 		
+		actividad.registrarActividad("Inicio del sistema", "Principal");
 		ventanaPrincipal.setVisible(true);
 	}
 
@@ -41,6 +47,7 @@ public class CtrlPrincipal implements ActionListener {
 			} else {
 				
 				JOptionPane.showMessageDialog(null, "No tiene nivel de acceso suficiente.");
+				actividad.registrarActividad("Nivel de acceso insuficiente", "Gestión administrativa");
 			}
 		}
 		
@@ -54,6 +61,7 @@ public class CtrlPrincipal implements ActionListener {
 			} else {
 				
 				JOptionPane.showMessageDialog(null, "No tiene nivel de acceso suficiente.");
+				actividad.registrarActividad("Nivel de acceso insuficiente", "Gestión de los alumnos");
 			}
 		}
 		
@@ -62,11 +70,26 @@ public class CtrlPrincipal implements ActionListener {
 			if(identificacion.getNivelAcceso() < 60) {
 				
 				InterfaceBotones ventanaPersonal = new InterfaceBotones("Gestión del personal");
-				CtrlPersonal ctrlAdmin = new CtrlPersonal(ventanaPersonal);
+				CtrlEmpleados ctrlAdmin = new CtrlEmpleados(ventanaPersonal);
 				ctrlAdmin.iniciar();
 			} else {
 				
 				JOptionPane.showMessageDialog(null, "No tiene nivel de acceso suficiente.");
+				actividad.registrarActividad("Nivel de acceso insuficiente", "Gestión del personal");
+			}
+		}
+		
+		if(e.getSource() == ventanaPrincipal.btnCursos) {
+
+			if(identificacion.getNivelAcceso() < 60) {
+				
+				InterfaceBotones ventanaCursos = new InterfaceBotones("Gestión de los cursos");
+				CtrlCursos ctrlCursos = new CtrlCursos(ventanaCursos);
+				ctrlCursos.iniciar();
+			} else {
+				
+				JOptionPane.showMessageDialog(null, "No tiene nivel de acceso suficiente.");
+				actividad.registrarActividad("Nivel de acceso insuficiente", "Gestión del personal");
 			}
 		}
 		
@@ -80,6 +103,7 @@ public class CtrlPrincipal implements ActionListener {
 			} else {
 				
 				JOptionPane.showMessageDialog(null, "No tiene nivel de acceso suficiente.");
+				actividad.registrarActividad("Nivel de acceso insuficiente", "Configuración del sistema");
 			}
 			
 		}
@@ -91,6 +115,7 @@ public class CtrlPrincipal implements ActionListener {
 		
 		if(e.getSource() == ventanaPrincipal.btnSalir) {
 			
+			actividad.registrarActividad("Cierre del sistema", "Principal");
 			System.exit(0);
 		}
 		

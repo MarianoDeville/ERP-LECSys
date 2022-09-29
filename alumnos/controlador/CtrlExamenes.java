@@ -2,16 +2,16 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import interfaceUsuario.Examenes;
+import interfaceUsuario.Listado;
 
 public class CtrlExamenes implements ActionListener {
 
-	private Examenes ventanaExamenes;
+	private Listado ventanaExamenes;
 	
-	public CtrlExamenes(Examenes vista) {
+	public CtrlExamenes(Listado vista) {
 		
 		this.ventanaExamenes = vista;
-		this.ventanaExamenes.comboBoxCurso.addActionListener(this);
+		this.ventanaExamenes.comboBox1.addActionListener(this);
 		this.ventanaExamenes.btnImprimir.addActionListener(this);
 		this.ventanaExamenes.btnVolver.addActionListener(this);
 	}

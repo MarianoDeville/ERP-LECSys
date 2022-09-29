@@ -1,7 +1,9 @@
 package interfaceUsuario;
 
 import javax.swing.JFrame;
-import objetoAccesoDatos.OperadorSistema;
+
+import dao.OperadorSistema;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 

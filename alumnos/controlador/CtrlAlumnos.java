@@ -6,7 +6,6 @@ import javax.swing.ImageIcon;
 import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.ABML;
 import interfaceUsuario.Listado;
-import interfaceUsuario.Examenes;
 
 public class CtrlAlumnos implements ActionListener {
 
@@ -24,7 +23,7 @@ public class CtrlAlumnos implements ActionListener {
 	
 	public void iniciar() {
 		
-		ventanaAlumnos.lbl1A.setText("ABML");
+		ventanaAlumnos.lbl1A.setText("ABML alumnos");
 		ventanaAlumnos.lbl1A.setVisible(true);
 		ventanaAlumnos.btn1A.setIcon(new ImageIcon("C:\\LECSys 2.0\\Imagenes\\ABML.png"));
 		ventanaAlumnos.btn1A.setVisible(true);
@@ -61,14 +60,14 @@ public class CtrlAlumnos implements ActionListener {
 		
 		if(e.getSource() == ventanaAlumnos.btn2A) {
 			
-			Examenes ventanaAsistencia = new Examenes("Asistencia");
+			Listado ventanaAsistencia = new Listado("Asistencia");
 			CtrlAsistenciaAlumnos ctrlAsistenciaAlumnos = new CtrlAsistenciaAlumnos(ventanaAsistencia);
 			ctrlAsistenciaAlumnos.iniciar();
 		}
 		
 		if(e.getSource() == ventanaAlumnos.btn2B) {
 			
-			Examenes ventanaExamenes = new Examenes("Examenes");
+			Listado ventanaExamenes = new Listado("Examenes");
 			CtrlExamenes ctrlExamenes = new CtrlExamenes(ventanaExamenes);
 			ctrlExamenes.iniciar();
 		}
