@@ -25,27 +25,27 @@ public class CtrlAdministracion implements ActionListener {
 		
 		ventanaAdministracion.lbl1A.setText("Cobros");
 		ventanaAdministracion.lbl1A.setVisible(true);
-		ventanaAdministracion.btn1A.setIcon(new ImageIcon("C:\\LECSys 2.0\\Imagenes\\Cobros.png"));
+		ventanaAdministracion.btn1A.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Cobros.png"));
 		ventanaAdministracion.btn1A.setVisible(true);
 		ventanaAdministracion.lbl1B.setText("Pagos");
 		ventanaAdministracion.lbl1B.setVisible(true);
-		ventanaAdministracion.btn1B.setIcon(new ImageIcon("C:\\LECSys 2.0\\Imagenes\\Pagos.png"));
+		ventanaAdministracion.btn1B.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Pagos.png"));
 		ventanaAdministracion.btn1B.setVisible(true);
 		ventanaAdministracion.lbl1C.setText("Compras");
 		ventanaAdministracion.lbl1C.setVisible(true);
-		ventanaAdministracion.btn1C.setIcon(new ImageIcon("C:\\LECSys 2.0\\Imagenes\\Compras.png"));
+		ventanaAdministracion.btn1C.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Compras.png"));
 		ventanaAdministracion.btn1C.setVisible(true);
 		ventanaAdministracion.lbl2A.setText("EstadÍsticas");
 		ventanaAdministracion.lbl2A.setVisible(true);
-		ventanaAdministracion.btn2A.setIcon(new ImageIcon("C:\\LECSys 2.0\\Imagenes\\Estadisticas.png"));
+		ventanaAdministracion.btn2A.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Estadisticas.png"));
 		ventanaAdministracion.btn2A.setVisible(true);
 		ventanaAdministracion.lbl2B.setText("Proveedores");
 		ventanaAdministracion.lbl2B.setVisible(true);
-		ventanaAdministracion.btn2B.setIcon(new ImageIcon("C:\\LECSys 2.0\\Imagenes\\Proveedores.png"));
+		ventanaAdministracion.btn2B.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Proveedores.png"));
 		ventanaAdministracion.btn2B.setVisible(true);
 		ventanaAdministracion.lbl2C.setText("Cerrar año");
 		ventanaAdministracion.lbl2C.setVisible(true);
-		ventanaAdministracion.btn2C.setIcon(new ImageIcon("C:\\LECSys 2.0\\Imagenes\\Cierre.png"));
+		ventanaAdministracion.btn2C.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Cierre.png"));
 		ventanaAdministracion.btn2C.setVisible(true);
 		ventanaAdministracion.setVisible(true);
 	}

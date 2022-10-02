@@ -1,9 +1,7 @@
 package interfaceUsuario;
 
 import javax.swing.JFrame;
-
 import dao.OperadorSistema;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -15,7 +13,7 @@ public abstract class VentanaModelo extends JFrame {
 		
 		OperadorSistema identificación = new OperadorSistema();
 		setTitle(nombreVentana + " - " + identificación.getNombreUsuario());
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\LECSys 2.0\\Imagenes\\LEC.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\LECSys 1.0\\Imagenes\\LEC.png"));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(10, 10, 800, 600);
 		setMinimumSize(new Dimension(640, 480));

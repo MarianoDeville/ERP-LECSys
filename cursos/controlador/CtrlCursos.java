@@ -26,7 +26,7 @@ public class CtrlCursos implements ActionListener {
 		
 		ventanaCursos.lbl1A.setText("Crear curso");
 		ventanaCursos.lbl1A.setVisible(true);
-		ventanaCursos.btn1A.setIcon(new ImageIcon("C:\\LECSys 2.0\\Imagenes\\Actividades.png"));
+		ventanaCursos.btn1A.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Actividades.png"));
 		ventanaCursos.btn1A.setVisible(true);
 		ventanaCursos.setVisible(true);
 	}

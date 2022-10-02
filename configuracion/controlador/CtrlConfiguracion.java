@@ -24,11 +24,11 @@ public class CtrlConfiguracion implements ActionListener {
 		
 		ventanaConfiguracion.lbl1A.setText("Actividad");
 		ventanaConfiguracion.lbl1A.setVisible(true);
-		ventanaConfiguracion.btn1A.setIcon(new ImageIcon("C:\\LECSys 2.0\\Imagenes\\Actividades.png"));
+		ventanaConfiguracion.btn1A.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Actividades.png"));
 		ventanaConfiguracion.btn1A.setVisible(true);
 		ventanaConfiguracion.lbl1B.setText("ABML usuarios");
 		ventanaConfiguracion.lbl1B.setVisible(true);
-		ventanaConfiguracion.btn1B.setIcon(new ImageIcon("C:\\LECSys 2.0\\Imagenes\\ABML.png"));
+		ventanaConfiguracion.btn1B.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\ABML.png"));
 		ventanaConfiguracion.btn1B.setVisible(true);
 		ventanaConfiguracion.setVisible(true);
 	}

@@ -65,9 +65,14 @@ public class CtrlABMLEmpleados implements ActionListener {
 			ventanaNuevoEmpleado.btnVolver.addActionListener(this);
 			
 		}
-		
+		if(ventanaNuevoEmpleado != null) {
+			
+			if(e.getSource() == ventanaNuevoEmpleado.btnVolver) {
+	
+				actualizar();
+			}
+		}
 
-		
 		if(e.getSource() == ventanaABML.comboBox1) {
 			
 			actualizar();
@@ -77,11 +82,6 @@ public class CtrlABMLEmpleados implements ActionListener {
 			
 			actualizar();
 		}
-		
-		if(e.getSource() == ventanaNuevoEmpleado.btnVolver) {
-
-			actualizar();
-		}		
 		
 		if(e.getSource() == ventanaABML.txt1) {
 			
