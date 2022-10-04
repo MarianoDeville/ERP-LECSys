@@ -9,16 +9,17 @@ import javax.swing.SwingConstants;
 import interfaceUsuario.VentanaModelo;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.SpringLayout;
 
 public class CrearCurso extends VentanaModelo{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
+	public JScrollPane scrollTabla;
 	public JTextField txtCuota;
 	public JComboBox<String> comboBoxNivel;
 	public JComboBox<String> comboBoxAño;
 	public JComboBox<String> comboBoxProfesor;
-	public JComboBox<String> comboBoxTurno;
 	public JComboBox<String> comboBoxAula;
 	public JLabel lblMensageError;
 	public JButton btnGuardar;
@@ -28,115 +29,168 @@ public class CrearCurso extends VentanaModelo{
 	public CrearCurso(String nombreVentana) {
 		
 		super(nombreVentana);
-		setResizable(false);
+		setResizable(true);
 		setBounds(10, 20, 480, 330);
 		panel = new JPanel();
 		panel.setBorder(null);
 		setContentPane(panel);
-		panel.setLayout(null);
+		SpringLayout contenedor = new SpringLayout();
+		panel.setLayout(contenedor);
 
 		JLabel lblNivel = new JLabel("Nivel:");
-		lblNivel.setBounds(25, 15, 70, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblNivel, 15, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblNivel, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblNivel, 35, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblNivel, 95, SpringLayout.WEST, panel);
 		panel.add(lblNivel);
 		
 		comboBoxNivel = new JComboBox<String>();
-		comboBoxNivel.setBounds(95, 15, 120, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, comboBoxNivel, 15, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, comboBoxNivel, 95, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, comboBoxNivel, 35, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, comboBoxNivel, 215, SpringLayout.WEST, panel);
 		panel.add(comboBoxNivel);
 		
 		JLabel lblAo = new JLabel("Año:");
-		lblAo.setBounds(25, 40, 70, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblAo, 40, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblAo, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblAo, 60, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblAo, 95, SpringLayout.WEST, panel);
 		panel.add(lblAo);	
 		
 		comboBoxAño = new JComboBox<String>();
-		comboBoxAño.setBounds(95, 40, 120, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, comboBoxAño, 40, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, comboBoxAño, 95, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, comboBoxAño, 60, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, comboBoxAño, 215, SpringLayout.WEST, panel);
 		panel.add(comboBoxAño);
 		
 		JLabel lblProfesor = new JLabel("Profesor:");
-		lblProfesor.setBounds(25, 65, 70, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblProfesor, 65, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblProfesor, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblProfesor, 85, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblProfesor, 95, SpringLayout.WEST, panel);
 		panel.add(lblProfesor);
 		
 		comboBoxProfesor = new JComboBox<String>();
-		comboBoxProfesor.setBounds(95, 65, 200, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, comboBoxProfesor, 65, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, comboBoxProfesor, 95, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, comboBoxProfesor, 85, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, comboBoxProfesor, 295, SpringLayout.WEST, panel);
 		panel.add(comboBoxProfesor);
 		
-		JLabel lblTurno = new JLabel("Turno:");
-		lblTurno.setBounds(25, 90, 70, 20);
-		panel.add(lblTurno);
-		
-		comboBoxTurno = new JComboBox<String>();
-		comboBoxTurno.setBounds(95, 90, 120, 20);
-		panel.add(comboBoxTurno);
-		
 		JLabel lblAula = new JLabel("Aula:");
-		lblAula.setBounds(25, 140, 70, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblAula, 115, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblAula, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblAula, 135, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblAula, 95, SpringLayout.WEST, panel);
 		panel.add(lblAula);
 		
 		comboBoxAula = new JComboBox<String>();
-		comboBoxAula.setBounds(95, 140, 120, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, comboBoxAula, 115, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, comboBoxAula, 95, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, comboBoxAula, 135, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, comboBoxAula, 215, SpringLayout.WEST, panel);
 		panel.add(comboBoxAula);
 		
 		JLabel lblHorario = new JLabel("Horario:");
-		lblHorario.setBounds(25, 175, 70, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblHorario, 150, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblHorario, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblHorario, 170, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblHorario, 95, SpringLayout.WEST, panel);
 		panel.add(lblHorario);
 		
 		JLabel lblLunes = new JLabel("Lunes");
-		lblLunes.setBounds(25, 200, 70, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblLunes, 175, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblLunes, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblLunes, 195, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblLunes, 95, SpringLayout.WEST, panel);
 		lblLunes.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblLunes);
 		
 		JLabel lblMartes = new JLabel("Martes");
-		lblMartes.setBounds(25, 225, 70, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblMartes, 200, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblMartes, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblMartes, 220, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblMartes, 95, SpringLayout.WEST, panel);
 		lblMartes.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblMartes);
 		
 		JLabel lblMiercoles = new JLabel("Miércoles");
-		lblMiercoles.setBounds(25, 250, 70, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblMiercoles, 225, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblMiercoles, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblMiercoles, 245, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblMiercoles, 95, SpringLayout.WEST, panel);
 		lblMiercoles.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblMiercoles);
 		
 		JLabel lblJueves = new JLabel("Jueves");
-		lblJueves.setBounds(25, 275, 70, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblJueves, 250, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblJueves, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblJueves, 270, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblJueves, 95, SpringLayout.WEST, panel);
 		lblJueves.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblJueves);
 		
 		JLabel lblViernes = new JLabel("Viernes");
-		lblViernes.setBounds(25, 300, 70, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblViernes, 275, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblViernes, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblViernes, 295, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblViernes, 95, SpringLayout.WEST, panel);
 		lblViernes.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblViernes);
 		
 		JLabel lblSabado = new JLabel("Sábado");
-		lblSabado.setBounds(25, 325, 70, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblSabado, 300, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblSabado, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblSabado, 320, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblSabado, 95, SpringLayout.WEST, panel);
 		lblSabado.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(lblSabado);
 		
 		lblMensageError = new JLabel("");
-		lblMensageError.setBounds(25, 360, 516, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblMensageError, 360, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblMensageError, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblMensageError, 380, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblMensageError, 541, SpringLayout.WEST, panel);
 		lblMensageError.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblMensageError);
 		
 		JLabel lblCuota = new JLabel("Valor cuota:");
-		lblCuota.setBounds(25, 115, 70, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, lblCuota, 90, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, lblCuota, 25, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblCuota, 110, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, lblCuota, 95, SpringLayout.WEST, panel);
 		panel.add(lblCuota);
 		
 		txtCuota = new JTextField();
-		txtCuota.setBounds(95, 115, 120, 20);
+		contenedor.putConstraint(SpringLayout.NORTH, txtCuota, 90, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, txtCuota, 95, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.EAST, txtCuota, 215, SpringLayout.WEST, panel);
 		panel.add(txtCuota);
 		txtCuota.setColumns(10);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(95, 175, 450, 175);
-		panel.add(scrollPane);
-		
+		scrollTabla = new JScrollPane();
+		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla, 150, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, scrollTabla, 95, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla, 340, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, scrollTabla, -25, SpringLayout.EAST, panel);
+		panel.add(scrollTabla);
 		tablaHorarios = new JTable();
-		tablaHorarios.setCellSelectionEnabled(true);
-		scrollPane.setViewportView(tablaHorarios);
+		tablaHorarios.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tablaHorarios.doLayout();
+		scrollTabla.setViewportView(tablaHorarios); 
 		
 		btnGuardar = new JButton("Guardar");
-		btnGuardar.setBounds(236, 407, 90, 23);
+		contenedor.putConstraint(SpringLayout.SOUTH, btnGuardar, -15, SpringLayout.SOUTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, btnGuardar, 60, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.EAST, btnGuardar, 85, SpringLayout.WEST, btnGuardar);
 		panel.add(btnGuardar);
 		
 		btnVolver = new JButton("Volver");
-		btnVolver.setBounds(355, 407, 90, 23);
+		contenedor.putConstraint(SpringLayout.NORTH, btnVolver, 0, SpringLayout.NORTH, btnGuardar);
+		contenedor.putConstraint(SpringLayout.WEST, btnVolver, 60, SpringLayout.EAST, btnGuardar);
+		contenedor.putConstraint(SpringLayout.EAST, btnVolver, 85, SpringLayout.WEST, btnVolver);
 		panel.add(btnVolver);
 		
 	}

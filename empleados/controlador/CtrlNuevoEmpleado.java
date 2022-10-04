@@ -69,7 +69,6 @@ public class CtrlNuevoEmpleado implements ActionListener {
 			dtosNuevoEmpleado.setRelacion((String) ventanaNuevoEmplado.comboBox2.getSelectedItem());
 			dtosNuevoEmpleado.setCargo(ventanaNuevoEmplado.txt1.getText());
 			dtosNuevoEmpleado.setSalario(ventanaNuevoEmplado.txt2.getText());
-	
 			String msgError = dtosNuevoEmpleado.checkInformacion(); 
 			ventanaNuevoEmplado.lblMsgError.setForeground(Color.RED);
 			ventanaNuevoEmplado.lblMsgError.setText(msgError);

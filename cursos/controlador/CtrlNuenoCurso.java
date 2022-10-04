@@ -11,8 +11,7 @@ public class CtrlNuenoCurso implements ActionListener {
 	
 	private  CrearCurso ventanaCrearCursos;
 	private DtosCrearCurso dtosCrearCurso;
-	
-	
+		
 	public CtrlNuenoCurso(CrearCurso vista) {
 		
 		this.ventanaCrearCursos = vista;
@@ -20,15 +19,12 @@ public class CtrlNuenoCurso implements ActionListener {
 		this.ventanaCrearCursos.comboBoxNivel.addActionListener(this);
 		this.ventanaCrearCursos.comboBoxAula.addActionListener(this);
 		this.ventanaCrearCursos.comboBoxProfesor.addActionListener(this);
-		this.ventanaCrearCursos.comboBoxTurno.addActionListener(this);
 		this.ventanaCrearCursos.btnGuardar.addActionListener(this);
 		this.ventanaCrearCursos.btnVolver.addActionListener(this);
 	}
 	
-	
 	public void iniciar() {
 		
-		ventanaCrearCursos.comboBoxTurno.setModel(new DefaultComboBoxModel<String>(dtosCrearCurso.getListaTurno()));
 		ventanaCrearCursos.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(dtosCrearCurso.getListaNivel()));
 		ventanaCrearCursos.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCrearCurso.getProfesores()));
 		ventanaCrearCursos.comboBoxAula.setModel(new DefaultComboBoxModel<String>(dtosCrearCurso.getListaAulas()));
@@ -39,18 +35,21 @@ public class CtrlNuenoCurso implements ActionListener {
 	private void actualizar() {
 
 		ventanaCrearCursos.comboBoxAño.setModel(new DefaultComboBoxModel<String>(dtosCrearCurso.getAño((String)ventanaCrearCursos.comboBoxNivel.getSelectedItem())));
-		ventanaCrearCursos.tablaHorarios.setModel(dtosCrearCurso.getHorarios((String)ventanaCrearCursos.comboBoxTurno.getSelectedItem(),
-																			 ventanaCrearCursos.comboBoxTurno.getSelectedIndex(),
+		ventanaCrearCursos.tablaHorarios.setModel(dtosCrearCurso.getHorarios(ventanaCrearCursos.comboBoxAula.getSelectedIndex(),
 																			 ventanaCrearCursos.comboBoxProfesor.getSelectedIndex()));
 
-		ventanaCrearCursos.tablaHorarios.setRowHeight(25);
+		for(int i = 0 ; i < 28 ; i++) {
+			
+			ventanaCrearCursos.tablaHorarios.getColumnModel().getColumn(i).setPreferredWidth(40);
+		}
 
+		ventanaCrearCursos.tablaHorarios.setRowHeight(25);
 	}
 	
 	private void limpiarCampos() {
 		
 		ventanaCrearCursos.txtCuota.setText("");
-
+		actualizar();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -70,21 +69,14 @@ public class CtrlNuenoCurso implements ActionListener {
 			actualizar();
 		}
 		
-		if(e.getSource() == ventanaCrearCursos.comboBoxTurno) {
-			
-			actualizar();
-		}
-		
 		if(e.getSource() == ventanaCrearCursos.btnGuardar) {
 		
 			dtosCrearCurso.setAño((String)ventanaCrearCursos.comboBoxAño.getSelectedItem());
 			dtosCrearCurso.setNivel((String)ventanaCrearCursos.comboBoxNivel.getSelectedItem());
 			dtosCrearCurso.setIdProfesor(ventanaCrearCursos.comboBoxProfesor.getSelectedIndex());
-			dtosCrearCurso.setTurno((String)ventanaCrearCursos.comboBoxTurno.getSelectedItem());
 			dtosCrearCurso.setValorCuota(ventanaCrearCursos.txtCuota.getText());
-
-			
-			
+			dtosCrearCurso.setAula(ventanaCrearCursos.comboBoxAula.getSelectedIndex());
+			dtosCrearCurso.setHorarios(ventanaCrearCursos.tablaHorarios);
 			String msgError = dtosCrearCurso.checkInformacion(); 
 			ventanaCrearCursos.lblMensageError.setForeground(Color.RED);
 			ventanaCrearCursos.lblMensageError.setText(msgError);
@@ -96,6 +88,10 @@ public class CtrlNuenoCurso implements ActionListener {
 					ventanaCrearCursos.lblMensageError.setForeground(Color.BLUE);
 					limpiarCampos();
 					ventanaCrearCursos.lblMensageError.setText("Registro guardado con éxito.");
+				} else {
+					
+					ventanaCrearCursos.lblMensageError.setForeground(Color.RED);
+					ventanaCrearCursos.lblMensageError.setText("No se pudo guardar en la base de datos.");
 				}
 			}
 		}

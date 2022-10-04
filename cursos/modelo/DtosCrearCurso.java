@@ -1,73 +1,54 @@
 package modelo;
 
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
 import dao.CursosDAO;
 import dao.EmpleadosDAO;
-import interfaceUsuario.VentanaModelo;
-import interfaces.CrearCurso;
 
 public class DtosCrearCurso {
 	
+	private boolean editable[][];
+	private static int aula;
 	private static String año;
 	private static String nivel;
 	private static String [] idProfesores;
 	private static String idProfesor;
-	private static String turno;
 	private static String valorCuota;
+	private static int[][] horarios;
 		
-	public DefaultTableModel getHorarios(String turno, int aula, int profesor) {
+	public DefaultTableModel getHorarios(int aula, int profesor) {
 		
 		CursosDAO cursoDAO = new CursosDAO();
-		String titulo[] = null;
 		
-		if(turno.contentEquals("Mañana")) {
-			
-			titulo = new String[] {"8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30"};
-		}else if(turno.contentEquals("Tarde")) {
-			
-			titulo = new String[] {"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30"};
-		}else if(turno.contentEquals("Noche")) {
-			
-			titulo = new String[] {"17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"};
-		}
-		
-		
-		
-		Object cuerpo[][] = new Object[6][titulo.length];
-		
+		String titulo[] = new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", 
+										"12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", 
+										"16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"};
+
+		editable = cursoDAO.getCronogramaDias(profesor, aula);
+		Object cronograma[][] = new Object[6][28];
+
 		for(int i = 0 ; i < 6 ; i++) {
 			
-			for(int e = 0 ; e < titulo.length ; e++) {
+			for(int e = 0 ; e < 28 ; e++) {
 				
-				cuerpo[i][e] = false;
+				cronograma[i][e] = false;
 			}
 		}
-		
-		boolean editable[][] = new boolean[6][titulo.length];
-		
-		
-		
-		
-		
-		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo){
+				
+		DefaultTableModel tablaModelo = new DefaultTableModel(cronograma, titulo){
 
 			private static final long serialVersionUID = 1L;
 			
 			public boolean isCellEditable(int row, int column) {
+				
 				return editable[row][column];
 			}
 			
-			public Class<?> getColumnClass(int column) {
-				
-		        	return Boolean.class;
+			public Class<?> getColumnClass(int row) {
+	
+		        return Boolean.class;
 		    }
 		};
-		
-		
-		
-		
-		
 		return tablaModelo;
 	}
 	
@@ -126,6 +107,16 @@ public class DtosCrearCurso {
 			
 			return "El valor cuota no puede estar vacío y debe ser un número.";
 		
+		for(int i = 0 ; i < 6 ; i++) {
+			
+			for(int e = 0; e < 28 ; e++) {
+			
+				if(horarios.length == 0) {
+				
+					return "Debe elegir por lo menos un día y horario para el curso.";
+				}
+			}
+		}
 		return "";
 	}
 	
@@ -163,14 +154,6 @@ public class DtosCrearCurso {
 		DtosCrearCurso.nivel = nivel;
 	}
 
-	public String getTurno() {
-		return turno;
-	}
-
-	public void setTurno(String turno) {
-		DtosCrearCurso.turno = turno;
-	}
-
 	public String getValorCuota() {
 		return valorCuota;
 	}
@@ -185,5 +168,65 @@ public class DtosCrearCurso {
 	
 	public void setIdProfesor(int orden) {
 		DtosCrearCurso.idProfesor = idProfesores[orden];
+	}
+
+	public int [][] getHorarios() {
+		return horarios;
+	}
+
+	public void setHorarios(JTable horarios) {
+		
+		int cont = 0;
+		int cursado[][];
+		
+		for(int i = 0 ; i < 6 ; i++) {
+			
+			for(int e = 0; e < 28; e++) {
+			
+				if((boolean)horarios.getValueAt(i, e) == true) {
+				
+					while((boolean)horarios.getValueAt(i, e)) {
+						
+						e++;
+					}
+					cont++;
+				}
+			}
+		}
+		cursado = new int [cont][3];
+		cont = 0;
+		
+		for(int i = 0 ; i < 6 ; i++) {
+			
+			int e = 0;
+			
+			while(e < 28) {
+				
+				if((boolean)horarios.getValueAt(i, e)) {
+
+					cursado[cont][0] = i;
+					cursado[cont][1] = e;
+					int cant = 0;
+					
+					while((boolean)horarios.getValueAt(i, e)) { 
+						
+						e++;
+						cant++;
+					}
+					cursado[cont][2] = cant;
+					cont++;
+				}
+				e++;
+			}
+		}
+		DtosCrearCurso.horarios = cursado;
+	}
+
+	public int getAula() {
+		return aula;
+	}
+
+	public void setAula(int aula) {
+		DtosCrearCurso.aula = aula;
 	}
 }

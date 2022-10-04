@@ -2,6 +2,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
 import javax.swing.DefaultComboBoxModel;
 import interfaceUsuario.ABML;
@@ -12,6 +14,8 @@ public class CtrlABMLAlumnos implements ActionListener {
 
 	private ABML ventanaABML;
 	private DtosABMLAlumnos dtosABMLAlumnos;
+	Nuevo ventanaNuevoAlumno;
+	Nuevo ventanaEditarAlumno;
 			
 	public CtrlABMLAlumnos(ABML vista) {
 		
@@ -33,6 +37,13 @@ public class CtrlABMLAlumnos implements ActionListener {
 		ventanaABML.chckbx1.setVisible(true);
 		ventanaABML.comboBox1.setVisible(true);
 		ventanaABML.txt1.setVisible(true);
+		ventanaABML.txt1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				actualizar();
+			}
+		});
 		ventanaABML.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosABMLAlumnos.getOrdenamiento()));
 		actualizar();
 		ventanaABML.setVisible(true);
@@ -40,15 +51,37 @@ public class CtrlABMLAlumnos implements ActionListener {
 	
 	private void actualizar() {
 		
-		ventanaABML.tabla.setModel(dtosABMLAlumnos.getTablaAlumnos("","",true, ventanaABML.comboBox1.getSelectedIndex()));
+		ventanaABML.tabla.setModel(dtosABMLAlumnos.getTablaAlumnos("",ventanaABML.txt1.getText()
+																	 ,ventanaABML.chckbx1.isSelected()
+																	 , ventanaABML.comboBox1.getSelectedIndex()));
+		ventanaABML.tabla.getColumnModel().getColumn(0).setPreferredWidth(40);
+		ventanaABML.tabla.getColumnModel().getColumn(0).setMaxWidth(50);
+		ventanaABML.tabla.getColumnModel().getColumn(3).setPreferredWidth(65);
+		ventanaABML.tabla.getColumnModel().getColumn(3).setMaxWidth(70);
+		ventanaABML.tabla.getColumnModel().getColumn(5).setPreferredWidth(80);
+		ventanaABML.tabla.getColumnModel().getColumn(5).setMaxWidth(80);
+		ventanaABML.tabla.getColumnModel().getColumn(7).setPreferredWidth(80);
+		ventanaABML.tabla.getColumnModel().getColumn(7).setMaxWidth(80);
+		ventanaABML.tabla.getColumnModel().getColumn(8).setPreferredWidth(30);
+		ventanaABML.tabla.getColumnModel().getColumn(8).setMaxWidth(30);
 	}
+	
 	public void actionPerformed(ActionEvent e) {
 
 		if(e.getSource() == ventanaABML.btnNuevo) {
 			
-			Nuevo ventanaNuevoAlumno = new Nuevo("Nuevo alumno");
+			ventanaNuevoAlumno = new Nuevo("Nuevo alumno.");
 			CtrlNuevoAlumno ctrlNuevoAlumno = new CtrlNuevoAlumno(ventanaNuevoAlumno);
 			ctrlNuevoAlumno.iniciar();
+			ventanaNuevoAlumno.btnVolver.addActionListener(this);
+		}
+		
+		if(ventanaNuevoAlumno != null) {
+			
+			if(e.getSource() == ventanaNuevoAlumno.btnVolver) {
+				
+				actualizar();
+			}
 		}
 		
 		if(e.getSource() == ventanaABML.btnBuscar) {
@@ -58,7 +91,30 @@ public class CtrlABMLAlumnos implements ActionListener {
 		
 		if(e.getSource() == ventanaABML.btnEditar) {
 			
-
+			int i = 0;
+			String legajo = null;
+			
+			while(i < ventanaABML.tabla.getRowCount()) {
+				
+				if((boolean)ventanaABML.tabla.getValueAt(i, 8)) {
+					
+					legajo = (String)ventanaABML.tabla.getValueAt(i, 0);
+					break;
+				}
+			}
+			
+			ventanaEditarAlumno = new Nuevo("Edición de alumno.");
+			CtrlEditarAlumno ctrolEditarAlumno = new CtrlEditarAlumno(ventanaEditarAlumno);
+			ctrolEditarAlumno.iniciar(legajo);
+			ventanaEditarAlumno.btnVolver.addActionListener(this);
+		}
+		
+		if(ventanaNuevoAlumno != null) {
+			
+			if(e.getSource() == ventanaNuevoAlumno.btnVolver) {
+				
+				actualizar();
+			}
 		}
 		
 		if(e.getSource() == ventanaABML.btnImprimir) {

@@ -62,7 +62,6 @@ CREATE TABLE IF NOT EXISTS `LECSys1`.`curso` (
   `nivel` VARCHAR(15) NOT NULL,
   `idProfesor` INT NULL,
   `estado` INT NOT NULL,
-  `turno` VARCHAR(10) NOT NULL,
   `aula` INT NULL,
   PRIMARY KEY (`idCurso`),
   INDEX `idProfesor_idx` (`idProfesor` ASC) VISIBLE,
@@ -270,7 +269,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `LECSys1`.`valorCuota` (
   `idValorCuota` INT NOT NULL AUTO_INCREMENT,
   `idCurso` INT NOT NULL,
-  `precio` FLOAT NOT NULL,
+  `precio` INT NOT NULL,
   PRIMARY KEY (`idValorCuota`),
   INDEX `fk_valorCuota_curso1_idx` (`idCurso` ASC) VISIBLE,
   CONSTRAINT `idCurso1`
@@ -286,9 +285,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LECSys1`.`diasCursado` (
   `idDíasCursado` INT NOT NULL AUTO_INCREMENT,
-  `día` VARCHAR(10) NOT NULL,
-  `horario` VARCHAR(10) NOT NULL,
-  `duración` VARCHAR(10) NOT NULL,
+  `día` INT NOT NULL,
+  `horario` INT NOT NULL,
+  `duración` INT NOT NULL,
   `idCurso` INT NOT NULL,
   PRIMARY KEY (`idDíasCursado`),
   INDEX `idCursos_idx` (`idCurso` ASC) VISIBLE,

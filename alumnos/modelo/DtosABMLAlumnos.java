@@ -1,7 +1,6 @@
 package modelo;
 
 import javax.swing.table.DefaultTableModel;
-
 import dao.AlumnosDAO;
 
 public class DtosABMLAlumnos {

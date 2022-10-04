@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class PeronasDAO extends Conexion {
 	
@@ -39,6 +40,31 @@ public class PeronasDAO extends Conexion {
 		return registro;
 	}
 	
-	
+	public boolean getDNIDuplicado (String dni) {
+		
+		boolean bandera = false;
+		String comandoStatement = "SELECT idPersona FROM lecsys1.persona WHERE dni = '" + dni + "'";
+		
+		try {
+			
+			this.conectar();
+			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery(comandoStatement);
+
+			if(rs.next()) {
+				
+				bandera = true;
+				
+			}
+		}catch (Exception e) {
+			
+			System.err.println(e.getMessage());
+		} finally {
+			
+			this.cerrar();
+		}
+		
+		return bandera;
+	}
 
 }
