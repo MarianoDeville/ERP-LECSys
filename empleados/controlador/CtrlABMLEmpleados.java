@@ -20,7 +20,6 @@ public class CtrlABMLEmpleados implements ActionListener {
 		this.ventanaABML = vista;
 		this.dtosABMLEmpleados = new DtosABMLEmpleados();
 		this.ventanaABML.btnNuevo.addActionListener(this);
-		this.ventanaABML.btnBuscar.addActionListener(this);
 		this.ventanaABML.btnEditar.addActionListener(this);
 		this.ventanaABML.btnImprimir.addActionListener(this);
 		this.ventanaABML.btnVolver.addActionListener(this);
@@ -38,7 +37,6 @@ public class CtrlABMLEmpleados implements ActionListener {
 			}
 		});
 		
-		ventanaABML.btnBuscar.setVisible(true);
 		ventanaABML.chckbx1.setVisible(true);
 		ventanaABML.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosABMLEmpleados.getFiltro()));
 		ventanaABML.comboBox1.setVisible(true);
@@ -89,11 +87,6 @@ public class CtrlABMLEmpleados implements ActionListener {
 		}
 		
 		if(e.getSource() == ventanaABML.btnEditar) {
-			
-			
-		}
-		
-		if(e.getSource() == ventanaABML.btnBuscar) {
 			
 			
 		}

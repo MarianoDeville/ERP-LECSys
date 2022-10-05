@@ -10,6 +10,43 @@ import modelo.DtosAlumno;
 
 public class AlumnosDAO extends Conexion {
 
+	public boolean setActualizarAlumno() {
+		
+		boolean bandera = true;
+		DtosAlumno dtosNuevoAlumno = new DtosAlumno();
+		DtosActividad dtosActividad = new DtosActividad();
+		PeronasDAO dtosPersona = new PeronasDAO();
+		String infoPersona[] = new String[] {dtosNuevoAlumno.getNombre(), 
+											 dtosNuevoAlumno.getApellido(), 
+											 dtosNuevoAlumno.getDni(),
+											 dtosNuevoAlumno.getDireccion(), 
+											 dtosNuevoAlumno.getFechaNacimientoAño()+"-"+dtosNuevoAlumno.getFechaNacimientoMes()+"-"+dtosNuevoAlumno.getFechaNacimientoDia(), 
+											 dtosNuevoAlumno.getTelefono(), 
+											 dtosNuevoAlumno.getEmail(), 
+											 dtosNuevoAlumno.getIdPersona()};
+		bandera = dtosPersona.actualizarPersona(infoPersona);
+		
+		try {
+
+			this.conectar();
+			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.alumnos SET idCurso = ?, estado = ? WHERE (idAlumno = ?)");
+			stm.setInt(1, Integer.parseInt(dtosNuevoAlumno.getCurso()));
+			stm.setInt(2, dtosNuevoAlumno.getEstado()? 1:0);
+			stm.setInt(3, Integer.parseInt(dtosNuevoAlumno.getLegajo()));
+			stm.executeUpdate();
+		} catch (Exception e) {
+	
+			System.err.println(e.getMessage());
+			bandera = false;
+		} finally {
+			
+			this.cerrar();
+		}
+		dtosNuevoAlumno.limpiarInformacion();
+		dtosActividad.registrarActividad("Actualizacion de datos de alumno.", "Alumnos");
+		return bandera;
+	}
+		
 	public boolean setAlumno() {
 		
 		int idPersona = 0;
@@ -19,11 +56,15 @@ public class AlumnosDAO extends Conexion {
 		PeronasDAO dtosPersona = new PeronasDAO();
 		Calendar fechaSistema = new GregorianCalendar();
 		String fecha = fechaSistema.get(Calendar.YEAR) + "/" 
-				 + (fechaSistema.get(Calendar.MONTH)+1) + "/" 
-				 + fechaSistema.get(Calendar.DAY_OF_MONTH);
-		String infoPersona[] = new String[] {dtosNuevoAlumno.getNombre(), dtosNuevoAlumno.getApellido(), dtosNuevoAlumno.getDni(),dtosNuevoAlumno.getDireccion(), 
+					 + (fechaSistema.get(Calendar.MONTH)+1) + "/" 
+					 + fechaSistema.get(Calendar.DAY_OF_MONTH);
+		String infoPersona[] = new String[] {dtosNuevoAlumno.getNombre(), 
+											 dtosNuevoAlumno.getApellido(), 
+											 dtosNuevoAlumno.getDni(),
+											 dtosNuevoAlumno.getDireccion(), 
 											 dtosNuevoAlumno.getFechaNacimientoAño()+"-"+dtosNuevoAlumno.getFechaNacimientoMes()+"-"+dtosNuevoAlumno.getFechaNacimientoDia(), 
-											 dtosNuevoAlumno.getTelefono(), dtosNuevoAlumno.getEmail()};
+											 dtosNuevoAlumno.getTelefono(), 
+											 dtosNuevoAlumno.getEmail()};
 		idPersona = dtosPersona.registrarPersona(infoPersona);
 		
 		try {
@@ -63,7 +104,8 @@ public class AlumnosDAO extends Conexion {
 					  + "%') ORDER BY " + orden;
 		}
 		
-		String comandoStatement = "SELECT idAlumno, nombre, apellido, dni, dirección, teléfono, email, nivel, año, idGrupoFamiliar, alumnos.estado, alumnos.idCurso, alumnos.estado "
+		String comandoStatement = "SELECT idAlumno, nombre, apellido, dni, dirección, teléfono, email, nivel, año"
+								+ ", idGrupoFamiliar, alumnos.estado, alumnos.idCurso, alumnos.estado, fechaNacimiento , alumnos.idPersona "
 								+ "FROM lecsys1.alumnos "
 				 				+ "JOIN lecsys1.persona on alumnos.idPersona = persona.idPersona "
 				 				+ "JOIN lecsys1.curso ON curso.idCurso = alumnos.idCurso " 
@@ -75,7 +117,7 @@ public class AlumnosDAO extends Conexion {
 			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stm.executeQuery(comandoStatement);
 			rs.last();	
-			matriz = new String[rs.getRow()][12];
+			matriz = new String[rs.getRow()][14];
 			rs.beforeFirst();
 			int i=0;
 
@@ -93,6 +135,8 @@ public class AlumnosDAO extends Conexion {
 				matriz[i][9] = rs.getInt(11) + "";
 				matriz[i][10] = rs.getInt(12) + "";
 				matriz[i][11] = (rs.getInt(13) == 1)? "Activo": "Inactivo";
+				matriz[i][12] = rs.getString(14);
+				matriz[i][13] = rs.getString(15);
 				i++;
 			}
 		}catch (Exception e) {
@@ -105,5 +149,4 @@ public class AlumnosDAO extends Conexion {
 	
 		return matriz;
 	}
-	
 }

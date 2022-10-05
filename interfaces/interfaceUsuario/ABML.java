@@ -20,7 +20,6 @@ public class ABML extends VentanaModelo {
 	public JComboBox<String> comboBox1;
 	public JButton btnNuevo;
 	public JButton btnEditar;
-	public JButton btnBuscar;
 	public JButton btnImprimir;
 	public JButton btnVolver;
 
@@ -53,16 +52,9 @@ public class ABML extends VentanaModelo {
 		contenedor.putConstraint(SpringLayout.WEST, btnEditar, -105, SpringLayout.EAST, btnEditar);
 		panel.add(btnEditar);
 		
-		btnBuscar = new JButton("Buscar");
-		contenedor.putConstraint(SpringLayout.NORTH, btnBuscar, 25, SpringLayout.SOUTH, btnEditar);
-		contenedor.putConstraint(SpringLayout.EAST, btnBuscar, 0, SpringLayout.EAST, btnNuevo);
-		contenedor.putConstraint(SpringLayout.WEST, btnBuscar, -105, SpringLayout.EAST, btnBuscar);
-		btnBuscar.setVisible(false);
-		panel.add(btnBuscar);
-		
 		chckbx1 = new JCheckBox("Activo");
 		chckbx1.setSelected(true);
-		contenedor.putConstraint(SpringLayout.NORTH, chckbx1, 25, SpringLayout.SOUTH, btnBuscar);
+		contenedor.putConstraint(SpringLayout.NORTH, chckbx1, 25, SpringLayout.SOUTH, btnEditar);
 		contenedor.putConstraint(SpringLayout.EAST, chckbx1, 0, SpringLayout.EAST, btnNuevo);
 		contenedor.putConstraint(SpringLayout.WEST, chckbx1, -105, SpringLayout.EAST, chckbx1);
 		chckbx1.setVisible(false);

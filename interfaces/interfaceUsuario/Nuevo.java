@@ -18,7 +18,7 @@ import javax.swing.JComboBox;
 public class Nuevo extends VentanaModelo {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel panel;
+	public JPanel panel;
 	public JScrollPane scrollTabla;
 	public JTextField txtLegajo;
 	public JTextField txtNombre;
@@ -52,7 +52,7 @@ public class Nuevo extends VentanaModelo {
 		setContentPane(panel);
 		SpringLayout contenedor = new SpringLayout();
 		setMinimumSize(new Dimension(450, 500));
-		setBounds(10, 10, 460, 500);
+		setBounds(10, 10, 460, 530);
 		panel.setLayout(contenedor);
 		
 		JLabel lblLegajo = new JLabel("Legajo:");

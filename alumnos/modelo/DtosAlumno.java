@@ -20,6 +20,7 @@ public class DtosAlumno {
 	private static boolean estado;
 	private static String curso;
 	private static String idCurso;
+	private static String idPersona;
 	private static String [] idCursos;
 	private static String [][] horariosCursos;
 
@@ -73,9 +74,16 @@ public class DtosAlumno {
 		AlumnosDAO alumnosDAO = new AlumnosDAO();
 		return alumnosDAO.setAlumno();
 	}
+	
+	public boolean setActualizarAlumno() { 
+		
+		AlumnosDAO alumnosDAO = new AlumnosDAO();
+		return alumnosDAO.setActualizarAlumno();
+	} 
 
 	public void limpiarInformacion() {
 		
+		legajo = "";
 		nombre = "";
 		apellido = "";
 		dni = "";
@@ -86,6 +94,7 @@ public class DtosAlumno {
 		direccion = "";
 		email = "";
 		curso = "";
+		idPersona = "";
 	}
 	
 	public boolean recuperarInformacionAlumno(String nroLegajo) {
@@ -104,6 +113,11 @@ public class DtosAlumno {
 			email = alumno[0][6];
 			idCurso = alumno[0][10];
 			estado = alumno[0][11].contentEquals("Activo")? true: false;
+			String[] fecha = alumno[0][12].split("-");
+			fechaNacimientoAño = fecha[0];
+			fechaNacimientoMes = fecha[1];
+			fechaNacimientoDia = fecha[2];
+			idPersona = alumno[0][13];
 		}
 		return true;
 	}
@@ -137,7 +151,7 @@ public class DtosAlumno {
 		return nombreCursos;
 	}
 	
-	public String checkInformacion() {
+	public String checkInformacion(boolean checDNI) {
 		
 		String msg = "";
 		PeronasDAO personasDAO = new PeronasDAO();
@@ -151,7 +165,7 @@ public class DtosAlumno {
 		}else if(dni.length() < 7 || !isNumeric(dni)) {
 			
 			msg ="Error en el formato del DNI (solamente números).";
-		}else if(personasDAO.getDNIDuplicado(dni)) {
+		}else if(personasDAO.getDNIDuplicado(dni) && checDNI) {
 			
 			msg ="El DNI ya está siendo usado.";
 		}else if(fechaNacimientoAño.length() == 0 
@@ -321,5 +335,13 @@ public class DtosAlumno {
 
 	public void setCurso(int curso) {
 		DtosAlumno.curso = idCursos[curso];
+	}
+
+	public String getIdPersona() {
+		return idPersona;
+	}
+
+	public void setIdPersona(String idPersona) {
+		DtosAlumno.idPersona = idPersona;
 	}
 }

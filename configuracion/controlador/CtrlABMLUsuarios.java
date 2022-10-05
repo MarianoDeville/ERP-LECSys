@@ -13,14 +13,12 @@ public class CtrlABMLUsuarios implements ActionListener {
 		this.ventanaABML = vista;
 		this.ventanaABML.btnNuevo.addActionListener(this);
 		this.ventanaABML.btnEditar.addActionListener(this);
-		this.ventanaABML.btnBuscar.addActionListener(this);
 		this.ventanaABML.btnImprimir.addActionListener(this);
 		this.ventanaABML.btnVolver.addActionListener(this);
 	}
 	
 	public void iniciar() {
 		
-		ventanaABML.btnBuscar.setVisible(true);
 		ventanaABML.chckbx1.setVisible(true);
 		ventanaABML.comboBox1.setVisible(true);
 		ventanaABML.txt1.setVisible(true);
@@ -40,11 +38,6 @@ public class CtrlABMLUsuarios implements ActionListener {
 			
 		}
 		
-		if(e.getSource() == ventanaABML.btnBuscar) {
-			
-			
-		}
-
 		if(e.getSource() == ventanaABML.btnImprimir) {
 			
 			

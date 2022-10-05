@@ -67,7 +67,7 @@ public class CtrlNuevoAlumno implements ActionListener {
 			dtosNuevoAlumno.setEmail(ventanaNuenoAlumno.txtEmail.getText());
 			dtosNuevoAlumno.setTelefono(ventanaNuenoAlumno.txtTelefono.getText());
 			dtosNuevoAlumno.setCurso(ventanaNuenoAlumno.comboBox1.getSelectedIndex());
-			String msgError = dtosNuevoAlumno.checkInformacion(); 
+			String msgError = dtosNuevoAlumno.checkInformacion(true); 
 			ventanaNuenoAlumno.lblMsgError.setForeground(Color.RED);
 			ventanaNuenoAlumno.lblMsgError.setText(msgError);
 			
@@ -78,6 +78,10 @@ public class CtrlNuevoAlumno implements ActionListener {
 					limpiarCampos();
 					ventanaNuenoAlumno.lblMsgError.setForeground(Color.BLUE);
 					ventanaNuenoAlumno.lblMsgError.setText("Los datos se guardaron correctamente.");
+				} else {
+					
+					ventanaNuenoAlumno.lblMsgError.setForeground(Color.RED);
+					ventanaNuenoAlumno.lblMsgError.setText("Error al intentar guardar la información.");
 				}
 			}
 		}		

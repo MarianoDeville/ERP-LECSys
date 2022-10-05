@@ -6,6 +6,35 @@ import java.sql.Statement;
 
 public class PeronasDAO extends Conexion {
 	
+	public boolean actualizarPersona(String infoPersona[]) {
+		
+		boolean bandera = true;
+		
+		try {
+			
+			this.conectar();
+			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.persona SET nombre = ?, apellido = ?, dni = ?, dirección = ?"
+																 + ", fechaNacimiento = ?, teléfono = ?, email = ? WHERE (idPersona = ?)");
+			stm.setString(1, infoPersona[0]);
+			stm.setString(2, infoPersona[1]);
+			stm.setString(3, infoPersona[2]);
+			stm.setString(4, infoPersona[3]);
+			stm.setString(5, infoPersona[4]);
+			stm.setString(6, infoPersona[5]);
+			stm.setString(7, infoPersona[6]);
+			stm.setString(8, infoPersona[7]);
+			stm.executeUpdate();
+		} catch (Exception e) {
+			
+			bandera = false;
+			System.err.println(e.getMessage());
+		} finally {
+			
+			this.cerrar();
+		}
+		return bandera;
+	}
+	
 	public int registrarPersona(String infoPersona[]) {
 		
 		int registro = 0;
@@ -23,7 +52,6 @@ public class PeronasDAO extends Conexion {
 			stm.setString(6, infoPersona[5]);
 			stm.setString(7, infoPersona[6]);
 			stm.executeUpdate();
-
 			ResultSet rs = stm.executeQuery("SELECT MAX(idPersona) FROM persona");
 			
 			if(rs.next())
@@ -48,7 +76,7 @@ public class PeronasDAO extends Conexion {
 		try {
 			
 			this.conectar();
-			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			Statement stm = this.conexion.createStatement();
 			ResultSet rs = stm.executeQuery(comandoStatement);
 
 			if(rs.next()) {
@@ -63,8 +91,6 @@ public class PeronasDAO extends Conexion {
 			
 			this.cerrar();
 		}
-		
 		return bandera;
 	}
-
 }
