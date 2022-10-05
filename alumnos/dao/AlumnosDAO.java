@@ -6,7 +6,7 @@ import java.sql.Statement;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import modelo.DtosActividad;
-import modelo.DtosNuevoAlumno;
+import modelo.DtosAlumno;
 
 public class AlumnosDAO extends Conexion {
 
@@ -14,7 +14,7 @@ public class AlumnosDAO extends Conexion {
 		
 		int idPersona = 0;
 		boolean bandera = true;
-		DtosNuevoAlumno dtosNuevoAlumno = new DtosNuevoAlumno();
+		DtosAlumno dtosNuevoAlumno = new DtosAlumno();
 		DtosActividad dtosActividad = new DtosActividad();
 		PeronasDAO dtosPersona = new PeronasDAO();
 		Calendar fechaSistema = new GregorianCalendar();
@@ -51,13 +51,23 @@ public class AlumnosDAO extends Conexion {
 	public String [][] getAlumnos(String campo, String valor, boolean estado, String orden) {
 	
 		String matriz[][]=null;
-		String comandoStatement = "SELECT idAlumno, nombre, apellido, dni, dirección, teléfono, email, nivel, año, idGrupoFamiliar "
+		String armoWhere = null;
+		
+		if(campo.contentEquals("ID")) {
+			
+			armoWhere ="WHERE idAlumno = " + valor;
+		} else {
+			
+			armoWhere = "WHERE (alumnos.estado = " + (estado? "1 ":"0 ")
+					  + "AND apellido LIKE '" + valor
+					  + "%') ORDER BY " + orden;
+		}
+		
+		String comandoStatement = "SELECT idAlumno, nombre, apellido, dni, dirección, teléfono, email, nivel, año, idGrupoFamiliar, alumnos.estado, alumnos.idCurso, alumnos.estado "
 								+ "FROM lecsys1.alumnos "
 				 				+ "JOIN lecsys1.persona on alumnos.idPersona = persona.idPersona "
 				 				+ "JOIN lecsys1.curso ON curso.idCurso = alumnos.idCurso " 
-						 		+ "WHERE (alumnos.estado = " + (estado? "1 ":"0 ")
-						 		+ "AND apellido LIKE '" + valor
-				 				+ "%') ORDER BY " + orden;
+						 		+ armoWhere;
 		
 		try {
 			
@@ -65,7 +75,7 @@ public class AlumnosDAO extends Conexion {
 			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stm.executeQuery(comandoStatement);
 			rs.last();	
-			matriz = new String[rs.getRow()][9];
+			matriz = new String[rs.getRow()][12];
 			rs.beforeFirst();
 			int i=0;
 
@@ -79,7 +89,10 @@ public class AlumnosDAO extends Conexion {
 				matriz[i][5] = rs.getString(6);	
 				matriz[i][6] = rs.getString(7);	
 				matriz[i][7] = rs.getString(8) + " " + rs.getString(9);
-				matriz[i][8] = rs.getInt(10)+"";
+				matriz[i][8] = rs.getInt(10) + "";
+				matriz[i][9] = rs.getInt(11) + "";
+				matriz[i][10] = rs.getInt(12) + "";
+				matriz[i][11] = (rs.getInt(13) == 1)? "Activo": "Inactivo";
 				i++;
 			}
 		}catch (Exception e) {

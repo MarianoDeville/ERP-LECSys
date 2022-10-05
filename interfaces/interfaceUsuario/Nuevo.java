@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -36,6 +37,7 @@ public class Nuevo extends VentanaModelo {
 	public JLabel lblTxt1;
 	public JLabel lblTxt2;
 	public JLabel lblMsgError;
+	public JCheckBox chkbox1;
 	public JComboBox<String> comboBox1;
 	public JComboBox<String> comboBox2;
 	public JTable tabla;
@@ -49,8 +51,8 @@ public class Nuevo extends VentanaModelo {
 		panel = new JPanel();
 		setContentPane(panel);
 		SpringLayout contenedor = new SpringLayout();
-		setMinimumSize(new Dimension(400, 500));
-		setBounds(10, 10, 420, 500);
+		setMinimumSize(new Dimension(450, 500));
+		setBounds(10, 10, 460, 500);
 		panel.setLayout(contenedor);
 		
 		JLabel lblLegajo = new JLabel("Legajo:");
@@ -65,6 +67,12 @@ public class Nuevo extends VentanaModelo {
 		contenedor.putConstraint(SpringLayout.EAST, txtLegajo, 150, SpringLayout.WEST, txtLegajo);
 		txtLegajo.setEditable(false);
 		panel.add(txtLegajo);
+		
+		chkbox1 = new JCheckBox("Activo");
+		contenedor.putConstraint(SpringLayout.NORTH, chkbox1, -2, SpringLayout.NORTH, lblLegajo);
+		contenedor.putConstraint(SpringLayout.WEST, chkbox1, 15, SpringLayout.EAST, txtLegajo);
+		chkbox1.setVisible(false);
+		panel.add(chkbox1);
 				
 		JLabel lblNombre = new JLabel("Nombre:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblNombre, 15, SpringLayout.SOUTH, lblLegajo);
@@ -245,7 +253,7 @@ public class Nuevo extends VentanaModelo {
 		scrollTabla = new JScrollPane();
 		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla, 15, SpringLayout.SOUTH, lblTxt2);
 		contenedor.putConstraint(SpringLayout.WEST, scrollTabla, 15, SpringLayout.WEST, panel);
-		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla, -60, SpringLayout.SOUTH, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla, 55, SpringLayout.NORTH, scrollTabla);
 		contenedor.putConstraint(SpringLayout.EAST, scrollTabla, -20, SpringLayout.EAST, panel);
 		panel.add(scrollTabla);
 		tabla = new JTable();

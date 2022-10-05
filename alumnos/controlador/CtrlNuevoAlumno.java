@@ -5,17 +5,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 import interfaceUsuario.Nuevo;
-import modelo.DtosNuevoAlumno;
+import modelo.DtosAlumno;
 
 public class CtrlNuevoAlumno implements ActionListener {
 	
 	private Nuevo ventanaNuenoAlumno;
-	private DtosNuevoAlumno dtosNuevoAlumno;
+	private DtosAlumno dtosNuevoAlumno;
 	
 	public CtrlNuevoAlumno(Nuevo vista) {
 		
 		this.ventanaNuenoAlumno = vista;
-		this.dtosNuevoAlumno = new DtosNuevoAlumno();
+		this.dtosNuevoAlumno = new DtosAlumno();
+		this.ventanaNuenoAlumno.comboBox1.addActionListener(this);
 		this.ventanaNuenoAlumno.btnGuardar.addActionListener(this);
 		this.ventanaNuenoAlumno.btnVolver.addActionListener(this);
 	}
@@ -24,7 +25,14 @@ public class CtrlNuevoAlumno implements ActionListener {
 		
 		ventanaNuenoAlumno.lblcomboBox1.setText("Curso:");
 		ventanaNuenoAlumno.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosNuevoAlumno.getListaCursos()));
+		ventanaNuenoAlumno.scrollTabla.setVisible(true);
+		actualizar();
 		ventanaNuenoAlumno.setVisible(true);
+	}
+	
+	private void actualizar() {
+		
+		ventanaNuenoAlumno.tabla.setModel(dtosNuevoAlumno.getTablaDias(ventanaNuenoAlumno.comboBox1.getSelectedIndex()));
 	}
 	
 	private void limpiarCampos() {
@@ -41,6 +49,11 @@ public class CtrlNuevoAlumno implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == ventanaNuenoAlumno.comboBox1) {
+			
+			actualizar();
+		}
 
 		if(e.getSource() == ventanaNuenoAlumno.btnGuardar) {
 			

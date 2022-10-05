@@ -6,6 +6,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 import interfaceUsuario.ABML;
 import interfaceUsuario.Nuevo;
 import modelo.DtosABMLAlumnos;
@@ -101,12 +103,17 @@ public class CtrlABMLAlumnos implements ActionListener {
 					legajo = (String)ventanaABML.tabla.getValueAt(i, 0);
 					break;
 				}
+				i++;
 			}
-			
-			ventanaEditarAlumno = new Nuevo("Edición de alumno.");
-			CtrlEditarAlumno ctrolEditarAlumno = new CtrlEditarAlumno(ventanaEditarAlumno);
-			ctrolEditarAlumno.iniciar(legajo);
-			ventanaEditarAlumno.btnVolver.addActionListener(this);
+			if(legajo != null) {
+				ventanaEditarAlumno = new Nuevo("Edición de alumno.");
+				CtrlEditarAlumno ctrolEditarAlumno = new CtrlEditarAlumno(ventanaEditarAlumno);
+				ctrolEditarAlumno.iniciar(legajo);
+				ventanaEditarAlumno.btnVolver.addActionListener(this);
+			} else {
+				
+				JOptionPane.showMessageDialog(null, "Debe seleccionar un alumno para editar.");
+			}
 		}
 		
 		if(ventanaNuevoAlumno != null) {

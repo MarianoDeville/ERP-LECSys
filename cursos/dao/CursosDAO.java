@@ -8,6 +8,40 @@ import modelo.DtosCrearCurso;
 
 public class CursosDAO extends Conexion {
 	
+	public String [][] buscarDiasCurso(String idCurso) {
+		
+		String matriz[][] = null;
+		String comandoStatement = "SELECT día, horario, duración FROM lecsys1.diasCursado WHERE idCurso = " + idCurso;
+		
+		try {
+		
+			this.conectar();
+			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery(comandoStatement);
+			
+			rs.last();	
+			matriz = new String[rs.getRow()][3];
+			rs.beforeFirst();
+			int i=0; 
+			
+			while(rs.next()) {
+			
+				matriz[i][0] = rs.getInt(1) + "";
+				matriz[i][1] = rs.getInt(2) + "";
+				matriz[i][2] = rs.getInt(3) + "";
+				i++;
+			}
+			
+		} catch (Exception e) {
+		
+			System.err.println(e.getMessage());
+		} finally {
+		
+			this.cerrar();
+		}
+		return matriz;
+	}
+
 	public boolean [][] getCronogramaDias(int idProfesor, int aula){
 
 		boolean [][] matrizDiasHorarios = new boolean[6][28];
