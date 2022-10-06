@@ -3,7 +3,7 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import interfaceUsuario.ABML;
-import interfaces.CrearCurso;
+import interfaceUsuario.CrearCurso;
 import modelo.DtosAMBLCurso;
 
 public class CtrlABMLCursos implements ActionListener {

@@ -13,8 +13,14 @@ public class PeronasDAO extends Conexion {
 		try {
 			
 			this.conectar();
-			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.persona SET nombre = ?, apellido = ?, dni = ?, dirección = ?"
-																 + ", fechaNacimiento = ?, teléfono = ?, email = ? WHERE (idPersona = ?)");
+			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.persona SET "
+																							 + "nombre = ?, "
+																							 + "apellido = ?, "
+																							 + "dni = ?, "
+																							 + "dirección = ?, "
+																							 + "fechaNacimiento = ?, "
+																							 + "teléfono = ?, "
+																							 + "email = ? WHERE (idPersona = ?)");
 			stm.setString(1, infoPersona[0]);
 			stm.setString(2, infoPersona[1]);
 			stm.setString(3, infoPersona[2]);
@@ -42,8 +48,15 @@ public class PeronasDAO extends Conexion {
 		try {
 			
 			this.conectar();
-			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO persona (nombre, apellido, dni, dirección, fechaNacimiento, teléfono, email)"
-																 + " VALUES (?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO persona ("
+																					+ "nombre, "
+																					+ "apellido, "
+																					+ "dni, "
+																					+ "dirección, "
+																					+ "fechaNacimiento, "
+																					+ "teléfono, "
+																					+ "email)"
+																					+ " VALUES (?, ?, ?, ?, ?, ?, ?)");
 			stm.setString(1, infoPersona[0]);
 			stm.setString(2, infoPersona[1]);
 			stm.setString(3, infoPersona[2]);

@@ -4,16 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import interfaceUsuario.InterfaceBotones;
+import modelo.DtosAcceso;
 import interfaceUsuario.ABML;
 
 public class CtrlEmpleados implements ActionListener {
 
 	private InterfaceBotones ventanaPersonal;
+	private DtosAcceso acceso;
 	
 	public CtrlEmpleados(InterfaceBotones vista) {
 		
 		this.ventanaPersonal = vista;
-		
+		this.acceso = new DtosAcceso();
 		this.ventanaPersonal.btn1A.addActionListener(this);
 		this.ventanaPersonal.btn1B.addActionListener(this);
 		this.ventanaPersonal.btn2A.addActionListener(this);
@@ -41,19 +43,30 @@ public class CtrlEmpleados implements ActionListener {
 		
 		if(e.getSource() == ventanaPersonal.btn1A) {
 			
-			ABML ventanaABML = new ABML("ABML del personal");
-			CtrlABMLEmpleados ctrlABMLEmpleados = new CtrlABMLEmpleados(ventanaABML);
-			ctrlABMLEmpleados.iniciar();
+			if(acceso.chkAcceso("Empleados", "ABML")) {
+			
+				ABML ventanaABML = new ABML("ABML del personal");
+				CtrlABMLEmpleados ctrlABMLEmpleados = new CtrlABMLEmpleados(ventanaABML);
+				ctrlABMLEmpleados.iniciar();
+			}
 		}
 		
 		if(e.getSource() == ventanaPersonal.btn1B) {
 			
-			
+			if(acceso.chkAcceso("Empleados", "Asistencia")) {
+
+				
+				
+			}
 		}
 		
 		if(e.getSource() == ventanaPersonal.btn2A) {
 			
-			
+			if(acceso.chkAcceso("Empleados", "Horarios")) {
+
+				
+				
+			}
 		}
 		
 		if(e.getSource() == ventanaPersonal.btnVolver) {

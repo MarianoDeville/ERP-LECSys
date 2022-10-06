@@ -6,14 +6,17 @@ import javax.swing.ImageIcon;
 import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.ABML;
 import interfaceUsuario.Listado;
+import modelo.DtosAcceso;
 
 public class CtrlAlumnos implements ActionListener {
 
 	private InterfaceBotones ventanaAlumnos;
+	private DtosAcceso acceso;
 	
 	public CtrlAlumnos(InterfaceBotones vista) {
 		
 		this.ventanaAlumnos = vista;
+		this.acceso = new DtosAcceso();
 		this.ventanaAlumnos.btn1A.addActionListener(this);
 		this.ventanaAlumnos.btn1B.addActionListener(this);
 		this.ventanaAlumnos.btn2A.addActionListener(this);
@@ -46,30 +49,42 @@ public class CtrlAlumnos implements ActionListener {
 		
 		if(e.getSource() == ventanaAlumnos.btn1A) {
 			
-			ABML ventanaABML = new ABML("Alta, Baja, Modificación y Listado");
-			CtrlABMLAlumnos ctrlABMLPersonal = new CtrlABMLAlumnos(ventanaABML);
-			ctrlABMLPersonal.iniciar();
+			if(acceso.chkAcceso("Alumnos", "ABML")) {
+			
+				ABML ventanaABML = new ABML("Alta, Baja, Modificación y Listado");
+				CtrlABMLAlumnos ctrlABMLPersonal = new CtrlABMLAlumnos(ventanaABML);
+				ctrlABMLPersonal.iniciar();
+			}
 		}
 		
 		if(e.getSource() == ventanaAlumnos.btn1B) {
 			
-			Listado ventanaListado = new Listado("Listado");
-			CtrlListado ctrlListado = new CtrlListado(ventanaListado);
-			ctrlListado.iniciar();
+			if(acceso.chkAcceso("Alumnos", "Listado")) {
+			
+				Listado ventanaListado = new Listado("Listado");
+				CtrlListado ctrlListado = new CtrlListado(ventanaListado);
+				ctrlListado.iniciar();
+			}
 		}
 		
 		if(e.getSource() == ventanaAlumnos.btn2A) {
 			
-			Listado ventanaAsistencia = new Listado("Asistencia");
-			CtrlAsistenciaAlumnos ctrlAsistenciaAlumnos = new CtrlAsistenciaAlumnos(ventanaAsistencia);
-			ctrlAsistenciaAlumnos.iniciar();
+			if(acceso.chkAcceso("Alumnos", "Asistencia")) {
+			
+				Listado ventanaAsistencia = new Listado("Asistencia");
+				CtrlAsistenciaAlumnos ctrlAsistenciaAlumnos = new CtrlAsistenciaAlumnos(ventanaAsistencia);
+				ctrlAsistenciaAlumnos.iniciar();
+			}
 		}
 		
 		if(e.getSource() == ventanaAlumnos.btn2B) {
 			
-			Listado ventanaExamenes = new Listado("Examenes");
-			CtrlExamenes ctrlExamenes = new CtrlExamenes(ventanaExamenes);
-			ctrlExamenes.iniciar();
+			if(acceso.chkAcceso("Alumnos", "Examenes")) {
+			
+				Listado ventanaExamenes = new Listado("Examenes");
+				CtrlExamenes ctrlExamenes = new CtrlExamenes(ventanaExamenes);
+				ctrlExamenes.iniciar();
+			}
 		}
 		
 		if(e.getSource() == ventanaAlumnos.btnVolver) {

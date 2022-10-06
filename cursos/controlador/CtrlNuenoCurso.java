@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
-import interfaces.CrearCurso;
+
+import interfaceUsuario.CrearCurso;
 import modelo.DtosCrearCurso;
 
 public class CtrlNuenoCurso implements ActionListener {

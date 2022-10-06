@@ -15,9 +15,9 @@ public class Listado extends VentanaModelo {
 	private static final long serialVersionUID = 1L;
 	private JPanel listado;
 	private JScrollPane scrollTabla;
-	public JLabel lbl1;
-	public JLabel lbl2;
-	public JLabel lbl3;
+	public JLabel lblComboBox1;
+	public JLabel lblComboBox2;
+	public JLabel lblTxt1;
 	public JTextField txt1;
 	public JTable tabla;
 	public JButton btnImprimir;
@@ -34,41 +34,41 @@ public class Listado extends VentanaModelo {
 		SpringLayout contenedor = new SpringLayout();
 		listado.setLayout(contenedor);
 		
-		lbl1 = new JLabel();
-		contenedor.putConstraint(SpringLayout.NORTH, lbl1, 15, SpringLayout.NORTH, listado);
-		contenedor.putConstraint(SpringLayout.WEST, lbl1, 15, SpringLayout.WEST, listado);
-		lbl1.setVisible(false);
-		listado.add(lbl1);
+		lblComboBox1 = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblComboBox1, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, lblComboBox1, 15, SpringLayout.WEST, listado);
+		lblComboBox1.setVisible(false);
+		listado.add(lblComboBox1);
 		
 		comboBox1 = new JComboBox<String>();
 		contenedor.putConstraint(SpringLayout.NORTH, comboBox1, 15, SpringLayout.NORTH, listado);
-		contenedor.putConstraint(SpringLayout.WEST, comboBox1, 5, SpringLayout.EAST, lbl1);
+		contenedor.putConstraint(SpringLayout.WEST, comboBox1, 5, SpringLayout.EAST, lblComboBox1);
 		contenedor.putConstraint(SpringLayout.EAST, comboBox1, 150, SpringLayout.WEST, comboBox1);
 		comboBox1.setVisible(false);
 		listado.add(comboBox1);
 		
-		lbl2 = new JLabel();
-		contenedor.putConstraint(SpringLayout.NORTH, lbl2, 15, SpringLayout.NORTH, listado);
-		contenedor.putConstraint(SpringLayout.WEST, lbl2, 25, SpringLayout.EAST, comboBox1);
-		lbl2.setVisible(false);
-		listado.add(lbl2);
+		lblComboBox2 = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblComboBox2, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, lblComboBox2, 25, SpringLayout.EAST, comboBox1);
+		lblComboBox2.setVisible(false);
+		listado.add(lblComboBox2);
 		
 		comboBox2 = new JComboBox<String>();
 		contenedor.putConstraint(SpringLayout.NORTH, comboBox2, 15, SpringLayout.NORTH, listado);
-		contenedor.putConstraint(SpringLayout.WEST, comboBox2, 5, SpringLayout.EAST, lbl2);
+		contenedor.putConstraint(SpringLayout.WEST, comboBox2, 5, SpringLayout.EAST, lblComboBox2);
 		contenedor.putConstraint(SpringLayout.EAST, comboBox2, 150, SpringLayout.WEST, comboBox2);
 		comboBox2.setVisible(false);
 		listado.add(comboBox2);
 		
-		lbl3 = new JLabel();
-		contenedor.putConstraint(SpringLayout.NORTH, lbl3, 15, SpringLayout.NORTH, listado);
-		contenedor.putConstraint(SpringLayout.WEST, lbl3, 25, SpringLayout.EAST, comboBox2);
-		lbl3.setVisible(false);
-		listado.add(lbl3);
+		lblTxt1 = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblTxt1, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, lblTxt1, 25, SpringLayout.EAST, comboBox2);
+		lblTxt1.setVisible(false);
+		listado.add(lblTxt1);
 		
 		txt1 = new JTextField();
 		contenedor.putConstraint(SpringLayout.NORTH, txt1, 15, SpringLayout.NORTH, listado);
-		contenedor.putConstraint(SpringLayout.WEST, txt1, 5, SpringLayout.EAST, lbl3);
+		contenedor.putConstraint(SpringLayout.WEST, txt1, 5, SpringLayout.EAST, lblTxt1);
 		contenedor.putConstraint(SpringLayout.EAST, txt1, 80, SpringLayout.WEST, txt1);
 		txt1.setVisible(false);
 		listado.add(txt1);

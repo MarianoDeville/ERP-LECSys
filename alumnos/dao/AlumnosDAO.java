@@ -97,6 +97,12 @@ public class AlumnosDAO extends Conexion {
 		if(campo.contentEquals("ID")) {
 			
 			armoWhere ="WHERE idAlumno = " + valor;
+		} else if(campo.contentEquals("Docente")) {
+		
+			armoWhere ="WHERE idProfesor = " + valor;
+		} else if(campo.contentEquals("Curso")) {
+			
+			armoWhere ="WHERE alumnos.idCurso = " + valor;
 		} else {
 			
 			armoWhere = "WHERE (alumnos.estado = " + (estado? "1 ":"0 ")
@@ -146,7 +152,6 @@ public class AlumnosDAO extends Conexion {
 			
 			this.cerrar();
 		}
-	
 		return matriz;
 	}
 }

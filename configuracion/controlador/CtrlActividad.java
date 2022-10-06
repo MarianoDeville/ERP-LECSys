@@ -27,11 +27,11 @@ public class CtrlActividad implements ActionListener {
 		
 	public void iniciar() {
 		
-		ventanaActividad.lbl1.setText("Mes:");
-		ventanaActividad.lbl1.setVisible(true);
+		ventanaActividad.lblComboBox1.setText("Mes:");
+		ventanaActividad.lblComboBox1.setVisible(true);
 		ventanaActividad.comboBox1.setVisible(true);
-		ventanaActividad.lbl2.setText("Año:");
-		ventanaActividad.lbl2.setVisible(true);
+		ventanaActividad.lblComboBox2.setText("Año:");
+		ventanaActividad.lblComboBox2.setVisible(true);
 		ventanaActividad.comboBox2.setVisible(true);
 		ventanaActividad.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosActividad.getMeses()));
 		ventanaActividad.comboBox2.setModel(new DefaultComboBoxModel<String>(dtosActividad.getAños()));

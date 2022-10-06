@@ -3,6 +3,7 @@ package modelo;
 import javax.swing.table.DefaultTableModel;
 import dao.AlumnosDAO;
 import dao.CursosDAO;
+import dao.EmpleadosDAO;
 import dao.PeronasDAO;
 
 public class DtosAlumno {
@@ -22,7 +23,95 @@ public class DtosAlumno {
 	private static String idCurso;
 	private static String idPersona;
 	private static String [] idCursos;
+	private static String [] idProfesores;
 	private static String [][] horariosCursos;
+	private static String cantAlumnos; 
+	
+	public DefaultTableModel getListadoAlumnos(String campo, String valor) {
+		
+		AlumnosDAO alumnos = new AlumnosDAO();
+		String titulo[] = {"Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Curso"};
+		String respuesta[][]=alumnos.getAlumnos(campo, valor, true, "");
+		Object cuerpo[][]=null;
+		cantAlumnos = "0";
+		if(respuesta != null) {
+			
+			cuerpo = new Object[respuesta.length][9];
+			cantAlumnos = respuesta.length + "";
+			
+			for(int i = 0 ; i < respuesta.length ; i++) {
+				
+				cuerpo[i][0] = respuesta[i][0];
+				cuerpo[i][1] = respuesta[i][1];
+				cuerpo[i][2] = respuesta[i][2];
+				cuerpo[i][3] = respuesta[i][3];
+				cuerpo[i][4] = respuesta[i][4];
+				cuerpo[i][5] = respuesta[i][5];
+				cuerpo[i][6] = respuesta[i][6];
+				cuerpo[i][7] = respuesta[i][7];
+			}
+		} else
+			cuerpo = null;
+		
+		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo);
+		return tablaModelo;
+	}
+	
+	public String [] getOrdenamiento() {
+		
+		return new String [] {"Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Curso"};
+	}
+	
+	public DefaultTableModel getTablaAlumnos(String campo, String valor, boolean estado, int pos) {
+		
+		AlumnosDAO alumnos = new AlumnosDAO();
+		String titulo[] = {"Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Curso", "Sel."};
+		String ordenado[] = {"idAlumno", "nombre", "apellido", "dni", "dirección", "alumnos.idCurso"};
+		String respuesta[][]=alumnos.getAlumnos(campo, valor, estado, ordenado[pos]);
+		Object cuerpo[][]=null;
+		cantAlumnos = "0";
+		if(respuesta != null) {
+			
+			cuerpo = new Object[respuesta.length][9];
+			cantAlumnos = respuesta.length + "";
+			
+			for(int i = 0 ; i < respuesta.length ; i++) {
+				
+				cuerpo[i][0] = respuesta[i][0];
+				cuerpo[i][1] = respuesta[i][1];
+				cuerpo[i][2] = respuesta[i][2];
+				cuerpo[i][3] = respuesta[i][3];
+				cuerpo[i][4] = respuesta[i][4];
+				cuerpo[i][5] = respuesta[i][5];
+				cuerpo[i][6] = respuesta[i][6];
+				cuerpo[i][7] = respuesta[i][7];
+				cuerpo[i][8] = false;
+			}
+		} else
+			cuerpo = null;
+		
+		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo){
+
+			private static final long serialVersionUID = 1L;
+			
+			boolean[] columnEditables = new boolean[] {
+					false, false, false, false, false, false, false, false, true
+			};
+			
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+			
+			public Class<?> getColumnClass(int column) {
+				
+		        if(column == 8)
+		        	return Boolean.class;
+		        else
+		        	return String.class;
+		    }
+		};
+		return tablaModelo;
+	}
 
 	public DefaultTableModel getTablaDias(int curso) {
 		
@@ -97,12 +186,12 @@ public class DtosAlumno {
 		idPersona = "";
 	}
 	
-	public boolean recuperarInformacionAlumno(String nroLegajo) {
+	public void recuperarInformacionAlumno(String nroLegajo) {
 		
 		AlumnosDAO alumnosDAO = new AlumnosDAO();
 		String alumno[][] = alumnosDAO.getAlumnos("ID", nroLegajo, true, "");
 		
-		if(alumno != null) {
+		if(alumno.length > 0) {
 			
 			legajo = alumno[0][0];
 			nombre =  alumno[0][1];
@@ -119,7 +208,6 @@ public class DtosAlumno {
 			fechaNacimientoDia = fecha[2];
 			idPersona = alumno[0][13];
 		}
-		return true;
 	}
 	
 	public int getCursoSeleccionado() {
@@ -149,6 +237,53 @@ public class DtosAlumno {
 			nombreCursos[i] = respuesta[i][0] + " " + respuesta[i][1] + " " + respuesta[i][2];
 		}
 		return nombreCursos;
+	}
+	
+	public String[] getCriterio() {
+		
+		return new String [] {"Curso", "Docente"};
+	}
+		
+	public String [] getListadoProfesores() {
+		
+		EmpleadosDAO empleadosDAO = new EmpleadosDAO();
+		String matriz[][] = empleadosDAO.getEmpleados("Docente", true, "");
+		String respuesta[] = new String[matriz.length];
+		idProfesores = new String[matriz.length];
+		for(int i = 0 ; i < matriz.length ; i++) {
+			
+			idProfesores[i] = matriz[i][0];
+			respuesta[i] = matriz[i][1] + " " + matriz[i][2];
+		}
+		return respuesta;
+	}
+
+	public String [] getListadoValorCriterio(String criterio) {
+		
+		if(criterio.contentEquals("Curso")) {
+			
+			return getListaCursos();
+		}
+		
+		if(criterio.contentEquals("Docente")) {
+		
+			return getListadoProfesores();
+		}
+		return null;
+	}
+	
+	public String getIdValorCriterio(String criterio, int valor) {
+		
+		if(criterio.contentEquals("Curso")) {
+			
+			return idCursos[valor];
+		}
+		
+		if(criterio.contentEquals("Docente")) {
+		
+			return idProfesores[valor];
+		}
+		return null;
 	}
 	
 	public String checkInformacion(boolean checDNI) {
@@ -319,21 +454,26 @@ public class DtosAlumno {
 	}
 
 	public void setHorariosCursos(String [][] horariosCursos) {
+		
 		DtosAlumno.horariosCursos = horariosCursos;
 	}
 
 	public boolean getEstado() {
+		
 		return estado;
 	}
 
 	public void setEstado(boolean estado) {
+		
 		DtosAlumno.estado = estado;
 	}
 	public String getCurso() {
+		
 		return curso;
 	}
 
 	public void setCurso(int curso) {
+		
 		DtosAlumno.curso = idCursos[curso];
 	}
 
@@ -343,5 +483,9 @@ public class DtosAlumno {
 
 	public void setIdPersona(String idPersona) {
 		DtosAlumno.idPersona = idPersona;
+	}
+
+	public String getCantAlumnos() {
+		return cantAlumnos;
 	}
 }

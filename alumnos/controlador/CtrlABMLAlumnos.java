@@ -9,19 +9,22 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import interfaceUsuario.ABML;
 import interfaceUsuario.Nuevo;
-import modelo.DtosABMLAlumnos;
+import modelo.DtosAcceso;
+import modelo.DtosAlumno;
 
 public class CtrlABMLAlumnos implements ActionListener {
 
 	private ABML ventanaABML;
-	private DtosABMLAlumnos dtosABMLAlumnos;
-	Nuevo ventanaNuevoAlumno;
-	Nuevo ventanaEditarAlumno;
+	private DtosAlumno dtosABMLAlumnos;
+	private Nuevo ventanaNuevoAlumno;
+	private Nuevo ventanaEditarAlumno;
+	private DtosAcceso acceso;
 			
 	public CtrlABMLAlumnos(ABML vista) {
 		
 		this.ventanaABML = vista;
-		this.dtosABMLAlumnos = new DtosABMLAlumnos();
+		this.dtosABMLAlumnos = new DtosAlumno();
+		this.acceso = new DtosAcceso();
 		this.ventanaABML.btnNuevo.addActionListener(this);
 		this.ventanaABML.btnEditar.addActionListener(this);
 		this.ventanaABML.btnImprimir.addActionListener(this);
@@ -69,10 +72,13 @@ public class CtrlABMLAlumnos implements ActionListener {
 
 		if(e.getSource() == ventanaABML.btnNuevo) {
 			
-			ventanaNuevoAlumno = new Nuevo("Nuevo alumno.");
-			CtrlNuevoAlumno ctrlNuevoAlumno = new CtrlNuevoAlumno(ventanaNuevoAlumno);
-			ctrlNuevoAlumno.iniciar();
-			ventanaNuevoAlumno.btnVolver.addActionListener(this);
+			if(acceso.chkAcceso("Alumnos", "Crear")) {
+				
+				ventanaNuevoAlumno = new Nuevo("Nuevo alumno.");
+				CtrlNuevoAlumno ctrlNuevoAlumno = new CtrlNuevoAlumno(ventanaNuevoAlumno);
+				ctrlNuevoAlumno.iniciar();
+				ventanaNuevoAlumno.btnVolver.addActionListener(this);
+			}
 		}
 		
 		if(ventanaNuevoAlumno != null) {
@@ -85,26 +91,30 @@ public class CtrlABMLAlumnos implements ActionListener {
 		
 		if(e.getSource() == ventanaABML.btnEditar) {
 			
-			int i = 0;
-			String legajo = null;
-			
-			while(i < ventanaABML.tabla.getRowCount()) {
+			if(acceso.chkAcceso("Alumnos", "Editar")) {
 				
-				if((boolean)ventanaABML.tabla.getValueAt(i, 8)) {
+				int i = 0;
+				String legajo = null;
+				
+				while(i < ventanaABML.tabla.getRowCount()) {
 					
-					legajo = (String)ventanaABML.tabla.getValueAt(i, 0);
-					break;
+					if((boolean)ventanaABML.tabla.getValueAt(i, 8)) {
+						
+						legajo = (String)ventanaABML.tabla.getValueAt(i, 0);
+						break;
+					}
+					i++;
 				}
-				i++;
-			}
-			if(legajo != null) {
-				ventanaEditarAlumno = new Nuevo("Edición de alumno.");
-				CtrlEditarAlumno ctrolEditarAlumno = new CtrlEditarAlumno(ventanaEditarAlumno);
-				ctrolEditarAlumno.iniciar(legajo);
-				ventanaEditarAlumno.btnVolver.addActionListener(this);
-			} else {
 				
-				JOptionPane.showMessageDialog(null, "Debe seleccionar un alumno para editar.");
+				if(legajo != null) {
+					ventanaEditarAlumno = new Nuevo("Edición de alumno.");
+					CtrlEditarAlumno ctrolEditarAlumno = new CtrlEditarAlumno(ventanaEditarAlumno);
+					ctrolEditarAlumno.iniciar(legajo);
+					ventanaEditarAlumno.btnVolver.addActionListener(this);
+				} else {
+					
+					JOptionPane.showMessageDialog(null, "Debe seleccionar un alumno para editar.");
+				}
 			}
 		}
 		

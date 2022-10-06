@@ -2,32 +2,70 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.DefaultComboBoxModel;
 import interfaceUsuario.Listado;
+import modelo.DtosAlumno;
 
 public class CtrlListado implements ActionListener {
 
 	private Listado ventanaListado;
+	private DtosAlumno dtosAlumno;
 	
 	public CtrlListado(Listado vista) {
 		
 		this.ventanaListado = vista;
-		this.ventanaListado.btnImprimir.addActionListener(this);
-		this.ventanaListado.chckbx1.addActionListener(this);
+		this.dtosAlumno = new DtosAlumno();
 		this.ventanaListado.comboBox1.addActionListener(this);
 		this.ventanaListado.comboBox2.addActionListener(this);
-		this.ventanaListado.txt1.addActionListener(this);
+		this.ventanaListado.btnImprimir.addActionListener(this);
 		this.ventanaListado.btnVolver.addActionListener(this);
 	}
 
 	public void iniciar() {
 		
+		ventanaListado.comboBox1.setVisible(true);
+		ventanaListado.comboBox2.setVisible(true);
+		ventanaListado.lblTxt1.setVisible(true);
+		ventanaListado.lblTxt1.setText("Cantidad de alumnos:");
+		ventanaListado.txt1.setVisible(true);
+		ventanaListado.txt1.setEditable(false);
+		ventanaListado.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosAlumno.getCriterio()));
+		ventanaListado.comboBox2.setModel(new DefaultComboBoxModel<String>(dtosAlumno.getListadoValorCriterio((String)ventanaListado.comboBox1.getSelectedItem())));
+		actualizar();
 		ventanaListado.setVisible(true);
+	}
+	
+	public void actualizar() {
+		
+		ventanaListado.tabla.setModel(dtosAlumno.getListadoAlumnos((String)ventanaListado.comboBox1.getSelectedItem() 
+																,dtosAlumno.getIdValorCriterio((String)ventanaListado.comboBox1.getSelectedItem()
+																							 , ventanaListado.comboBox2.getSelectedIndex())));
+		ventanaListado.txt1.setText(dtosAlumno.getCantAlumnos());
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 
+		if(e.getSource() == ventanaListado.comboBox1) {
 
+			ventanaListado.comboBox2.setModel(new DefaultComboBoxModel<String>(dtosAlumno.getListadoValorCriterio((String)ventanaListado.comboBox1.getSelectedItem())));
+			actualizar();
+		}
 		
+		if(e.getSource() == ventanaListado.comboBox2) {
+
+			actualizar();
+		}
+		
+		if(e.getSource() == ventanaListado.btnImprimir) {
+
+			try {
+				
+				ventanaListado.tabla.print();
+			} catch (Exception f) {
+				
+				f.printStackTrace();
+			}
+		}		
 		
 		if(e.getSource() == ventanaListado.btnVolver) {
 
