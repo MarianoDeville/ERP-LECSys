@@ -20,11 +20,12 @@ public class CrearCurso extends VentanaModelo{
 	public JComboBox<String> comboBoxAño;
 	public JComboBox<String> comboBoxProfesor;
 	public JComboBox<String> comboBoxAula;
+	public JTable tablaHorarios;
 	public JLabel lblMensageError;
 	public JButton btnGuardar;
+	public JButton btnBorrar;
 	public JButton btnVolver;
-	public JTable tablaHorarios;
-	
+		
 	public CrearCurso(String nombreVentana) {
 		
 		super(nombreVentana);
@@ -185,10 +186,17 @@ public class CrearCurso extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.WEST, btnGuardar, 60, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, btnGuardar, 85, SpringLayout.WEST, btnGuardar);
 		panel.add(btnGuardar);
+
+		btnBorrar = new JButton("Borrar");
+		contenedor.putConstraint(SpringLayout.NORTH, btnBorrar, 0, SpringLayout.NORTH, btnGuardar);
+		contenedor.putConstraint(SpringLayout.WEST, btnBorrar, 60, SpringLayout.EAST, btnGuardar);
+		contenedor.putConstraint(SpringLayout.EAST, btnBorrar, 85, SpringLayout.WEST, btnBorrar);
+		btnBorrar.setVisible(false);
+		panel.add(btnBorrar);
 		
 		btnVolver = new JButton("Volver");
-		contenedor.putConstraint(SpringLayout.NORTH, btnVolver, 0, SpringLayout.NORTH, btnGuardar);
-		contenedor.putConstraint(SpringLayout.WEST, btnVolver, 60, SpringLayout.EAST, btnGuardar);
+		contenedor.putConstraint(SpringLayout.NORTH, btnVolver, 0, SpringLayout.NORTH, btnBorrar);
+		contenedor.putConstraint(SpringLayout.WEST, btnVolver, 60, SpringLayout.EAST, btnBorrar);
 		contenedor.putConstraint(SpringLayout.EAST, btnVolver, 85, SpringLayout.WEST, btnVolver);
 		panel.add(btnVolver);
 		

@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import modelo.DtosActividad;
-import modelo.DtosCrearCurso;
+import modelo.DtosCurso;
 
 public class CursosDAO extends Conexion {
 	
@@ -42,18 +42,30 @@ public class CursosDAO extends Conexion {
 		return matriz;
 	}
 
-	public boolean [][] getCronogramaDias(int idProfesor, int aula){
+	public boolean [][] getCronogramaDias(int idCurso, int idProfesor, int aula){
 
 		boolean [][] matrizDiasHorarios = new boolean[6][28];
+		String where = null;
+		
+		if(idCurso == 0) {
+			
+			where = "WHERE (curso.estado = 1 AND (curso.aula = "
+					+ aula 
+					+ " OR curso.idProfesor = "
+					+ idProfesor
+					+ "))";
+		} else {
+			
+			where = "WHERE (curso.estado = 1 AND curso.idCurso = "
+					+ idCurso 
+					+ ")";
+		}
+		
 		String comandoStatement = "SELECT día, horario, duración "
 								+ "FROM lecsys1.diasCursado "
 								+ "JOIN lecsys1.curso ON diasCursado.idCurso = curso.idCurso "
 								+ "JOIN lecsys1.empleados ON curso.idProfesor = empleados.idEmpleado "
-								+ "WHERE (curso.estado = 1 AND (curso.aula = "
-								+ aula 
-								+ " OR curso.idProfesor = "
-								+ idProfesor
-								+ "))";
+								+ where;
 		
 		for(int i = 0 ; i < 6 ; i++) {
 			
@@ -93,15 +105,25 @@ public class CursosDAO extends Conexion {
 		return matrizDiasHorarios;
 	}
 	
-	public String [][] getListado() {
+	public String [][] getListado(String idCurso) {
 		
 		String matriz[][] = null;
+		String where = null;
 		
-		String comandoStatement = "SELECT curso.idCurso, año, nivel, nombre, apellido, precio FROM lecsys1.curso "
-				 + "JOIN lecsys1.empleados ON curso.idProfesor = empleados.idEmpleado "
-				 + "JOIN lecsys1.persona ON empleados.idPersona = persona.idPersona "
-				 + "JOIN lecsys1.valorCuota on curso.idCurso = valorCuota.idCurso "
-				 + "WHERE curso.estado = 1 GROUP BY curso.idCurso";
+		if(idCurso.contentEquals("")) {
+		
+			where = "WHERE curso.estado = 1 ";
+		} else {
+			
+			where = "WHERE ( curso.estado = 1 AND curso.idCurso = " + idCurso + ")";
+		}
+		
+		String comandoStatement = "SELECT curso.idCurso, año, nivel, nombre, apellido, precio, curso.idProfesor, aula FROM lecsys1.curso "
+								 + "JOIN lecsys1.empleados ON curso.idProfesor = empleados.idEmpleado "
+								 + "JOIN lecsys1.persona ON empleados.idPersona = persona.idPersona "
+								 + "JOIN lecsys1.valorCuota on curso.idCurso = valorCuota.idCurso "
+								 + where
+								 + "GROUP BY curso.idCurso";
 
 		try {
 			
@@ -109,18 +131,20 @@ public class CursosDAO extends Conexion {
 			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stm.executeQuery(comandoStatement);
 			rs.last();	
-			matriz = new String[rs.getRow()][6];
+			matriz = new String[rs.getRow()][9];
 			rs.beforeFirst();
 			int i=0;
 
 			while (rs.next()) {
 				
-				matriz[i][4] = rs.getInt(1) + "";
-				matriz[i][0] = rs.getString(2);
-				matriz[i][1] = rs.getString(3);
-				matriz[i][2] = rs.getString(4) + " " + rs.getString(5);
-				matriz[i][3] = rs.getString(6);
-				matriz[i][5] = rs.getInt(1) + "";
+				matriz[i][0] = rs.getString(2);							// año
+				matriz[i][1] = rs.getString(3);							// nivel
+				matriz[i][2] = rs.getString(4) + " " + rs.getString(5);	// nombre y apellido del profesor
+				matriz[i][3] = rs.getString(6);							// valor cuota
+				matriz[i][5] = rs.getInt(1) + "";						// idcurso
+				matriz[i][6] = rs.getInt(1) + "";						// idcurso
+				matriz[i][7] = rs.getInt(7) + "";						// idProfesor
+				matriz[i][8] = rs.getInt(8) + "";						// aula
 				i++;
 			}
 			
@@ -129,7 +153,7 @@ public class CursosDAO extends Conexion {
 			
 			while(i < matriz.length) {		
 				
-				comandoStatement = "SELECT día FROM lecsys1.diasCursado WHERE idCurso = " + Integer.valueOf(matriz[i][4]);
+				comandoStatement = "SELECT día FROM lecsys1.diasCursado WHERE idCurso = " + Integer.valueOf(matriz[i][6]);
 				
 				rs = stm.executeQuery(comandoStatement);
 				boolean bandera = true;
@@ -162,17 +186,17 @@ public class CursosDAO extends Conexion {
 		boolean bandera = true;
 		int idCurso = 0;
 		DtosActividad dtosActividad = new DtosActividad();
-		DtosCrearCurso dtosCrearCurso = new DtosCrearCurso();
+		DtosCurso dtosCurso = new DtosCurso();
 
 		try {
 			
 			this.conectar();
 			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO lecsys1.curso (año, nivel, idProfesor, estado, aula)"
 																 + " VALUES (?, ?, ?, 1, ?)");
-			stm.setString(1, dtosCrearCurso.getAño());
-			stm.setString(2, dtosCrearCurso.getNivel());
-			stm.setString(3, dtosCrearCurso.getIdProfesor());
-			stm.setInt(4, dtosCrearCurso.getAula());
+			stm.setString(1, dtosCurso.getAño());
+			stm.setString(2, dtosCurso.getNivel());
+			stm.setString(3, dtosCurso.getIdProfesor());
+			stm.setInt(4, dtosCurso.getAula());
 			stm.executeUpdate();
 
 			ResultSet rs = stm.executeQuery("SELECT MAX(idCurso) FROM lecsys1.curso");
@@ -182,10 +206,10 @@ public class CursosDAO extends Conexion {
 			
 			stm = this.conexion.prepareStatement("INSERT INTO lecsys1.valorCuota (idCurso, precio) VALUES (?, ?)");
 			stm.setInt(1, idCurso);
-			stm.setString(2, dtosCrearCurso.getValorCuota());
+			stm.setString(2, dtosCurso.getValorCuota());
 			stm.executeUpdate();
 			
-			int diasCursado[][] = dtosCrearCurso.getHorarios();
+			int diasCursado[][] = dtosCurso.getHorarios();
 			
 			for(int i = 0 ; i < diasCursado.length ; i++) {
 				
@@ -208,4 +232,62 @@ public class CursosDAO extends Conexion {
 		dtosActividad.registrarActividad("Registrar nuevo curso.", "Cursos.");
 		return bandera;
 	}
+	
+	public boolean setActualizarCurso() {
+		
+		boolean bandera = true;
+		DtosActividad dtosActividad = new DtosActividad();
+		DtosCurso dtosCurso = new DtosCurso();
+
+		try {
+			
+			this.conectar();
+			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.curso SET idProfesor = ?, estado = ?, aula = ? WHERE ( idCurso = ? )");
+			stm.setInt(1, Integer.parseInt(dtosCurso.getIdProfesor()));
+			stm.setInt(2, dtosCurso.getEstado());
+			stm.setInt(3, dtosCurso.getAula());
+			stm.setInt(4, Integer.parseInt(dtosCurso.getCurso()));
+			stm.executeUpdate();
+			
+			stm = this.conexion.prepareStatement("UPDATE lecsys1.valorCuota SET precio = ? WHERE ( idCurso = ? )");
+			stm.setInt(1, Integer.parseInt(dtosCurso.getValorCuota()));
+			stm.setInt(2, Integer.parseInt(dtosCurso.getCurso()));
+			stm.executeUpdate();
+	
+			stm = this.conexion.prepareStatement("DELETE FROM lecsys1.diasCursado WHERE ( idCurso = ? )");
+			stm.setInt(1, Integer.parseInt(dtosCurso.getCurso()));
+			stm.executeUpdate();
+			
+			if(dtosCurso.getEstado() == 1) {
+				
+				int diasCursado[][] = dtosCurso.getHorarios();
+				
+				for(int i = 0 ; i < diasCursado.length ; i++) {
+					
+					stm = this.conexion.prepareStatement("INSERT INTO lecsys1.diasCursado (día, horario, duración, idCurso) VALUES (?, ?, ?, ?)");
+					stm.setInt(1, diasCursado[i][0]);
+					stm.setInt(2, diasCursado[i][1]);
+					stm.setInt(3, diasCursado[i][2]);
+					stm.setInt(4, Integer.parseInt(dtosCurso.getCurso()));
+					stm.executeUpdate();				
+				}
+			}
+
+		} catch (Exception e) {
+			
+			bandera = false;
+			System.err.println(e.getMessage());
+		} finally {
+			
+			this.cerrar();
+		}
+		dtosActividad.registrarActividad("Editar un curso.", "Cursos.");
+		return bandera;
+	}
+	
+	
+	
+	
+	
+	
 }

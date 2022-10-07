@@ -4,19 +4,18 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
-
 import interfaceUsuario.CrearCurso;
-import modelo.DtosCrearCurso;
+import modelo.DtosCurso;
 
 public class CtrlNuenoCurso implements ActionListener {
 	
 	private  CrearCurso ventanaCrearCursos;
-	private DtosCrearCurso dtosCrearCurso;
+	private DtosCurso dtosCurso;
 		
 	public CtrlNuenoCurso(CrearCurso vista) {
 		
 		this.ventanaCrearCursos = vista;
-		this.dtosCrearCurso = new DtosCrearCurso();
+		this.dtosCurso = new DtosCurso();
 		this.ventanaCrearCursos.comboBoxNivel.addActionListener(this);
 		this.ventanaCrearCursos.comboBoxAula.addActionListener(this);
 		this.ventanaCrearCursos.comboBoxProfesor.addActionListener(this);
@@ -26,17 +25,17 @@ public class CtrlNuenoCurso implements ActionListener {
 	
 	public void iniciar() {
 		
-		ventanaCrearCursos.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(dtosCrearCurso.getListaNivel()));
-		ventanaCrearCursos.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCrearCurso.getProfesores()));
-		ventanaCrearCursos.comboBoxAula.setModel(new DefaultComboBoxModel<String>(dtosCrearCurso.getListaAulas()));
+		ventanaCrearCursos.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaNivel()));
+		ventanaCrearCursos.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getProfesores()));
+		ventanaCrearCursos.comboBoxAula.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAulas()));
 		actualizar();
 		ventanaCrearCursos.setVisible(true);
 	}
 
 	private void actualizar() {
 
-		ventanaCrearCursos.comboBoxAño.setModel(new DefaultComboBoxModel<String>(dtosCrearCurso.getAño((String)ventanaCrearCursos.comboBoxNivel.getSelectedItem())));
-		ventanaCrearCursos.tablaHorarios.setModel(dtosCrearCurso.getHorarios(ventanaCrearCursos.comboBoxAula.getSelectedIndex(),
+		ventanaCrearCursos.comboBoxAño.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAños((String)ventanaCrearCursos.comboBoxNivel.getSelectedItem())));
+		ventanaCrearCursos.tablaHorarios.setModel(dtosCurso.getHorarios(ventanaCrearCursos.comboBoxAula.getSelectedIndex(),
 																			 ventanaCrearCursos.comboBoxProfesor.getSelectedIndex()));
 
 		for(int i = 0 ; i < 28 ; i++) {
@@ -72,19 +71,19 @@ public class CtrlNuenoCurso implements ActionListener {
 		
 		if(e.getSource() == ventanaCrearCursos.btnGuardar) {
 		
-			dtosCrearCurso.setAño((String)ventanaCrearCursos.comboBoxAño.getSelectedItem());
-			dtosCrearCurso.setNivel((String)ventanaCrearCursos.comboBoxNivel.getSelectedItem());
-			dtosCrearCurso.setIdProfesor(ventanaCrearCursos.comboBoxProfesor.getSelectedIndex());
-			dtosCrearCurso.setValorCuota(ventanaCrearCursos.txtCuota.getText());
-			dtosCrearCurso.setAula(ventanaCrearCursos.comboBoxAula.getSelectedIndex());
-			dtosCrearCurso.setHorarios(ventanaCrearCursos.tablaHorarios);
-			String msgError = dtosCrearCurso.checkInformacion(); 
+			dtosCurso.setAño((String)ventanaCrearCursos.comboBoxAño.getSelectedItem());
+			dtosCurso.setNivel((String)ventanaCrearCursos.comboBoxNivel.getSelectedItem());
+			dtosCurso.setIdProfesor(ventanaCrearCursos.comboBoxProfesor.getSelectedIndex());
+			dtosCurso.setValorCuota(ventanaCrearCursos.txtCuota.getText());
+			dtosCurso.setAula(ventanaCrearCursos.comboBoxAula.getSelectedIndex());
+			dtosCurso.setHorarios(ventanaCrearCursos.tablaHorarios);
+			String msgError = dtosCurso.checkInformacion(); 
 			ventanaCrearCursos.lblMensageError.setForeground(Color.RED);
 			ventanaCrearCursos.lblMensageError.setText(msgError);
 			
 			if(msgError.contentEquals("")) {
 				
-				if(dtosCrearCurso.setNuevoCurso()) {
+				if(dtosCurso.setNuevoCurso()) {
 					
 					ventanaCrearCursos.lblMensageError.setForeground(Color.BLUE);
 					limpiarCampos();

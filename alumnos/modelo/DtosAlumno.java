@@ -227,7 +227,7 @@ public class DtosAlumno {
 	public String [] getListaCursos() {
 		
 		CursosDAO cursosDAO = new CursosDAO();
-		String [][] respuesta = cursosDAO.getListado();
+		String [][] respuesta = cursosDAO.getListado("");
 		idCursos = new String[respuesta.length];
 		String [] nombreCursos = new String[respuesta.length];
 		

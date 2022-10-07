@@ -5,7 +5,7 @@ import javax.swing.table.DefaultTableModel;
 import dao.CursosDAO;
 import dao.EmpleadosDAO;
 
-public class DtosCrearCurso {
+public class DtosCurso {
 	
 	private boolean editable[][];
 	private static int aula;
@@ -14,8 +14,116 @@ public class DtosCrearCurso {
 	private static String [] idProfesores;
 	private static String idProfesor;
 	private static String valorCuota;
+	private static String nombreProfesor;
 	private static int[][] horarios;
+	private static String idCurso;
+	private static int estado;
+	
+	public void getInformacionCurso() {
 		
+		CursosDAO cursosDAO = new CursosDAO();
+		String respuesta[][] = cursosDAO.getListado(idCurso);
+		
+		if(respuesta.length > 0) {
+			
+			año = respuesta[0][0];
+			nivel = respuesta[0][1];
+			nombreProfesor = respuesta[0][2];
+			valorCuota = respuesta[0][3];
+			idProfesor = respuesta[0][7];
+			aula = Integer.parseInt(respuesta[0][8]);
+			estado = 1;
+		}
+	}
+	
+	public DefaultTableModel getTablaCursos() {
+		
+		CursosDAO cursosDAO = new CursosDAO();
+		String titulo[] = {"", "Curso", "Profesor", "Aula", "Cuota", "Días", "Sel."};
+		String aulas [] = getListaAulas();
+		String respuesta[][]= cursosDAO.getListado("");
+		Object cuerpo[][]=null;
+		
+		if(respuesta != null) {
+			
+			cuerpo = new Object[respuesta.length][7];
+			
+			for(int i = 0 ; i < respuesta.length ; i++) {
+				
+				cuerpo[i][0] = respuesta[i][6];
+				cuerpo[i][1] = respuesta[i][1] + " " + respuesta[i][0];
+				cuerpo[i][2] = respuesta[i][2];
+				cuerpo[i][3] = aulas[Integer.parseInt(respuesta[i][8])];
+				cuerpo[i][4] = respuesta[i][3];
+				cuerpo[i][5] = respuesta[i][4];
+				cuerpo[i][6] = false;
+			}
+		} else
+			cuerpo = null;
+		
+		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo){
+
+			private static final long serialVersionUID = 1L;
+			
+			boolean[] columnEditables = new boolean[] {
+					false, false, false, false, false, false, true
+			};
+			
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+			
+			public Class<?> getColumnClass(int column) {
+				
+		        if(column == 6)
+		        	return Boolean.class;
+		        else
+		        	return String.class;
+		    }
+		};
+		return tablaModelo;
+	}
+	
+	public DefaultTableModel getHorariosCurso(int aula, int profesor) {
+		
+		CursosDAO cursoDAO = new CursosDAO();
+		String titulo[] = new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", 
+										"12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", 
+										"16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"};
+		editable = cursoDAO.getCronogramaDias(0, profesor, aula);
+		boolean [][] horariosActuales = cursoDAO.getCronogramaDias(Integer.parseInt(idCurso), profesor, aula);
+		Object cronograma[][] = new Object[6][28];
+
+		for(int i = 0 ; i < 6 ; i++) {
+			
+			for(int e = 0 ; e < 28 ; e++) {
+				
+				cronograma[i][e] = !horariosActuales[i][e];
+				
+				if(!horariosActuales[i][e]) {
+					
+					editable[i][e] = true;
+				}
+			}
+		}
+		
+		DefaultTableModel tablaModelo = new DefaultTableModel(cronograma, titulo){
+
+			private static final long serialVersionUID = 1L;
+			
+			public boolean isCellEditable(int row, int column) {
+				
+				return editable[row][column];
+			}
+			
+			public Class<?> getColumnClass(int row) {
+	
+		        return Boolean.class;
+		    }
+		};
+		return tablaModelo;
+	}
+	
 	public DefaultTableModel getHorarios(int aula, int profesor) {
 		
 		CursosDAO cursoDAO = new CursosDAO();
@@ -24,7 +132,7 @@ public class DtosCrearCurso {
 										"12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", 
 										"16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"};
 
-		editable = cursoDAO.getCronogramaDias(profesor, aula);
+		editable = cursoDAO.getCronogramaDias(0, profesor, aula);
 		Object cronograma[][] = new Object[6][28];
 
 		for(int i = 0 ; i < 6 ; i++) {
@@ -67,7 +175,7 @@ public class DtosCrearCurso {
 		return new String [] {"A1", "A2", "A3", "B1", "B2", "B3"};
 	}
 	
-	public String [] getAño(String nivel) {
+	public String [] getListaAños(String nivel) {
 		
 		if(nivel.contentEquals("Kinder")) {
 			
@@ -137,40 +245,55 @@ public class DtosCrearCurso {
 		CursosDAO cursoDAO = new CursosDAO();
 		return cursoDAO.setCurso();
 	}
+	
+	public boolean setActualizarCurso() {
+		
+		CursosDAO cursoDAO = new CursosDAO();
+		return cursoDAO.setActualizarCurso();
+	}
 
 	public String getAño() {
+		
 		return año;
 	}
 
 	public void setAño(String año) {
-		DtosCrearCurso.año = año;
+		
+		DtosCurso.año = año;
 	}
 
 	public String getNivel() {
+		
 		return nivel;
 	}
 
 	public void setNivel(String nivel) {
-		DtosCrearCurso.nivel = nivel;
+		
+		DtosCurso.nivel = nivel;
 	}
 
 	public String getValorCuota() {
+		
 		return valorCuota;
 	}
 
 	public void setValorCuota(String valorCuota) {
-		DtosCrearCurso.valorCuota = valorCuota;
+		
+		DtosCurso.valorCuota = valorCuota;
 	}
 
 	public String getIdProfesor() {
+		
 		return idProfesor;
 	}
 	
 	public void setIdProfesor(int orden) {
-		DtosCrearCurso.idProfesor = idProfesores[orden];
+		
+		DtosCurso.idProfesor = idProfesores[orden];
 	}
 
 	public int [][] getHorarios() {
+		
 		return horarios;
 	}
 
@@ -219,14 +342,41 @@ public class DtosCrearCurso {
 				e++;
 			}
 		}
-		DtosCrearCurso.horarios = cursado;
+		DtosCurso.horarios = cursado;
 	}
 
 	public int getAula() {
+		
 		return aula;
 	}
 
 	public void setAula(int aula) {
-		DtosCrearCurso.aula = aula;
+		
+		DtosCurso.aula = aula;
+	}
+
+	public String getNombreProfesor() {
+		
+		return nombreProfesor;
+	}
+
+	public String getCurso() {
+		
+		return idCurso;
+	}
+
+	public void setCurso(String curso) {
+		
+		DtosCurso.idCurso = curso;
+	}
+
+	public int getEstado() {
+		
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		
+		DtosCurso.estado = estado;
 	}
 }
