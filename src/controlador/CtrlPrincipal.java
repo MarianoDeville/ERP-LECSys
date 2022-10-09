@@ -2,6 +2,10 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import dao.OperadorSistema;
+import interfaceUsuario.CambioContraseña;
+import interfaceUsuario.IngresoUsuario;
 import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.Principal;
 import modelo.DtosAcceso;
@@ -31,6 +35,14 @@ public class CtrlPrincipal implements ActionListener {
 		
 		actividad.registrarActividad("Inicio del sistema", "Principal");
 		ventanaPrincipal.setVisible(true);
+		OperadorSistema acceso = new OperadorSistema();
+		
+		if(acceso.getActualizarContraseña()) {
+			
+			CambioContraseña ventanaCambioPass = new CambioContraseña();
+			CtrlCambioPassword ctrlCambioPass = new CtrlCambioPassword(ventanaCambioPass);
+			ctrlCambioPass.iniciar();
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -103,7 +115,9 @@ public class CtrlPrincipal implements ActionListener {
 	
 		if(e.getSource() == ventanaPrincipal.btnRelogin) {
 			
-			
+			IngresoUsuario ventanaLogin = new IngresoUsuario();
+			CtrlReLogin ctrlIngreso = new CtrlReLogin(ventanaLogin);
+			ctrlIngreso.iniciar();
 		}
 		
 		if(e.getSource() == ventanaPrincipal.btnSalir) {

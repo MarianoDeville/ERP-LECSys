@@ -17,7 +17,7 @@ public class UsuariosDAO extends Conexion {
 		try {
 			
 			this.conectar();
-			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO lecsys1.usuarios (nombre, contraseña, nivelAcceso, estado, idEmpleado) VALUES (?, ?, ?, ?, ?)");
+			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO lecsys1.usuarios (nombre, contraseña, nivelAcceso, estado, idEmpleado) VALUES (?, SHA(?), ?, ?, ?)");
 			stm.setString(1, dtosUsuario.getUsuario());
 			stm.setString(2, dtosUsuario.getContraseña());
 			stm.setInt(3, Integer.parseInt(dtosUsuario.getNivelAcceso()));
@@ -94,7 +94,7 @@ public class UsuariosDAO extends Conexion {
 		try {
 			
 			this.conectar();
-			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.usuarios SET contraseña = ?, estado = ?, nivelAcceso = ? WHERE ( nombre = ?)");
+			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.usuarios SET contraseña = SHA(?), estado = ?, nivelAcceso = ? WHERE ( nombre = ?)");
 			stm.setString(1, dtosUsuarios.getContraseña());
 			stm.setInt(2, Integer.parseInt(dtosUsuarios.getEstado()));
 			stm.setInt(3, Integer.parseInt(dtosUsuarios.getNivelAcceso()));

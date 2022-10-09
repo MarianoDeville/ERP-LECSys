@@ -3,15 +3,14 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Arrays;
-
 import interfaceUsuario.IngresoUsuario;
 
 public class OperadorSistema extends Conexion {
 
 	private static String nombreUsuario;
-	private static String contraseña;
-	private static int nivelAcceso = 100;
-	private static int fichaEmpleado;
+	private static int nivelAcceso;
+	private static int idUsuarioActual;
+	private static boolean actualizarContraseña;
 		
 	public String getNombreUsuario() {
 		
@@ -25,34 +24,27 @@ public class OperadorSistema extends Conexion {
 	
 	public int getFichaEmpleado() {
 		
-		return fichaEmpleado;
+		return idUsuarioActual;
+	}
+	
+	public boolean getActualizarContraseña() {
+		
+		return actualizarContraseña;
 	}
 	
 	public boolean checkUsuario(IngresoUsuario ventanaLogin) {
 		
-		boolean estado = false;
-		
+		boolean bandera = false;
+System.out.println(IngresoUsuario.txtPassword.getPassword());
+System.out.println(IngresoUsuario.txtUsuario.getText());
 		if(nombreUsuario == null) {
 			
 			nombreUsuario ="";
-			contraseña = "";
-			nivelAcceso = 0;
-			fichaEmpleado = 0;
+			nivelAcceso = 100;
+			idUsuarioActual = 0;
+			actualizarContraseña = false;
 		}
-		if(IngresoUsuario.txtUsuario.getText().contentEquals("")) {
-			
-			return false;
-		}
-		
-		char[] pass = {'n','n'};
-		
-		if(IngresoUsuario.txtUsuario.getText().contentEquals("nn") && Arrays.equals(pass, IngresoUsuario.txtPassword.getPassword())) {
-			
-			nombreUsuario = "root";
-			return true;
-		}
-
-		String armoStatement = "SELECT * FROM usuarios WHERE (estado = 1 AND nombre = '" + IngresoUsuario.txtUsuario.getText() + "')";
+		String armoStatement = "SELECT COUNT(*) FROM lecsys1.usuarios WHERE estado = 1";
 
 		try {
 
@@ -62,10 +54,26 @@ public class OperadorSistema extends Conexion {
 
 			if(rs.next()) {
 				
-				nombreUsuario = rs.getString(1);
-				contraseña = rs.getString(2);
-				nivelAcceso = rs.getInt(3);
-				fichaEmpleado = rs.getInt(4);
+				int cant = rs.getInt(1);
+				bandera = cant==0? true:false;
+				nombreUsuario = "Sin usuario";
+				nivelAcceso=0;
+			}
+		
+			if(!bandera) {
+				
+				String palabraClave = Arrays.toString(IngresoUsuario.txtPassword.getPassword());		
+				armoStatement = "SELECT idUsuarios, nombre, nivelAcceso FROM lecsys1.usuarios "
+							  + "WHERE(estado = 1 AND nombre = '" + IngresoUsuario.txtUsuario.getText() + "' AND contraseña = SHA('" + palabraClave + "'))";
+				rs = stm.executeQuery(armoStatement);
+	
+				if(rs.next()) {
+					
+					idUsuarioActual = rs.getInt(1);
+					nombreUsuario = rs.getString(2);
+					nivelAcceso = rs.getInt(3);
+					bandera = true;
+				}
 			}
 		} catch (Exception e) {
 			
@@ -74,11 +82,6 @@ public class OperadorSistema extends Conexion {
 			
 			this.cerrar();
 		}
-		
-		if(IngresoUsuario.txtUsuario.getText().contentEquals(nombreUsuario) && Arrays.equals(contraseña.toCharArray(), IngresoUsuario.txtPassword.getPassword())) {
-			
-			estado = true;
-		}
-		return estado;
+		return bandera;
 	}
 }

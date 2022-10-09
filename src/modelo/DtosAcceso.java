@@ -8,7 +8,6 @@ public class DtosAcceso {
 	
 	public boolean chkAcceso(String modulo, String accion) {
 		
-		boolean bandera = false;
 		OperadorSistema identificacion = new OperadorSistema();
 		String modulos[] = new String[] {"Administrativo","Alumnos","Personal","Cursos","Configuracion","Usuarios"};
 //		String acciones[] = new String[] {"Entrar","Editar","Crear","ABML","Listado","Asistencia","Horarios"};			// Lo comenté hasta que lo use para que no me moleste.
@@ -18,17 +17,17 @@ public class DtosAcceso {
 			return true;
 		}
 		
-		if(accion.contentEquals("Entrar")) {
+	//	if(accion.contentEquals("Entrar")) {
 			
 			for(int i = 0 ; i < modulos.length ; i++) {
 				
-				if(identificacion.getNivelAcceso() < 50) {
+				if(identificacion.getNivelAcceso() < 90) {
 					
 					return true;
 				}
 			}
-		}
+//		}
 		JOptionPane.showMessageDialog(null, "No posee permisos para realizar esta operación.");
-		return bandera;
+		return false;
 	}
 }

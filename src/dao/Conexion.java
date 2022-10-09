@@ -3,7 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class Conexion {
+class Conexion {
 	
 	protected Connection conexion;
 	private static final String CONTROLADOR = "com.mysql.cj.jdbc.Driver";
@@ -37,6 +37,5 @@ public class Conexion {
 
 			System.err.println(e.getMessage());
 		}
-
 	}
 }

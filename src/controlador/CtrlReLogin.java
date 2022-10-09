@@ -6,12 +6,12 @@ import dao.OperadorSistema;
 import interfaceUsuario.IngresoUsuario;
 import interfaceUsuario.Principal;
 
-public class CtrlLogin implements ActionListener {
+public class CtrlReLogin implements ActionListener {
 	
 	private IngresoUsuario ventanaLogin;
 	private OperadorSistema comprobarLogin;
 	
-	public CtrlLogin(IngresoUsuario vista) {
+	public CtrlReLogin(IngresoUsuario vista) {
 		
 		this.ventanaLogin = vista;
 		this.ventanaLogin.btnCancelar.addActionListener(this);
@@ -27,12 +27,12 @@ public class CtrlLogin implements ActionListener {
 
 		if(e.getSource() == ventanaLogin.btnCancelar) {
 			
-			System.exit(0);
+			ventanaLogin.dispose();
 		}
 		
 		if(e.getSource() == ventanaLogin.btnOk) {
 			
-			if(IngresoUsuario.txtUsuario.getText().contentEquals("")) {
+			if(IngresoUsuario.txtUsuario.getText().equals("")) {
 				
 				ventanaLogin.txtError.setText("El campo nombre se usuario no puede estar vacío.");
 			} else {
@@ -46,9 +46,6 @@ public class CtrlLogin implements ActionListener {
 				} else {
 	
 					ventanaLogin.dispose();
-					Principal ventanaPrincipal = new Principal("Sistema de gestión - LECSys");
-					CtrlPrincipal ctrlPrincipal = new CtrlPrincipal(ventanaPrincipal);
-					ctrlPrincipal.iniciar();
 				}
 			}
 		}

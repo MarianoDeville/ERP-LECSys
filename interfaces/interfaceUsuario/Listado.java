@@ -82,6 +82,7 @@ public class Listado extends VentanaModelo {
 		tabla = new JTable();
 		scrollTabla.setViewportView(tabla);
 		
+		
 		btnImprimir = new JButton("Imprimir");
 		contenedor.putConstraint(SpringLayout.NORTH, btnImprimir, 50, SpringLayout.NORTH, listado);
 		contenedor.putConstraint(SpringLayout.EAST, btnImprimir, -10, SpringLayout.EAST, listado);

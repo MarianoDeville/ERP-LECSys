@@ -46,8 +46,8 @@ public class CtrlABMLCursos implements ActionListener {
 			if(acceso.chkAcceso("Cursos", "Crear")) {
 			
 				ventanaCrearCurso = new CrearCurso("Crear un nuevo curso");
-				CtrlNuenoCurso ctrlNuenoCurso = new CtrlNuenoCurso(ventanaCrearCurso);
-				ctrlNuenoCurso.iniciar();
+				CtrlNuevoCurso ctrlNuevoCurso = new CtrlNuevoCurso(ventanaCrearCurso);
+				ctrlNuevoCurso.iniciar();
 				ventanaCrearCurso.btnVolver.addActionListener(this);
 			}
 		}

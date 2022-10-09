@@ -8,11 +8,15 @@ public class ActividadDAO extends Conexion {
 	
 	public void setActividad( int idUsuario, String fecha, String hora, String accion, String modulo, String miIP) {
 		
+		if(idUsuario == 0)
+			
+			return;
+		
 		try {
 			
 			this.conectar();
-			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO registroActividad (idUsuarios, fecha, hora, acción, modulo, ip) VALUES (?, ?, ?, ?, ?, ?)");
-			stm.setString(1, (idUsuario !=0? idUsuario+"":null));
+			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO lecsys1.registroActividad (idUsuarios, fecha, hora, acción, modulo, ip) VALUES (?, ?, ?, ?, ?, ?)");
+			stm.setInt(1, idUsuario);
 			stm.setString(2, fecha);
 			stm.setString(3, hora);
 			stm.setString(4, accion);
@@ -31,7 +35,11 @@ public class ActividadDAO extends Conexion {
 	public String [][] getActividad(String mes, String año) {
 		
 		String respuesta[][] = null;
-		String armoStatement = "SELECT * FROM registroActividad WHERE MONTH(fecha)= " + mes + " AND YEAR(fecha)= " + año + " ORDER BY idRegistroActividad DESC";
+		String armoStatement = "SELECT idRegistroActividad, nombre, fecha, hora, acción, modulo, ip "
+							 + "FROM lecsys1.registroActividad "
+							 + "JOIN lecsys1.usuarios ON registroActividad.idUsuarios = usuarios.idUsuarios "
+							 + "WHERE MONTH(fecha)= " + mes + " AND YEAR(fecha)= " + año + " "
+							 + "ORDER BY idRegistroActividad DESC";
 		
 		try {
 			
@@ -46,7 +54,7 @@ public class ActividadDAO extends Conexion {
 			while (rs.next()) {
 				
 				respuesta[i][0] = rs.getInt(1) + "";
-				respuesta[i][1] = rs.getInt(2) + "";
+				respuesta[i][1] = rs.getString(2);
 				respuesta[i][2] = rs.getString(3);
 				respuesta[i][3] = rs.getString(4);
 				respuesta[i][4] = rs.getString(5);

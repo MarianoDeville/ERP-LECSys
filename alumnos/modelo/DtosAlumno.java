@@ -116,12 +116,10 @@ public class DtosAlumno {
 	public DefaultTableModel getTablaDias(int curso) {
 		
 		CursosDAO cursosDAO = new CursosDAO();
+		DtosCurso dtosCurso = new DtosCurso();
 		String titulo[] = {"", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"};
-		String horas[] = new String [] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", 
-										"12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", 
-										"16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"};
-		String duracion[] = new String [] {"0:30","1:00","1:30","2:00","2:30","3:00"};
-		
+		String horas[] = dtosCurso.getListadoHorarios();
+		String duracion[] = new String [] {"0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00"};
 		String respuesta[][]=cursosDAO.buscarDiasCurso(idCursos[curso]);
 		Object cuerpo[][]= new Object[][] {{"Hora:","","","","","",""},{"Duración:","","","","","",""}};
 		

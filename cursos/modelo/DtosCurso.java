@@ -17,7 +17,9 @@ public class DtosCurso {
 	private static String nombreProfesor;
 	private static int[][] horarios;
 	private static String idCurso;
+	private static String [] idCursos;
 	private static int estado;
+	private static String cantHoras;
 	
 	public void getInformacionCurso() {
 		
@@ -59,6 +61,7 @@ public class DtosCurso {
 				cuerpo[i][6] = false;
 			}
 		} else
+			
 			cuerpo = null;
 		
 		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo){
@@ -66,43 +69,106 @@ public class DtosCurso {
 			private static final long serialVersionUID = 1L;
 			
 			boolean[] columnEditables = new boolean[] {
+					
 					false, false, false, false, false, false, true
 			};
 			
 			public boolean isCellEditable(int row, int column) {
+				
 				return columnEditables[column];
 			}
 			
 			public Class<?> getColumnClass(int column) {
 				
 		        if(column == 6)
+		        	
 		        	return Boolean.class;
 		        else
+		        	
 		        	return String.class;
 		    }
 		};
 		return tablaModelo;
 	}
+
+	public DefaultTableModel getDiagramacion (String criterio, int valor) {
+		
+		CursosDAO cursoDAO = new CursosDAO();
+		int sumaHoras=0;
+		String titulo[] = new String[] {"", "7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", 
+										"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", 
+										"18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30"};
+		String dia[] = new String[] {"Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"};
+
+		if(criterio.contentEquals("Profesor")) {
+			
+			editable = cursoDAO.getCronogramaDias(0, Integer.parseInt(idProfesores[valor]), 100);
+		} else if(criterio.contentEquals("Curso")) {
+			
+			editable = cursoDAO.getCronogramaDias(Integer.parseInt(idCursos[valor]), 0, 100);
+		}else {
+			
+			editable = cursoDAO.getCronogramaDias(0, 0, valor);
+		}
+
+		Object cronograma[][] = new Object[6][33];
+
+		for(int i = 0 ; i < 6 ; i++) {
+			
+			for(int e = 0 ; e < 32 ; e++) {
+				
+				if(e == 0) {
+					
+					cronograma[i][e] = dia[i];
+				} else {
+					
+					cronograma[i][e] = editable[i][e]? " ":"   O ";
+				}
+				if(cronograma[i][e].equals("   O ")) {
+					
+					sumaHoras++;
+				}
+			}
+		}
+		cantHoras = (float)sumaHoras / 2 + "";
+		DefaultTableModel tablaModelo = new DefaultTableModel(cronograma, titulo);
+		return tablaModelo;	
+	}
+	
+	public String [] getListadoHorarios() {
+		
+		return new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", 
+							 "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", 
+							 "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30"};
+	}
 	
 	public DefaultTableModel getHorariosCurso(int aula, int profesor) {
 		
 		CursosDAO cursoDAO = new CursosDAO();
-		String titulo[] = new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", 
-										"12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", 
-										"16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"};
-		editable = cursoDAO.getCronogramaDias(0, profesor, aula);
-		boolean [][] horariosActuales = cursoDAO.getCronogramaDias(Integer.parseInt(idCurso), profesor, aula);
-		Object cronograma[][] = new Object[6][28];
+		String titulo[] = getListadoHorarios();
+		editable = cursoDAO.getCronogramaDias(0, Integer.parseInt(idProfesores[profesor]), aula);
+		boolean [][] horariosActuales = null;
+		if(!idCurso.contentEquals("0")) {
+			
+			horariosActuales = cursoDAO.getCronogramaDias(Integer.parseInt(idCurso), profesor, aula);
+		}
+		Object cronograma[][] = new Object[6][32];
 
 		for(int i = 0 ; i < 6 ; i++) {
 			
-			for(int e = 0 ; e < 28 ; e++) {
+			for(int e = 0 ; e < 32 ; e++) {
 				
-				cronograma[i][e] = !horariosActuales[i][e];
-				
-				if(!horariosActuales[i][e]) {
+				if(!idCurso.contentEquals("0")) {
 					
-					editable[i][e] = true;
+					cronograma[i][e] = !horariosActuales[i][e];
+					
+					if(!horariosActuales[i][e]) {
+						
+						editable[i][e] = true;
+					}
+				} else {
+					
+					cronograma[i][e] = false;
 				}
 			}
 		}
@@ -123,41 +189,72 @@ public class DtosCurso {
 		};
 		return tablaModelo;
 	}
-	
-	public DefaultTableModel getHorarios(int aula, int profesor) {
-		
-		CursosDAO cursoDAO = new CursosDAO();
-		
-		String titulo[] = new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", 
-										"12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", 
-										"16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"};
 
-		editable = cursoDAO.getCronogramaDias(0, profesor, aula);
-		Object cronograma[][] = new Object[6][28];
+	public void setHorarios(JTable horarios) {
+		
+		int cont = 0;
+		int cursado[][];
 
 		for(int i = 0 ; i < 6 ; i++) {
 			
-			for(int e = 0 ; e < 28 ; e++) {
+			for(int e = 0 ; e < 32 ; e++) {
+			
+				if((boolean)horarios.getValueAt(i, e) == true) {
 				
-				cronograma[i][e] = false;
+					while((boolean)horarios.getValueAt(i, e) && e < 31) {
+						
+						e++;
+					}
+					cont++;
+				}
 			}
 		}
+		cursado = new int [cont][3];
+		cont = 0;
+		
+		for(int i = 0 ; i < 6 ; i++) {
+			
+			int e = 0;
+			
+			while(e < 32) {
 				
-		DefaultTableModel tablaModelo = new DefaultTableModel(cronograma, titulo){
+				if((boolean)horarios.getValueAt(i, e)) {
 
-			private static final long serialVersionUID = 1L;
-			
-			public boolean isCellEditable(int row, int column) {
-				
-				return editable[row][column];
+					cursado[cont][0] = i;
+					cursado[cont][1] = e;
+					int cant = 0;
+					
+					while((boolean)horarios.getValueAt(i, e) && e < 31) { 
+						
+						e++;
+						cant++;
+					}
+					cursado[cont][2] = cant;
+					cont++;
+				}
+				e++;
 			}
+		}
+		DtosCurso.horarios = cursado;
+	}
+
+	public String checkInformacion() {
+		
+		if(valorCuota.contentEquals("") || !isNumeric(valorCuota))
 			
-			public Class<?> getColumnClass(int row) {
-	
-		        return Boolean.class;
-		    }
-		};
-		return tablaModelo;
+			return "El valor cuota no puede estar vacío y debe ser un número.";
+		
+		for(int i = 0 ; i < 6 ; i++) {
+			
+			for(int e = 0; e < 32 ; e++) {
+			
+				if(horarios.length == 0) {
+				
+					return "Debe elegir por lo menos un día y horario para el curso.";
+				}
+			}
+		}
+		return "";
 	}
 	
 	public String [] getListaNivel() {
@@ -165,11 +262,41 @@ public class DtosCurso {
 		return new String [] {"Kinder", "Children", "Junior", "Teens", "Adults"};
 	}
 
-	public String [] getListaTurno() {
+	public String [] getListaCriterios() {
 		
-		return new String [] {"Mañana", "Tarde", "Noche"};
+		return new String [] {"Aula", "Curso", "Profesor"};
 	}
 	
+	public String [] getListadoOpciones(String valor) {
+		
+		if(valor.contentEquals("Aula")) {
+			
+			return getListaAulas();
+		} else if(valor.contentEquals("Profesor")) {
+			
+			return getListaProfesores();
+		} else if(valor.contentEquals("Curso")) {
+			
+			return getListaCursos();
+		}
+		return null;
+	}
+	
+	public String [] getListaCursos() {
+		
+		CursosDAO cursosDAO = new CursosDAO();
+		String [][] respuesta = cursosDAO.getListado("");
+		idCursos = new String[respuesta.length];
+		String [] nombreCursos = new String[respuesta.length];
+		
+		for(int i = 0 ; i < respuesta.length; i++) {
+			
+			idCursos[i] = respuesta[i][5];
+			nombreCursos[i] = respuesta[i][0] + " " + respuesta[i][1] + " " + respuesta[i][2];
+		}
+		return nombreCursos;
+	}
+
 	public String [] getListaAulas() {
 		
 		return new String [] {"A1", "A2", "A3", "B1", "B2", "B3"};
@@ -193,7 +320,7 @@ public class DtosCurso {
 		return null;
 	}
 	
-	public String [] getProfesores() {
+	public String [] getListaProfesores() {
 		
 		EmpleadosDAO empleadosDAO = new EmpleadosDAO();
 		String matriz[][] = empleadosDAO.getEmpleados("Docente", true, "");
@@ -207,25 +334,6 @@ public class DtosCurso {
 		}
 		
 		return respuesta;
-	}
-
-	public String checkInformacion() {
-		
-		if(valorCuota.contentEquals("") || !isNumeric(valorCuota))
-			
-			return "El valor cuota no puede estar vacío y debe ser un número.";
-		
-		for(int i = 0 ; i < 6 ; i++) {
-			
-			for(int e = 0; e < 28 ; e++) {
-			
-				if(horarios.length == 0) {
-				
-					return "Debe elegir por lo menos un día y horario para el curso.";
-				}
-			}
-		}
-		return "";
 	}
 	
 	private static boolean isNumeric(String cadena) {
@@ -297,54 +405,6 @@ public class DtosCurso {
 		return horarios;
 	}
 
-	public void setHorarios(JTable horarios) {
-		
-		int cont = 0;
-		int cursado[][];
-		
-		for(int i = 0 ; i < 6 ; i++) {
-			
-			for(int e = 0; e < 28; e++) {
-			
-				if((boolean)horarios.getValueAt(i, e) == true) {
-				
-					while((boolean)horarios.getValueAt(i, e)) {
-						
-						e++;
-					}
-					cont++;
-				}
-			}
-		}
-		cursado = new int [cont][3];
-		cont = 0;
-		
-		for(int i = 0 ; i < 6 ; i++) {
-			
-			int e = 0;
-			
-			while(e < 28) {
-				
-				if((boolean)horarios.getValueAt(i, e)) {
-
-					cursado[cont][0] = i;
-					cursado[cont][1] = e;
-					int cant = 0;
-					
-					while((boolean)horarios.getValueAt(i, e)) { 
-						
-						e++;
-						cant++;
-					}
-					cursado[cont][2] = cant;
-					cont++;
-				}
-				e++;
-			}
-		}
-		DtosCurso.horarios = cursado;
-	}
-
 	public int getAula() {
 		
 		return aula;
@@ -378,5 +438,9 @@ public class DtosCurso {
 	public void setEstado(int estado) {
 		
 		DtosCurso.estado = estado;
+	}
+
+	public String getCantHoras() {
+		return cantHoras;
 	}
 }

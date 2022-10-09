@@ -7,12 +7,12 @@ import javax.swing.DefaultComboBoxModel;
 import interfaceUsuario.CrearCurso;
 import modelo.DtosCurso;
 
-public class CtrlNuenoCurso implements ActionListener {
+public class CtrlNuevoCurso implements ActionListener {
 	
-	private  CrearCurso ventanaCrearCursos;
+	private CrearCurso ventanaCrearCursos;
 	private DtosCurso dtosCurso;
 		
-	public CtrlNuenoCurso(CrearCurso vista) {
+	public CtrlNuevoCurso(CrearCurso vista) {
 		
 		this.ventanaCrearCursos = vista;
 		this.dtosCurso = new DtosCurso();
@@ -26,24 +26,26 @@ public class CtrlNuenoCurso implements ActionListener {
 	public void iniciar() {
 		
 		ventanaCrearCursos.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaNivel()));
-		ventanaCrearCursos.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getProfesores()));
+		ventanaCrearCursos.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaProfesores()));
 		ventanaCrearCursos.comboBoxAula.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAulas()));
+		ventanaCrearCursos.comboBoxAño.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAños((String)ventanaCrearCursos.comboBoxNivel.getSelectedItem())));
 		actualizar();
 		ventanaCrearCursos.setVisible(true);
 	}
 
 	private void actualizar() {
 
-		ventanaCrearCursos.comboBoxAño.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAños((String)ventanaCrearCursos.comboBoxNivel.getSelectedItem())));
-		ventanaCrearCursos.tablaHorarios.setModel(dtosCurso.getHorarios(ventanaCrearCursos.comboBoxAula.getSelectedIndex(),
+		dtosCurso.setCurso("0");
+		ventanaCrearCursos.tablaHorarios.setModel(dtosCurso.getHorariosCurso(ventanaCrearCursos.comboBoxAula.getSelectedIndex(),
 																			 ventanaCrearCursos.comboBoxProfesor.getSelectedIndex()));
 
-		for(int i = 0 ; i < 28 ; i++) {
+		for(int i = 0 ; i < 32 ; i++) {
 			
 			ventanaCrearCursos.tablaHorarios.getColumnModel().getColumn(i).setPreferredWidth(40);
 		}
 
 		ventanaCrearCursos.tablaHorarios.setRowHeight(25);
+
 	}
 	
 	private void limpiarCampos() {
@@ -56,6 +58,7 @@ public class CtrlNuenoCurso implements ActionListener {
 
 		if(e.getSource() == ventanaCrearCursos.comboBoxNivel) {
 			
+			ventanaCrearCursos.comboBoxAño.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAños((String)ventanaCrearCursos.comboBoxNivel.getSelectedItem())));
 			actualizar();
 		}		
 		

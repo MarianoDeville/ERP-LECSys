@@ -29,7 +29,7 @@ public class CtrlEditarUsuario implements ActionListener {
 		dtosUsuario.recuperarInformacionUsuario();
 		ventanaEditarUsuario.txtUsuario.setText(dtosUsuario.getUsuario());
 		ventanaEditarUsuario.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosUsuario.getListaNivelAcceso()));
-		ventanaEditarUsuario.comboBox1.setSelectedItem(dtosUsuario.getNivelAcceso());
+		ventanaEditarUsuario.comboBox1.setSelectedIndex(Integer.parseInt(dtosUsuario.getNivelAcceso()));
 		ventanaEditarUsuario.comboBox2.setModel(new DefaultComboBoxModel<String>(new String [] {dtosUsuario.getNombre()}));
 		ventanaEditarUsuario.setVisible(true);
 	}

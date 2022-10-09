@@ -147,7 +147,7 @@ public class DtosEmpleado {
 	
 	public String [] getListaTipos () {
 		
-		return new String [] {"Monotributista","Relación de dependencia"};
+		return new String [] {"Relación de dependencia","Monotributista"};
 	}
 	
 	public String checkInformacion() {

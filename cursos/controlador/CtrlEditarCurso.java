@@ -9,8 +9,9 @@ import modelo.DtosCurso;
 
 public class CtrlEditarCurso implements ActionListener{
 	
-	private  CrearCurso ventanaEditarCursos;
+	private CrearCurso ventanaEditarCursos;
 	private DtosCurso dtosCurso;
+	private String curso;
 		
 	public CtrlEditarCurso(CrearCurso vista) {
 		
@@ -28,11 +29,12 @@ public class CtrlEditarCurso implements ActionListener{
 	public void iniciar(String idCurso) {
 		
 		dtosCurso.setCurso(idCurso);
+		curso = idCurso;
 		dtosCurso.getInformacionCurso();
 		ventanaEditarCursos.btnBorrar.setVisible(true);
 		ventanaEditarCursos.comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String [] {dtosCurso.getAño()}));
 		ventanaEditarCursos.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String [] {dtosCurso.getNivel()}));
-		ventanaEditarCursos.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getProfesores()));
+		ventanaEditarCursos.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaProfesores()));
 		ventanaEditarCursos.comboBoxAula.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAulas()));
 		ventanaEditarCursos.txtCuota.setText(dtosCurso.getValorCuota());
 		ventanaEditarCursos.comboBoxAula.setSelectedIndex(dtosCurso.getAula());
@@ -47,15 +49,17 @@ public class CtrlEditarCurso implements ActionListener{
 
 		if(ventanaEditarCursos.comboBoxAula.getSelectedIndex() == dtosCurso.getAula()) {
 			
+			dtosCurso.setCurso(curso);	
 			ventanaEditarCursos.tablaHorarios.setModel(dtosCurso.getHorariosCurso(ventanaEditarCursos.comboBoxAula.getSelectedIndex(),
 																				  ventanaEditarCursos.comboBoxProfesor.getSelectedIndex()));
 		} else {
 			
-			ventanaEditarCursos.tablaHorarios.setModel(dtosCurso.getHorarios(ventanaEditarCursos.comboBoxAula.getSelectedIndex(),
+			dtosCurso.setCurso("0");
+			ventanaEditarCursos.tablaHorarios.setModel(dtosCurso.getHorariosCurso(ventanaEditarCursos.comboBoxAula.getSelectedIndex(),
 																			 ventanaEditarCursos.comboBoxProfesor.getSelectedIndex()));
 		}
 
-		for(int i = 0 ; i < 28 ; i++) {
+		for(int i = 0 ; i < 32 ; i++) {
 			
 			ventanaEditarCursos.tablaHorarios.getColumnModel().getColumn(i).setPreferredWidth(40);
 		}

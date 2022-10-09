@@ -34,7 +34,6 @@ public class CtrlNuevoUsuario implements ActionListener {
 		ventanaNuevoUsuario.txtReContraseña.setText("");
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getSource() == ventanaNuevoUsuario.btnGuardar) {

@@ -44,7 +44,7 @@ public class CursosDAO extends Conexion {
 
 	public boolean [][] getCronogramaDias(int idCurso, int idProfesor, int aula){
 
-		boolean [][] matrizDiasHorarios = new boolean[6][28];
+		boolean [][] matrizDiasHorarios = new boolean[6][32];
 		String where = null;
 		
 		if(idCurso == 0) {
@@ -69,7 +69,7 @@ public class CursosDAO extends Conexion {
 		
 		for(int i = 0 ; i < 6 ; i++) {
 			
-			for(int e = 0 ; e < 28 ; e++) {
+			for(int e = 0 ; e < 32 ; e++) {
 				
 				matrizDiasHorarios[i][e] = true;
 			}
