@@ -71,7 +71,7 @@ public class CtrlNuevoAlumno implements ActionListener {
 			ventanaNuenoAlumno.lblMsgError.setForeground(Color.RED);
 			ventanaNuenoAlumno.lblMsgError.setText(msgError);
 			
-			if(msgError.contentEquals("")) {
+			if(msgError.equals("")) {
 				
 				if(dtosNuevoAlumno.setNuevoAlumno()) {
 					

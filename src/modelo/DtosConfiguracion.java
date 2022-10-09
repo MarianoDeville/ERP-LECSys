@@ -31,7 +31,7 @@ public class DtosConfiguracion {
 					String[] output = lineaLeida.split(":");
 					respuesta = output[1];
 					
-					if(parametro.contentEquals("LOG:"))
+					if(parametro.equals("LOG:"))
 						respuesta += ":" + output[2];
 					bandera = false;
 				}
@@ -52,10 +52,10 @@ public class DtosConfiguracion {
 			}
 		}
 		
-		if(bandera && parametro.contentEquals("LOG:"))
+		if(bandera && parametro.equals("LOG:"))
 			JOptionPane.showMessageDialog(null, "No se encuentra configuración de log.");
 		
-		if(bandera && parametro.contentEquals("IP:"))
+		if(bandera && parametro.equals("IP:"))
 			JOptionPane.showMessageDialog(null, "No se encuentra configuración de red.");
 
 		return respuesta;

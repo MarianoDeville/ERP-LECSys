@@ -84,7 +84,7 @@ public class CtrlNuevoCurso implements ActionListener {
 			ventanaCrearCursos.lblMensageError.setForeground(Color.RED);
 			ventanaCrearCursos.lblMensageError.setText(msgError);
 			
-			if(msgError.contentEquals("")) {
+			if(msgError.equals("")) {
 				
 				if(dtosCurso.setNuevoCurso()) {
 					

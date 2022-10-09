@@ -47,7 +47,7 @@ public class CtrlNuevoUsuario implements ActionListener {
 			ventanaNuevoUsuario.lblMsgError.setForeground(Color.RED);
 			ventanaNuevoUsuario.lblMsgError.setText(msgError);
 			
-			if(msgError.contentEquals("")) {
+			if(msgError.equals("")) {
 
 				if(dtosUsuarios.setNuevoUsuario()) {
 					

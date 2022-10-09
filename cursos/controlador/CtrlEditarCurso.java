@@ -91,7 +91,7 @@ public class CtrlEditarCurso implements ActionListener{
 			ventanaEditarCursos.lblMensageError.setForeground(Color.RED);
 			ventanaEditarCursos.lblMensageError.setText(msgError);
 			
-			if(msgError.contentEquals("")) {
+			if(msgError.equals("")) {
 				
 				if(dtosCurso.setActualizarCurso()) {
 					

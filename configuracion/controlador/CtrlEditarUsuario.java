@@ -45,7 +45,7 @@ public class CtrlEditarUsuario implements ActionListener {
 			ventanaEditarUsuario.lblMsgError.setForeground(Color.RED);
 			ventanaEditarUsuario.lblMsgError.setText(msgError);
 			
-			if(msgError.contentEquals("")) {
+			if(msgError.equals("")) {
 				
 				if(dtosUsuario.setActualizarUsuario()) {
 					

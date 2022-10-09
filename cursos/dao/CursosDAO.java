@@ -110,7 +110,7 @@ public class CursosDAO extends Conexion {
 		String matriz[][] = null;
 		String where = null;
 		
-		if(idCurso.contentEquals("")) {
+		if(idCurso.equals("")) {
 		
 			where = "WHERE curso.estado = 1 ";
 		} else {

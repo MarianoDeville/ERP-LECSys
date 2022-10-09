@@ -22,6 +22,8 @@ public class Listado extends VentanaModelo {
 	public JTable tabla;
 	public JButton btnImprimir;
 	public JCheckBox chckbx1;
+	public JButton btn1A;
+	public JButton btn1B;
 	public JButton btnVolver;
 	public JComboBox<String> comboBox1;
 	public JComboBox<String> comboBox2;
@@ -41,7 +43,7 @@ public class Listado extends VentanaModelo {
 		listado.add(lblComboBox1);
 		
 		comboBox1 = new JComboBox<String>();
-		contenedor.putConstraint(SpringLayout.NORTH, comboBox1, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.NORTH, comboBox1, -2, SpringLayout.NORTH, lblComboBox1);
 		contenedor.putConstraint(SpringLayout.WEST, comboBox1, 5, SpringLayout.EAST, lblComboBox1);
 		contenedor.putConstraint(SpringLayout.EAST, comboBox1, 150, SpringLayout.WEST, comboBox1);
 		comboBox1.setVisible(false);
@@ -54,7 +56,7 @@ public class Listado extends VentanaModelo {
 		listado.add(lblComboBox2);
 		
 		comboBox2 = new JComboBox<String>();
-		contenedor.putConstraint(SpringLayout.NORTH, comboBox2, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.NORTH, comboBox2, -2, SpringLayout.NORTH, lblComboBox2);
 		contenedor.putConstraint(SpringLayout.WEST, comboBox2, 5, SpringLayout.EAST, lblComboBox2);
 		contenedor.putConstraint(SpringLayout.EAST, comboBox2, 150, SpringLayout.WEST, comboBox2);
 		comboBox2.setVisible(false);
@@ -70,6 +72,7 @@ public class Listado extends VentanaModelo {
 		contenedor.putConstraint(SpringLayout.NORTH, txt1, 15, SpringLayout.NORTH, listado);
 		contenedor.putConstraint(SpringLayout.WEST, txt1, 5, SpringLayout.EAST, lblTxt1);
 		contenedor.putConstraint(SpringLayout.EAST, txt1, 80, SpringLayout.WEST, txt1);
+		txt1.setEditable(false);
 		txt1.setVisible(false);
 		listado.add(txt1);
 		
@@ -90,17 +93,31 @@ public class Listado extends VentanaModelo {
 		listado.add(btnImprimir);
 		
 		chckbx1 = new JCheckBox();
-		chckbx1.setSelected(true);
 		contenedor.putConstraint(SpringLayout.NORTH, chckbx1, 25, SpringLayout.SOUTH, btnImprimir);
-		contenedor.putConstraint(SpringLayout.EAST, chckbx1, 0, SpringLayout.EAST, listado);
+		contenedor.putConstraint(SpringLayout.EAST, chckbx1, 0, SpringLayout.EAST, btnImprimir);
 		contenedor.putConstraint(SpringLayout.WEST, chckbx1, -90, SpringLayout.EAST, chckbx1);
+		chckbx1.setSelected(true);
 		chckbx1.setVisible(false);
 		listado.add(chckbx1);
+		
+		btn1A = new JButton("");
+		contenedor.putConstraint(SpringLayout.NORTH, btn1A, 25, SpringLayout.SOUTH, btnImprimir);
+		contenedor.putConstraint(SpringLayout.EAST, btn1A, 0, SpringLayout.EAST, btnImprimir);
+		contenedor.putConstraint(SpringLayout.WEST, btn1A, -90, SpringLayout.EAST, btn1A);
+		btn1A.setVisible(false);
+		listado.add(btn1A);
 		
 		btnVolver = new JButton("Volver");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -10, SpringLayout.SOUTH, listado);
 		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -10, SpringLayout.EAST, listado);
-		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -85, SpringLayout.EAST, btnVolver);
+		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -90, SpringLayout.EAST, btnVolver);
 		listado.add(btnVolver);
+		
+		btn1B = new JButton("");
+		contenedor.putConstraint(SpringLayout.SOUTH, btn1B, -25, SpringLayout.NORTH, btnVolver);
+		contenedor.putConstraint(SpringLayout.EAST, btn1B, 0, SpringLayout.EAST, btnVolver);
+		contenedor.putConstraint(SpringLayout.WEST, btn1B, -90, SpringLayout.EAST, btn1B);
+		btn1B.setVisible(false);
+		listado.add(btn1B);	
 	}
 }

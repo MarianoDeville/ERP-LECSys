@@ -35,8 +35,7 @@ public class OperadorSistema extends Conexion {
 	public boolean checkUsuario(IngresoUsuario ventanaLogin) {
 		
 		boolean bandera = false;
-System.out.println(IngresoUsuario.txtPassword.getPassword());
-System.out.println(IngresoUsuario.txtUsuario.getText());
+
 		if(nombreUsuario == null) {
 			
 			nombreUsuario ="";
@@ -64,7 +63,7 @@ System.out.println(IngresoUsuario.txtUsuario.getText());
 				
 				String palabraClave = Arrays.toString(IngresoUsuario.txtPassword.getPassword());		
 				armoStatement = "SELECT idUsuarios, nombre, nivelAcceso FROM lecsys1.usuarios "
-							  + "WHERE(estado = 1 AND nombre = '" + IngresoUsuario.txtUsuario.getText() + "' AND contraseña = SHA('" + palabraClave + "'))";
+							  + "WHERE(estado = 1 AND nombre = BINARY'" + IngresoUsuario.txtUsuario.getText() + "' AND contraseña = SHA('" + palabraClave + "'))";
 				rs = stm.executeQuery(armoStatement);
 	
 				if(rs.next()) {

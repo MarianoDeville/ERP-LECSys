@@ -66,6 +66,7 @@ public class CtrlABMLAlumnos implements ActionListener {
 		ventanaABML.tabla.getColumnModel().getColumn(7).setMaxWidth(80);
 		ventanaABML.tabla.getColumnModel().getColumn(8).setPreferredWidth(30);
 		ventanaABML.tabla.getColumnModel().getColumn(8).setMaxWidth(30);
+		dtosABMLAlumnos.setEstado(ventanaABML.chckbx1.isSelected());
 	}
 	
 	public void actionPerformed(ActionEvent e) {

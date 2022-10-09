@@ -31,7 +31,7 @@ public class CtrlEditarAlumno implements ActionListener {
 		ventanaEditarAlumno.btnImprimir.setVisible(true);
 		ventanaEditarAlumno.scrollTabla.setVisible(true);
 		ventanaEditarAlumno.chkbox1.setVisible(true);
-		dtosEditarAlumno.recuperarInformacionAlumno(legajo);
+		dtosEditarAlumno.recuperarInformacionAlumno(legajo, dtosEditarAlumno.getEstado());
 		ventanaEditarAlumno.txtLegajo.setText(dtosEditarAlumno.getLegajo());
 		ventanaEditarAlumno.txtNombre.setText(dtosEditarAlumno.getNombre());
 		ventanaEditarAlumno.txtApellido.setText(dtosEditarAlumno.getApellido());
@@ -52,6 +52,7 @@ public class CtrlEditarAlumno implements ActionListener {
 	private void actualizar() {
 		
 		ventanaEditarAlumno.tabla.setModel(dtosEditarAlumno.getTablaDias(ventanaEditarAlumno.comboBox1.getSelectedIndex()));
+
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -78,7 +79,7 @@ public class CtrlEditarAlumno implements ActionListener {
 			ventanaEditarAlumno.lblMsgError.setForeground(Color.RED);
 			ventanaEditarAlumno.lblMsgError.setText(msgError);
 
-			if(msgError.contentEquals("")) {
+			if(msgError.equals("")) {
 				
 				if(dtosEditarAlumno.setActualizarAlumno()) {
 					

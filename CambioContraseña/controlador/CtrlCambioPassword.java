@@ -41,11 +41,12 @@ public class CtrlCambioPassword implements ActionListener {
 			ventanaCambioPass.txtError.setForeground(Color.RED);
 			ventanaCambioPass.txtError.setText(msgError);
 			
-			if(msgError.contentEquals("")) {
+			if(msgError.equals("")) {
 			
 				if(dtosCambioPassword.setNuevaContraseña()) {
 
 					ventanaCambioPass.dispose();
+					
 				} else {
 					
 					ventanaCambioPass.txtError.setForeground(Color.RED);

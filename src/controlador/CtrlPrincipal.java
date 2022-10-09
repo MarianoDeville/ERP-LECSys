@@ -14,13 +14,15 @@ import modelo.DtosActividad;
 public class CtrlPrincipal implements ActionListener {
 	
 	private Principal ventanaPrincipal;
-	private DtosAcceso acceso;
+	private DtosAcceso controlAcceso;
 	private DtosActividad actividad;
+	private IngresoUsuario ventanaLogin;
+	private OperadorSistema acceso;
 
 	public CtrlPrincipal(Principal vista) {
 		
 		this.ventanaPrincipal = vista;
-		this.acceso = new DtosAcceso();
+		this.controlAcceso = new DtosAcceso();
 		this.actividad = new DtosActividad();
 		this.ventanaPrincipal.btnAdmin.addActionListener(this);
 		this.ventanaPrincipal.btnAlumnos.addActionListener(this);
@@ -35,7 +37,7 @@ public class CtrlPrincipal implements ActionListener {
 		
 		actividad.registrarActividad("Inicio del sistema", "Principal");
 		ventanaPrincipal.setVisible(true);
-		OperadorSistema acceso = new OperadorSistema();
+		acceso = new OperadorSistema();
 		
 		if(acceso.getActualizarContraseña()) {
 			
@@ -49,7 +51,7 @@ public class CtrlPrincipal implements ActionListener {
 
 		if(e.getSource() == ventanaPrincipal.btnAdmin) {
 		
-			if(acceso.chkAcceso("Administrativo", "Entrar")) {
+			if(controlAcceso.chkAcceso("Administrativo", "Entrar")) {
 
 				InterfaceBotones ventanaAdministracion = new InterfaceBotones("Gestión administrativa");
 				CtrlAdministracion ctrlAdmin = new CtrlAdministracion(ventanaAdministracion);
@@ -62,7 +64,7 @@ public class CtrlPrincipal implements ActionListener {
 		
 		if(e.getSource() == ventanaPrincipal.btnAlumnos) {
 
-			if(acceso.chkAcceso("Alumnos", "Entrar")) {
+			if(controlAcceso.chkAcceso("Alumnos", "Entrar")) {
 				
 				InterfaceBotones ventanaAlumnos = new InterfaceBotones("Gestión de los alumnos");
 				CtrlAlumnos ctrlAlumn = new CtrlAlumnos(ventanaAlumnos);
@@ -75,7 +77,7 @@ public class CtrlPrincipal implements ActionListener {
 		
 		if(e.getSource() == ventanaPrincipal.btnPersonal) {
 
-			if(acceso.chkAcceso("Personal", "Entrar")) {
+			if(controlAcceso.chkAcceso("Personal", "Entrar")) {
 				
 				InterfaceBotones ventanaPersonal = new InterfaceBotones("Gestión del personal");
 				CtrlEmpleados ctrlAdmin = new CtrlEmpleados(ventanaPersonal);
@@ -88,7 +90,7 @@ public class CtrlPrincipal implements ActionListener {
 		
 		if(e.getSource() == ventanaPrincipal.btnCursos) {
 
-			if(acceso.chkAcceso("Cursos", "Entrar")) {
+			if(controlAcceso.chkAcceso("Cursos", "Entrar")) {
 				
 				InterfaceBotones ventanaCursos = new InterfaceBotones("Gestión de los cursos");
 				CtrlCursos ctrlCursos = new CtrlCursos(ventanaCursos);
@@ -101,7 +103,7 @@ public class CtrlPrincipal implements ActionListener {
 		
 		if(e.getSource() == ventanaPrincipal.btnConfig) {	
 			
-			if(acceso.chkAcceso("Configuracion", "Entrar")) {
+			if(controlAcceso.chkAcceso("Configuracion", "Entrar")) {
 
 				InterfaceBotones ventanaConfiguracion = new InterfaceBotones("Configuración del sistema");
 				CtrlConfiguracion ctrlConfig = new CtrlConfiguracion(ventanaConfiguracion);
@@ -115,14 +117,15 @@ public class CtrlPrincipal implements ActionListener {
 	
 		if(e.getSource() == ventanaPrincipal.btnRelogin) {
 			
-			IngresoUsuario ventanaLogin = new IngresoUsuario();
+			ventanaLogin = new IngresoUsuario();
 			CtrlReLogin ctrlIngreso = new CtrlReLogin(ventanaLogin);
 			ctrlIngreso.iniciar();
+			ventanaPrincipal.setTitle("Sistema de gestión - LECSys - " + acceso.getNombreUsuario());
 		}
 		
 		if(e.getSource() == ventanaPrincipal.btnSalir) {
 			
-			actividad.registrarActividad("Cierre del sistema", "Principal");
+			actividad.registrarActividad("Cierre del sistema", "Principal" );
 			System.exit(0);
 		}
 		

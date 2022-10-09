@@ -15,7 +15,7 @@ public class CambioPasswordDAO extends Conexion {
 		boolean bandera = false;
 		dtosCambioPass = new DtosCambioPassword();
 		String armoStatement = "SELECT idUsuarios FROM lecsys1.usuarios "
-							 + "WHERE(nombre = '" + dtosCambioPass.getNombreUsuario() + "' "
+							 + "WHERE(nombre = BINARY'" + dtosCambioPass.getNombreUsuario() + "' "
 							 + "AND contraseña = SHA('" + dtosCambioPass.getContraseñaOld() + "'))";
 		
 		try {

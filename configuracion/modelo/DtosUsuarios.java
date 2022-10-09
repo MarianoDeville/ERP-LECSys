@@ -105,7 +105,7 @@ public class DtosUsuarios {
 		}else if(contraseña.length() < 5) {
 			
 			return "La contraseña debe tener más de cuatro caracteres.";
-		} else if(!contraseña.contentEquals(reContraseña)) {
+		} else if(!contraseña.equals(reContraseña)) {
 			
 			return "Las contraseñas no coinciden.";
 		}

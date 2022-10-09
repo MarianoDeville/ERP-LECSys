@@ -17,15 +17,19 @@ public class UsuariosDAO extends Conexion {
 		try {
 			
 			this.conectar();
-			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO lecsys1.usuarios (nombre, contraseña, nivelAcceso, estado, idEmpleado) VALUES (?, SHA(?), ?, ?, ?)");
+			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO lecsys1.usuarios "
+																 + "(nombre, contraseña, nivelAcceso, estado, idEmpleado, cambioContraseña) "
+																 + "VALUES (?, SHA(?), ?, ?, ?, ?)");
 			stm.setString(1, dtosUsuario.getUsuario());
 			stm.setString(2, dtosUsuario.getContraseña());
 			stm.setInt(3, Integer.parseInt(dtosUsuario.getNivelAcceso()));
 			stm.setInt(4, 1);
 			stm.setInt(5, Integer.parseInt(dtosUsuario.getIdEmpleado()));
+			stm.setInt(6, 1);
 			stm.executeUpdate();
 		} catch (Exception e) {
 	
+			System.err.println("UsuariosDAO, setUsuario()");
 			System.err.println(e.getMessage());
 			bandera = false;
 		} finally {
@@ -42,7 +46,7 @@ public class UsuariosDAO extends Conexion {
 		String matriz[][] = null;
 		String where = null;
 		
-		if(usuario.contentEquals("")) {
+		if(usuario.equals("")) {
 			
 			where = "WHERE usuarios.estado = 1";
 		} else {
@@ -77,6 +81,7 @@ public class UsuariosDAO extends Conexion {
 			}
 		}catch (Exception e) {
 			
+			System.err.println("UsuariosDAO, getUsuarios");
 			System.err.println(e.getMessage());
 		} finally {
 			
@@ -94,7 +99,8 @@ public class UsuariosDAO extends Conexion {
 		try {
 			
 			this.conectar();
-			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.usuarios SET contraseña = SHA(?), estado = ?, nivelAcceso = ? WHERE ( nombre = ?)");
+			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.usuarios SET contraseña = SHA(?), estado = ?, "
+																 + "nivelAcceso = ?, cambioContraseña = 0 WHERE ( nombre = ?)");
 			stm.setString(1, dtosUsuarios.getContraseña());
 			stm.setInt(2, Integer.parseInt(dtosUsuarios.getEstado()));
 			stm.setInt(3, Integer.parseInt(dtosUsuarios.getNivelAcceso()));
@@ -103,6 +109,7 @@ public class UsuariosDAO extends Conexion {
 			
 		} catch (Exception e) {
 
+			System.err.println("UsuariosDAO, setActualizarUsuario()");
 			System.err.println(e.getMessage());
 			bandera = false;
 		} finally {

@@ -75,7 +75,7 @@ public class CtrlNuevoEmpleado implements ActionListener {
 			ventanaNuevoEmplado.lblMsgError.setForeground(Color.RED);
 			ventanaNuevoEmplado.lblMsgError.setText(msgError);
 			
-			if(msgError.contentEquals("")) {
+			if(msgError.equals("")) {
 				
 				if(dtosEmpleado.setNuevoEmpleado()) {
 					

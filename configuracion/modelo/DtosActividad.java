@@ -44,7 +44,7 @@ public class DtosActividad {
 	public String [][] getActividad(String mes, String año) {
 		
 		ActividadDAO actividadDAO = new ActividadDAO();
-		if(mes.contentEquals("") || año.contentEquals("")) {
+		if(mes.equals("") || año.equals("")) {
 			
 			fechaSistema = new GregorianCalendar();
 			año = fechaSistema.get(Calendar.YEAR) + "";

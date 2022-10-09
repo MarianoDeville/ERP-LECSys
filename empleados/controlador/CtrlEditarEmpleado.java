@@ -86,7 +86,7 @@ public class CtrlEditarEmpleado implements ActionListener {
 			ventanaEditarEmpleado.lblMsgError.setForeground(Color.RED);
 			ventanaEditarEmpleado.lblMsgError.setText(msgError);
 			
-			if(msgError.contentEquals("")) {
+			if(msgError.equals("")) {
 			
 				if(dtosEditarEmpleado.setActualizarEmpleado()) {
 					

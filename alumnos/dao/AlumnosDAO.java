@@ -36,6 +36,7 @@ public class AlumnosDAO extends Conexion {
 			stm.executeUpdate();
 		} catch (Exception e) {
 	
+			System.err.println("AlumnosDAO, setActualizarAlumno()");
 			System.err.println(e.getMessage());
 			bandera = false;
 		} finally {
@@ -78,6 +79,7 @@ public class AlumnosDAO extends Conexion {
 			stm.executeUpdate();
 		} catch (Exception e) {
 	
+			System.err.println("AlumnosDAO, setAlumno()");
 			System.err.println(e.getMessage());
 			bandera = false;
 		} finally {
@@ -94,15 +96,18 @@ public class AlumnosDAO extends Conexion {
 		String matriz[][]=null;
 		String armoWhere = null;
 		
-		if(campo.contentEquals("ID")) {
+		if(campo.equals("ID")) {
 			
-			armoWhere ="WHERE idAlumno = " + valor;
-		} else if(campo.contentEquals("Docente")) {
+			armoWhere = "WHERE (alumnos.estado = " + (estado? "1 ":"0 ") 
+					  + " AND idAlumno = " + valor + ")";
+		} else if(campo.equals("Docente")) {
 		
-			armoWhere ="WHERE idProfesor = " + valor;
-		} else if(campo.contentEquals("Curso")) {
+			armoWhere = "WHERE (alumnos.estado = " + (estado? "1 ":"0 ") 
+					  + " AND idProfesor = " + valor + ")";
+		} else if(campo.equals("Curso")) {
 			
-			armoWhere ="WHERE alumnos.idCurso = " + valor;
+			armoWhere = "WHERE (alumnos.estado = " + (estado? "1 ":"0 ") 
+					  + " AND alumnos.idCurso = " + valor + ")";
 		} else {
 			
 			armoWhere = "WHERE (alumnos.estado = " + (estado? "1 ":"0 ")
@@ -147,6 +152,7 @@ public class AlumnosDAO extends Conexion {
 			}
 		}catch (Exception e) {
 			
+			System.err.println("AlumnosDAO, getAlumnos()");
 			System.err.println(e.getMessage());
 		} finally {
 			

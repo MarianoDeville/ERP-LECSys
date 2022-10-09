@@ -54,10 +54,10 @@ public class DtosCambioPassword {
 		if(contraseñaNew.length() < 5) {
 			
 			return "La contraseña debe tener más de cuatro caracteres.";
-		} else if(!reContraseñaNew.contentEquals(contraseñaNew)) {
+		} else if(!reContraseñaNew.equals(contraseñaNew)) {
 			
 			return "Las contraseñas no coinciden.";
-		} else if(contraseñaOld.contentEquals(contraseñaNew)) {
+		} else if(contraseñaOld.equals(contraseñaNew)) {
 			
 			return "La nueva contraseña no pude ser igual a la anterior.";
 		} else if(!cambioPass.checkContraseña()) {

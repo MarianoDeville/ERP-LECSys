@@ -307,7 +307,7 @@ public class DtosEmpleado {
 	}
 
 	public boolean getEstado() {
-		return estado.contentEquals("Activo")? true:false;
+		return estado.equals("Activo")? true:false;
 	}
 
 	public void setEstado(String estado) {

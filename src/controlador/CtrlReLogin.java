@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import dao.OperadorSistema;
 import interfaceUsuario.IngresoUsuario;
-import interfaceUsuario.Principal;
 
 public class CtrlReLogin implements ActionListener {
 	

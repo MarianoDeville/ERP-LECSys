@@ -100,10 +100,10 @@ public class DtosCurso {
 										"18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30"};
 		String dia[] = new String[] {"Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"};
 
-		if(criterio.contentEquals("Profesor")) {
+		if(criterio.equals("Profesor")) {
 			
 			editable = cursoDAO.getCronogramaDias(0, Integer.parseInt(idProfesores[valor]), 100);
-		} else if(criterio.contentEquals("Curso")) {
+		} else if(criterio.equals("Curso")) {
 			
 			editable = cursoDAO.getCronogramaDias(Integer.parseInt(idCursos[valor]), 0, 100);
 		}else {
@@ -148,7 +148,7 @@ public class DtosCurso {
 		String titulo[] = getListadoHorarios();
 		editable = cursoDAO.getCronogramaDias(0, Integer.parseInt(idProfesores[profesor]), aula);
 		boolean [][] horariosActuales = null;
-		if(!idCurso.contentEquals("0")) {
+		if(!idCurso.equals("0")) {
 			
 			horariosActuales = cursoDAO.getCronogramaDias(Integer.parseInt(idCurso), profesor, aula);
 		}
@@ -158,7 +158,7 @@ public class DtosCurso {
 			
 			for(int e = 0 ; e < 32 ; e++) {
 				
-				if(!idCurso.contentEquals("0")) {
+				if(!idCurso.equals("0")) {
 					
 					cronograma[i][e] = !horariosActuales[i][e];
 					
@@ -240,7 +240,7 @@ public class DtosCurso {
 
 	public String checkInformacion() {
 		
-		if(valorCuota.contentEquals("") || !isNumeric(valorCuota))
+		if(valorCuota.equals("") || !isNumeric(valorCuota))
 			
 			return "El valor cuota no puede estar vacío y debe ser un número.";
 		
@@ -269,13 +269,13 @@ public class DtosCurso {
 	
 	public String [] getListadoOpciones(String valor) {
 		
-		if(valor.contentEquals("Aula")) {
+		if(valor.equals("Aula")) {
 			
 			return getListaAulas();
-		} else if(valor.contentEquals("Profesor")) {
+		} else if(valor.equals("Profesor")) {
 			
 			return getListaProfesores();
-		} else if(valor.contentEquals("Curso")) {
+		} else if(valor.equals("Curso")) {
 			
 			return getListaCursos();
 		}
@@ -304,16 +304,16 @@ public class DtosCurso {
 	
 	public String [] getListaAños(String nivel) {
 		
-		if(nivel.contentEquals("Kinder")) {
+		if(nivel.equals("Kinder")) {
 			
 			return new String [] {" ", "PRE"};
-		} else if(nivel.contentEquals("Children")) {
+		} else if(nivel.equals("Children")) {
 			
 			return new String [] {"First", "Second", "Third"};
-		}else if(nivel.contentEquals("Junior") || nivel.contentEquals("Adults")) {
+		}else if(nivel.equals("Junior") || nivel.equals("Adults")) {
 			
 			return new String [] {"First", "Second", "Third", "Fourth", "Fifth", "Sixth"};
-		}else if(nivel.contentEquals("Teens")) {
+		}else if(nivel.equals("Teens")) {
 			
 			return new String [] {"I", "II", "III"};
 		}

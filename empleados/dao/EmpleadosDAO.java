@@ -99,10 +99,10 @@ public class EmpleadosDAO extends Conexion {
 		String matriz[][]=null;
 		String where = null;
 		
-		if(tipo.contentEquals("Todos")) {
+		if(tipo.equals("Todos")) {
 
 			where = "WHERE (empleados.estado = " + (estado? "1 ":"0 ") + "AND apellido LIKE '" + filtrado + "%')";
-		} else if(tipo.contentEquals("ID")) {
+		} else if(tipo.equals("ID")) {
 			
 			where = "WHERE empleados.idEmpleado = '" + filtrado + "'";
 		} else {
