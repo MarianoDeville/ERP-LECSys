@@ -6,16 +6,16 @@ import interfaceUsuario.IngresoUsuario;
 /********************************************************************************/
 /*		Sistema ERP de gestión offline para academias - LECSys					*/
 /*------------------------------------------------------------------------------*/
-/*		Revisión:				2.00											*/
+/*		Revisión:				1.00											*/
 /*		IDE:					Eclipse IDE Ver. 2022-09 (4.25.0)				*/
 /*		Lenguaje:				Java SE-17										*/
-/*		Versionado:				git - GitHub.com/MarianoDeville					*/
+/*		Versionado:				git - GitHub.com/MarianoDeville/ERP-LECSys		*/
 /*		Base de Datos:			MySQL Workbench 8.00 CE							*/
 /*		Plugin:					WindowBuilder 1.9.8								*/
 /*								UMLet 14.3										*/
 /*		Estado:					Desarrollo.										*/
 /*		Fecha creación:			15/09/2022										*/
-/*		Última modificación:	09/10/2022										*/
+/*		Última modificación:	10/10/2022										*/
 /********************************************************************************/
 
 public class LECSys {

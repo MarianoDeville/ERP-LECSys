@@ -8,6 +8,8 @@
 //	public DefaultTableModel getListadoAlumnos(String campo, String valor)
 //	public DefaultTableModel getTablaAlumnos(String campo, String valor, boolean estado, int pos)
 //	public DefaultTableModel getTablaDias(int curso)
+//	public DefaultTableModel getTablaRegistroAsistencia(int cursoSeleccionado, boolean reduciodo)
+//	public DefaultTableModel getTablaExamenes(int curso)
 //	public String getFechaActual(boolean formato)
 //	public String getIdValorCriterio(String criterio, int valor)
 //	public String getLegajo()
@@ -59,7 +61,6 @@ package modelo;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import javax.swing.table.DefaultTableModel;
 import dao.AlumnosDAO;
 import dao.AsistenciaDAO;
@@ -90,6 +91,114 @@ public class DtosAlumno {
 	private static String [][] horariosCursos;
 	private static Object [][] tablaAsistencia;
 
+	
+	public DefaultTableModel getTablaExamenes(int curso) { ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		
+		String titulo[] = {"Legajo", "Nombre", "Apellido", "1º Examen", "2º Examen", "Integrador"};
+		
+		String respuesta[][] = null;
+		
+		String cuerpo[][]= null;
+		
+		if(respuesta != null) {
+			
+			for(int i = 0 ; i < respuesta.length ; i++) {
+
+				cuerpo[i][0] = respuesta[i][1];
+				cuerpo[i][0] = respuesta[i][1];
+			}
+		} else
+			cuerpo = null;
+		
+		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo){
+
+			private static final long serialVersionUID = 1L;
+			
+			boolean[] columnEditables = new boolean[] {
+					false, false, false,  true, true
+			};
+			
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		};
+		return tablaModelo;
+	}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
+	
+	
+	
+	public DefaultTableModel getTablaRegistroAsistencia(int cursoSeleccionado) {
+		
+		AlumnosDAO alumnosDAO = new AlumnosDAO();
+		AsistenciaDAO asistenciasDAO = new AsistenciaDAO();
+		String titulo1[] = {"Legajo", "Nombre", "Apellido"};
+		String cuerpo[][] = null;
+		String respuesta[][] = asistenciasDAO.tablaAsistenciasAlumnos(idCursos[cursoSeleccionado], true);
+		String titulo2[] = new String [respuesta.length];
+		String titulo[] = new String[titulo1.length + titulo2.length];
+		
+		for(int i = 0 ; i < titulo.length ; i++) {
+		
+			if(i < 3) {
+				
+				titulo[i] = titulo1[i];
+			} else {
+				
+				titulo[i] = respuesta[i - 3][2];
+			}
+		}
+		respuesta = alumnosDAO.getAlumnos("Curso", idCursos[cursoSeleccionado], true, "");
+		
+		if(respuesta != null) {
+			
+			cuerpo = new String[respuesta.length][titulo.length];
+
+			for(int i = 0 ; i < respuesta.length ; i++) {
+				
+				cuerpo[i][0] = respuesta[i][0];
+				cuerpo[i][1] = respuesta[i][1];
+				cuerpo[i][2] = respuesta[i][2];
+
+			}
+		} else {
+
+			cuerpo = null;
+		}
+		respuesta = asistenciasDAO.tablaAsistenciasAlumnos(idCursos[cursoSeleccionado], false);
+		
+		for( int e = 0 ; e < cuerpo.length ; e++) {
+		
+			int f = 3;
+			
+			for(int i = 0 ; i < respuesta.length  ; i++) {
+				
+				if(cuerpo[e][0].equals(respuesta[i][1])) {
+					
+					cuerpo[e][f] = respuesta[i][2];
+			
+					if(respuesta[i][3].equals("0")) {
+						
+						cuerpo[e][f] = "Falta";
+					} else if(respuesta[i][3].equals("1")) {
+						
+						cuerpo[e][f] = "Presente";
+					}else if(respuesta[i][3].equals("2")) {
+						
+						cuerpo[e][f] = "Tarde";
+					}
+					f++;
+				}
+			}
+		}
+		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo);
+		return tablaModelo;
+	}
 
 	public void setCurso(int curso) {
 		

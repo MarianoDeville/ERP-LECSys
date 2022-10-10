@@ -42,6 +42,7 @@ public class EmpleadosDAO extends Conexion {
 		} catch (Exception e) {
 			
 			bandera = false;
+			System.err.println("EmpleadosDAO, setActualizarEmpleado()");
 			System.err.println(e.getMessage());
 		} finally {
 			
@@ -84,6 +85,7 @@ public class EmpleadosDAO extends Conexion {
 		} catch (Exception e) {
 			
 			bandera = false;
+			System.err.println("EmpleadosDAO, setEmpleado()");
 			System.err.println(e.getMessage());
 		} finally {
 			
@@ -147,6 +149,7 @@ public class EmpleadosDAO extends Conexion {
 			}
 		}catch (Exception e) {
 			
+			System.err.println("EmpleadosDAO, getEmpleados()");
 			System.err.println(e.getMessage());
 		} finally {
 			

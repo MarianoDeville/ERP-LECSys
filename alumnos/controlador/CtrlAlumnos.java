@@ -97,10 +97,9 @@ public class CtrlAlumnos implements ActionListener {
 			if(acceso.chkAcceso("Alumnos", "Registro asistencia")) {
 			
 
-				
-				
-				
-				
+				Listado ventanaRegistroAsistencia = new Listado("Registro asistencia");
+				CtrlRegistroAsistencia ctrlRegistroAsistencias = new CtrlRegistroAsistencia(ventanaRegistroAsistencia);
+				ctrlRegistroAsistencias.iniciar();
 			}
 		}
 		
