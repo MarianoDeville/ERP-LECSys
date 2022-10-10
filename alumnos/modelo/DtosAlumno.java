@@ -32,6 +32,7 @@
 //	public String [] getCriterio() 
 //	public String [] getListadoProfesores()
 //	public String [] getListadoValorCriterio(String criterio)
+//	public String [] getListaTipoExamen()
 //	public String [][] getHorariosCursos()
 //	public void setTablaAsistencia(int fila, int columna, boolean valor)
 //	public void setLegajo(String legajo)
@@ -53,7 +54,8 @@
 //	public boolean setActualizarAlumno()
 //	public void limpiarInformacion()
 //	public void recuperarInformacionAlumno(String nroLegajo, boolean estadoAlumno)
-//	public boolean guardoAsistencia()	
+//	public boolean guardoAsistencia()
+//	public boolean guardarResultados(String [][] tablaResultados)
 //	public String checkInformacion(boolean checDNI)
 //	private boolean isNumeric(String cadena)
 /*****************************************************************************************************************************************************************/
@@ -70,6 +72,7 @@ import dao.PeronasDAO;
 
 public class DtosAlumno {
 	
+	AlumnosDAO alumnosDAO;
 	private static boolean estado;
 	private static String legajo;
 	private static String nombre;
@@ -90,34 +93,50 @@ public class DtosAlumno {
 	private static String [] idProfesores;
 	private static String [][] horariosCursos;
 	private static Object [][] tablaAsistencia;
-
 	
-	public DefaultTableModel getTablaExamenes(int curso) { ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public boolean guardarResultados(String [][] tablaResultados) {
+		
+		boolean bandera = true;
 		
 		
 		
-		String titulo[] = {"Legajo", "Nombre", "Apellido", "1º Examen", "2º Examen", "Integrador"};
+		return bandera;
+	}
+	
+	public String [] getListaTipoExamen() {
 		
-		String respuesta[][] = null;
-		
-		String cuerpo[][]= null;
-		
+		return new String[] {"1º Escrito","2º Escrito","1º Oral", "2º Oral","Recuperatorio","Final"};
+	}
+
+	public DefaultTableModel getTablaExamenes(int cursoSeleccionado) {
+
+		alumnosDAO = new AlumnosDAO();
+		String cuerpo[][] = null;
+		String titulo[] = {"Legajo", "Nombre", "Apellido", "Resultado"};
+		String respuesta[][] = alumnosDAO.getAlumnos("Curso", idCursos[cursoSeleccionado], true, "");
+
 		if(respuesta != null) {
+		
+			cuerpo = new String [respuesta.length][4];
 			
 			for(int i = 0 ; i < respuesta.length ; i++) {
 
-				cuerpo[i][0] = respuesta[i][1];
-				cuerpo[i][0] = respuesta[i][1];
+				cuerpo[i][0] = respuesta[i][0];
+				cuerpo[i][1] = respuesta[i][1];
+				cuerpo[i][2] = respuesta[i][2];
+				cuerpo[i][3] = "";
 			}
-		} else
+		} else {
+			
 			cuerpo = null;
+		}
 		
 		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo){
 
 			private static final long serialVersionUID = 1L;
 			
 			boolean[] columnEditables = new boolean[] {
-					false, false, false,  true, true
+					false, false, false,  true, true, true
 			};
 			
 			public boolean isCellEditable(int row, int column) {
@@ -126,16 +145,10 @@ public class DtosAlumno {
 		};
 		return tablaModelo;
 	}
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
-	
-	
-	
 	
 	public DefaultTableModel getTablaRegistroAsistencia(int cursoSeleccionado) {
 		
-		AlumnosDAO alumnosDAO = new AlumnosDAO();
+		alumnosDAO = new AlumnosDAO();
 		AsistenciaDAO asistenciasDAO = new AsistenciaDAO();
 		String titulo1[] = {"Legajo", "Nombre", "Apellido"};
 		String cuerpo[][] = null;
@@ -283,9 +296,9 @@ public class DtosAlumno {
 	
 	public DefaultTableModel getTablaAsistencia(int cursoSeleccionado) {
 		
-		AlumnosDAO alumnos = new AlumnosDAO();
+		alumnosDAO = new AlumnosDAO();
 		String titulo[] = {"Legajo", "Nombre", "Apellido", "Presente", "Tarde"};
-		String respuesta[][]=alumnos.getAlumnos("Curso", idCursos[cursoSeleccionado], true, "");
+		String respuesta[][] = alumnosDAO.getAlumnos("Curso", idCursos[cursoSeleccionado], true, "");
 		tablaAsistencia = null;
 		cantAlumnos = "0";
 		if(respuesta != null) {
@@ -329,10 +342,10 @@ public class DtosAlumno {
 	
 	public DefaultTableModel getListadoAlumnos(String campo, String valor) {
 		
-		AlumnosDAO alumnos = new AlumnosDAO();
+		alumnosDAO = new AlumnosDAO();
 		String titulo[] = {"Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Curso", "Sel."};
-		String respuesta[][]=alumnos.getAlumnos(campo, valor, true, "");
-		Object cuerpo[][]=null;
+		String respuesta[][] = alumnosDAO.getAlumnos(campo, valor, true, "");
+		Object cuerpo[][] = null;
 		cantAlumnos = "0";
 		if(respuesta != null) {
 			
@@ -387,8 +400,8 @@ public class DtosAlumno {
 		AlumnosDAO alumnos = new AlumnosDAO();
 		String titulo[] = {"Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Curso", "Sel."};
 		String ordenado[] = {"idAlumno", "nombre", "apellido", "dni", "dirección", "alumnos.idCurso"};
-		String respuesta[][]=alumnos.getAlumnos(campo, valor, estado, ordenado[pos]);
-		Object cuerpo[][]=null;
+		String respuesta[][] = alumnos.getAlumnos(campo, valor, estado, ordenado[pos]);
+		Object cuerpo[][] = null;
 		cantAlumnos = "0";
 		if(respuesta != null) {
 			
@@ -440,8 +453,8 @@ public class DtosAlumno {
 		String titulo[] = {"", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"};
 		String horas[] = dtosCurso.getListadoHorarios();
 		String duracion[] = new String [] {"0:00","0:30","1:00","1:30","2:00","2:30","3:00","3:30","4:00"};
-		String respuesta[][]=cursosDAO.buscarDiasCurso(idCursos[curso]);
-		Object cuerpo[][]= new Object[][] {{"Hora:","","","","","",""},{"Duración:","","","","","",""}};
+		String respuesta[][] = cursosDAO.buscarDiasCurso(idCursos[curso]);
+		Object cuerpo[][] = new Object[][] {{"Hora:","","","","","",""},{"Duración:","","","","","",""}};
 		
 		if(respuesta != null) {
 			
@@ -478,13 +491,13 @@ public class DtosAlumno {
 	
 	public boolean setNuevoAlumno() {
 		
-		AlumnosDAO alumnosDAO = new AlumnosDAO();
+		alumnosDAO = new AlumnosDAO();
 		return alumnosDAO.setAlumno();
 	}
 	
 	public boolean setActualizarAlumno() { 
 		
-		AlumnosDAO alumnosDAO = new AlumnosDAO();
+		alumnosDAO = new AlumnosDAO();
 		return alumnosDAO.setActualizarAlumno();
 	} 
 
@@ -506,7 +519,7 @@ public class DtosAlumno {
 	
 	public void recuperarInformacionAlumno(String nroLegajo, boolean estadoAlumno) {
 		
-		AlumnosDAO alumnosDAO = new AlumnosDAO();
+		alumnosDAO = new AlumnosDAO();
 		String alumno[][] = alumnosDAO.getAlumnos("ID", nroLegajo, estadoAlumno, "");
 		
 		if(alumno.length > 0) {
@@ -545,7 +558,7 @@ public class DtosAlumno {
 	public String [] getListaCursos() {
 		
 		CursosDAO cursosDAO = new CursosDAO();
-		String [][] respuesta = cursosDAO.getListado("");
+		String respuesta[][] = cursosDAO.getListado("");
 		idCursos = new String[respuesta.length];
 		nombreCursos = new String[respuesta.length];
 		

@@ -3,7 +3,6 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-
 import modelo.DtosActividad;
 import modelo.DtosAlumno;
 

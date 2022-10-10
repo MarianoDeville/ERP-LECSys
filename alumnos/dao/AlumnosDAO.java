@@ -121,7 +121,7 @@ public class AlumnosDAO extends Conexion {
 				 				+ "JOIN lecsys1.persona on alumnos.idPersona = persona.idPersona "
 				 				+ "JOIN lecsys1.curso ON curso.idCurso = alumnos.idCurso " 
 						 		+ armoWhere;
-		
+	
 		try {
 			
 			this.conectar();
