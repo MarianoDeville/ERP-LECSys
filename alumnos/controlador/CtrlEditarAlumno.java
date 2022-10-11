@@ -39,9 +39,9 @@ public class CtrlEditarAlumno implements ActionListener {
 		ventanaEditarAlumno.txtDireccion.setText(dtosEditarAlumno.getDireccion());
 		ventanaEditarAlumno.txtTelefono.setText(dtosEditarAlumno.getTelefono());
 		ventanaEditarAlumno.txtEmail.setText(dtosEditarAlumno.getEmail());
-		ventanaEditarAlumno.txtAño.setText(dtosEditarAlumno.getFechaNacimientoAño());
-		ventanaEditarAlumno.txtMes.setText(dtosEditarAlumno.getFechaNacimientoMes());
-		ventanaEditarAlumno.txtDia.setText(dtosEditarAlumno.getFechaNacimientoDia());
+		ventanaEditarAlumno.txtAño.setText(dtosEditarAlumno.getFechaAño());
+		ventanaEditarAlumno.txtMes.setText(dtosEditarAlumno.getFechaMes());
+		ventanaEditarAlumno.txtDia.setText(dtosEditarAlumno.getFechaDia());
 		ventanaEditarAlumno.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosEditarAlumno.getListaCursos()));
 		ventanaEditarAlumno.comboBox1.setSelectedIndex(dtosEditarAlumno.getCursoSeleccionado());
 		ventanaEditarAlumno.chkbox1.setSelected(dtosEditarAlumno.getEstado());
@@ -70,9 +70,9 @@ public class CtrlEditarAlumno implements ActionListener {
 			dtosEditarAlumno.setDireccion(ventanaEditarAlumno.txtDireccion.getText());
 			dtosEditarAlumno.setTelefono(ventanaEditarAlumno.txtTelefono.getText());
 			dtosEditarAlumno.setEmail(ventanaEditarAlumno.txtEmail.getText());
-			dtosEditarAlumno.setFechaNacimientoAño(ventanaEditarAlumno.txtAño.getText());
-			dtosEditarAlumno.setFechaNacimientoMes(ventanaEditarAlumno.txtMes.getText());
-			dtosEditarAlumno.setFechaNacimientoDia(ventanaEditarAlumno.txtDia.getText());
+			dtosEditarAlumno.setFechaAño(ventanaEditarAlumno.txtAño.getText());
+			dtosEditarAlumno.setFechaMes(ventanaEditarAlumno.txtMes.getText());
+			dtosEditarAlumno.setFechaDia(ventanaEditarAlumno.txtDia.getText());
 			dtosEditarAlumno.setEstado(ventanaEditarAlumno.chkbox1.isSelected());
 			dtosEditarAlumno.setCurso(ventanaEditarAlumno.comboBox1.getSelectedIndex());
 			String msgError = dtosEditarAlumno.checkInformacion(false); 

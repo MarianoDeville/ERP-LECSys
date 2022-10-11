@@ -1,4 +1,4 @@
-package principal;
+package com.lecsys;
 
 import controlador.CtrlLogin;
 import interfaceUsuario.IngresoUsuario;

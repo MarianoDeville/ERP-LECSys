@@ -37,6 +37,12 @@ public class CtrlExamenes implements ActionListener {
 		ventanaExamenes.lblComboBox2.setText("Examen");
 		ventanaExamenes.comboBox2.setVisible(true);
 		ventanaExamenes.comboBox2.setModel(new DefaultComboBoxModel<String>(dtosAlumno.getListaTipoExamen()));
+		ventanaExamenes.lblTxt1.setVisible(true);
+		ventanaExamenes.lblTxt1.setText("Fecha");
+		ventanaExamenes.txt1.setVisible(true);
+		ventanaExamenes.txt1.setEditable(true);
+		ventanaExamenes.lblTxt1Izq.setVisible(true);
+		ventanaExamenes.lblTxt1Izq.setText("DD-MM-AAAA");
 		actualizar();
 		ventanaExamenes.setVisible(true);
 	}
@@ -56,22 +62,30 @@ public class CtrlExamenes implements ActionListener {
 		if(e.getSource() == ventanaExamenes.btn1B) {
 			
 			int cantAlumnos = ventanaExamenes.tabla.getRowCount();
-			String notas [][] = new String [cantAlumnos][2];
-			
-			for(int i = 0 ; i < cantAlumnos ; i++) {
+			String notas [][] = new String [cantAlumnos][3];
+			dtosAlumno.setCurso(ventanaExamenes.comboBox1.getSelectedIndex());
+			dtosAlumno.setTipoExamen((String)ventanaExamenes.comboBox2.getSelectedItem());
+
+			if(ventanaExamenes.txt1.getText().length() == 10) {
+
+				String[] fecha = ventanaExamenes.txt1.getText().split("-");
+				dtosAlumno.setFechaDia(fecha[0]);
+				dtosAlumno.setFechaMes(fecha[1]);
+				dtosAlumno.setFechaAño(fecha[2]);
 				
-				notas[i][0] = (String)ventanaExamenes.tabla.getValueAt(i, 0);
-				notas[i][1] = (String)ventanaExamenes.tabla.getValueAt(i, 3);
-			}
-			
-			if(dtosAlumno.guardarResultados(notas)) {
+				for(int i = 0 ; i < cantAlumnos ; i++) {
+					
+					notas[i][0] = (String)ventanaExamenes.tabla.getValueAt(i, 0);
+					notas[i][1] = (String)ventanaExamenes.tabla.getValueAt(i, 3);
+				}
 				
-				JOptionPane.showMessageDialog(null, "Notas almacenadas.");
+				String msg = dtosAlumno.guardarResultados(notas);
+				JOptionPane.showMessageDialog(null,msg);
+				
 			} else {
 				
-				JOptionPane.showMessageDialog(null, "Error al intentar almacenar las notas.");
+				JOptionPane.showMessageDialog(null, "El formato de la fecha es incorrecto. Ej. 25-10-2020");
 			}
-
 		}
 		
 		if(e.getSource() == ventanaExamenes.btnImprimir) {

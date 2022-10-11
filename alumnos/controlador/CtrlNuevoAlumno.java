@@ -60,9 +60,9 @@ public class CtrlNuevoAlumno implements ActionListener {
 			dtosNuevoAlumno.setNombre(ventanaNuenoAlumno.txtNombre.getText());
 			dtosNuevoAlumno.setApellido(ventanaNuenoAlumno.txtApellido.getText());
 			dtosNuevoAlumno.setDni(ventanaNuenoAlumno.txtDNI.getText());
-			dtosNuevoAlumno.setFechaNacimientoAño(ventanaNuenoAlumno.txtAño.getText());
-			dtosNuevoAlumno.setFechaNacimientoMes(ventanaNuenoAlumno.txtMes.getText());
-			dtosNuevoAlumno.setFechaNacimientoDia(ventanaNuenoAlumno.txtDia.getText());
+			dtosNuevoAlumno.setFechaAño(ventanaNuenoAlumno.txtAño.getText());
+			dtosNuevoAlumno.setFechaMes(ventanaNuenoAlumno.txtMes.getText());
+			dtosNuevoAlumno.setFechaDia(ventanaNuenoAlumno.txtDia.getText());
 			dtosNuevoAlumno.setDireccion(ventanaNuenoAlumno.txtDireccion.getText());
 			dtosNuevoAlumno.setEmail(ventanaNuenoAlumno.txtEmail.getText());
 			dtosNuevoAlumno.setTelefono(ventanaNuenoAlumno.txtTelefono.getText());

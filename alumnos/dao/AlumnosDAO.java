@@ -10,6 +10,41 @@ import modelo.DtosAlumno;
 
 public class AlumnosDAO extends Conexion {
 
+	public boolean setExamen() {
+		
+		boolean bandera = true;
+		DtosAlumno dtosAlumno = new DtosAlumno();
+		DtosActividad dtosActividad = new DtosActividad();
+		String fecha = dtosAlumno.getFechaAño() + "-"
+					 + dtosAlumno.getFechaMes() + "-"
+					 + dtosAlumno.getFechaDia();
+		
+		try {
+			
+			this.conectar();
+			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO lecsys1.examenes "
+																+ "(idAlumno, fecha, tipo, nota, idProfesor, idCurso) "
+																+ "VALUES (?, ?, ?, ?, ?, ?)");
+			stm.setInt(1, Integer.parseInt(dtosAlumno.getLegajo()));
+			stm.setString(2, fecha);
+			stm.setString(3, dtosAlumno.getTipoExamen());
+			stm.setInt(4, Integer.parseInt(dtosAlumno.getResultadoExamen()));
+			stm.setInt(5, Integer.parseInt(dtosAlumno.getIdProfesor()));
+			stm.setInt(6, Integer.parseInt(dtosAlumno.getCurso()));
+			stm.executeUpdate();
+		} catch (Exception e) {
+	
+			System.err.println("AlumnosDAO, setExamen()");
+			System.err.println(e.getMessage());
+			bandera = false;
+		} finally {
+			
+			this.cerrar();
+		}
+		dtosActividad.registrarActividad("Carga de exámenes.", "Alumnos");
+		return bandera;
+	}
+	
 	public boolean setActualizarAlumno() {
 		
 		boolean bandera = true;
@@ -20,7 +55,7 @@ public class AlumnosDAO extends Conexion {
 											 dtosNuevoAlumno.getApellido(), 
 											 dtosNuevoAlumno.getDni(),
 											 dtosNuevoAlumno.getDireccion(), 
-											 dtosNuevoAlumno.getFechaNacimientoAño()+"-"+dtosNuevoAlumno.getFechaNacimientoMes()+"-"+dtosNuevoAlumno.getFechaNacimientoDia(), 
+											 dtosNuevoAlumno.getFechaAño()+"-"+dtosNuevoAlumno.getFechaMes()+"-"+dtosNuevoAlumno.getFechaDia(), 
 											 dtosNuevoAlumno.getTelefono(), 
 											 dtosNuevoAlumno.getEmail(), 
 											 dtosNuevoAlumno.getIdPersona()};
@@ -63,7 +98,7 @@ public class AlumnosDAO extends Conexion {
 											 dtosNuevoAlumno.getApellido(), 
 											 dtosNuevoAlumno.getDni(),
 											 dtosNuevoAlumno.getDireccion(), 
-											 dtosNuevoAlumno.getFechaNacimientoAño()+"-"+dtosNuevoAlumno.getFechaNacimientoMes()+"-"+dtosNuevoAlumno.getFechaNacimientoDia(), 
+											 dtosNuevoAlumno.getFechaAño()+"-"+dtosNuevoAlumno.getFechaMes()+"-"+dtosNuevoAlumno.getFechaDia(), 
 											 dtosNuevoAlumno.getTelefono(), 
 											 dtosNuevoAlumno.getEmail()};
 		idPersona = dtosPersona.registrarPersona(infoPersona);
@@ -153,6 +188,73 @@ public class AlumnosDAO extends Conexion {
 		}catch (Exception e) {
 			
 			System.err.println("AlumnosDAO, getAlumnos()");
+			System.err.println(e.getMessage());
+		} finally {
+			
+			this.cerrar();
+		}
+		return matriz;
+	}
+	public boolean setAsistencia(int fila) {
+		
+		boolean bandera = true;
+		DtosAlumno dtosAlumno = new DtosAlumno();
+		DtosActividad dtosActividad = new DtosActividad();
+
+		try {
+			
+			this.conectar();
+			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO lecsys1.faltas (idAlumnos, fecha, estado, idCurso) VALUES (?, ?, ?, ?)");
+			stm.setInt(1, dtosAlumno.getAsistencia("Legajo",fila));
+			stm.setString(2, dtosAlumno.getFechaActual(false));
+			stm.setInt(3, dtosAlumno.getAsistencia("Estado",fila));
+			stm.setInt(4, Integer.parseInt(dtosAlumno.getCurso()));
+			stm.executeUpdate();
+		} catch (Exception e) {
+	
+			System.err.println("AsistenciaDAO, setAsistencia()");
+			System.err.println(e.getMessage());
+			bandera = false;
+		} finally {
+			
+			this.cerrar();
+		}
+		dtosActividad.registrarActividad("Registro de asistencia.", "Alumnos");
+		return bandera;
+	}
+
+	public String [][] tablaAsistenciasAlumnos(String idCurso, boolean reducido) {
+		
+		String matriz[][]=null;
+		String comandoStatement = "SELECT * FROM lecsys1.faltas WHERE idCurso = " + idCurso; 
+		
+		if(reducido) {
+			
+			comandoStatement += " GROUP BY fecha";
+		}
+		
+		try {
+			
+			this.conectar();
+			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery(comandoStatement);
+			rs.last();	
+			matriz = new String[rs.getRow()][5];
+			rs.beforeFirst();
+			int i=0;
+
+			while (rs.next()) {
+					
+				matriz[i][0] = rs.getInt(1) + "";	
+				matriz[i][1] = rs.getInt(2) + "";
+				matriz[i][2] = rs.getString(3);
+				matriz[i][3] = rs.getInt(4) + "";
+				matriz[i][4] = rs.getInt(5) + "";
+				i++;
+			}
+		}catch (Exception e) {
+			
+			System.err.println("AsistenciaDAO, tablaAsistenciasAlumnos()");
 			System.err.println(e.getMessage());
 		} finally {
 			

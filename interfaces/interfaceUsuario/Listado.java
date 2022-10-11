@@ -18,12 +18,13 @@ public class Listado extends VentanaModelo {
 	public JLabel lblComboBox1;
 	public JLabel lblComboBox2;
 	public JLabel lblTxt1;
+	public JLabel lblTxt1Izq;
 	public JTextField txt1;
 	public JTable tabla;
-	public JButton btnImprimir;
 	public JCheckBox chckbx1;
 	public JButton btn1A;
 	public JButton btn1B;
+	public JButton btnImprimir;
 	public JButton btnVolver;
 	public JComboBox<String> comboBox1;
 	public JComboBox<String> comboBox2;
@@ -63,7 +64,7 @@ public class Listado extends VentanaModelo {
 		listado.add(comboBox2);
 		
 		lblTxt1 = new JLabel();
-		contenedor.putConstraint(SpringLayout.NORTH, lblTxt1, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.NORTH, lblTxt1, 17, SpringLayout.NORTH, listado);
 		contenedor.putConstraint(SpringLayout.WEST, lblTxt1, 25, SpringLayout.EAST, comboBox2);
 		lblTxt1.setVisible(false);
 		listado.add(lblTxt1);
@@ -76,6 +77,12 @@ public class Listado extends VentanaModelo {
 		txt1.setVisible(false);
 		listado.add(txt1);
 		
+		lblTxt1Izq = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblTxt1Izq, 17, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, lblTxt1Izq, 5, SpringLayout.EAST, txt1);
+		lblTxt1Izq.setVisible(false);
+		listado.add(lblTxt1Izq);
+		
 		scrollTabla = new JScrollPane();
 		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla, 50, SpringLayout.NORTH, listado);
 		contenedor.putConstraint(SpringLayout.WEST, scrollTabla, 15, SpringLayout.WEST, listado);
@@ -84,7 +91,6 @@ public class Listado extends VentanaModelo {
 		listado.add(scrollTabla);
 		tabla = new JTable();
 		scrollTabla.setViewportView(tabla);
-		
 		
 		btnImprimir = new JButton("Imprimir");
 		contenedor.putConstraint(SpringLayout.NORTH, btnImprimir, 50, SpringLayout.NORTH, listado);
