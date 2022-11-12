@@ -1,5 +1,3 @@
-package com.lecsys;
-
 import controlador.CtrlLogin;
 import interfaceUsuario.IngresoUsuario;
 
@@ -15,7 +13,7 @@ import interfaceUsuario.IngresoUsuario;
 /*								UMLet 14.3										*/
 /*		Estado:					Desarrollo.										*/
 /*		Fecha creación:			15/09/2022										*/
-/*		Última modificación:	10/10/2022										*/
+/*		Última modificación:	12/11/2022										*/
 /********************************************************************************/
 
 public class LECSys {

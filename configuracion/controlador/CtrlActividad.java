@@ -35,6 +35,7 @@ public class CtrlActividad implements ActionListener {
 		ventanaActividad.comboBox2.setVisible(true);
 		ventanaActividad.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosActividad.getMeses()));
 		ventanaActividad.comboBox2.setModel(new DefaultComboBoxModel<String>(dtosActividad.getAños()));
+		ventanaActividad.comboBox1.setSelectedIndex(dtosActividad.getMesActual());
 		actualizar();
 		ventanaActividad.setVisible(true);
 	}
@@ -49,7 +50,6 @@ public class CtrlActividad implements ActionListener {
 		ventanaActividad.tabla.getColumnModel().getColumn(2).setMaxWidth(90);
 		ventanaActividad.tabla.getColumnModel().getColumn(3).setMaxWidth(70);
 		ventanaActividad.tabla.getColumnModel().getColumn(6).setMaxWidth(110);
-		ventanaActividad.comboBox1.setSelectedIndex(dtosActividad.getMesActual());
 	}
 	
 	public void actionPerformed(ActionEvent e) {
