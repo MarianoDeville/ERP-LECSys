@@ -22,6 +22,7 @@ public class CtrlAlumnos implements ActionListener {
 		this.ventanaAlumnos.btn1C.addActionListener(this);
 		this.ventanaAlumnos.btn2A.addActionListener(this);
 		this.ventanaAlumnos.btn2B.addActionListener(this);
+		this.ventanaAlumnos.btn2C.addActionListener(this);
 		this.ventanaAlumnos.btnVolver.addActionListener(this);
 	}
 	
@@ -47,6 +48,10 @@ public class CtrlAlumnos implements ActionListener {
 		ventanaAlumnos.lbl2B.setVisible(true);
 		ventanaAlumnos.btn2B.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Registro asistencia.png"));
 		ventanaAlumnos.btn2B.setVisible(true);
+		ventanaAlumnos.lbl2C.setText("Grupo familiar");
+		ventanaAlumnos.lbl2C.setVisible(true);
+		ventanaAlumnos.btn2C.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Grupo familiar.png"));
+		ventanaAlumnos.btn2C.setVisible(true);
 		ventanaAlumnos.setVisible(true);
 	}
 	
@@ -96,10 +101,19 @@ public class CtrlAlumnos implements ActionListener {
 			
 			if(acceso.chkAcceso("Alumnos", "Registro asistencia")) {
 			
-
 				Listado ventanaRegistroAsistencia = new Listado("Registro asistencia");
 				CtrlRegistroAsistencia ctrlRegistroAsistencias = new CtrlRegistroAsistencia(ventanaRegistroAsistencia);
 				ctrlRegistroAsistencias.iniciar();
+			}
+		}
+		
+		if(e.getSource() == ventanaAlumnos.btn2C) {
+			
+			if(acceso.chkAcceso("Alumnos", "Grupo familiar")) {
+			
+				Listado ventanaGrupoFamiliar = new Listado("Registro asistencia");
+				CtrlGrupoFamiliar ctrlGrupoFamiliar = new CtrlGrupoFamiliar(ventanaGrupoFamiliar);
+				ctrlGrupoFamiliar.iniciar();
 			}
 		}
 		

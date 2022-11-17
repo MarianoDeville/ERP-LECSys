@@ -122,8 +122,8 @@ public class CursosDAO extends Conexion {
 								 + "JOIN lecsys1.empleados ON curso.idProfesor = empleados.idEmpleado "
 								 + "JOIN lecsys1.persona ON empleados.idPersona = persona.idPersona "
 								 + "JOIN lecsys1.valorCuota on curso.idCurso = valorCuota.idCurso "
-								 + where
-								 + "GROUP BY curso.idCurso";
+								 + where;
+						//		 + "GROUP BY curso.idCurso";
 
 		try {
 			
@@ -173,6 +173,7 @@ public class CursosDAO extends Conexion {
 			}			
 		}catch (Exception e) {
 			
+			System.out.println(comandoStatement);
 			System.err.println(e.getMessage());
 		} finally {
 			

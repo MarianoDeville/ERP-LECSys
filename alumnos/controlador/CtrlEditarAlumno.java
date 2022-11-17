@@ -26,11 +26,15 @@ public class CtrlEditarAlumno implements ActionListener {
 		this.ventanaEditarAlumno.btnVolver.addActionListener(this);
 		
 	}
+	
 	public void iniciar(String legajo) {
 		
 		ventanaEditarAlumno.btnImprimir.setVisible(true);
 		ventanaEditarAlumno.scrollTabla.setVisible(true);
 		ventanaEditarAlumno.chkbox1.setVisible(true);
+		ventanaEditarAlumno.lblTxt1.setVisible(true);
+		ventanaEditarAlumno.txt1.setVisible(true);
+		ventanaEditarAlumno.txt1.setEditable(false);
 		dtosEditarAlumno.recuperarInformacionAlumno(legajo, dtosEditarAlumno.getEstado());
 		ventanaEditarAlumno.txtLegajo.setText(dtosEditarAlumno.getLegajo());
 		ventanaEditarAlumno.txtNombre.setText(dtosEditarAlumno.getNombre());
@@ -44,6 +48,8 @@ public class CtrlEditarAlumno implements ActionListener {
 		ventanaEditarAlumno.txtDia.setText(dtosEditarAlumno.getFechaDia());
 		ventanaEditarAlumno.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosEditarAlumno.getListaCursos()));
 		ventanaEditarAlumno.comboBox1.setSelectedIndex(dtosEditarAlumno.getCursoSeleccionado());
+		ventanaEditarAlumno.lblTxt1.setText("Ingreso:");
+		ventanaEditarAlumno.txt1.setText(dtosEditarAlumno.getFechaIngreso());
 		ventanaEditarAlumno.chkbox1.setSelected(dtosEditarAlumno.getEstado());
 		actualizar();
 		ventanaEditarAlumno.setVisible(true);
@@ -52,7 +58,6 @@ public class CtrlEditarAlumno implements ActionListener {
 	private void actualizar() {
 		
 		ventanaEditarAlumno.tabla.setModel(dtosEditarAlumno.getTablaDias(ventanaEditarAlumno.comboBox1.getSelectedIndex()));
-
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -131,8 +136,8 @@ public class CtrlEditarAlumno implements ActionListener {
 		
 		if(e.getSource() == ventanaEditarAlumno.btnVolver) {
 			
+			dtosEditarAlumno.limpiarInformacion();
 			ventanaEditarAlumno.dispose();
 		}
 	}
-	
 }

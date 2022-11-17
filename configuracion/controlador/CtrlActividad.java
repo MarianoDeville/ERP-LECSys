@@ -34,8 +34,8 @@ public class CtrlActividad implements ActionListener {
 		ventanaActividad.lblComboBox2.setVisible(true);
 		ventanaActividad.comboBox2.setVisible(true);
 		ventanaActividad.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosActividad.getMeses()));
-		ventanaActividad.comboBox2.setModel(new DefaultComboBoxModel<String>(dtosActividad.getAños()));
 		ventanaActividad.comboBox1.setSelectedIndex(dtosActividad.getMesActual());
+		ventanaActividad.comboBox2.setModel(new DefaultComboBoxModel<String>(dtosActividad.getAños()));
 		actualizar();
 		ventanaActividad.setVisible(true);
 	}

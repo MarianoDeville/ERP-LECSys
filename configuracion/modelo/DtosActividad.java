@@ -28,7 +28,6 @@ public class DtosActividad {
 				 + ":" +fechaSistema.get(Calendar.MINUTE)
 				 + ":" +fechaSistema.get(Calendar.SECOND);
 			
-		
 		} catch (Exception e) {
 			
 			System.err.println(e.getMessage());
@@ -44,13 +43,13 @@ public class DtosActividad {
 	public String [][] getActividad(String mes, String año) {
 		
 		ActividadDAO actividadDAO = new ActividadDAO();
+		
 		if(mes.equals("") || año.equals("")) {
 			
 			fechaSistema = new GregorianCalendar();
 			año = fechaSistema.get(Calendar.YEAR) + "";
 			mes = fechaSistema.get(Calendar.MONTH) + 1 + "";
 		}
-		
 		return actividadDAO.getActividad(mes, año);
 	}
 	

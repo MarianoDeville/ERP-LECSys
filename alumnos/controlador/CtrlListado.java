@@ -40,7 +40,7 @@ public class CtrlListado implements ActionListener {
 		ventanaListado.setVisible(true);
 	}
 	
-	public void actualizar() {
+	private void actualizar() {
 		
 		ventanaListado.tabla.setModel(dtosAlumno.getListadoAlumnos((String)ventanaListado.comboBox1.getSelectedItem() 
 																,dtosAlumno.getIdValorCriterio((String)ventanaListado.comboBox1.getSelectedItem()

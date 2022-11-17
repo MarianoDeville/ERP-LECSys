@@ -30,6 +30,7 @@
 //	public String getResultadoExamen()
 //	public String getIdProfesor()
 //	public String getTipoExamen()
+//	public String getFechaIngreso()
 //	public String [] getOrdenamiento()
 //	public String [] getListaCursos()
 //	public String [] getCriterio() 
@@ -86,6 +87,7 @@ public class DtosAlumno {
 	private static String fechaDia;
 	private static String telefono;
 	private static String direccion;
+	private static String fechaIngreso;
 	private static String email;
 	private static String idCurso;
 	private static String idPersona;
@@ -548,6 +550,7 @@ public class DtosAlumno {
 		email = "";
 		idCurso = "";
 		idPersona = "";
+		fechaIngreso = "";
 	}
 	
 	public void recuperarInformacionAlumno(String nroLegajo, boolean estadoAlumno) {
@@ -571,14 +574,15 @@ public class DtosAlumno {
 			fechaMes = fecha[1];
 			fechaDia = fecha[2];
 			idPersona = alumno[0][13];
+			fechaIngreso = alumno[0][14];
 		}
 	}
 	
 	public int getCursoSeleccionado() {
 		
 		int i = 0;
-		while(i < idCurso.length()) {
-			
+		while(i < idCursos.length) {
+	
 			if(idCurso.equals(idCursos[i])) {
 
 				break;
@@ -825,30 +829,42 @@ public class DtosAlumno {
 	}
 
 	public String getIdPersona() {
+		
 		return idPersona;
 	}
 
 	public void setIdPersona(String idPersona) {
+		
 		DtosAlumno.idPersona = idPersona;
 	}
 
 	public String getCantAlumnos() {
+		
 		return cantAlumnos;
 	}
 
 	public String getResultadoExamen() {
+		
 		return resultadoExamen;
 	}
 
 	public String getIdProfesor() {
+		
 		return idProfesor;
 	}
 
 	public String getTipoExamen() {
+		
 		return tipoExamen;
 	}
 
 	public void setTipoExamen(String tipoExamen) {
+		
 		DtosAlumno.tipoExamen = tipoExamen;
+	}
+
+	public String getFechaIngreso() {
+		
+		return fechaIngreso;
 	}
 }
