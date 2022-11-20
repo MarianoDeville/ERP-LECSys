@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import dao.OperadorSistema;
 import interfaceUsuario.CambioContraseña;
+import interfaceUsuario.Cumpleaños;
 import interfaceUsuario.IngresoUsuario;
 import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.Principal;
@@ -45,6 +46,9 @@ public class CtrlPrincipal implements ActionListener {
 			CtrlCambioPassword ctrlCambioPass = new CtrlCambioPassword(ventanaCambioPass);
 			ctrlCambioPass.iniciar();
 		}
+		Cumpleaños ventanaCumpleaños = new Cumpleaños("Recordatorio de cumpleaños");
+		CtrlCumpleaños ctrlCumpleaños = new CtrlCumpleaños(ventanaCumpleaños);
+		ctrlCumpleaños.iniciar();
 	}
 
 	public void actionPerformed(ActionEvent e) {

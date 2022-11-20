@@ -9,6 +9,7 @@
 	<classpathentry kind="src" path="personas"/>
 	<classpathentry kind="src" path="cursos"/>
 	<classpathentry kind="src" path="CambioContraseña"/>
+	<classpathentry kind="src" path="grupoFamiliar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="Lib/mysql-connector-java-8.0.21.jar">
 		<attributes>

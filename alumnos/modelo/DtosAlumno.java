@@ -72,7 +72,7 @@ import javax.swing.table.DefaultTableModel;
 import dao.AlumnosDAO;
 import dao.CursosDAO;
 import dao.EmpleadosDAO;
-import dao.PeronasDAO;
+import dao.PersonasDAO;
 
 public class DtosAlumno {
 	
@@ -659,7 +659,7 @@ public class DtosAlumno {
 	public String checkInformacion(boolean checDNI) {
 		
 		String msg = "";
-		PeronasDAO personasDAO = new PeronasDAO();
+		PersonasDAO personasDAO = new PersonasDAO();
 		
 		if(nombre.length() < 3) {
 

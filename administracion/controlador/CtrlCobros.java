@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import interfaceUsuario.InterfaceBotones;
+import interfaceUsuario.Listado;
 
 public class CtrlCobros implements ActionListener {
 	
@@ -42,7 +43,7 @@ public class CtrlCobros implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 
-/*		if(e.getSource() == ventanaCobros.btn1A) {
+		if(e.getSource() == ventanaCobros.btn1A) {
 			
 			
 		}
@@ -54,14 +55,16 @@ public class CtrlCobros implements ActionListener {
 		
 		if(e.getSource() == ventanaCobros.btn2A) {
 			
-			
+			Listado ventanaCobrarHabilitar = new Listado("Cobro y habilitación");
+			CtrolCobrarHabilitar ctrolCobrarHabilitar = new CtrolCobrarHabilitar(ventanaCobrarHabilitar);
+			ctrolCobrarHabilitar.iniciar();
 		}
 		
 		if(e.getSource() == ventanaCobros.btn2B) {
 			
 			
 		}
-*/		
+		
 		if(e.getSource() == ventanaCobros.btnVolver) {
 			
 			ventanaCobros.dispose();

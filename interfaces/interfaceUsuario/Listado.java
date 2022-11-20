@@ -20,8 +20,10 @@ public class Listado extends VentanaModelo {
 	public JLabel lblTxt1;
 	public JLabel lblTxt1Izq;
 	public JTextField txt1;
+	public JTextField txt2;
 	public JTable tabla;
 	public JCheckBox chckbx1;
+	public JCheckBox chckbx2;
 	public JButton btn1A;
 	public JButton btn1B;
 	public JButton btnImprimir;
@@ -94,17 +96,9 @@ public class Listado extends VentanaModelo {
 		
 		btnImprimir = new JButton("Imprimir");
 		contenedor.putConstraint(SpringLayout.NORTH, btnImprimir, 50, SpringLayout.NORTH, listado);
-		contenedor.putConstraint(SpringLayout.EAST, btnImprimir, -10, SpringLayout.EAST, listado);
+		contenedor.putConstraint(SpringLayout.EAST, btnImprimir, -20, SpringLayout.EAST, listado);
 		contenedor.putConstraint(SpringLayout.WEST, btnImprimir, -90, SpringLayout.EAST, btnImprimir);
 		listado.add(btnImprimir);
-		
-		chckbx1 = new JCheckBox();
-		contenedor.putConstraint(SpringLayout.NORTH, chckbx1, 25, SpringLayout.SOUTH, btnImprimir);
-		contenedor.putConstraint(SpringLayout.EAST, chckbx1, 0, SpringLayout.EAST, btnImprimir);
-		contenedor.putConstraint(SpringLayout.WEST, chckbx1, -90, SpringLayout.EAST, chckbx1);
-		chckbx1.setSelected(true);
-		chckbx1.setVisible(false);
-		listado.add(chckbx1);
 		
 		btn1A = new JButton("");
 		contenedor.putConstraint(SpringLayout.NORTH, btn1A, 25, SpringLayout.SOUTH, btnImprimir);
@@ -113,9 +107,33 @@ public class Listado extends VentanaModelo {
 		btn1A.setVisible(false);
 		listado.add(btn1A);
 		
+		chckbx1 = new JCheckBox();
+		contenedor.putConstraint(SpringLayout.NORTH, chckbx1, 25, SpringLayout.SOUTH, btn1A);
+		contenedor.putConstraint(SpringLayout.EAST, chckbx1, 0, SpringLayout.EAST, btn1A);
+		contenedor.putConstraint(SpringLayout.WEST, chckbx1, -90, SpringLayout.EAST, chckbx1);
+		chckbx1.setSelected(true);
+		chckbx1.setVisible(false);
+		listado.add(chckbx1);
+		
+		chckbx2 = new JCheckBox();
+		contenedor.putConstraint(SpringLayout.NORTH, chckbx2, 25, SpringLayout.SOUTH, chckbx1);
+		contenedor.putConstraint(SpringLayout.EAST, chckbx2, 0, SpringLayout.EAST, chckbx1);
+		contenedor.putConstraint(SpringLayout.WEST, chckbx2, -90, SpringLayout.EAST, chckbx2);
+		chckbx2.setSelected(true);
+		chckbx2.setVisible(false);
+		listado.add(chckbx2);
+
+		txt2 = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txt2, 25, SpringLayout.SOUTH, chckbx2);
+		contenedor.putConstraint(SpringLayout.EAST, txt2, 0, SpringLayout.EAST, chckbx2);
+		contenedor.putConstraint(SpringLayout.WEST, txt2, -90, SpringLayout.EAST, txt2);
+		txt2.setEditable(false);
+		txt2.setVisible(false);
+		listado.add(txt2);
+		
 		btnVolver = new JButton("Volver");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -10, SpringLayout.SOUTH, listado);
-		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -10, SpringLayout.EAST, listado);
+		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -20, SpringLayout.EAST, listado);
 		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -90, SpringLayout.EAST, btnVolver);
 		listado.add(btnVolver);
 		

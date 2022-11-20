@@ -15,7 +15,7 @@ public class EmpleadosDAO extends Conexion {
 		
 		boolean bandera = true;
 		DtosActividad dtosActividad = new DtosActividad();
-		PeronasDAO dtosPersona = new PeronasDAO();
+		PersonasDAO dtosPersona = new PersonasDAO();
 		DtosEmpleado dtosEmpleado = new DtosEmpleado();
 		String infoPersona[] = new String[] {dtosEmpleado.getNombre(), 
 											 dtosEmpleado.getApellido(), 
@@ -58,7 +58,7 @@ public class EmpleadosDAO extends Conexion {
 		
 		boolean bandera = true;
 		DtosActividad dtosActividad = new DtosActividad();
-		PeronasDAO dtosPersona = new PeronasDAO();
+		PersonasDAO dtosPersona = new PersonasDAO();
 		DtosEmpleado dtosEmpleado = new DtosEmpleado();
 		Calendar fechaSistema = new GregorianCalendar();
 		String fechaActual = fechaSistema.get(Calendar.YEAR) + "/" 

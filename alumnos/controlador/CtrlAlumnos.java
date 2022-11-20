@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.ABML;
 import interfaceUsuario.Listado;
+import interfaceUsuario.ListadoDoble;
 import modelo.DtosAcceso;
 
 public class CtrlAlumnos implements ActionListener {
@@ -111,7 +112,7 @@ public class CtrlAlumnos implements ActionListener {
 			
 			if(acceso.chkAcceso("Alumnos", "Grupo familiar")) {
 			
-				Listado ventanaGrupoFamiliar = new Listado("Registro asistencia");
+				ListadoDoble ventanaGrupoFamiliar = new ListadoDoble("Gestión de grupos familiares");
 				CtrlGrupoFamiliar ctrlGrupoFamiliar = new CtrlGrupoFamiliar(ventanaGrupoFamiliar);
 				ctrlGrupoFamiliar.iniciar();
 			}

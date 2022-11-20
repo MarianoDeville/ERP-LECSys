@@ -1,7 +1,14 @@
 package controlador;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+
+import javax.swing.JOptionPane;
+
 import interfaceUsuario.InformeAlumno;
 import modelo.DtosAlumno;
 
@@ -54,7 +61,30 @@ public class CtrlInformeAlumno implements ActionListener {
 		
 		if(e.getSource() == ventanaInforme.btnImprimir) {
 
-
+			Color colorPanel = ventanaInforme.panel.getBackground();
+			ventanaInforme.panel.setBackground(Color.WHITE);
+			ventanaInforme.btnImprimir.setVisible(false);
+			ventanaInforme.btnVolver.setVisible(false);
+			PrinterJob imprimir = PrinterJob.getPrinterJob();
+			PageFormat preformat = imprimir.defaultPage();
+			PageFormat postformat = imprimir.pageDialog(preformat);
+			imprimir.setPrintable(new Printer(ventanaInforme.panel), postformat);
+			
+			if (imprimir.printDialog()) {
+				
+				try {
+					
+						imprimir.print();
+				} catch (PrinterException f) {
+					
+						JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
+						System.err.println(f.getMessage());
+				}
+			}
+			
+			ventanaInforme.panel.setBackground(colorPanel);
+			ventanaInforme.btnImprimir.setVisible(true);
+			ventanaInforme.btnVolver.setVisible(true);
 		}		
 		
 		if(e.getSource() == ventanaInforme.btnVolver) {

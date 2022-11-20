@@ -12,7 +12,7 @@ import javax.swing.JButton;
 public class InformeAlumno extends VentanaModelo {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel panel;
+	public JPanel panel;
 	public JTextField txtLegajo;
 	public JTextField txtNombre;
 	public JTextField txtApellido;

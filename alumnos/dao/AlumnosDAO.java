@@ -50,7 +50,7 @@ public class AlumnosDAO extends Conexion {
 		boolean bandera = true;
 		DtosAlumno dtosNuevoAlumno = new DtosAlumno();
 		DtosActividad dtosActividad = new DtosActividad();
-		PeronasDAO dtosPersona = new PeronasDAO();
+		PersonasDAO dtosPersona = new PersonasDAO();
 		String infoPersona[] = new String[] {dtosNuevoAlumno.getNombre(), 
 											 dtosNuevoAlumno.getApellido(), 
 											 dtosNuevoAlumno.getDni(),
@@ -89,7 +89,7 @@ public class AlumnosDAO extends Conexion {
 		boolean bandera = true;
 		DtosAlumno dtosNuevoAlumno = new DtosAlumno();
 		DtosActividad dtosActividad = new DtosActividad();
-		PeronasDAO dtosPersona = new PeronasDAO();
+		PersonasDAO dtosPersona = new PersonasDAO();
 		Calendar fechaSistema = new GregorianCalendar();
 		String fecha = fechaSistema.get(Calendar.YEAR) + "/" 
 					 + (fechaSistema.get(Calendar.MONTH)+1) + "/" 
@@ -146,8 +146,9 @@ public class AlumnosDAO extends Conexion {
 		} else {
 			
 			armoWhere = "WHERE (alumnos.estado = " + (estado? "1 ":"0 ")
-					  + "AND apellido LIKE '" + valor
-					  + "%') ORDER BY " + orden;
+					  + "AND (apellido LIKE '" + valor
+					  + "%' OR nombre LIKE '" + valor
+					  + "%')) ORDER BY " + orden;
 		}
 		
 		String comandoStatement = "SELECT idAlumno, nombre, apellido, dni, dirección, teléfono, email, nivel, año"

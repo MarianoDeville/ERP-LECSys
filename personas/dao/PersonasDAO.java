@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class PeronasDAO extends Conexion {
+public class PersonasDAO extends Conexion {
 	
 	public boolean actualizarPersona(String infoPersona[]) {
 		
@@ -105,5 +105,41 @@ public class PeronasDAO extends Conexion {
 			this.cerrar();
 		}
 		return bandera;
+	}
+	
+	public String [][] getListadoCumpleAños() {
+
+		String respuesta[][] = null;
+
+		try {
+			
+			this.conectar();
+			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery("SELECT nombre, apellido FROM lecsys1.persona "
+										  + "WHERE DAY(fechaNacimiento)=DAY(NOW()) AND MONTH(fechaNacimiento)=MONTH(NOW())");
+			rs.last();
+			
+			if(rs.getRow() > 0) {
+				
+				respuesta = new String[rs.getRow()][2];
+				rs.beforeFirst();
+				int i=0;
+	
+				while (rs.next()) {
+						
+					respuesta[i][0] = rs.getString(1);	
+					respuesta[i][1] = rs.getString(2);	
+					i++;
+				}
+			}
+		} catch (Exception e) {
+			
+			System.err.println("PersonasDAO, listadoCumpleAños()");
+			System.err.println(e.getMessage());
+		} finally {
+			
+			this.cerrar();
+		}
+		return respuesta;
 	}
 }
