@@ -7,6 +7,7 @@ import javax.swing.JTable;
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JCheckBox;
 
 public class Cobro extends VentanaModelo {
 
@@ -19,12 +20,15 @@ public class Cobro extends VentanaModelo {
 	public JLabel lblInscripción;
 	public JLabel lblDescEfectivo;
 	public JLabel lblTotalPagar;
+	public JLabel lblEmail;
 	public JLabel lblMsgError;
+	public JCheckBox chckbxEnviarEmail;
 	public JTextField txtNombre;
 	public JTextField txtDescuento;
 	public JTextField txtInscripción;
 	public JTextField txtDescEfectivo;
 	public JTextField txtTotalPagar;
+	public JTextField txtEmail;
 	public JButton btnCobrar;
 	public JButton btnVolver;
 
@@ -103,21 +107,39 @@ public class Cobro extends VentanaModelo {
 		panel.add(txtTotalPagar);
 		txtTotalPagar.setColumns(20);
 	
-		lblMsgError = new JLabel("Total a pagar:");
-		contenedor.putConstraint(SpringLayout.NORTH, lblMsgError, 20, SpringLayout.SOUTH, lblTotalPagar);
-		contenedor.putConstraint(SpringLayout.WEST, lblMsgError, 0, SpringLayout.WEST, lblTotalPagar);
+		chckbxEnviarEmail = new JCheckBox("Enviar comprobante por e-mail");
+		contenedor.putConstraint(SpringLayout.NORTH, chckbxEnviarEmail, 20, SpringLayout.SOUTH, lblTotalPagar);
+		contenedor.putConstraint(SpringLayout.WEST, chckbxEnviarEmail, 0, SpringLayout.WEST, lblNombre);
+		panel.add(chckbxEnviarEmail);
+		
+		lblEmail = new JLabel("E-mail:");
+		contenedor.putConstraint(SpringLayout.NORTH, lblEmail, 20, SpringLayout.SOUTH, chckbxEnviarEmail);
+		contenedor.putConstraint(SpringLayout.WEST, lblEmail, 0, SpringLayout.WEST, lblNombre);
+		lblEmail.setVisible(false);
+		panel.add(lblEmail);
+		
+		txtEmail = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txtEmail, -3, SpringLayout.NORTH, lblEmail);
+		contenedor.putConstraint(SpringLayout.WEST, txtEmail, 0, SpringLayout.WEST, txtNombre);
+		panel.add(txtEmail);
+		txtEmail.setVisible(false);
+		txtEmail.setColumns(40);		
+
+		lblMsgError = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblMsgError, 20, SpringLayout.SOUTH, lblEmail);
+		contenedor.putConstraint(SpringLayout.WEST, lblMsgError, 0, SpringLayout.WEST, lblEmail);
 		panel.add(lblMsgError);
 			
 		btnCobrar = new JButton("Cobrar");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnCobrar, -10, SpringLayout.SOUTH, panel);
 		contenedor.putConstraint(SpringLayout.WEST, btnCobrar, 20, SpringLayout.WEST, panel);
-//		contenedor.putConstraint(SpringLayout.EAST, btnCobrar, 90, SpringLayout.WEST, btnCobrar);
+		contenedor.putConstraint(SpringLayout.EAST, btnCobrar, 90, SpringLayout.WEST, btnCobrar);
 		panel.add(btnCobrar);
 		
 		btnVolver = new JButton("Volver");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -10, SpringLayout.SOUTH, panel);
-		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -10, SpringLayout.EAST, panel);
-//		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -90, SpringLayout.EAST, btnVolver);
+		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -20, SpringLayout.EAST, panel);
+		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -90, SpringLayout.EAST, btnVolver);
 		panel.add(btnVolver);
 	}
 }

@@ -31,7 +31,13 @@ public class CtrlABMLAlumnos implements ActionListener {
 		this.ventanaABML.btnVolver.addActionListener(this);
 		this.ventanaABML.chckbx1.addActionListener(this);
 		this.ventanaABML.comboBox1.addActionListener(this);
-		this.ventanaABML.txt1.addActionListener(this);
+		this.ventanaABML.txt1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				actualizar();
+			}
+		});
 	}
 	
 	public void iniciar() {
@@ -39,13 +45,6 @@ public class CtrlABMLAlumnos implements ActionListener {
 		ventanaABML.chckbx1.setVisible(true);
 		ventanaABML.comboBox1.setVisible(true);
 		ventanaABML.txt1.setVisible(true);
-		ventanaABML.txt1.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				
-				actualizar();
-			}
-		});
 		ventanaABML.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosABMLAlumnos.getOrdenamiento()));
 		actualizar();
 		ventanaABML.setVisible(true);
@@ -144,11 +143,6 @@ public class CtrlABMLAlumnos implements ActionListener {
 		}
 		
 		if(e.getSource() == ventanaABML.comboBox1) {
-			
-			actualizar();
-		}
-		
-		if(e.getSource() == ventanaABML.txt1) {
 			
 			actualizar();
 		}

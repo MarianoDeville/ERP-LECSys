@@ -149,7 +149,7 @@ public class DtosAlumno {
 		alumnosDAO = new AlumnosDAO();
 		String cuerpo[][] = null;
 		String titulo[] = {"Legajo", "Nombre", "Apellido", "Resultado"};
-		String respuesta[][] = alumnosDAO.getAlumnos("Curso", idCursos[cursoSeleccionado], true, "");
+		String respuesta[][] = alumnosDAO.getAlumnos("Curso", idCursos[cursoSeleccionado], true, "", "");
 
 		if(respuesta != null) {
 		
@@ -201,7 +201,7 @@ public class DtosAlumno {
 				titulo[i] = respuesta[i - 3][2];
 			}
 		}
-		respuesta = alumnosDAO.getAlumnos("Curso", idCursos[cursoSeleccionado], true, "");
+		respuesta = alumnosDAO.getAlumnos("Curso", idCursos[cursoSeleccionado], true, "", "");
 		
 		if(respuesta != null) {
 			
@@ -333,7 +333,7 @@ public class DtosAlumno {
 		
 		alumnosDAO = new AlumnosDAO();
 		String titulo[] = {"Legajo", "Nombre", "Apellido", "Presente", "Tarde"};
-		String respuesta[][] = alumnosDAO.getAlumnos("Curso", idCursos[cursoSeleccionado], true, "");
+		String respuesta[][] = alumnosDAO.getAlumnos("Curso", idCursos[cursoSeleccionado], true, "", "");
 		tablaAsistencia = null;
 		cantAlumnos = "0";
 		if(respuesta != null) {
@@ -379,7 +379,7 @@ public class DtosAlumno {
 		
 		alumnosDAO = new AlumnosDAO();
 		String titulo[] = {"Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Curso", "Sel."};
-		String respuesta[][] = alumnosDAO.getAlumnos(campo, valor, true, "");
+		String respuesta[][] = alumnosDAO.getAlumnos(campo, valor, true, "", "");
 		Object cuerpo[][] = null;
 		cantAlumnos = "0";
 		if(respuesta != null) {
@@ -435,7 +435,7 @@ public class DtosAlumno {
 		alumnosDAO = new AlumnosDAO();
 		String titulo[] = {"Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Curso", "Sel."};
 		String ordenado[] = {"idAlumno", "nombre", "apellido", "dni", "dirección", "alumnos.idCurso"};
-		String respuesta[][] = alumnosDAO.getAlumnos(campo, valor, estado, ordenado[pos]);
+		String respuesta[][] = alumnosDAO.getAlumnos(campo, "", estado, ordenado[pos], valor);
 		Object cuerpo[][] = null;
 		cantAlumnos = "0";
 		if(respuesta != null) {
@@ -556,7 +556,7 @@ public class DtosAlumno {
 	public void recuperarInformacionAlumno(String nroLegajo, boolean estadoAlumno) {
 		
 		alumnosDAO = new AlumnosDAO();
-		String alumno[][] = alumnosDAO.getAlumnos("ID", nroLegajo, estadoAlumno, "");
+		String alumno[][] = alumnosDAO.getAlumnos("ID", nroLegajo, estadoAlumno, "", "");
 		
 		if(alumno.length > 0) {
 			

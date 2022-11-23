@@ -286,9 +286,34 @@ public class CursosDAO extends Conexion {
 		return bandera;
 	}
 	
-	
-	
-	
+	public String getValorCuota(String idCurso) {
+		
+		String respuesta = null;
+		String comandoStatement = "SELECT precio FROM lecsys1.curso "
+								+ "JOIN lecsys1.valorCuota ON valorCuota.idCurso = curso.idCurso "
+								+ "WHERE curso.idCurso = " + idCurso;
+		
+		try {
+			
+			this.conectar();
+			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery(comandoStatement);
+
+			if(rs.next()) {
+				
+				respuesta = rs.getString(1);
+			}
+			
+		}catch (Exception e) {
+			
+			System.out.println(comandoStatement);
+			System.err.println(e.getMessage());
+		} finally {
+			
+			this.cerrar();
+		}
+		return respuesta;
+	}
 	
 	
 }

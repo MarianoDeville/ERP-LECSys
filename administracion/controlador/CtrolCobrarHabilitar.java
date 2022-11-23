@@ -2,6 +2,11 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import dao.CursosDAO;
+import interfaceUsuario.Cobro;
 import interfaceUsuario.Listado;
 import modelo.DtosAcceso;
 import modelo.DtosCobros;
@@ -19,7 +24,13 @@ public class CtrolCobrarHabilitar implements ActionListener {
 		this.dtosCobros = new DtosCobros();
 		this.ventanaCobrarHabilitar.chckbx1.addActionListener(this);
 		this.ventanaCobrarHabilitar.chckbx2.addActionListener(this);
-		this.ventanaCobrarHabilitar.txt2.addActionListener(this);
+		this.ventanaCobrarHabilitar.txt2.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				actualizar();
+			}
+		});
 		this.ventanaCobrarHabilitar.btn1A.addActionListener(this);
 		this.ventanaCobrarHabilitar.btnImprimir.addActionListener(this);
 		this.ventanaCobrarHabilitar.btnVolver.addActionListener(this);
@@ -50,9 +61,45 @@ public class CtrolCobrarHabilitar implements ActionListener {
 		ventanaCobrarHabilitar.tabla.setModel(dtosCobros.getTablaAlumnos(ventanaCobrarHabilitar.chckbx1.isSelected(), 
 																		 ventanaCobrarHabilitar.chckbx2.isSelected(), 
 																		 ventanaCobrarHabilitar.txt2.getText()));
+	}
+	
+	private String[][] itemsSeleccionados() {
 		
+		int cantidadSeleccionados = 0;
+		CursosDAO cursoDAO = new CursosDAO();
 		
+		try {
 		
+			for(int i = 0; i < dtosCobros.getCantidadElementos() ; i++) {
+				
+				if((boolean) ventanaCobrarHabilitar.tabla.getValueAt(i, 4))
+					cantidadSeleccionados++;
+			}
+		} catch (NullPointerException e) {
+			
+			return null;
+		}
+				
+		if(cantidadSeleccionados == 0)
+			return null;
+
+		String listaSeleccionados[][] = new String[cantidadSeleccionados][10];
+		int e = 0;
+		
+		for(int i = 0; i < dtosCobros.getCantidadElementos(); i++) {
+
+			if((boolean) ventanaCobrarHabilitar.tabla.getValueAt(i, 4)) {
+				
+				listaSeleccionados[e][0] = (String) ventanaCobrarHabilitar.tabla.getValueAt(i, 0);
+				listaSeleccionados[e][1] = (String) ventanaCobrarHabilitar.tabla.getValueAt(i, 1);
+				listaSeleccionados[e][2] = (String) ventanaCobrarHabilitar.tabla.getValueAt(i, 2);
+				listaSeleccionados[e][3] = (String) ventanaCobrarHabilitar.tabla.getValueAt(i, 3);
+				listaSeleccionados[e][4] = dtosCobros.getElementoMatriz(i, 7);
+				listaSeleccionados[e][5] = cursoDAO.getValorCuota(dtosCobros.getElementoMatriz(i, 10));
+				e++;
+			}
+		}
+		return listaSeleccionados;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -61,10 +108,10 @@ public class CtrolCobrarHabilitar implements ActionListener {
 
 			if(dtosAcceso.chkAcceso("Administrativo", "Cobrar y habilitar")) {
 				
-				
-				
-				
-				
+				dtosCobros.setAlumnosSeleccionados(itemsSeleccionados());
+				Cobro cobrarInscripción = new Cobro("Cobrar inscripción y habilitar");
+				CtrolCobrarInscripcion ctrlCobrarInscripción = new CtrolCobrarInscripcion(cobrarInscripción);
+				ctrlCobrarInscripción.iniciar();
 			}
 		}
 
@@ -74,11 +121,6 @@ public class CtrolCobrarHabilitar implements ActionListener {
 		}
 		
 		if(e.getSource() == ventanaCobrarHabilitar.chckbx2) {
-			
-			actualizar();
-		}
-		
-		if(e.getSource() == ventanaCobrarHabilitar.txt2) {
 			
 			actualizar();
 		}

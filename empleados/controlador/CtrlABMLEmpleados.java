@@ -31,17 +31,15 @@ public class CtrlABMLEmpleados implements ActionListener {
 		this.ventanaABML.btnVolver.addActionListener(this);
 		this.ventanaABML.chckbx1.addActionListener(this);
 		this.ventanaABML.comboBox1.addActionListener(this);
-		this.ventanaABML.txt1.addActionListener(this);
-	}
-	
-	public void iniciar() {
-		
-		ventanaABML.txt1.addKeyListener(new KeyAdapter() {
+		this.ventanaABML.txt1.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent e) {
 	
 				actualizar();
 			}
 		});
+	}
+	
+	public void iniciar() {
 		
 		ventanaABML.chckbx1.setVisible(true);
 		ventanaABML.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosABMLEmpleados.getFiltro()));
@@ -67,11 +65,6 @@ public class CtrlABMLEmpleados implements ActionListener {
 		}
 		
 		if(e.getSource() == ventanaABML.chckbx1) {
-			
-			actualizar();
-		}
-		
-		if(e.getSource() == ventanaABML.txt1) {
 			
 			actualizar();
 		}

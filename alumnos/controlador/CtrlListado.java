@@ -44,7 +44,7 @@ public class CtrlListado implements ActionListener {
 		
 		ventanaListado.tabla.setModel(dtosAlumno.getListadoAlumnos((String)ventanaListado.comboBox1.getSelectedItem() 
 																,dtosAlumno.getIdValorCriterio((String)ventanaListado.comboBox1.getSelectedItem()
-																							 , ventanaListado.comboBox2.getSelectedIndex())));
+																,ventanaListado.comboBox2.getSelectedIndex())));
 		ventanaListado.txt1.setText(dtosAlumno.getCantAlumnos());
 	}
 	

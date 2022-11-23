@@ -126,7 +126,7 @@ public class AlumnosDAO extends Conexion {
 		return bandera;
 	}
 	
-	public String [][] getAlumnos(String campo, String valor, boolean estado, String orden) {
+	public String [][] getAlumnos(String campo, String valor, boolean estado, String orden, String busqueda) {
 	
 		String matriz[][]=null;
 		String armoWhere = null;
@@ -143,34 +143,42 @@ public class AlumnosDAO extends Conexion {
 			
 			armoWhere = "WHERE (alumnos.estado = " + (estado? "1 ":"0 ") 
 					  + " AND alumnos.idCurso = " + valor + ")";
+		} else if(campo.equals("GF")) {
+			
+			armoWhere = "WHERE (alumnos.estado = " + (estado? "1 ":"0 ") 
+					  + " AND idGrupoFamiliar " + (valor.length()==0? "IS NULL":"= " + valor) 
+					  + " AND (apellido LIKE '" + busqueda
+					  + "%' OR nombre LIKE '" + busqueda
+					  + "%')) ORDER BY " + orden;
 		} else {
 			
 			armoWhere = "WHERE (alumnos.estado = " + (estado? "1 ":"0 ")
-					  + "AND (apellido LIKE '" + valor
-					  + "%' OR nombre LIKE '" + valor
-					  + "%')) ORDER BY " + orden;
+					  + "AND (apellido LIKE '" + busqueda
+					  + "%' OR nombre LIKE '" + busqueda
+					  + "%')) ORDER BY " + orden ;
 		}
 		
 		String comandoStatement = "SELECT idAlumno, nombre, apellido, dni, dirección, teléfono, email, nivel, año"
-								+ ", idGrupoFamiliar, alumnos.estado, alumnos.idCurso, alumnos.estado, fechaNacimiento , alumnos.idPersona, date_format(fechaIngreso, '%d/%m/%Y') "
+								+ ", idGrupoFamiliar, alumnos.estado, alumnos.idCurso, alumnos.estado, fechaNacimiento , "
+								+ "alumnos.idPersona, date_format(fechaIngreso, '%d/%m/%Y'), año, nivel "
 								+ "FROM lecsys1.alumnos "
 				 				+ "JOIN lecsys1.persona on alumnos.idPersona = persona.idPersona "
 				 				+ "JOIN lecsys1.curso ON curso.idCurso = alumnos.idCurso " 
 						 		+ armoWhere;
-	
+
 		try {
 			
 			this.conectar();
 			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stm.executeQuery(comandoStatement);
 			rs.last();	
-			matriz = new String[rs.getRow()][15];
+			matriz = new String[rs.getRow()][16];
 			rs.beforeFirst();
 			int i=0;
 
 			while (rs.next()) {
 					
-				matriz[i][0] = rs.getInt(1)+"";	
+				matriz[i][0] = rs.getString(1);	
 				matriz[i][1] = rs.getString(2);	
 				matriz[i][2] = rs.getString(3);	
 				matriz[i][3] = rs.getString(4);	
@@ -178,25 +186,28 @@ public class AlumnosDAO extends Conexion {
 				matriz[i][5] = rs.getString(6);	
 				matriz[i][6] = rs.getString(7);	
 				matriz[i][7] = rs.getString(8) + " " + rs.getString(9);
-				matriz[i][8] = rs.getInt(10) + "";
-				matriz[i][9] = rs.getInt(11) + "";
-				matriz[i][10] = rs.getInt(12) + "";
+				matriz[i][8] = rs.getString(10);
+				matriz[i][9] = rs.getString(11);
+				matriz[i][10] = rs.getString(12);
 				matriz[i][11] = (rs.getInt(13) == 1)? "Activo": "Inactivo";
 				matriz[i][12] = rs.getString(14);
 				matriz[i][13] = rs.getString(15);
 				matriz[i][14] = rs.getString(16);
+				matriz[i][15] = rs.getString(17) + " " + rs.getString(18);
 				i++;
 			}
 		}catch (Exception e) {
 			
 			System.err.println("AlumnosDAO, getAlumnos()");
 			System.err.println(e.getMessage());
+			System.out.println(comandoStatement);
 		} finally {
 			
 			this.cerrar();
 		}
 		return matriz;
 	}
+	
 	public boolean setAsistencia(int fila) {
 		
 		boolean bandera = true;
