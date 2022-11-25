@@ -39,6 +39,7 @@ public class Cumpleaños extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.EAST, scrollTabla, -25, SpringLayout.EAST, panel);
 		panel.add(scrollTabla);
 		tablaCumpleaños = new JTable();
+		tablaCumpleaños.setEnabled(false);
 		scrollTabla.setViewportView(tablaCumpleaños);
 		
 		btnCerrar = new JButton("Cerrar");

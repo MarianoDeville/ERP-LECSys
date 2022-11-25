@@ -13,7 +13,7 @@ import interfaceUsuario.IngresoUsuario;
 /*								UMLet 14.3										*/
 /*		Estado:					Desarrollo.										*/
 /*		Fecha creación:			15/09/2022										*/
-/*		Última modificación:	22/11/2022										*/
+/*		Última modificación:	25/11/2022										*/
 /********************************************************************************/
 
 public class LECSys {

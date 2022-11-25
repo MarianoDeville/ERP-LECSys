@@ -28,6 +28,7 @@ public class Cobro extends VentanaModelo {
 	public JTextField txtInscripción;
 	public JTextField txtDescEfectivo;
 	public JTextField txtTotalPagar;
+	public JTextField txtFactura;
 	public JTextField txtEmail;
 	public JButton btnCobrar;
 	public JButton btnVolver;
@@ -59,7 +60,7 @@ public class Cobro extends VentanaModelo {
 		contenedor.putConstraint(SpringLayout.WEST, txtNombre, 35, SpringLayout.EAST, lblNombre);
 		txtNombre.setEditable(false);
 		panel.add(txtNombre);
-		txtNombre.setColumns(40);
+		txtNombre.setColumns(20);
 		
 		lblDescGrupo = new JLabel("Porcentage de descunto:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblDescGrupo, 0, SpringLayout.NORTH, lblNombre);
@@ -68,11 +69,11 @@ public class Cobro extends VentanaModelo {
 		panel.add(lblDescGrupo);
 		
 		txtDescuento = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txtDescuento, -3, SpringLayout.NORTH, lblNombre);
+		contenedor.putConstraint(SpringLayout.NORTH, txtDescuento, 0, SpringLayout.NORTH, lblNombre);
 		contenedor.putConstraint(SpringLayout.WEST, txtDescuento, 10, SpringLayout.EAST, lblDescGrupo);
 		txtDescuento.setVisible(false);
 		panel.add(txtDescuento);
-		txtDescuento.setColumns(5);
+		txtDescuento.setColumns(3);
 		
 		lblInscripción = new JLabel("Inscripción:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblInscripción, 20, SpringLayout.SOUTH, lblNombre);
@@ -80,10 +81,10 @@ public class Cobro extends VentanaModelo {
 		panel.add(lblInscripción);
 		
 		txtInscripción = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txtInscripción, -3, SpringLayout.NORTH, lblInscripción);
+		contenedor.putConstraint(SpringLayout.NORTH, txtInscripción, 0, SpringLayout.NORTH, lblInscripción);
 		contenedor.putConstraint(SpringLayout.WEST, txtInscripción, 0, SpringLayout.WEST, txtNombre);
 		panel.add(txtInscripción);
-		txtInscripción.setColumns(20);
+		txtInscripción.setColumns(7);
 		
 		lblDescEfectivo = new JLabel("Decuento pago efectivo:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblDescEfectivo, 20, SpringLayout.SOUTH, lblInscripción);
@@ -91,10 +92,10 @@ public class Cobro extends VentanaModelo {
 		panel.add(lblDescEfectivo);
 		
 		txtDescEfectivo = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txtDescEfectivo, -3, SpringLayout.NORTH, lblDescEfectivo);
+		contenedor.putConstraint(SpringLayout.NORTH, txtDescEfectivo, 0, SpringLayout.NORTH, lblDescEfectivo);
 		contenedor.putConstraint(SpringLayout.WEST, txtDescEfectivo, 0, SpringLayout.WEST, txtNombre);
 		panel.add(txtDescEfectivo);
-		txtDescEfectivo.setColumns(20);
+		txtDescEfectivo.setColumns(7);
 		
 		lblTotalPagar = new JLabel("Total a pagar:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblTotalPagar, 20, SpringLayout.SOUTH, lblDescEfectivo);
@@ -102,16 +103,28 @@ public class Cobro extends VentanaModelo {
 		panel.add(lblTotalPagar);
 		
 		txtTotalPagar = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txtTotalPagar, -3, SpringLayout.NORTH, lblTotalPagar);
+		contenedor.putConstraint(SpringLayout.NORTH, txtTotalPagar, 0, SpringLayout.NORTH, lblTotalPagar);
 		contenedor.putConstraint(SpringLayout.WEST, txtTotalPagar, 0, SpringLayout.WEST, txtNombre);
+		txtTotalPagar.setEditable(false);
 		panel.add(txtTotalPagar);
-		txtTotalPagar.setColumns(20);
-	
+		txtTotalPagar.setColumns(10);
+		
+		JLabel lblFactura = new JLabel("Factura nro.:");
+		contenedor.putConstraint(SpringLayout.NORTH, lblFactura, 20, SpringLayout.SOUTH, lblTotalPagar);
+		contenedor.putConstraint(SpringLayout.WEST, lblFactura, 0, SpringLayout.WEST, lblNombre);
+		panel.add(lblFactura);
+		
+		txtFactura = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txtFactura, 0, SpringLayout.NORTH, lblFactura);
+		contenedor.putConstraint(SpringLayout.WEST, txtFactura, 10, SpringLayout.EAST, lblFactura);
+		panel.add(txtFactura);
+		txtFactura.setColumns(16);	
+		
 		chckbxEnviarEmail = new JCheckBox("Enviar comprobante por e-mail");
-		contenedor.putConstraint(SpringLayout.NORTH, chckbxEnviarEmail, 20, SpringLayout.SOUTH, lblTotalPagar);
+		contenedor.putConstraint(SpringLayout.NORTH, chckbxEnviarEmail, 20, SpringLayout.SOUTH, lblFactura);
 		contenedor.putConstraint(SpringLayout.WEST, chckbxEnviarEmail, 0, SpringLayout.WEST, lblNombre);
 		panel.add(chckbxEnviarEmail);
-		
+				
 		lblEmail = new JLabel("E-mail:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblEmail, 20, SpringLayout.SOUTH, chckbxEnviarEmail);
 		contenedor.putConstraint(SpringLayout.WEST, lblEmail, 0, SpringLayout.WEST, lblNombre);
@@ -119,11 +132,11 @@ public class Cobro extends VentanaModelo {
 		panel.add(lblEmail);
 		
 		txtEmail = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txtEmail, -3, SpringLayout.NORTH, lblEmail);
-		contenedor.putConstraint(SpringLayout.WEST, txtEmail, 0, SpringLayout.WEST, txtNombre);
+		contenedor.putConstraint(SpringLayout.NORTH, txtEmail, 0, SpringLayout.NORTH, lblEmail);
+		contenedor.putConstraint(SpringLayout.WEST, txtEmail, 10, SpringLayout.EAST, lblEmail);
 		panel.add(txtEmail);
 		txtEmail.setVisible(false);
-		txtEmail.setColumns(40);		
+		txtEmail.setColumns(25);		
 
 		lblMsgError = new JLabel();
 		contenedor.putConstraint(SpringLayout.NORTH, lblMsgError, 20, SpringLayout.SOUTH, lblEmail);

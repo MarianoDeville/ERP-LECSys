@@ -2,13 +2,8 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 import modelo.DtosActividad;
-import modelo.DtosAlumno;
 import modelo.DtosCobros;
 
 public class GrupoFamiliarDAO extends Conexion {
@@ -65,35 +60,75 @@ public class GrupoFamiliarDAO extends Conexion {
 	
 	public boolean setGrupoFamiliar() {
 		
-		boolean bandera = false;
+		boolean bandera = true;
 		DtosCobros dtosNuevoGrupoFamilar = new DtosCobros();
 		DtosActividad dtosActividad = new DtosActividad();
-		String infoPersona[] = null;
-					
+		int id = 0;
+		
 		try {
 			
 			this.conectar();
-			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO lecsys.grupoFamiliar (nombreFamilia, integrantes, deuda, estado, descuento) VALUES (?, ?, ?, ?)");
-/*			stm.setInt(1, );
-			stm.setInt(2, idPersona);
-			stm.setString(3, fecha);
-			stm.setInt(4, 0);
-			*/
+			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO lecsys1.grupoFamiliar (nombreFamilia, integrantes, deuda, estado, descuento, email) "
+																 + "VALUES (?, ?, 0, 1, ?, ?)");
+			stm.setString(1, dtosNuevoGrupoFamilar.getNombre());
+			stm.setInt(2, dtosNuevoGrupoFamilar.getCantidadElementosSeleccionados());
+			stm.setInt(3, dtosNuevoGrupoFamilar.getDescuentoGrupo());
+			stm.setString(4, dtosNuevoGrupoFamilar.getEmail());
 			stm.executeUpdate();
+			String listaIdAlumnos[] = dtosNuevoGrupoFamilar.getIdElementosSeleccionados();
+			ResultSet rs = stm.executeQuery("SELECT MAX(idGrupoFamiliar) FROM lecsys1.grupoFamiliar");
+			
+			if(rs.next())
+				id = rs.getInt(1);
+			
+			dtosNuevoGrupoFamilar.setIdFamilia(id);
+			
+			for(int i = 0 ; i < listaIdAlumnos.length ; i++) {
+				
+				stm = this.conexion.prepareStatement("UPDATE lecsys1.alumnos SET idGrupoFamiliar = ?, estado = 1 WHERE (idAlumno = ?)");
+				stm.setInt(1, id);
+				stm.setInt(2, Integer.parseInt(listaIdAlumnos[i]));
+				stm.executeUpdate();
+			}
+			
 		} catch (Exception e) {
 	
-			System.err.println("AlumnosDAO, setAlumno()");
+			System.err.println("GrupoFamiliarDAO, setGrupoFamiliar()");
 			System.err.println(e.getMessage());
 			bandera = false;
 		} finally {
 			
 			this.cerrar();
 		}
-//		dtosNuevoGrupoFamilar.limpiarInformacion();
 		dtosActividad.registrarActividad("Registro nuevo grupo familiar.", "Administración");
 		return bandera;
 	}
 
-	
+	public boolean isNombreFamilia(String nombre) {
+		
+		boolean bandera = false;
+		String comandoStatement = "SELECT idGrupoFamiliar FROM lecsys1.grupoFamiliar WHERE nombreFamilia = '" + nombre + "'";
+		
+		try {
+			
+			this.conectar();
+			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery(comandoStatement);
+
+			if(rs.next())
+				bandera = true;
+				
+		}catch (Exception e) {
+			
+			System.err.println("GrupoFamiliarDAO, isNombreFamilia()");
+			System.err.println(e.getMessage());
+			System.out.println(comandoStatement);
+		} finally {
+			
+			this.cerrar();
+		}
+		return bandera;
+		
+	}
 	
 }

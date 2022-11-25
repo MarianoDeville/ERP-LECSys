@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.print.PrinterException;
 
 import dao.CursosDAO;
 import interfaceUsuario.Cobro;
@@ -14,6 +15,7 @@ import modelo.DtosCobros;
 public class CtrolCobrarHabilitar implements ActionListener {
 
 	private Listado ventanaCobrarHabilitar;
+	private Cobro cobrarInscripción;
 	private DtosCobros dtosCobros;
 	private DtosAcceso dtosAcceso;
 	
@@ -35,7 +37,6 @@ public class CtrolCobrarHabilitar implements ActionListener {
 		this.ventanaCobrarHabilitar.btnImprimir.addActionListener(this);
 		this.ventanaCobrarHabilitar.btnVolver.addActionListener(this);
 	}
-	
 	
 	public void iniciar() {
 		
@@ -109,9 +110,24 @@ public class CtrolCobrarHabilitar implements ActionListener {
 			if(dtosAcceso.chkAcceso("Administrativo", "Cobrar y habilitar")) {
 				
 				dtosCobros.setAlumnosSeleccionados(itemsSeleccionados());
-				Cobro cobrarInscripción = new Cobro("Cobrar inscripción y habilitar");
+				cobrarInscripción = new Cobro("Cobrar inscripción y habilitar");
 				CtrolCobrarInscripcion ctrlCobrarInscripción = new CtrolCobrarInscripcion(cobrarInscripción);
+				cobrarInscripción.btnVolver.addActionListener(this);
+				cobrarInscripción.btnCobrar.addActionListener(this);
 				ctrlCobrarInscripción.iniciar();
+			}
+		}
+		
+		if(cobrarInscripción != null) {
+			
+			if(e.getSource() == cobrarInscripción.btnVolver) {
+				
+				actualizar();
+			}
+			
+			if(e.getSource() == cobrarInscripción.btnCobrar) {
+				
+				actualizar();
 			}
 		}
 
@@ -125,6 +141,17 @@ public class CtrolCobrarHabilitar implements ActionListener {
 			actualizar();
 		}
 
+		if(e.getSource() == ventanaCobrarHabilitar.btnImprimir) {
+			
+			try {
+				
+				ventanaCobrarHabilitar.tabla.print();
+			} catch (PrinterException f) {
+				
+				f.printStackTrace();
+			}
+		}
+		
 		if(e.getSource() == ventanaCobrarHabilitar.btnVolver) {
 			
 			ventanaCobrarHabilitar.dispose();
