@@ -14,13 +14,13 @@ public class PersonasDAO extends Conexion {
 			
 			this.conectar();
 			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.persona SET "
-																							 + "nombre = ?, "
-																							 + "apellido = ?, "
-																							 + "dni = ?, "
-																							 + "dirección = ?, "
-																							 + "fechaNacimiento = ?, "
-																							 + "teléfono = ?, "
-																							 + "email = ? WHERE (idPersona = ?)");
+																 + "nombre = ?, "
+																 + "apellido = ?, "
+																 + "dni = ?, "
+																 + "dirección = ?, "
+																 + "fechaNacimiento = ?, "
+																 + "teléfono = ?, "
+																 + "email = ? WHERE (idPersona = ?)");
 			stm.setString(1, infoPersona[0]);
 			stm.setString(2, infoPersona[1]);
 			stm.setString(3, infoPersona[2]);
@@ -33,6 +33,7 @@ public class PersonasDAO extends Conexion {
 		} catch (Exception e) {
 			
 			bandera = false;
+			System.err.println("PersonasDAO, actualizarPersona()");
 			System.err.println(e.getMessage());
 		} finally {
 			
@@ -49,14 +50,14 @@ public class PersonasDAO extends Conexion {
 			
 			this.conectar();
 			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO persona ("
-																					+ "nombre, "
-																					+ "apellido, "
-																					+ "dni, "
-																					+ "dirección, "
-																					+ "fechaNacimiento, "
-																					+ "teléfono, "
-																					+ "email)"
-																					+ " VALUES (?, ?, ?, ?, ?, ?, ?)");
+																 + "nombre, "
+																 + "apellido, "
+																 + "dni, "
+																 + "dirección, "
+																 + "fechaNacimiento, "
+																 + "teléfono, "
+																 + "email)"
+																 + " VALUES (?, ?, ?, ?, ?, ?, ?)");
 			stm.setString(1, infoPersona[0]);
 			stm.setString(2, infoPersona[1]);
 			stm.setString(3, infoPersona[2]);
@@ -72,6 +73,7 @@ public class PersonasDAO extends Conexion {
 			
 		} catch (Exception e) {
 			
+			System.err.println("PersonasDAO, registrarPersona()");
 			System.err.println(e.getMessage());
 		} finally {
 			
@@ -99,6 +101,7 @@ public class PersonasDAO extends Conexion {
 			}
 		}catch (Exception e) {
 			
+			System.err.println("PersonasDAO, getDNIDuplicado()");
 			System.err.println(e.getMessage());
 		} finally {
 			

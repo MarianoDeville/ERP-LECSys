@@ -1,8 +1,8 @@
 package dao;
 
 import java.sql.PreparedStatement;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import modelo.DtosActividad;
 import modelo.DtosCobros;
 
@@ -11,13 +11,6 @@ public class AdministracionDAO extends Conexion {
 	public boolean setCobro() {
 		
 		boolean bandera = true;
-		Calendar fechaSistema = new GregorianCalendar();
-		String fecha = fechaSistema.get(Calendar.YEAR) + "/" 
-					 + (fechaSistema.get(Calendar.MONTH)+1) + "/" 
-					 + fechaSistema.get(Calendar.DAY_OF_MONTH);
-	    String hora = (fechaSistema.get(Calendar.AM_PM)==0? fechaSistema.get(Calendar.HOUR):fechaSistema.get(Calendar.HOUR)+12) + ":" 
-					+ (fechaSistema.get(Calendar.MINUTE)<10? "0" + fechaSistema.get(Calendar.MINUTE):fechaSistema.get(Calendar.MINUTE)) + ":" 
-					+ (fechaSistema.get(Calendar.SECOND)<10? "0" + fechaSistema.get(Calendar.SECOND):fechaSistema.get(Calendar.SECOND));
 		DtosCobros dtosNuevoCobro = new DtosCobros();
 		DtosActividad dtosActividad = new DtosActividad();
 		
@@ -29,8 +22,8 @@ public class AdministracionDAO extends Conexion {
 			stm.setInt(1, dtosNuevoCobro.getIdFamilia());
 			stm.setString(2, dtosNuevoCobro.getNombre());
 			stm.setString(3, dtosNuevoCobro.getDescripcion());
-			stm.setString(4, fecha);
-			stm.setString(5, hora);
+			stm.setString(4, dtosNuevoCobro.getFechaActual("A"));
+			stm.setString(5, dtosNuevoCobro.getHoraActual());
 			stm.setInt(6, dtosNuevoCobro.getMontoTotal());
 			stm.setString(7, dtosNuevoCobro.getFactura());
 			stm.executeUpdate();
@@ -47,5 +40,28 @@ public class AdministracionDAO extends Conexion {
 		return bandera;
 	}
 	
-	
+	public int getUltimoRegistro() {
+		
+		int valor = 0;
+		
+		try {
+			
+			this.conectar();
+			Statement stm = this.conexion.createStatement();
+			ResultSet rs = stm.executeQuery("SELECT MAX(idCobros) FROM lecsys1.cobros");
+
+			if(rs.next())
+				valor = rs.getInt(1);
+
+		}catch (Exception e) {
+			
+			System.err.println("AdministracionDAO, getUltimoRegistro()");
+			System.err.println(e.getMessage());
+		} finally {
+			
+			this.cerrar();
+		}
+		return valor;
+	}
+
 }

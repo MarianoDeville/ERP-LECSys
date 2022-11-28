@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import interfaceUsuario.Cobro;
+import interfaceUsuario.ReciboCobro;
 import modelo.DtosCobros;
 
 public class CtrolCobrarInscripcion implements ActionListener {
@@ -14,7 +14,7 @@ public class CtrolCobrarInscripcion implements ActionListener {
 	private Cobro ventanaCobrarInscripcion;
 	private DtosCobros dtosCobros;
 	private boolean primeraVez;
-	
+		
 	public CtrolCobrarInscripcion(Cobro vista) {
 		
 		this.ventanaCobrarInscripcion = vista;
@@ -43,22 +43,34 @@ public class CtrolCobrarInscripcion implements ActionListener {
 				actualizar();
 			}
 		});
+		this.ventanaCobrarInscripcion.txtEmail.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				dtosCobros.setEmail(ventanaCobrarInscripcion.txtEmail.getText());
+			}
+		});
 	}
 	
 	public void iniciar() {
 		
 		primeraVez = true; 
 		ventanaCobrarInscripcion.tabla.setModel(dtosCobros.getTablaSeleccionados());
+		
 		if(dtosCobros.getCantidadElementosSeleccionados() > 1) {
 			
 			ventanaCobrarInscripcion.txtNombre.setEditable(true);
 			ventanaCobrarInscripcion.lblDescGrupo.setVisible(true);
 			ventanaCobrarInscripcion.txtDescuento.setVisible(true);
-		} else {
-			
-			ventanaCobrarInscripcion.txtNombre.setText(dtosCobros.getNombre());
-		}
+		} 
+		ventanaCobrarInscripcion.txtNombre.setText(dtosCobros.getNombre());
+		ventanaCobrarInscripcion.txtDescuento.setText(dtosCobros.getDescuentoGrupo() + "");
+		ventanaCobrarInscripcion.txtEmail.setText(dtosCobros.getEmail());
 		ventanaCobrarInscripcion.setVisible(true);
+		
+		if(dtosCobros.getEmail().length() > 2)
+			ventanaCobrarInscripcion.chckbxEnviarEmail.setSelected(true);
+		
 		actualizar();
 	}
 	
@@ -80,6 +92,7 @@ public class CtrolCobrarInscripcion implements ActionListener {
 		
 		if(!primeraVez)
 			ventanaCobrarInscripcion.lblMsgError.setText(mensaje);
+		
 		ventanaCobrarInscripcion.txtTotalPagar.setText(dtosCobros.getMontoTotal() + "");
 		
 		if(dtosCobros.getCantidadElementosSeleccionados() == 1)
@@ -108,7 +121,6 @@ public class CtrolCobrarInscripcion implements ActionListener {
 				
 				dtosCobros.setEmail("");
 			}
-			
 			String error = dtosCobros.validarInformación();
 			
 			if(error.length() == 0) {
@@ -119,21 +131,16 @@ public class CtrolCobrarInscripcion implements ActionListener {
 					ventanaCobrarInscripcion.lblMsgError.setText("Operación almacenada en la base de datos.");
 					ventanaCobrarInscripcion.btnCobrar.setEnabled(false);
 
-					if(ventanaCobrarInscripcion.chckbxEnviarEmail.isSelected()) {/////////////////////////////////////////////////////////////////////////////////////////////////
+					if(ventanaCobrarInscripcion.chckbxEnviarEmail.isSelected()) {
 						
-						// acá debo enviar el comprobante por email
-						
-						
+						EmailSenderService emailService = new EmailSenderService();
+						emailService.mandarCorreo(dtosCobros.getEmail(), "Recibo de pago", dtosCobros.getCuerpoEmail());
 					} else {
-						
-						// acá debo imprimir el comprobante			
-						
-						
-						
-					}//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 					
-					
-
+						ReciboCobro ventanaReciboPago = new ReciboCobro("Comprobante de pago");
+						CtrolReciboCobrarInscripcion ctrolReciboInscripcion = new CtrolReciboCobrarInscripcion(ventanaReciboPago);
+						ctrolReciboInscripcion.iniciar();
+					}
 					dtosCobros.setBorrarSeleccionados();
 				} else {
 					

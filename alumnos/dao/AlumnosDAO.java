@@ -160,10 +160,11 @@ public class AlumnosDAO extends Conexion {
 		
 		String comandoStatement = "SELECT idAlumno, nombre, apellido, dni, dirección, teléfono, email, nivel, año"
 								+ ", idGrupoFamiliar, alumnos.estado, alumnos.idCurso, alumnos.estado, fechaNacimiento , "
-								+ "alumnos.idPersona, date_format(fechaIngreso, '%d/%m/%Y'), año, nivel "
+								+ "alumnos.idPersona, date_format(fechaIngreso, '%d/%m/%Y'), año, nivel, precio "
 								+ "FROM lecsys1.alumnos "
 				 				+ "JOIN lecsys1.persona on alumnos.idPersona = persona.idPersona "
 				 				+ "JOIN lecsys1.curso ON curso.idCurso = alumnos.idCurso " 
+				 				+ "JOIN lecsys1.valorCuota ON curso.idCurso = valorCuota.idCurso "
 						 		+ armoWhere;
 
 		try {
@@ -172,7 +173,7 @@ public class AlumnosDAO extends Conexion {
 			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stm.executeQuery(comandoStatement);
 			rs.last();	
-			matriz = new String[rs.getRow()][16];
+			matriz = new String[rs.getRow()][17];
 			rs.beforeFirst();
 			int i=0;
 
@@ -194,6 +195,7 @@ public class AlumnosDAO extends Conexion {
 				matriz[i][13] = rs.getString(15);
 				matriz[i][14] = rs.getString(16);
 				matriz[i][15] = rs.getString(17) + " " + rs.getString(18);
+				matriz[i][16] = rs.getString(19);
 				i++;
 			}
 		}catch (Exception e) {

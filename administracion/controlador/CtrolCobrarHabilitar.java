@@ -5,8 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
-
-import dao.CursosDAO;
 import interfaceUsuario.Cobro;
 import interfaceUsuario.Listado;
 import modelo.DtosAcceso;
@@ -64,41 +62,13 @@ public class CtrolCobrarHabilitar implements ActionListener {
 																		 ventanaCobrarHabilitar.txt2.getText()));
 	}
 	
-	private String[][] itemsSeleccionados() {
+	private boolean[] itemsSeleccionados() {
 		
-		int cantidadSeleccionados = 0;
-		CursosDAO cursoDAO = new CursosDAO();
-		
-		try {
-		
-			for(int i = 0; i < dtosCobros.getCantidadElementos() ; i++) {
-				
-				if((boolean) ventanaCobrarHabilitar.tabla.getValueAt(i, 4))
-					cantidadSeleccionados++;
-			}
-		} catch (NullPointerException e) {
-			
-			return null;
-		}
-				
-		if(cantidadSeleccionados == 0)
-			return null;
-
-		String listaSeleccionados[][] = new String[cantidadSeleccionados][10];
-		int e = 0;
+		boolean listaSeleccionados[] = new boolean[dtosCobros.getCantidadElementos()];
 		
 		for(int i = 0; i < dtosCobros.getCantidadElementos(); i++) {
 
-			if((boolean) ventanaCobrarHabilitar.tabla.getValueAt(i, 4)) {
-				
-				listaSeleccionados[e][0] = (String) ventanaCobrarHabilitar.tabla.getValueAt(i, 0);
-				listaSeleccionados[e][1] = (String) ventanaCobrarHabilitar.tabla.getValueAt(i, 1);
-				listaSeleccionados[e][2] = (String) ventanaCobrarHabilitar.tabla.getValueAt(i, 2);
-				listaSeleccionados[e][3] = (String) ventanaCobrarHabilitar.tabla.getValueAt(i, 3);
-				listaSeleccionados[e][4] = dtosCobros.getElementoMatriz(i, 7);
-				listaSeleccionados[e][5] = cursoDAO.getValorCuota(dtosCobros.getElementoMatriz(i, 10));
-				e++;
-			}
+			listaSeleccionados[i] = (boolean)ventanaCobrarHabilitar.tabla.getValueAt(i, 4);
 		}
 		return listaSeleccionados;
 	}

@@ -1,3 +1,5 @@
+package controlador;
+
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.Session;
@@ -7,7 +9,7 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailSenderService {
 
-	public void mandarcorreo(String destinatario, String asunto) {
+	public void mandarCorreo(String destinatario, String asunto, String mensaje) {
 		
 		Properties propiedad = new Properties();
 		propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -18,20 +20,22 @@ public class EmailSenderService {
 		Session sesion = Session.getDefaultInstance(propiedad);
 		String correoEnvia = "mariano.deville@gmail.com";
 		String contrasena = "lkxokocyudnmfkyk";
-		String mensaje = "Email enviado desde java.";
 		MimeMessage mail = new MimeMessage(sesion);
 		
 		try {
 		
 			mail.setFrom(new InternetAddress (correoEnvia));
-			mail.addRecipient(Message.RecipientType.TO, new InternetAddress (destinatario));
+//			mail.addRecipient(Message.RecipientType.TO, new InternetAddress (destinatario));
+mail.addRecipient(Message.RecipientType.TO, new InternetAddress ("mariano_deville@hotmail.com"));
+System.out.println("Destinatario: " + destinatario);
+System.out.println("Asusnto: " + asunto);
+System.out.println("Mensaje: \n" + mensaje);
 			mail.setSubject(asunto);
 			mail.setText(mensaje);
 			Transport transporte = sesion.getTransport("smtp");
 			transporte.connect(correoEnvia,contrasena);
 			transporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));          
 			transporte.close();
-System.out.println("Listo, revise su correo");
 		} catch (Exception e) {
 			
 			System.out.println("Error al intentar enviar el email.");

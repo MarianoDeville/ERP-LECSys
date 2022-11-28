@@ -8,42 +8,129 @@ import modelo.DtosCobros;
 
 public class GrupoFamiliarDAO extends Conexion {
 
-	public String [][] getGruposFamilias(boolean sinDeuda, String campoBusqueda) {
-
-		String matriz[][]=null;
-		String armoWhere = "WHERE(grupoFamiliar.estado = 1 && deuda > 0 && nombreFamilia LIKE '" + campoBusqueda + "%') ";
+	public boolean setActualizarGrupo(int idFamilia, String nombre, int integrantes, int descuentoGrupo, String email) {
 		
-		if(sinDeuda)
-			
-			armoWhere = "WHERE(grupoFamiliar.estado = 1 && deuda = 0 && nombreFamilia LIKE '" + campoBusqueda + "%') ";
-		
-		String comandoStatement = "SELECT grupoFamiliar.idGrupoFamiliar, grupoFamiliar.nombreFamilia, integrantes, deuda, SUM(precio), descuento " +
-									"FROM lecsys1.alumnos " + 
-									"JOIN lecsys1.grupoFamiliar ON alumnos.idGrupoFamiliar = grupoFamiliar.idGrupoFamiliar " + 
-									"JOIN lecsys1.curso ON alumnos.idCurso = curso.idCurso " + 
-									"JOIN lecsys1.valorCuota ON curso.idCurso = valorCuota.idCurso " + 
-									armoWhere +
-									"GROUP BY grupoFamiliar.idGrupoFamiliar " +
-									"ORDER BY grupoFamiliar.nombreFamilia";
+		boolean bandera = true;
+		DtosActividad dtosActividad = new DtosActividad();
 		
 		try {
+
+			this.conectar();
+			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.grupoFamiliar "
+																 + "SET nombreFamilia = ?, integrantes = ?, deuda = 0, estado = 1, descuento = ?, email = ? "
+																 + "WHERE idGrupoFamiliar = ?");
+			stm.setString(1, nombre);
+			stm.setInt(2, integrantes);
+			stm.setInt(3, descuentoGrupo);
+			stm.setString(4, email);
+			stm.setInt(5, idFamilia);
+			stm.executeUpdate();
+		} catch (Exception e) {
+	
+			System.err.println("GrupoFamiliarDAO, setActualizarGrupo()");
+			System.err.println(e.getMessage());
+			bandera = false;
+		} finally {
 			
+			this.cerrar();
+		}
+		dtosActividad.registrarActividad("Actualización datos grupo familiar.", "Administración");
+		return bandera;
+	}
+	
+	public String [][] getIntegrantes(String id) {
+		
+		String respuesta[][] = null;
+		String comandoStatement = "SELECT alumnos.idAlumno, apellido, nombre, dirección, año, nivel, precio, descuento , grupoFamiliar.email, nombreFamilia " +
+								  "FROM lecsys1.grupoFamiliar " + 
+								  "JOIN lecsys1.alumnos ON alumnos.idGrupoFamiliar = grupoFamiliar.idGrupoFamiliar " +
+								  "JOIN lecsys1.persona ON persona.idPersona = alumnos.idpersona " + 
+								  "JOIN lecsys1.curso ON alumnos.idCurso = curso.idCurso " + 
+								  "JOIN lecsys1.valorCuota ON curso.idCurso = valorCuota.idCurso " + 
+								  "WHERE grupoFamiliar.idGrupoFamiliar = " + id;
+				  
+		try {
+		
 			this.conectar();
 			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stm.executeQuery(comandoStatement);
 			rs.last();	
-			matriz = new String[rs.getRow()][6];
+			respuesta = new String[rs.getRow()][9];
+			rs.beforeFirst();
+			int i=0;
+			
+			while (rs.next()) {
+				
+				respuesta[i][0] = rs.getString(1);
+				respuesta[i][1] = rs.getString(2);
+				respuesta[i][2] = rs.getString(3);
+				respuesta[i][3] = rs.getString(4);
+				respuesta[i][4] = rs.getString(5) + " " + rs.getString(6);
+				respuesta[i][5] = rs.getString(7);
+				respuesta[i][6] = rs.getString(8);
+				respuesta[i][7] = rs.getString(9);
+				respuesta[i][8] = rs.getString(10);
+				i++;
+			}
+		}catch (Exception e) {
+		
+			System.err.println("GrupoFamiliarDAO, getIntegrantes()");
+			System.err.println(e.getMessage());
+			System.out.println(comandoStatement);
+		} finally {
+		
+			this.cerrar();
+		}
+		return respuesta;
+	}
+
+	public String [][] getGruposFamilias(String campo, String valor, boolean sinDeuda, String campoBusqueda) {
+
+		String matriz[][]=null;
+		String armoWhere = null;
+		
+		if(campo.equals("ID")) {
+			
+			armoWhere = "WHERE (grupoFamiliar.idGrupoFamiliar = " + valor + " AND deuda " + (sinDeuda? "= 0":"> 0") + ") ";
+		} else if(campo.equals("IDALUMNO")) {
+			
+			armoWhere = "WHERE (idAlumno = " + valor + " AND deuda " + (sinDeuda? "= 0":"> 0") + ") ";
+		} else if(campo.equals("ESTADO")) {
+			
+			armoWhere = "WHERE (grupoFamiliar.estado = " + valor + " AND deuda " + (sinDeuda? "= 0":"> 0") + ") ";
+		} else {
+		
+			armoWhere = "WHERE (grupoFamiliar.estado = 1 AND deuda " + (sinDeuda? "= 0":"> 0") + " AND nombreFamilia LIKE '" + campoBusqueda + "%') ";
+		}
+		
+		String comandoStatement = "SELECT grupoFamiliar.idGrupoFamiliar, nombreFamilia, integrantes, deuda, SUM(precio), descuento , grupoFamiliar.email " +
+								  "FROM lecsys1.grupoFamiliar " + 
+								  "JOIN lecsys1.alumnos ON alumnos.idGrupoFamiliar = grupoFamiliar.idGrupoFamiliar " + 
+								  "JOIN lecsys1.curso ON alumnos.idCurso = curso.idCurso " + 
+								  "JOIN lecsys1.valorCuota ON curso.idCurso = valorCuota.idCurso " + 
+								  armoWhere +
+								  "GROUP BY grupoFamiliar.idGrupoFamiliar " +
+								  "ORDER BY grupoFamiliar.nombreFamilia";
+		
+		try {
+		
+			this.conectar();
+			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery(comandoStatement);
+			rs.last();	
+			matriz = new String[rs.getRow()][7];
 			rs.beforeFirst();
 			int i=0;
 
 			while (rs.next()) {
 					
-				matriz[i][0] =rs.getInt(1) + "";
+				matriz[i][0] = rs.getString(1);
 				matriz[i][1] = rs.getString(2);
-				matriz[i][2] = rs.getInt(3) + "";
-				matriz[i][3] = rs.getInt(4) + "";
-				matriz[i][4] = rs.getInt(5) + "";
-				matriz[i][5] = rs.getInt(6) + "";
+				matriz[i][2] = rs.getString(3);
+				matriz[i][3] = rs.getString(4);
+				matriz[i][4] = rs.getString(5);
+				matriz[i][5] = rs.getString(6);
+				matriz[i][6] = rs.getString(7);
 				i++;
 			}
 		}catch (Exception e) {
@@ -128,7 +215,5 @@ public class GrupoFamiliarDAO extends Conexion {
 			this.cerrar();
 		}
 		return bandera;
-		
 	}
-	
 }
