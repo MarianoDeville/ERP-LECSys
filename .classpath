@@ -21,6 +21,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="Lib/activation.jar"/>
-	<classpathentry kind="lib" path="Lib/mail.jar"/>
+	<classpathentry kind="lib" path="Lib/javax.mail-1.6.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

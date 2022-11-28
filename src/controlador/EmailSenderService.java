@@ -19,7 +19,7 @@ public class EmailSenderService {
 		propiedad.setProperty("mail.smtp.starttls.enable", "true");
 		Session sesion = Session.getDefaultInstance(propiedad);
 		String correoEnvia = "mariano.deville@gmail.com";
-		String contrasena = "lkxokocyudnmfkyk";
+		String contrasena = "qufmospqjbfpqgvi";
 		MimeMessage mail = new MimeMessage(sesion);
 		
 		try {

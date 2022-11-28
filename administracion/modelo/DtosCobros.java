@@ -278,7 +278,6 @@ public class DtosCobros {
 	
 	public void setAlumnosSeleccionados(boolean seleccionados[]) {
 		
-		
 		cantElementosSel = 0;
 		
 		for(int i = 0 ; i < seleccionados.length ; i++) {
@@ -320,6 +319,7 @@ public class DtosCobros {
 			matrizSelec = new String[cantElementosSel][6];
 			int e = 0;
 			sumaCuotas = 0;
+			email = "";
 	
 			for(int i = 0 ; i < tablaRespuesta.length ; i++) {
 					
