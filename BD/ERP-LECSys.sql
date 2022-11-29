@@ -421,6 +421,24 @@ CREATE TABLE IF NOT EXISTS `LECSys1`.`puntualidad` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `LECSys1`.`sistema`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LECSys1`.`sistema` (
+  `idSistema` INT NOT NULL AUTO_INCREMENT,
+  `correo` VARCHAR(90) NULL,
+  `pas` VARCHAR(90) NULL,
+  `idUsuario` INT NULL,
+  PRIMARY KEY (`idSistema`),
+  INDEX `usuario_idx` (`idUsuario` ASC) VISIBLE,
+  CONSTRAINT `usuario`
+    FOREIGN KEY (`idUsuario`)
+    REFERENCES `LECSys1`.`usuarios` (`idUsuarios`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

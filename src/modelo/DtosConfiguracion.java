@@ -1,102 +1,82 @@
 package modelo;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import javax.swing.JOptionPane;
 
-public class DtosConfiguracion {
+import dao.DiscoDAO;
 
-	static public String LeerConfiguracion(String parametro) {
+public class DtosConfiguracion extends DiscoDAO{
+
+	private static String emailSistema;
+	private static String passSistema;
+	private static String servidor;
+	private static String usuarioBD;
+	private static String passBD;
+	private static String directorio;
+	private static String msgError;
+	
+	public String getConfig() {
 		
-		File archivo = null;
-		FileReader fr = null;
-		BufferedReader br = null;
-		String respuesta = null;
-		boolean bandera = true;
-
-		try {
-
-			archivo = new File ("C:\\LECSys\\LECSys.ini");
-			fr = new FileReader (archivo);
-			br = new BufferedReader(fr);
-			String lineaLeida;
-			
-			while((lineaLeida=br.readLine())!=null) {
-				
-				if(lineaLeida.startsWith(parametro)) {
-					
-					String[] output = lineaLeida.split(":");
-					respuesta = output[1];
-					
-					if(parametro.equals("LOG:"))
-						respuesta += ":" + output[2];
-					bandera = false;
-				}
-			}
-		} catch(Exception e){
-			
-			JOptionPane.showMessageDialog(null, "No se encuentra archivo de configuración.");
-		} finally {
-
-			try {
-				
-				if( null != fr )   
-					fr.close();     
-           
-			} catch (Exception e2) {
-				
-				e2.printStackTrace();
-			}
-		}
-		
-		if(bandera && parametro.equals("LOG:"))
-			JOptionPane.showMessageDialog(null, "No se encuentra configuración de log.");
-		
-		if(bandera && parametro.equals("IP:"))
-			JOptionPane.showMessageDialog(null, "No se encuentra configuración de red.");
-
-		return respuesta;
+		return getConfiguracion();
 	}
 	
-	static public void generoIni() {
+	public String getEmailSistema() {
+		return emailSistema;
+	}
+	
+	public void setEmailSistema(String emailSistema) {
 		
-		BufferedWriter bw = null;
-	    FileWriter fw = null;
+		DtosConfiguracion.emailSistema = emailSistema;
+	}
+	
+	public String getPassSistema() {
+		
+		return passSistema;
+	}
+	
+	public void setPassSistema(String passSistema) {
+		
+		DtosConfiguracion.passSistema = passSistema;
+	}
+	public String getServidor() {
+		
+		return servidor;
+	}
+	
+	public void setServidor(String servidor) {
+		
+		DtosConfiguracion.servidor = servidor;
+	}
+	
+	public String getUsuarioBD() {
+		
+		return usuarioBD;
+	}
+	
+	public void setUsuarioBD(String usuarioBD) {
+		
+		DtosConfiguracion.usuarioBD = usuarioBD;
+	}
+	
+	public String getPassBD() {
+		
+		return passBD;
+	}
+	
+	public void setPassBD(String passBD) {
+		
+		DtosConfiguracion.passBD = passBD;
+	}
 
+	public String getMsgError() {
+		
+		return msgError;
+	}
 
-	    try {
-	    	
-	        File archivo = new File("C:\\LECSys\\LECSys.ini");
+	public String getDirectorio() {
+		
+		return directorio;
+	}
 
-	        if (!archivo.exists()) {
-	        	
-	        	archivo.createNewFile();
-		        fw = new FileWriter(archivo.getAbsoluteFile());
-		        bw = new BufferedWriter(fw);
-		        bw.write("LECSys - Archivo de configuración.\r\n"
-		        		+ "IP:localhost\r\n"
-		        		+ "// Si el archivo no existe se genera una nuevo, pero la carpeta debe existir.\r\n"
-		        		+ "LOG:C:\\LECSys\\log.txt");
-		        
-	        }
-	    } catch (IOException e) {
-	    	
-	    	System.err.println("No se pudo escribir en el archivo.");
-	    } finally {
-	    	
-	        try {
-
-	            if (bw != null)
-	                bw.close();
-	            if (fw != null)
-	                fw.close();
-	        } catch (IOException ex) {
-	        	
-	            ex.printStackTrace();
-	        }
-	    }
+	public void setDirectorio(String directorio) {
+		
+		DtosConfiguracion.directorio = directorio;
 	}
 }

@@ -11,7 +11,7 @@ import modelo.DtosConfiguracion;
 public class LogErrores {
 
 	static public void escribirLog(String contenido) {
-		
+/*		
 		BufferedWriter bw = null;
 	    FileWriter fw = null;
 	    String nombreArchivo = DtosConfiguracion.LeerConfiguracion("LOG:");
@@ -49,6 +49,6 @@ public class LogErrores {
 	        	
 	            ex.printStackTrace();
 	        }
-	    }
+	    }*/
 	}
 }

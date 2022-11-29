@@ -1,5 +1,6 @@
 import controlador.CtrlLogin;
 import interfaceUsuario.IngresoUsuario;
+import modelo.DtosConfiguracion;
 
 /********************************************************************************/
 /*		Sistema ERP de gestión offline para academias - LECSys					*/
@@ -13,13 +14,15 @@ import interfaceUsuario.IngresoUsuario;
 /*								UMLet 14.3										*/
 /*		Estado:					Desarrollo.										*/
 /*		Fecha creación:			15/09/2022										*/
-/*		Última modificación:	28/11/2022										*/
+/*		Última modificación:	29/11/2022										*/
 /********************************************************************************/
 
 public class LECSys {
 
 	public static void main(String[] args) {
 
+		DtosConfiguracion config = new DtosConfiguracion();
+		config.getConfig();
 		IngresoUsuario interfaceUsuario = new IngresoUsuario();
 		CtrlLogin ctrlIngreso = new CtrlLogin(interfaceUsuario);
 		ctrlIngreso.iniciar();
