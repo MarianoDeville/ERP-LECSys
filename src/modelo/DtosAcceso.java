@@ -11,7 +11,8 @@ public class DtosAcceso {
 		OperadorSistema identificacion = new OperadorSistema();
 		String modulos[] = new String[] {"Administrativo","Alumnos","Personal","Cursos","Configuracion","Usuarios"};
 //		String acciones[] = new String[] {"Entrar","Editar","Crear","ABML","Listado","Tomar asistencia",
-//										+ "Registro asistencia","Horarios","Listar actividad","Cambiar contraseña","Cobrar y habilitar"};		// Lo comenté hasta que lo use para que no me moleste.
+//										+ "Registro asistencia","Horarios","Listar actividad","Cambiar contraseña",
+//										+ "Cobrar y habilitar","Cambiar email"};		// Lo comenté hasta que lo use para que no me moleste.
 		
 		if(identificacion.getNivelAcceso() == 0) {
 			

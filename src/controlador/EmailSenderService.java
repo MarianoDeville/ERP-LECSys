@@ -13,10 +13,6 @@ public class EmailSenderService {
 	public void mandarCorreo(String destinatario, String asunto, String mensaje) {
 		
 		DtosConfiguracion config = new DtosConfiguracion();
-System.out.println("email: " + config.getEmailSistema());
-System.out.println("pass: " + config.getPassSistema());
-		
-		
 		Properties propiedad = new Properties();
 		propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
 		propiedad.setProperty("mail.smtp.port", "587");
@@ -30,12 +26,12 @@ System.out.println("pass: " + config.getPassSistema());
 		
 			mail.setFrom(new InternetAddress (config.getEmailSistema()));
 //			mail.addRecipient(Message.RecipientType.TO, new InternetAddress (destinatario));
-			
+// ES SOLO PARA PRUEBAS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
 mail.addRecipient(Message.RecipientType.TO, new InternetAddress ("mariano_deville@hotmail.com"));
 System.out.println("Destinatario: " + destinatario);
 System.out.println("Asusnto: " + asunto);
 System.out.println("Mensaje: \n" + mensaje);
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			mail.setSubject(asunto);
 			mail.setText(mensaje);
 			Transport transporte = sesion.getTransport("smtp");

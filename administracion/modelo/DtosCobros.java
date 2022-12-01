@@ -438,10 +438,10 @@ public class DtosCobros {
 		
 		if(enviarEmail) {
 			
-			if(email.length() < 3)
+			if(email.length() < 6)
 				return "Debe llenar el campo email.";
 			
-			if(!email.contains("@") || !email.contains(".") || email.contains(" "))
+			if(!email.contains("@") || email.contains(" "))
 				return "Error en el formato del email.";
 			
 			String partes[] = email.split("@");

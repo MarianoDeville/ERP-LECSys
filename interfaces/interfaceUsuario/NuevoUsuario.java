@@ -22,6 +22,11 @@ public class NuevoUsuario extends VentanaModelo{
 	public JPasswordField txtReContraseña;
 	public JComboBox<String> comboBox1;
 	public JComboBox<String> comboBox2;
+	public JLabel lblNombre;
+	public JLabel lblContraseña;
+	public JLabel lblReContraseña;
+	public JLabel lblcomboBox1;
+	public JLabel lblcomboBox2;
 	public JLabel lblMsgError;
 	public JButton btnGuardar;
 	public JButton btnBorrar;
@@ -37,7 +42,7 @@ public class NuevoUsuario extends VentanaModelo{
 		setBounds(10, 10, 460, 300);
 		panel.setLayout(contenedor);
 		
-		JLabel lblNombre = new JLabel("Usuario:");
+		lblNombre = new JLabel("Usuario:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblNombre, 30, SpringLayout.NORTH, panel);
 		contenedor.putConstraint(SpringLayout.WEST, lblNombre, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblNombre, 115, SpringLayout.WEST, lblNombre);
@@ -50,7 +55,7 @@ public class NuevoUsuario extends VentanaModelo{
 		panel.add(txtUsuario);
 		configurarJTextField(txtUsuario, 20);
 		
-		JLabel lblContraseña = new JLabel("Contraseña:");
+		lblContraseña = new JLabel("Contraseña:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblContraseña, 15, SpringLayout.SOUTH, lblNombre);
 		contenedor.putConstraint(SpringLayout.WEST, lblContraseña, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblContraseña, 115, SpringLayout.WEST, lblContraseña);
@@ -63,7 +68,7 @@ public class NuevoUsuario extends VentanaModelo{
 		panel.add(txtContraseña);
 		configurarJTextField(txtContraseña, 20);
 		
-		JLabel lblReContraseña = new JLabel("Repetir contraseña:");
+		lblReContraseña = new JLabel("Repetir contraseña:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblReContraseña, 15, SpringLayout.SOUTH, txtContraseña);
 		contenedor.putConstraint(SpringLayout.WEST, lblReContraseña, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblReContraseña, 115, SpringLayout.WEST, lblReContraseña);
@@ -76,7 +81,7 @@ public class NuevoUsuario extends VentanaModelo{
 		panel.add(txtReContraseña);
 		configurarJTextField(txtReContraseña, 20);
 		
-		JLabel lblcomboBox1 = new JLabel("Nivel de acceso:");
+		lblcomboBox1 = new JLabel("Nivel de acceso:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblcomboBox1, 15, SpringLayout.SOUTH, lblReContraseña);
 		contenedor.putConstraint(SpringLayout.WEST, lblcomboBox1, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblcomboBox1, 115, SpringLayout.WEST, lblcomboBox1);
@@ -88,7 +93,7 @@ public class NuevoUsuario extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.EAST, comboBox1, 250, SpringLayout.WEST, comboBox1);
 		panel.add(comboBox1);
 
-		JLabel lblcomboBox2 = new JLabel("Empleado:");
+		lblcomboBox2 = new JLabel("Empleado:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblcomboBox2, 15, SpringLayout.SOUTH, lblcomboBox1);
 		contenedor.putConstraint(SpringLayout.WEST, lblcomboBox2, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblcomboBox2, 115, SpringLayout.WEST, lblcomboBox2);

@@ -1,3 +1,4 @@
+import controlador.CtrlArgumentos;
 import controlador.CtrlLogin;
 import interfaceUsuario.IngresoUsuario;
 import modelo.DtosConfiguracion;
@@ -14,13 +15,18 @@ import modelo.DtosConfiguracion;
 /*								UMLet 14.3										*/
 /*		Estado:					Desarrollo.										*/
 /*		Fecha creación:			15/09/2022										*/
-/*		Última modificación:	29/11/2022										*/
+/*		Última modificación:	01/12/2022										*/
 /********************************************************************************/
 
 public class LECSys {
 
 	public static void main(String[] args) {
 
+		CtrlArgumentos ctrlArgumentos = new CtrlArgumentos();
+		
+		if(ctrlArgumentos.procesar(args))
+			return;
+		
 		DtosConfiguracion config = new DtosConfiguracion();
 		config.getConfig();
 		IngresoUsuario interfaceUsuario = new IngresoUsuario();

@@ -36,10 +36,10 @@ public class CtrlPrincipal implements ActionListener {
 	
 	public void iniciar() {
 		
-//		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.00\nRev. 29112022.1054");
-//		actividad.registrarActividad("Inicio del sistema", "Principal");
+		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.00\nRev. 01122022.1054");
+		actividad.registrarActividad("Inicio del sistema", "Principal");
 		ventanaPrincipal.setVisible(true);
-/*		acceso = new OperadorSistema();
+		acceso = new OperadorSistema();
 		
 		if(acceso.getActualizarContraseña()) {
 			
@@ -49,7 +49,7 @@ public class CtrlPrincipal implements ActionListener {
 		}
 		Cumpleaños ventanaCumpleaños = new Cumpleaños("Recordatorio de cumpleaños");
 		CtrlCumpleaños ctrlCumpleaños = new CtrlCumpleaños(ventanaCumpleaños);
-		ctrlCumpleaños.iniciar();*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		ctrlCumpleaños.iniciar();
 	}
 
 	public void actionPerformed(ActionEvent e) {

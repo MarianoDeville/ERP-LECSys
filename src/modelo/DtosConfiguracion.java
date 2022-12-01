@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.Arrays;
 import dao.DiscoDAO;
 
 public class DtosConfiguracion extends DiscoDAO{
@@ -16,7 +17,57 @@ public class DtosConfiguracion extends DiscoDAO{
 		
 		return getConfiguracion();
 	}
+
+	public void setConfiguracion() {
+		
+		if(!isArchivoExiste())
+			setArchivoConfiguración();
+	}
 	
+	public String setEmail(String email, char[] contraseña, char[] recontraseña) {
+		
+		String msg = "";
+		String pass = Arrays.toString(contraseña);
+		
+		if(email.length() < 6)
+			return "El campo email debe estar lleno.";
+		
+		if(!email.contains("@") || email.contains(" "))
+			return "Error en el formato del email.";
+		
+		String partes[] = email.split("@");
+		
+		try {
+			
+			if(partes[1].length() < 2 || !partes[1].contains("."))
+				return "Error en el formato del email.";	
+			
+		} catch (Exception e) {
+			
+			return "Error en el formato del email.";	
+		}	
+		
+		if(!pass.equals(Arrays.toString(recontraseña)))
+			return "Las contraseñas son distintas";
+		
+		pass = "";
+		
+		for(int i = 0; i < contraseña.length; i++) {
+			
+			pass += contraseña[i];
+		}
+		
+		String valores[] = {"MAIL", email, "MPAS", pass};
+		msg = modificarValores(valores);
+	
+		if(msg.equals("")) {
+			
+			emailSistema = email;
+			passSistema = pass;
+		}
+		return msg;
+	}
+
 	public String getEmailSistema() {
 		return emailSistema;
 	}

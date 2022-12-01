@@ -3,11 +3,11 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
-
 import interfaceUsuario.ABML;
 import interfaceUsuario.CambioContraseña;
 import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.Listado;
+import interfaceUsuario.NuevoUsuario;
 import modelo.DtosAcceso;
 
 public class CtrlConfiguracion implements ActionListener {
@@ -22,6 +22,7 @@ public class CtrlConfiguracion implements ActionListener {
 		this.ventanaConfiguracion.btn1A.addActionListener(this);
 		this.ventanaConfiguracion.btn1B.addActionListener(this);
 		this.ventanaConfiguracion.btn1C.addActionListener(this);
+		this.ventanaConfiguracion.btn2A.addActionListener(this);
 		this.ventanaConfiguracion.btnVolver.addActionListener(this);
 	}
 	
@@ -35,11 +36,14 @@ public class CtrlConfiguracion implements ActionListener {
 		ventanaConfiguracion.lbl1B.setVisible(true);
 		ventanaConfiguracion.btn1B.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\ABML.png"));
 		ventanaConfiguracion.btn1B.setVisible(true);
-		
 		ventanaConfiguracion.lbl1C.setText("Cambiar contraseña");
 		ventanaConfiguracion.lbl1C.setVisible(true);
 		ventanaConfiguracion.btn1C.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Cambio contraseña.png"));
 		ventanaConfiguracion.btn1C.setVisible(true);
+		ventanaConfiguracion.lbl2A.setText("Email");
+		ventanaConfiguracion.lbl2A.setVisible(true);
+		ventanaConfiguracion.btn2A.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Email.png"));
+		ventanaConfiguracion.btn2A.setVisible(true);
 		
 		ventanaConfiguracion.setVisible(true);
 	}
@@ -73,6 +77,16 @@ public class CtrlConfiguracion implements ActionListener {
 				CambioContraseña ventanaCambioPass = new CambioContraseña();
 				CtrlCambioPassword ctrlCambioPass = new CtrlCambioPassword(ventanaCambioPass);
 				ctrlCambioPass.iniciar();
+			}
+		}
+		
+		if(e.getSource() == ventanaConfiguracion.btn2A) {
+			
+			if(acceso.chkAcceso("Configuración", "Cambiar email")) {
+			
+				NuevoUsuario ventanaEmail = new NuevoUsuario("Edición email del sistema");
+				CtrolEditarEmail ctrolEditarEmail = new CtrolEditarEmail(ventanaEmail);
+				ctrolEditarEmail.iniciar();
 			}
 		}
 
