@@ -3,6 +3,8 @@ package modelo;
 import java.net.InetAddress;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import controlador.CtrlLogErrores;
 import dao.ActividadDAO;
 import dao.OperadorSistema;
 
@@ -30,7 +32,7 @@ public class DtosActividad {
 			
 		} catch (Exception e) {
 			
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
 		} 
 		actividadDAO.setActividad(identificacion.getFichaEmpleado(), fecha, hora, accion, modulo, miIP);
 	}
@@ -43,6 +45,9 @@ public class DtosActividad {
 	public String [][] getActividad(String mes, String año) {
 		
 		ActividadDAO actividadDAO = new ActividadDAO();
+		
+		if(año == null)
+			año ="";
 		
 		if(mes.equals("") || año.equals("")) {
 			

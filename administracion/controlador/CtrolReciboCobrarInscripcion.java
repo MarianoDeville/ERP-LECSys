@@ -53,10 +53,12 @@ public class CtrolReciboCobrarInscripcion implements ActionListener {
 			if (imprimir.printDialog()) {
 				
 				try {
-						imprimir.print();
+					imprimir.print();
 				} catch (PrinterException d) {
 					
-						JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
+					CtrlLogErrores.guardarError(d.getMessage());
+					CtrlLogErrores.guardarError("Error al intentar imprimir.");
+					JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
 				}
 			}
 			ventanaReciboInscripcion.dispose();

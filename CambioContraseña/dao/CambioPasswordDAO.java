@@ -3,6 +3,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import controlador.CtrlLogErrores;
 import modelo.DtosActividad;
 import modelo.DtosCambioPassword;
 
@@ -31,7 +32,7 @@ public class CambioPasswordDAO extends Conexion {
 			}
 		} catch (Exception e) {
 			
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
 		}finally {
 			
 			this.cerrar();
@@ -55,7 +56,7 @@ public class CambioPasswordDAO extends Conexion {
 			
 		} catch (Exception e) {
 
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
 			bandera = false;
 		} finally {
 			

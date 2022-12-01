@@ -86,6 +86,7 @@ public class DtosConfiguracion extends DiscoDAO{
 		
 		DtosConfiguracion.passSistema = passSistema;
 	}
+	
 	public String getServidor() {
 		
 		return servidor;

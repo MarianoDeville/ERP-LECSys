@@ -83,7 +83,8 @@ public class CtrlAsistenciaAlumnos implements ActionListener {
 				ventanaAsistencia.tabla.print();
 			} catch (PrinterException f) {
 				
-				f.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
+				CtrlLogErrores.guardarError(f.getMessage());
 			}
 		}
 		

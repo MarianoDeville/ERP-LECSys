@@ -105,7 +105,8 @@ public class CtrlABMLUsuarios implements ActionListener {
 				ventanaABMLUsuarios.tabla.print();
 			} catch (Exception f) {
 
-				f.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
+				CtrlLogErrores.guardarError(f.getMessage());
 			}
 		}
 		

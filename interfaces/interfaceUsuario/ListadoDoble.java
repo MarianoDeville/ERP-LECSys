@@ -55,7 +55,7 @@ public class ListadoDoble extends VentanaModelo {
 		btnAgregar = new JButton("Agregar");
 		contenedor.putConstraint(SpringLayout.NORTH, btnAgregar, 50, SpringLayout.NORTH, scrollTabla1);
 		contenedor.putConstraint(SpringLayout.WEST, btnAgregar, 10, SpringLayout.EAST, scrollTabla1);
-//		contenedor.putConstraint(SpringLayout.EAST, btnAgregar, -90, SpringLayout.WEST, btnAgregar);
+		contenedor.putConstraint(SpringLayout.EAST, btnAgregar, -90, SpringLayout.WEST, btnAgregar);
 		listado.add(btnAgregar);
 		
 		scrollTabla2 = new JScrollPane();
@@ -76,19 +76,19 @@ public class ListadoDoble extends VentanaModelo {
 		btnEditar = new JButton("Editar");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnEditar, -10, SpringLayout.SOUTH, listado);
 		contenedor.putConstraint(SpringLayout.WEST, btnEditar, 100, SpringLayout.WEST, listado);
-//		contenedor.putConstraint(SpringLayout.WEST, btnEditar, -90, SpringLayout.EAST, btnEditar);
+		contenedor.putConstraint(SpringLayout.WEST, btnEditar, -90, SpringLayout.EAST, btnEditar);
 		listado.add(btnEditar);
 		
 		btnGuafrdar = new JButton("Guardar");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnGuafrdar, 0, SpringLayout.SOUTH, btnEditar);
 		contenedor.putConstraint(SpringLayout.WEST, btnGuafrdar, 60, SpringLayout.EAST, btnEditar);
-//		contenedor.putConstraint(SpringLayout.WEST, btnGuafrdar, -90, SpringLayout.EAST, btnGuafrdar);
+		contenedor.putConstraint(SpringLayout.WEST, btnGuafrdar, -90, SpringLayout.EAST, btnGuafrdar);
 		listado.add(btnGuafrdar);
 		
 		btnVolver = new JButton("Volver");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -10, SpringLayout.SOUTH, listado);
 		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -10, SpringLayout.EAST, listado);
-//		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -90, SpringLayout.EAST, btnVolver);
+		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -90, SpringLayout.EAST, btnVolver);
 		listado.add(btnVolver);
 	}
 }

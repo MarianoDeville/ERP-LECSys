@@ -95,7 +95,8 @@ public class CtrlListado implements ActionListener {
 				ventanaListado.tabla.print();
 			} catch (Exception f) {
 				
-				f.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
+				CtrlLogErrores.guardarError(f.getMessage());
 			}
 		}		
 		

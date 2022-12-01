@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import controlador.CtrlLogErrores;
 import modelo.DtosConfiguracion;
 
 class Conexion {
@@ -20,8 +21,9 @@ class Conexion {
 			Class.forName(CONTROLADOR);
 		} catch (Exception e) {
 			
-			System.err.println("Error al acceder a la base de datos.");
-			System.err.println(url);
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("Error al acceder a la base de datos.");
+			CtrlLogErrores.guardarError(url);
 		}
 		return;
 	}
@@ -36,7 +38,7 @@ class Conexion {
 			}
 		} catch (Exception e) {
 
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
 		}
 	}
 }

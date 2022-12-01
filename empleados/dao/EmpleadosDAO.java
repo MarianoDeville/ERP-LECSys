@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
+import controlador.CtrlLogErrores;
 import modelo.DtosActividad;
 import modelo.DtosEmpleado;
 
@@ -42,8 +42,8 @@ public class EmpleadosDAO extends Conexion {
 		} catch (Exception e) {
 			
 			bandera = false;
-			System.err.println("EmpleadosDAO, setActualizarEmpleado()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("EmpleadosDAO, setActualizarEmpleado()");
 		} finally {
 			
 			this.cerrar();
@@ -85,8 +85,8 @@ public class EmpleadosDAO extends Conexion {
 		} catch (Exception e) {
 			
 			bandera = false;
-			System.err.println("EmpleadosDAO, setEmpleado()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("EmpleadosDAO, setEmpleado()");
 		} finally {
 			
 			this.cerrar();
@@ -149,8 +149,8 @@ public class EmpleadosDAO extends Conexion {
 			}
 		}catch (Exception e) {
 			
-			System.err.println("EmpleadosDAO, getEmpleados()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("EmpleadosDAO, getEmpleados()");
 		} finally {
 			
 			this.cerrar();

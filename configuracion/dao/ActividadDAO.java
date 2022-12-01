@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import controlador.CtrlLogErrores;
+
 public class ActividadDAO extends Conexion {
 	
 	public void setActividad( int idUsuario, String fecha, String hora, String accion, String modulo, String miIP) {
@@ -25,7 +27,8 @@ public class ActividadDAO extends Conexion {
 			stm.executeUpdate();
 		} catch (Exception e) {
 			
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("ActividadDAO, setActividad()");
 		} finally {
 			
 			this.cerrar();
@@ -64,7 +67,8 @@ public class ActividadDAO extends Conexion {
 			}
 		}catch (Exception e) {
 			
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("ActividadDAO, getActividad()");
 		} finally {
 			
 			this.cerrar();

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import interfaceUsuario.Listado;
 import modelo.DtosCurso;
@@ -76,7 +77,8 @@ public class CtrlDiagramaCursos implements ActionListener {
 				ventanaDiagramaCursos.tabla.print();
 			} catch (PrinterException f) {
 				
-				f.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
+				CtrlLogErrores.guardarError(f.getMessage());
 			}
 		}
 		

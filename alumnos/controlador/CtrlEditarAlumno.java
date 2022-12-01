@@ -24,7 +24,6 @@ public class CtrlEditarAlumno implements ActionListener {
 		this.ventanaEditarAlumno.btnGuardar.addActionListener(this);
 		this.ventanaEditarAlumno.btnImprimir.addActionListener(this);
 		this.ventanaEditarAlumno.btnVolver.addActionListener(this);
-		
 	}
 	
 	public void iniciar(String legajo) {
@@ -121,8 +120,8 @@ public class CtrlEditarAlumno implements ActionListener {
 						imprimir.print();
 				} catch (PrinterException f) {
 					
-						JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
-						System.err.println(f.getMessage());
+					JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
+					CtrlLogErrores.guardarError(f.getMessage());
 				}
 			}
 			

@@ -3,6 +3,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import controlador.CtrlLogErrores;
 import modelo.DtosActividad;
 import modelo.DtosCobros;
 
@@ -27,8 +28,8 @@ public class GrupoFamiliarDAO extends Conexion {
 			stm.executeUpdate();
 		} catch (Exception e) {
 	
-			System.err.println("GrupoFamiliarDAO, setActualizarGrupo()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("GrupoFamiliarDAO, setActualizarGrupo()");
 			bandera = false;
 		} finally {
 			
@@ -74,9 +75,9 @@ public class GrupoFamiliarDAO extends Conexion {
 			}
 		}catch (Exception e) {
 		
-			System.err.println("GrupoFamiliarDAO, getIntegrantes()");
-			System.err.println(e.getMessage());
-			System.out.println(comandoStatement);
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("GrupoFamiliarDAO, getIntegrantes()");
+			CtrlLogErrores.guardarError(comandoStatement);
 		} finally {
 		
 			this.cerrar();
@@ -135,9 +136,9 @@ public class GrupoFamiliarDAO extends Conexion {
 			}
 		}catch (Exception e) {
 			
-			System.err.println("GrupoFamiliarDAO, getGruposFamilias()");
-			System.err.println(e.getMessage());
-			System.out.println(comandoStatement);
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("GrupoFamiliarDAO, getGruposFamilias()");
+			CtrlLogErrores.guardarError(comandoStatement);
 		} finally {
 			
 			this.cerrar();
@@ -179,9 +180,9 @@ public class GrupoFamiliarDAO extends Conexion {
 			}
 			
 		} catch (Exception e) {
-	
-			System.err.println("GrupoFamiliarDAO, setGrupoFamiliar()");
-			System.err.println(e.getMessage());
+			
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("GrupoFamiliarDAO, setGrupoFamiliar()");
 			bandera = false;
 		} finally {
 			
@@ -207,9 +208,9 @@ public class GrupoFamiliarDAO extends Conexion {
 				
 		}catch (Exception e) {
 			
-			System.err.println("GrupoFamiliarDAO, isNombreFamilia()");
-			System.err.println(e.getMessage());
-			System.out.println(comandoStatement);
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("GrupoFamiliarDAO, isNombreFamilia()");
+			CtrlLogErrores.guardarError(comandoStatement);
 		} finally {
 			
 			this.cerrar();

@@ -3,6 +3,7 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import interfaceUsuario.Listado;
 import modelo.DtosAlumno;
@@ -51,7 +52,8 @@ public class CtrlRegistroAsistencia implements ActionListener {
 				ventanaRegistroAsistencia.tabla.print();
 			} catch (Exception f) {
 				
-				f.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
+				CtrlLogErrores.guardarError(f.getMessage());
 			}
 		}
 		

@@ -132,7 +132,8 @@ public class CtrlABMLEmpleados implements ActionListener {
 				ventanaABML.tabla.print();
 			} catch (PrinterException f) {
 				
-				f.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
+				CtrlLogErrores.guardarError(f.getMessage());
 			}
 		}
 

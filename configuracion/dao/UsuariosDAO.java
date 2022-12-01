@@ -3,6 +3,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import controlador.CtrlLogErrores;
 import modelo.DtosActividad;
 import modelo.DtosUsuarios;
 
@@ -29,8 +30,8 @@ public class UsuariosDAO extends Conexion {
 			stm.executeUpdate();
 		} catch (Exception e) {
 	
-			System.err.println("UsuariosDAO, setUsuario()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("UsuariosDAO, setUsuario()");
 			bandera = false;
 		} finally {
 			
@@ -81,8 +82,8 @@ public class UsuariosDAO extends Conexion {
 			}
 		}catch (Exception e) {
 			
-			System.err.println("UsuariosDAO, getUsuarios");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("UsuariosDAO, getUsuarios");
 		} finally {
 			
 			this.cerrar();
@@ -109,8 +110,8 @@ public class UsuariosDAO extends Conexion {
 			
 		} catch (Exception e) {
 
-			System.err.println("UsuariosDAO, setActualizarUsuario()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("UsuariosDAO, setActualizarUsuario()");
 			bandera = false;
 		} finally {
 			

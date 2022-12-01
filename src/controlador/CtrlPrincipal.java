@@ -133,6 +133,5 @@ public class CtrlPrincipal implements ActionListener {
 			actividad.registrarActividad("Cierre del sistema", "Principal" );
 			System.exit(0);
 		}
-		
 	}
 }

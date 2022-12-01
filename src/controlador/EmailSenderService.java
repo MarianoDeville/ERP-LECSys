@@ -41,7 +41,7 @@ System.out.println("Mensaje: \n" + mensaje);
 		} catch (Exception e) {
 			
 			System.out.println("Error al intentar enviar el email.");
-			e.printStackTrace();
+			CtrlLogErrores.guardarError(e.getMessage());
 		}
 	}
 }

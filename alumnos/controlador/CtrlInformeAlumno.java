@@ -33,7 +33,6 @@ public class CtrlInformeAlumno implements ActionListener {
 		ventanaInforme.txtApellido.setText(dtosAlumno.getApellido());
 		ventanaInforme.txtCurso.setEditable(false);
 		ventanaInforme.txtCurso.setText(dtosAlumno.getNombreCurso());
-		
 		ventanaInforme.txtPresentismo.setEditable(false);
 		ventanaInforme.txtFaltas.setEditable(false);
 		ventanaInforme.txtTotal.setEditable(false);
@@ -72,11 +71,11 @@ public class CtrlInformeAlumno implements ActionListener {
 				
 				try {
 					
-						imprimir.print();
+					imprimir.print();
 				} catch (PrinterException f) {
 					
-						JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
-						System.err.println(f.getMessage());
+					JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
+					CtrlLogErrores.guardarError(f.getMessage());
 				}
 			}
 			

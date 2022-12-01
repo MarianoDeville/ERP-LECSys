@@ -3,6 +3,8 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+import controlador.CtrlLogErrores;
 import modelo.DtosActividad;
 import modelo.DtosCobros;
 
@@ -29,8 +31,8 @@ public class AdministracionDAO extends Conexion {
 			stm.executeUpdate();
 		} catch (Exception e) {
 	
-			System.err.println("AdministracionDAO, setCobro()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AdministracionDAO, setCobro()");
 			bandera = false;
 		} finally {
 			
@@ -55,8 +57,8 @@ public class AdministracionDAO extends Conexion {
 
 		}catch (Exception e) {
 			
-			System.err.println("AdministracionDAO, getUltimoRegistro()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AdministracionDAO, getUltimoRegistro()");
 		} finally {
 			
 			this.cerrar();

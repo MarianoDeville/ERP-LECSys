@@ -124,7 +124,7 @@ public class CtrlEditarEmpleado implements ActionListener {
 				} catch (PrinterException f) {
 					
 						JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
-						System.err.println(f.getMessage());
+						CtrlLogErrores.guardarError(f.getMessage());
 				}
 			}
 			ventanaEditarEmpleado.panel.setBackground(colorPanel);

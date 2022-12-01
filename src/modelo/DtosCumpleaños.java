@@ -1,7 +1,6 @@
 package modelo;
 
 import javax.swing.table.DefaultTableModel;
-
 import dao.PersonasDAO;
 
 public class DtosCumpleaños {
@@ -14,11 +13,9 @@ public class DtosCumpleaños {
 		String titulo[] = {"Nombre", "Apellido"};
 		String respuesta[][] = personasDAO.getListadoCumpleAños();
 		
-		if(respuesta != null) {
-			
+		if(respuesta != null) 
 			bandera = true;
-		}
-		
+
 		DefaultTableModel tablaModelo = new DefaultTableModel(respuesta, titulo);
 		return tablaModelo;
 	}

@@ -10,11 +10,39 @@ import modelo.DtosConfiguracion;
 
 public class DiscoDAO {
 
-	public void escribirLog(String contenido) {
+	public static void escribirLog(String contenido) {
 		
-		
-		
+		BufferedWriter bw = null;
+	    FileWriter fw = null;
+
+	    try {
+	    	
+	        File archivo = new File(DtosConfiguracion.getDirectorio() + "\\log.txt");
+
+	        if (!archivo.exists())
+	        	archivo.createNewFile();
+
+	        fw = new FileWriter(archivo.getAbsoluteFile(), true);		// flag true, indica adjuntar información al archivo.
+	        bw = new BufferedWriter(fw);
+	        bw.write(contenido + "\r\n");
+	    } catch (IOException e) {
+	    	
+	    	System.err.println("No se pudo escribir en el archivo.");
+	    } finally {
+	    	
+	        try {
+
+	            if (bw != null)
+	                bw.close();
+	            if (fw != null)
+	                fw.close();
+	        } catch (IOException ex) {
+	        	
+	            ex.printStackTrace();
+	        }
+	    }
 	}
+	
 	public String modificarValores(String valor[]) {
 	
 		String msg = "";
@@ -238,7 +266,7 @@ public class DiscoDAO {
 			bw.write("IPBD=" + dtosConfig.getServidor() + "\n");
 			bw.write("USR=" + codifico(dtosConfig.getUsuarioBD()) + "\n");
 			bw.write("UPAS=" + codifico(dtosConfig.getPassBD()) + "\n");
-			bw.write("DLOG=" + dtosConfig.getDirectorio() + "\n");
+			bw.write("DLOG=" + DtosConfiguracion.getDirectorio() + "\n");
 			bw.write("MAIL=\n");
 			bw.write("MPAS=\n");
 		} catch (IOException e) {

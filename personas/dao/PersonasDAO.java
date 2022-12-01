@@ -3,6 +3,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import controlador.CtrlLogErrores;
 
 public class PersonasDAO extends Conexion {
 	
@@ -33,8 +34,8 @@ public class PersonasDAO extends Conexion {
 		} catch (Exception e) {
 			
 			bandera = false;
-			System.err.println("PersonasDAO, actualizarPersona()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("PersonasDAO, actualizarPersona()");
 		} finally {
 			
 			this.cerrar();
@@ -73,13 +74,12 @@ public class PersonasDAO extends Conexion {
 			
 		} catch (Exception e) {
 			
-			System.err.println("PersonasDAO, registrarPersona()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("PersonasDAO, registrarPersona()");
 		} finally {
 			
 			this.cerrar();
 		}
-		
 		return registro;
 	}
 	
@@ -101,8 +101,8 @@ public class PersonasDAO extends Conexion {
 			}
 		}catch (Exception e) {
 			
-			System.err.println("PersonasDAO, getDNIDuplicado()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("PersonasDAO, getDNIDuplicado()");
 		} finally {
 			
 			this.cerrar();
@@ -137,8 +137,8 @@ public class PersonasDAO extends Conexion {
 			}
 		} catch (Exception e) {
 			
-			System.err.println("PersonasDAO, listadoCumpleAños()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("PersonasDAO, listadoCumpleAños()");
 		} finally {
 			
 			this.cerrar();

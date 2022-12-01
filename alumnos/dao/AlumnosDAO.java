@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import controlador.CtrlLogErrores;
 import modelo.DtosActividad;
 import modelo.DtosAlumno;
 
@@ -34,8 +36,8 @@ public class AlumnosDAO extends Conexion {
 			stm.executeUpdate();
 		} catch (Exception e) {
 	
-			System.err.println("AlumnosDAO, setExamen()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AlumnosDAO, setExamen()");
 			bandera = false;
 		} finally {
 			
@@ -71,8 +73,8 @@ public class AlumnosDAO extends Conexion {
 			stm.executeUpdate();
 		} catch (Exception e) {
 	
-			System.err.println("AlumnosDAO, setActualizarAlumno()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AlumnosDAO, setActualizarAlumno()");
 			bandera = false;
 		} finally {
 			
@@ -114,8 +116,8 @@ public class AlumnosDAO extends Conexion {
 			stm.executeUpdate();
 		} catch (Exception e) {
 	
-			System.err.println("AlumnosDAO, setAlumno()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AlumnosDAO, setAlumno()");
 			bandera = false;
 		} finally {
 			
@@ -200,9 +202,9 @@ public class AlumnosDAO extends Conexion {
 			}
 		}catch (Exception e) {
 			
-			System.err.println("AlumnosDAO, getAlumnos()");
-			System.err.println(e.getMessage());
-			System.out.println(comandoStatement);
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AlumnosDAO, getAlumnos()");
+			CtrlLogErrores.guardarError(comandoStatement);
 		} finally {
 			
 			this.cerrar();
@@ -227,8 +229,8 @@ public class AlumnosDAO extends Conexion {
 			stm.executeUpdate();
 		} catch (Exception e) {
 	
-			System.err.println("AsistenciaDAO, setAsistencia()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AlumnosDAO, setAsistencia()");
 			bandera = false;
 		} finally {
 			
@@ -269,8 +271,8 @@ public class AlumnosDAO extends Conexion {
 			}
 		}catch (Exception e) {
 			
-			System.err.println("AsistenciaDAO, tablaAsistenciasAlumnos()");
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AlumnosDAO, tablaAsistenciasAlumnos()");
 		} finally {
 			
 			this.cerrar();

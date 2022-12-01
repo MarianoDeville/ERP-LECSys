@@ -3,6 +3,7 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import controlador.CtrlLogErrores;
 import modelo.DtosActividad;
 import modelo.DtosCurso;
 
@@ -34,7 +35,8 @@ public class CursosDAO extends Conexion {
 			
 		} catch (Exception e) {
 		
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("CursosDAO, buscarDiasCurso()");
 		} finally {
 		
 			this.cerrar();
@@ -97,7 +99,8 @@ public class CursosDAO extends Conexion {
 			
 		} catch (Exception e) {
 			
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("CursosDAO, getCronogramaDias()");
 		} finally {
 			
 			this.cerrar();
@@ -173,8 +176,9 @@ public class CursosDAO extends Conexion {
 			}			
 		}catch (Exception e) {
 			
-			System.out.println(comandoStatement);
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("CursosDAO, getListado()");
+			CtrlLogErrores.guardarError(comandoStatement);
 		} finally {
 			
 			this.cerrar();
@@ -225,7 +229,8 @@ public class CursosDAO extends Conexion {
 		} catch (Exception e) {
 			
 			bandera = false;
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("CursosDAO, setCurso()");
 		} finally {
 			
 			this.cerrar();
@@ -277,7 +282,8 @@ public class CursosDAO extends Conexion {
 		} catch (Exception e) {
 			
 			bandera = false;
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("CursosDAO, setActualizarCurso()");
 		} finally {
 			
 			this.cerrar();
@@ -306,8 +312,9 @@ public class CursosDAO extends Conexion {
 			
 		}catch (Exception e) {
 			
-			System.out.println(comandoStatement);
-			System.err.println(e.getMessage());
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("CursosDAO, getValorCuota()");
+			CtrlLogErrores.guardarError(comandoStatement);
 		} finally {
 			
 			this.cerrar();
