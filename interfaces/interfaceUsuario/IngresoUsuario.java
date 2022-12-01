@@ -6,6 +6,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import modelo.DtosConfiguracion;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -27,7 +30,7 @@ public class IngresoUsuario extends JDialog {
 	public IngresoUsuario() {
 		
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\LECSys 2.0\\Imagenes\\LEC.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DtosConfiguracion.getDirectorio() + "\\Imagenes\\LEC.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModalityType(ModalityType.TOOLKIT_MODAL);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);

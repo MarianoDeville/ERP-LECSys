@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import interfaceUsuario.InterfaceBotones;
+import modelo.DtosConfiguracion;
 
 public class CtrlPagos implements ActionListener {
 
@@ -23,19 +24,19 @@ public class CtrlPagos implements ActionListener {
 		
 		ventanaPagos.lbl1A.setText("Pagar");
 		ventanaPagos.lbl1A.setVisible(true);
-		ventanaPagos.btn1A.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Pagos.png"));
+		ventanaPagos.btn1A.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Pagos.png"));
 		ventanaPagos.btn1A.setVisible(true);
 		ventanaPagos.lbl1B.setText("Proveedores");
 		ventanaPagos.lbl1B.setVisible(true);
-		ventanaPagos.btn1B.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Proveedores.png"));
+		ventanaPagos.btn1B.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Proveedores.png"));
 		ventanaPagos.btn1B.setVisible(true);
 		ventanaPagos.lbl2A.setText("Empleados");
 		ventanaPagos.lbl2A.setVisible(true);
-		ventanaPagos.btn2A.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Empleados.png"));
+		ventanaPagos.btn2A.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Empleados.png"));
 		ventanaPagos.btn2A.setVisible(true);
 		ventanaPagos.lbl2B.setText("Listado pagos");
 		ventanaPagos.lbl2B.setVisible(true);
-		ventanaPagos.btn2B.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Listado cobros.png"));
+		ventanaPagos.btn2B.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Listado cobros.png"));
 		ventanaPagos.btn2B.setVisible(true);
 		ventanaPagos.setVisible(true);
 	}

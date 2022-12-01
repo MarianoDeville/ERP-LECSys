@@ -3,10 +3,8 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-
 import interfaceUsuario.Listado;
 import modelo.DtosAlumno;
 
@@ -81,7 +79,6 @@ public class CtrlExamenes implements ActionListener {
 				
 				String msg = dtosAlumno.guardarResultados(notas);
 				JOptionPane.showMessageDialog(null,msg);
-				
 			} else {
 				
 				JOptionPane.showMessageDialog(null, "El formato de la fecha es incorrecto. Ej. 25-10-2020");
@@ -104,5 +101,4 @@ public class CtrlExamenes implements ActionListener {
 			ventanaExamenes.dispose();
 		}
 	}
-
 }

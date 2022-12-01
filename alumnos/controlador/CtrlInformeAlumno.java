@@ -6,9 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-
 import javax.swing.JOptionPane;
-
 import interfaceUsuario.InformeAlumno;
 import modelo.DtosAlumno;
 

@@ -7,6 +7,7 @@ import interfaceUsuario.ABML;
 import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.Listado;
 import modelo.DtosAcceso;
+import modelo.DtosConfiguracion;
 
 public class CtrlCursos implements ActionListener {
 	
@@ -26,11 +27,11 @@ public class CtrlCursos implements ActionListener {
 		
 		ventanaCursos.lbl1A.setText("ABML");
 		ventanaCursos.lbl1A.setVisible(true);
-		ventanaCursos.btn1A.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Actividades.png"));
+		ventanaCursos.btn1A.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Actividades.png"));
 		ventanaCursos.btn1A.setVisible(true);
 		ventanaCursos.lbl1B.setText("Diagramación");
 		ventanaCursos.lbl1B.setVisible(true);
-		ventanaCursos.btn1B.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Diagramacion.png"));
+		ventanaCursos.btn1B.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Diagramacion.png"));
 		ventanaCursos.btn1B.setVisible(true);
 		ventanaCursos.setVisible(true);
 	}

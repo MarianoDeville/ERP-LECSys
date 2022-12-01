@@ -9,6 +9,7 @@ import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.Listado;
 import interfaceUsuario.NuevoUsuario;
 import modelo.DtosAcceso;
+import modelo.DtosConfiguracion;
 
 public class CtrlConfiguracion implements ActionListener {
 
@@ -30,19 +31,19 @@ public class CtrlConfiguracion implements ActionListener {
 		
 		ventanaConfiguracion.lbl1A.setText("Actividad");
 		ventanaConfiguracion.lbl1A.setVisible(true);
-		ventanaConfiguracion.btn1A.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Actividades.png"));
+		ventanaConfiguracion.btn1A.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Actividades.png"));
 		ventanaConfiguracion.btn1A.setVisible(true);
 		ventanaConfiguracion.lbl1B.setText("ABML usuarios");
 		ventanaConfiguracion.lbl1B.setVisible(true);
-		ventanaConfiguracion.btn1B.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\ABML.png"));
+		ventanaConfiguracion.btn1B.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\ABML.png"));
 		ventanaConfiguracion.btn1B.setVisible(true);
 		ventanaConfiguracion.lbl1C.setText("Cambiar contraseña");
 		ventanaConfiguracion.lbl1C.setVisible(true);
-		ventanaConfiguracion.btn1C.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Cambio contraseña.png"));
+		ventanaConfiguracion.btn1C.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Cambio contraseña.png"));
 		ventanaConfiguracion.btn1C.setVisible(true);
 		ventanaConfiguracion.lbl2A.setText("Email");
 		ventanaConfiguracion.lbl2A.setVisible(true);
-		ventanaConfiguracion.btn2A.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Email.png"));
+		ventanaConfiguracion.btn2A.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Email.png"));
 		ventanaConfiguracion.btn2A.setVisible(true);
 		
 		ventanaConfiguracion.setVisible(true);

@@ -121,7 +121,7 @@ public class DtosConfiguracion extends DiscoDAO{
 		return msgError;
 	}
 
-	public String getDirectorio() {
+	public static String getDirectorio() {
 		
 		return directorio;
 	}

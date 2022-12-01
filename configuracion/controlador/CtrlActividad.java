@@ -80,5 +80,4 @@ public class CtrlActividad implements ActionListener {
 			ventanaActividad.dispose();
 		}
 	}
-	
 }

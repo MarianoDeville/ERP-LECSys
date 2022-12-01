@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import modelo.DtosConfiguracion;
+
 public class ReciboCobro extends VentanaModelo {
 
 	private static final long serialVersionUID = 1L;
@@ -88,7 +90,7 @@ public class ReciboCobro extends VentanaModelo {
 		JButton btnNewButton = new JButton("");
 		btnNewButton.setBackground(Color.WHITE);
 		btnNewButton.setForeground(Color.WHITE);
-		btnNewButton.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\LEC - Min.png"));
+		btnNewButton.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\LEC - Min.png"));
 		btnNewButton.setBounds(40, 73, 150, 150);
 		panel.add(btnNewButton);
 		

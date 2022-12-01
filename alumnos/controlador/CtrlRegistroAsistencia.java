@@ -2,10 +2,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
-
 import interfaceUsuario.Listado;
 import modelo.DtosAlumno;
 

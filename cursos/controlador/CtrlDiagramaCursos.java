@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;
-
 import interfaceUsuario.Listado;
 import modelo.DtosCurso;
 

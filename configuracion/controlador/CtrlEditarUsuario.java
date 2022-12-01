@@ -81,7 +81,5 @@ public class CtrlEditarUsuario implements ActionListener {
 			
 			ventanaEditarUsuario.dispose();
 		}
-		
 	}
-
 }

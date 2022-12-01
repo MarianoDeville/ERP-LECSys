@@ -43,9 +43,7 @@ public class CtrlNuevoCurso implements ActionListener {
 			
 			ventanaCrearCursos.tablaHorarios.getColumnModel().getColumn(i).setPreferredWidth(40);
 		}
-
 		ventanaCrearCursos.tablaHorarios.setRowHeight(25);
-
 	}
 	
 	private void limpiarCampos() {

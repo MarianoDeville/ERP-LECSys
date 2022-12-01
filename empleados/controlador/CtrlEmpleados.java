@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import interfaceUsuario.InterfaceBotones;
 import modelo.DtosAcceso;
+import modelo.DtosConfiguracion;
 import interfaceUsuario.ABML;
 
 public class CtrlEmpleados implements ActionListener {
@@ -26,15 +27,15 @@ public class CtrlEmpleados implements ActionListener {
 		
 		ventanaPersonal.lbl1A.setText("ABML");
 		ventanaPersonal.lbl1A.setVisible(true);
-		ventanaPersonal.btn1A.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\ABML.png"));
+		ventanaPersonal.btn1A.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\ABML.png"));
 		ventanaPersonal.btn1A.setVisible(true);
 		ventanaPersonal.lbl1B.setText("Asistencia");
 		ventanaPersonal.lbl1B.setVisible(true);
-		ventanaPersonal.btn1B.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Asistencia.png"));
+		ventanaPersonal.btn1B.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Asistencia.png"));
 		ventanaPersonal.btn1B.setVisible(true);
 		ventanaPersonal.lbl2A.setText("Horarios");
 		ventanaPersonal.lbl2A.setVisible(true);
-		ventanaPersonal.btn2A.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Horarios.png"));
+		ventanaPersonal.btn2A.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Horarios.png"));
 		ventanaPersonal.btn2A.setVisible(true);
 		ventanaPersonal.setVisible(true);
 	}

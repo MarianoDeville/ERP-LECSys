@@ -14,7 +14,6 @@ public class CtrlGrupoFamiliar implements ActionListener {
 		
 		this.ventanaListado = vista;
 		this.dtosGrupoFamiliar = new DtosGrupoFamiliar();
-
 		this.ventanaListado.checkBoxActivos.addActionListener(this);
 		this.ventanaListado.txtTabla1.addActionListener(this);
 		this.ventanaListado.txtTabla2.addActionListener(this);

@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import modelo.DtosConfiguracion;
+
 public class Principal extends VentanaModelo{
 
 	private static final long serialVersionUID = 1L;
@@ -42,7 +44,7 @@ public class Principal extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.WEST, btnAdmin, 0, SpringLayout.WEST, lblAdministracion);
 		contenedor.putConstraint(SpringLayout.SOUTH, btnAdmin, 94, SpringLayout.NORTH, btnAdmin);
 		contenedor.putConstraint(SpringLayout.EAST, btnAdmin, 104, SpringLayout.WEST, btnAdmin);
-		btnAdmin.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Admin.png"));
+		btnAdmin.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Admin.png"));
 		principal.add(btnAdmin);
 		
 		JLabel lblAlumnos = new JLabel("Alumnos");
@@ -57,7 +59,7 @@ public class Principal extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.WEST, btnAlumnos, 0, SpringLayout.WEST, lblAlumnos);
 		contenedor.putConstraint(SpringLayout.SOUTH, btnAlumnos, 94, SpringLayout.NORTH, btnAlumnos);
 		contenedor.putConstraint(SpringLayout.EAST, btnAlumnos, 104, SpringLayout.WEST, btnAlumnos);
-		btnAlumnos.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Alumno.png"));
+		btnAlumnos.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Alumno.png"));
 		principal.add(btnAlumnos);
 		
 		JLabel lblPersonal = new JLabel("Personal");
@@ -72,7 +74,7 @@ public class Principal extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.WEST, btnPersonal, 0, SpringLayout.WEST, lblPersonal);
 		contenedor.putConstraint(SpringLayout.SOUTH, btnPersonal, 94, SpringLayout.NORTH, btnPersonal);
 		contenedor.putConstraint(SpringLayout.EAST, btnPersonal, 104, SpringLayout.WEST, btnPersonal);
-		btnPersonal.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Personal.png"));
+		btnPersonal.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Personal.png"));
 		principal.add(btnPersonal);
 		
 		JLabel lblCursos = new JLabel("Cursos");
@@ -87,7 +89,7 @@ public class Principal extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.WEST, btnCursos, 0, SpringLayout.WEST, lblCursos);
 		contenedor.putConstraint(SpringLayout.SOUTH, btnCursos, 94, SpringLayout.NORTH, btnCursos);
 		contenedor.putConstraint(SpringLayout.EAST, btnCursos, 104, SpringLayout.WEST, btnCursos);
-		btnCursos.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Curso.png"));
+		btnCursos.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Curso.png"));
 		principal.add(btnCursos);
 		
 		JLabel lblInsumos = new JLabel("Insumos");
@@ -102,7 +104,7 @@ public class Principal extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.WEST, btnInsumos, 0, SpringLayout.WEST, lblInsumos);
 		contenedor.putConstraint(SpringLayout.SOUTH, btnInsumos, 94, SpringLayout.NORTH, btnInsumos);
 		contenedor.putConstraint(SpringLayout.EAST, btnInsumos, 104, SpringLayout.WEST, btnInsumos);
-		btnInsumos.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Insumos.png"));
+		btnInsumos.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Insumos.png"));
 		principal.add(btnInsumos);
 		
 		JLabel lblConfig = new JLabel("Configuración");
@@ -117,7 +119,7 @@ public class Principal extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.WEST, btnConfig, 4, SpringLayout.WEST, lblConfig);
 		contenedor.putConstraint(SpringLayout.SOUTH, btnConfig, 69, SpringLayout.NORTH, btnConfig);
 		contenedor.putConstraint(SpringLayout.EAST, btnConfig, 76, SpringLayout.WEST, btnConfig);
-		btnConfig.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Configuracion1.png"));
+		btnConfig.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Configuracion1.png"));
 		principal.add(btnConfig);
 		
 		JLabel lblRelogin = new JLabel("Usuario");
@@ -132,7 +134,7 @@ public class Principal extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.WEST, btnRelogin, 0, SpringLayout.WEST, lblRelogin);
 		contenedor.putConstraint(SpringLayout.SOUTH, btnRelogin, 69, SpringLayout.NORTH, btnRelogin);
 		contenedor.putConstraint(SpringLayout.EAST, btnRelogin, 76, SpringLayout.WEST, btnRelogin);
-		btnRelogin.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Relogin.png"));
+		btnRelogin.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Relogin.png"));
 		principal.add(btnRelogin);
 
 		JLabel lblSalir = new JLabel("Salir");
@@ -147,7 +149,7 @@ public class Principal extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.WEST, btnSalir, 0, SpringLayout.WEST, lblSalir);
 		contenedor.putConstraint(SpringLayout.SOUTH, btnSalir, 69, SpringLayout.NORTH, btnSalir);
 		contenedor.putConstraint(SpringLayout.EAST, btnSalir, 76, SpringLayout.WEST, btnSalir);
-		btnSalir.setIcon(new ImageIcon("C:\\LECSys 1.0\\Imagenes\\Salir.png"));
+		btnSalir.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Salir.png"));
 		principal.add(btnSalir);
 	}
 }

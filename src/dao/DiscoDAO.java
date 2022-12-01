@@ -6,11 +6,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import modelo.DtosConfiguracion;
 
 public class DiscoDAO {
 
+	public void escribirLog(String contenido) {
+		
+		
+		
+	}
 	public String modificarValores(String valor[]) {
 	
 		String msg = "";
@@ -59,13 +63,13 @@ public class DiscoDAO {
 			try {
 				
 				if (bw != null)
-				bw.close();
+					bw.close();
 				
 				if (fw != null)
-				fw.close();
+					fw.close();
 								
 				if(fr != null)  
-				fr.close();  
+					fr.close();  
 				  
 				borrar(archivoOrigen);
 				archivoTemporal.renameTo(archivoOrigen);
@@ -161,17 +165,11 @@ public class DiscoDAO {
 	private String decodifico(String cuerpo) {
 
 		char temp[] = cuerpo.toCharArray();
-		
-		for(int i = 0; i < temp.length; i++) {
-			
-			temp[i] = (char)((i % 2 == 0)? (int)temp[i]+3:(int)temp[i]-5);
-		}
-
 		String respuesta = "";
 		
 		for(int i = 0; i < temp.length; i++) {
 			
-			respuesta += temp[i];
+			respuesta += (char)((i % 2 == 0)?(int)temp[i]+3:(int)temp[i]-5);
 		}
 		return respuesta;
 	}
@@ -179,17 +177,11 @@ public class DiscoDAO {
 	private String codifico(String cuerpo) {
 		
 		char temp[] = cuerpo.toCharArray();
-		
-		for(int i = 0; i < temp.length; i++) {
-			
-			temp[i] = (char)((i % 2 == 0)? (int)temp[i]-3:(int)temp[i]+5);
-		}
-
 		String respuesta = "";
 		
 		for(int i = 0; i < temp.length; i++) {
 			
-			respuesta += temp[i];
+			respuesta += (char)((i % 2 == 0)?(int)temp[i]-3:(int)temp[i]+5);
 		}
 		return respuesta;
 	}
