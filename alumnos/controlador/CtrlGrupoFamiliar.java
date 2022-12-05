@@ -2,77 +2,94 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import interfaceUsuario.ListadoDoble;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.print.PrinterException;
+
+import interfaceUsuario.ABML;
 import modelo.DtosGrupoFamiliar;
 
 public class CtrlGrupoFamiliar implements ActionListener {
 
-	private ListadoDoble ventanaListado;
+	private ABML ventanaFamilia;
 	private DtosGrupoFamiliar dtosGrupoFamiliar;
 	
-	public CtrlGrupoFamiliar(ListadoDoble vista) {
+	public CtrlGrupoFamiliar(ABML vista) {
 		
-		this.ventanaListado = vista;
+		this.ventanaFamilia = vista;
 		this.dtosGrupoFamiliar = new DtosGrupoFamiliar();
-		this.ventanaListado.checkBoxActivos.addActionListener(this);
-		this.ventanaListado.txtTabla1.addActionListener(this);
-		this.ventanaListado.txtTabla2.addActionListener(this);
-		this.ventanaListado.btnAgregar.addActionListener(this);
-		this.ventanaListado.btnEditar.addActionListener(this);
-		this.ventanaListado.btnGuafrdar.addActionListener(this);
-		this.ventanaListado.btnVolver.addActionListener(this);
+		this.ventanaFamilia.chckbx1.addActionListener(this);
+		this.ventanaFamilia.btnEditar.addActionListener(this);
+		this.ventanaFamilia.btnVolver.addActionListener(this);
+		this.ventanaFamilia.txt1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				actualizar();
+			}
+		});
 	}
 
 	public void iniciar() {
 	
-		actualizar(0);
-		ventanaListado.setVisible(true);
+		ventanaFamilia.panel.remove(ventanaFamilia.btnNuevo);
+		ventanaFamilia.chckbx1.setVisible(true);
+		ventanaFamilia.txt1.setVisible(true);
+		ventanaFamilia.setVisible(true);
+		actualizar();
 	}
 	
-	private void actualizar(int tabla) {
+	private void actualizar() {
 
-		ventanaListado.tabla1.setModel(dtosGrupoFamiliar.getTablaGrupoFamiliar(ventanaListado.checkBoxActivos.isSelected(), 
-																			   ventanaListado.txtTabla1.getText()));
-		ventanaListado.tabla2.setModel(dtosGrupoFamiliar.getTablaGrupoFamiliar(true, 
-																			   ventanaListado.txtTabla2.getText()));
-		
+		ventanaFamilia.tabla.setModel(dtosGrupoFamiliar.getTablaGrupoFamiliar(ventanaFamilia.chckbx1.isSelected(), 
+																			  ventanaFamilia.txt1.getText()));
+		ventanaFamilia.tabla.getColumnModel().getColumn(0).setPreferredWidth(200);
+		ventanaFamilia.tabla.getColumnModel().getColumn(0).setMaxWidth(250);
+		ventanaFamilia.tabla.getColumnModel().getColumn(2).setPreferredWidth(40);
+		ventanaFamilia.tabla.getColumnModel().getColumn(2).setMaxWidth(50);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if(e.getSource() == ventanaListado.txtTabla1) {
-
-			actualizar(1);
-		}
-		
-		if(e.getSource() == ventanaListado.txtTabla2) {
-
-			actualizar(2);
-		}
-		
-		if(e.getSource() == ventanaListado.checkBoxActivos) {
-
-			actualizar(1);
-		}
-
-		if(e.getSource() == ventanaListado.btnAgregar) {
-
+		if(e.getSource() == ventanaFamilia.chckbx1) {
 			
+			actualizar();
 		}
 	
-		if(e.getSource() == ventanaListado.btnEditar) {
-
+		if(e.getSource() == ventanaFamilia.btnImprimir) {
 			
+			try {
+				
+				ventanaFamilia.tabla.print();
+			} catch (PrinterException f) {
+				
+				f.printStackTrace();
+			}
 		}
 		
-		if(e.getSource() == ventanaListado.btnGuafrdar) {
+		if(e.getSource() == ventanaFamilia.btnEditar) {
 
+			int i = 0;
+			
+			while(i < ventanaFamilia.tabla.getRowCount()) {
+				
+				if((boolean)ventanaFamilia.tabla.getValueAt(i, 2)) {
+					
+					dtosGrupoFamiliar.setElementoSeleccionado(i);
+					break;
+				}
+				i++;
+			}
+			
+			dtosGrupoFamiliar.setInformacionGrupo();
+			
+			
 			
 		}
-		
-		if(e.getSource() == ventanaListado.btnVolver) {
 
-			ventanaListado.dispose();
+		if(e.getSource() == ventanaFamilia.btnVolver) {
+
+			ventanaFamilia.dispose();
 		}
 	}
 }

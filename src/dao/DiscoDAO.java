@@ -197,7 +197,7 @@ public class DiscoDAO {
 		
 		for(int i = 0; i < temp.length; i++) {
 			
-			respuesta += (char)((i % 2 == 0)?(int)temp[i]+3:(int)temp[i]-5);
+			respuesta+=(char)((i% 2==0)?(int)temp[i]+3:(int)temp[i]-5);
 		}
 		return respuesta;
 	}
@@ -209,7 +209,7 @@ public class DiscoDAO {
 		
 		for(int i = 0; i < temp.length; i++) {
 			
-			respuesta += (char)((i % 2 == 0)?(int)temp[i]-3:(int)temp[i]+5);
+			respuesta+=(char)((i%2==0)?(int)temp[i]-3:(int)temp[i]+5);
 		}
 		return respuesta;
 	}

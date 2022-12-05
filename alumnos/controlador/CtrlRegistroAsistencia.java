@@ -17,8 +17,8 @@ public class CtrlRegistroAsistencia implements ActionListener {
 		
 		this.ventanaRegistroAsistencia = vista;
 		this.dtosAlumno = new DtosAlumno();
-		
-		
+		this.ventanaRegistroAsistencia.comboBox1.addActionListener(this);
+		this.ventanaRegistroAsistencia.comboBox2.addActionListener(this);
 		this.ventanaRegistroAsistencia.btnImprimir.addActionListener(this);
 		this.ventanaRegistroAsistencia.btnVolver.addActionListener(this);
 	}
@@ -27,23 +27,34 @@ public class CtrlRegistroAsistencia implements ActionListener {
 		
 		ventanaRegistroAsistencia.comboBox1.setVisible(true);
 		ventanaRegistroAsistencia.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosAlumno.getListaCursos()));
-		
-		actualizar();
+		ventanaRegistroAsistencia.comboBox2.setVisible(true);
+		ventanaRegistroAsistencia.comboBox2.setModel(new DefaultComboBoxModel<String>(dtosAlumno.getListaMeses()));
 		ventanaRegistroAsistencia.setVisible(true);
+		actualizar();
 	}
 	
 	private void actualizar() {
 		
-		ventanaRegistroAsistencia.tabla.setModel(dtosAlumno.getTablaRegistroAsistencia(ventanaRegistroAsistencia.comboBox1.getSelectedIndex()));
+		ventanaRegistroAsistencia.tabla.setModel(dtosAlumno.getTablaRegistroAsistencia(ventanaRegistroAsistencia.comboBox1.getSelectedIndex(), 
+																						ventanaRegistroAsistencia.comboBox2.getSelectedIndex()));
 		ventanaRegistroAsistencia.tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		ventanaRegistroAsistencia.tabla.doLayout();
-
 		
-		
-		
+		if(!dtosAlumno.getMsg().equals(""))
+			JOptionPane.showMessageDialog(null, dtosAlumno.getMsg());
 	}
 	
 	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == ventanaRegistroAsistencia.comboBox1) {
+			
+			actualizar();
+		}
+		
+		if(e.getSource() == ventanaRegistroAsistencia.comboBox2) {
+			
+			actualizar();
+		}
 		
 		if(e.getSource() == ventanaRegistroAsistencia.btnImprimir) {
 			

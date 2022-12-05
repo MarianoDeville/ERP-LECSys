@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 public class ABML extends VentanaModelo {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel panel;
+	public JPanel panel;
 	private JScrollPane scrollTabla;
 	public JTable tabla;
 	public JTextField txt1;
@@ -48,32 +48,32 @@ public class ABML extends VentanaModelo {
 		
 		btnEditar = new JButton("Editar");
 		contenedor.putConstraint(SpringLayout.NORTH, btnEditar, 25, SpringLayout.SOUTH, btnNuevo);
-		contenedor.putConstraint(SpringLayout.EAST, btnEditar, 0, SpringLayout.EAST, btnNuevo);
+		contenedor.putConstraint(SpringLayout.EAST, btnEditar, -10, SpringLayout.EAST, panel);
 		contenedor.putConstraint(SpringLayout.WEST, btnEditar, -105, SpringLayout.EAST, btnEditar);
 		panel.add(btnEditar);
 		
 		chckbx1 = new JCheckBox("Activo");
 		chckbx1.setSelected(true);
 		contenedor.putConstraint(SpringLayout.NORTH, chckbx1, 25, SpringLayout.SOUTH, btnEditar);
-		contenedor.putConstraint(SpringLayout.EAST, chckbx1, 0, SpringLayout.EAST, btnNuevo);
+		contenedor.putConstraint(SpringLayout.EAST, chckbx1, -10, SpringLayout.EAST, panel);
 		contenedor.putConstraint(SpringLayout.WEST, chckbx1, -105, SpringLayout.EAST, chckbx1);
 		chckbx1.setVisible(false);
 		panel.add(chckbx1);
 		
-		comboBox1 = new JComboBox<String>();
-		contenedor.putConstraint(SpringLayout.NORTH, comboBox1, 25, SpringLayout.SOUTH, chckbx1);
-		contenedor.putConstraint(SpringLayout.EAST, comboBox1, 0, SpringLayout.EAST, btnNuevo);
-		contenedor.putConstraint(SpringLayout.WEST, comboBox1, -105, SpringLayout.EAST, comboBox1);
-		comboBox1.setVisible(false);
-		panel.add(comboBox1);
-		
 		txt1 = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txt1, 25, SpringLayout.SOUTH, comboBox1);
-		contenedor.putConstraint(SpringLayout.EAST, txt1, 0, SpringLayout.EAST, btnNuevo);
+		contenedor.putConstraint(SpringLayout.NORTH, txt1, 25, SpringLayout.SOUTH, chckbx1);
+		contenedor.putConstraint(SpringLayout.EAST, txt1, -10, SpringLayout.EAST, panel);
 		contenedor.putConstraint(SpringLayout.WEST, txt1, -105, SpringLayout.EAST, txt1);
 		txt1.setVisible(false);
 		panel.add(txt1);
-	
+		
+		comboBox1 = new JComboBox<String>();
+		contenedor.putConstraint(SpringLayout.NORTH, comboBox1, 25, SpringLayout.SOUTH, txt1);
+		contenedor.putConstraint(SpringLayout.EAST, comboBox1, -10, SpringLayout.EAST, panel);
+		contenedor.putConstraint(SpringLayout.WEST, comboBox1, -105, SpringLayout.EAST, comboBox1);
+		comboBox1.setVisible(false);
+		panel.add(comboBox1);
+			
 		btnVolver = new JButton("Volver");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -10, SpringLayout.SOUTH, panel);
 		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -10, SpringLayout.EAST, panel);

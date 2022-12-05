@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import controlador.CtrlLogErrores;
 import modelo.DtosActividad;
 import modelo.DtosAlumno;
@@ -240,15 +239,49 @@ public class AlumnosDAO extends Conexion {
 		return bandera;
 	}
 
-	public String [][] tablaAsistenciasAlumnos(String idCurso, boolean reducido) {
+	public boolean isAsistenciaTomada(String idCurso, boolean reducido) {
+		
+		boolean bandera = false;
+		String comandoStatement = "SELECT idCurso FROM lecsys1.faltas WHERE (idCurso = " + idCurso + " AND DATE(fecha) = CURDATE())"; 
+		
+		try {
+			
+			this.conectar();
+			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery(comandoStatement);
+
+			if(rs.next())
+				bandera =true;
+
+		}catch (Exception e) {
+			
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AlumnosDAO, isAsistenciaTomada()");
+			CtrlLogErrores.guardarError(comandoStatement);
+		} finally {
+			
+			this.cerrar();
+		}
+		return bandera;
+	}
+
+	public String [][] tablaAsistenciasAlumnos(String idCurso, boolean reducido, int mes) {
 		
 		String matriz[][]=null;
-		String comandoStatement = "SELECT * FROM lecsys1.faltas WHERE idCurso = " + idCurso; 
+		String comandoStatement = "SELECT * FROM lecsys1.faltas WHERE "; 
 		
-		if(reducido) {
+		if(mes == 0) {
 			
-			comandoStatement += " GROUP BY fecha";
+			comandoStatement += "idCurso = " + idCurso;
+		} else {
+			
+			comandoStatement += "(idCurso = " + idCurso + " AND MONTH(fecha)= " + mes + ") ";
 		}
+	
+		if(reducido)
+			comandoStatement += " GROUP BY fecha";
+
+		comandoStatement += " ORDER BY fecha";
 		
 		try {
 			
@@ -273,6 +306,7 @@ public class AlumnosDAO extends Conexion {
 			
 			CtrlLogErrores.guardarError(e.getMessage());
 			CtrlLogErrores.guardarError("AlumnosDAO, tablaAsistenciasAlumnos()");
+			CtrlLogErrores.guardarError(comandoStatement);
 		} finally {
 			
 			this.cerrar();

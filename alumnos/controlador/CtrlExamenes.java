@@ -64,7 +64,7 @@ public class CtrlExamenes implements ActionListener {
 			dtosAlumno.setCurso(ventanaExamenes.comboBox1.getSelectedIndex());
 			dtosAlumno.setTipoExamen((String)ventanaExamenes.comboBox2.getSelectedItem());
 
-			if(ventanaExamenes.txt1.getText().length() == 10) {
+			if(ventanaExamenes.txt1.getText().length() == 10 && ventanaExamenes.txt1.getText().contains("-")) {
 
 				String[] fecha = ventanaExamenes.txt1.getText().split("-");
 				dtosAlumno.setFechaDia(fecha[0]);
@@ -77,8 +77,8 @@ public class CtrlExamenes implements ActionListener {
 					notas[i][1] = (String)ventanaExamenes.tabla.getValueAt(i, 3);
 				}
 				
-				String msg = dtosAlumno.guardarResultados(notas);
-				JOptionPane.showMessageDialog(null,msg);
+				dtosAlumno.guardarResultados(notas);
+				JOptionPane.showMessageDialog(null,dtosAlumno.getMsg());
 			} else {
 				
 				JOptionPane.showMessageDialog(null, "El formato de la fecha es incorrecto. Ej. 25-10-2020");

@@ -48,6 +48,7 @@ public class CtrlAsistenciaAlumnos implements ActionListener {
 		ventanaAsistencia.tabla.getColumnModel().getColumn(3).setMaxWidth(70);
 		ventanaAsistencia.tabla.getColumnModel().getColumn(4).setPreferredWidth(80);
 		ventanaAsistencia.tabla.getColumnModel().getColumn(4).setMaxWidth(80);
+		ventanaAsistencia.btn1B.setEnabled(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -67,13 +68,10 @@ public class CtrlAsistenciaAlumnos implements ActionListener {
 			
 			dtosAlumno.setCurso(ventanaAsistencia.comboBox1.getSelectedIndex());
 			
-			if(dtosAlumno.guardoAsistencia()) {
-				
-				JOptionPane.showMessageDialog(null, "Se actualizó la información en la base de datos.");
-			} else {
+			if(dtosAlumno.guardoAsistencia()) 
+				ventanaAsistencia.btn1B.setEnabled(false);
 
-				JOptionPane.showMessageDialog(null, "Error al intentar guardar la información.");
-			}
+			JOptionPane.showMessageDialog(null, dtosAlumno.getMsg());
 		}
 		
 		if(e.getSource() == ventanaAsistencia.btnImprimir) {

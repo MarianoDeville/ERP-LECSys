@@ -121,12 +121,13 @@ public class CursosDAO extends Conexion {
 			where = "WHERE ( curso.estado = 1 AND curso.idCurso = " + idCurso + ")";
 		}
 		
-		String comandoStatement = "SELECT curso.idCurso, año, nivel, nombre, apellido, precio, curso.idProfesor, aula FROM lecsys1.curso "
-								 + "JOIN lecsys1.empleados ON curso.idProfesor = empleados.idEmpleado "
-								 + "JOIN lecsys1.persona ON empleados.idPersona = persona.idPersona "
-								 + "JOIN lecsys1.valorCuota on curso.idCurso = valorCuota.idCurso "
-								 + where;
-						//		 + "GROUP BY curso.idCurso";
+		String comandoStatement = "SELECT curso.idCurso, año, nivel, nombre, apellido, precio, curso.idProfesor, aula "
+								+ "FROM lecsys1.curso "
+								+ "JOIN lecsys1.empleados ON curso.idProfesor = empleados.idEmpleado "
+								+ "JOIN lecsys1.persona ON empleados.idPersona = persona.idPersona "
+								+ "JOIN lecsys1.valorCuota on curso.idCurso = valorCuota.idCurso "
+								+ where
+								+ "GROUP BY curso.idCurso";
 
 		try {
 			
@@ -184,6 +185,35 @@ public class CursosDAO extends Conexion {
 			this.cerrar();
 		}
 		return matriz;
+	}
+	
+	public boolean isExamenCargado(String idCurso, String examen) {
+
+		boolean bandera = false;
+		String comandoStatement = "SELECT curso.idCurso FROM lecsys1.curso "
+								+ "JOIN lecsys1.examenes ON curso.idCurso = examenes.idCurso "
+								+ "WHERE (estado = 1 AND curso.idCurso = " + idCurso + " AND tipo = '" + examen + "' AND YEAR(fecha)=YEAR(NOW())) "
+								+ "GROUP BY curso.idCurso";
+
+		try {
+			
+			this.conectar();
+			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery(comandoStatement);
+
+			if(rs.next())
+				bandera =true;
+
+		}catch (Exception e) {
+			
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("CursosDAO, isExamenCargado()");
+			CtrlLogErrores.guardarError(comandoStatement);
+		} finally {
+			
+			this.cerrar();
+		}
+		return bandera;
 	}
 	
 	public boolean setCurso() {

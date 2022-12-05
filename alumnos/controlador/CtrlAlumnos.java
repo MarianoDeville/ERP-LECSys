@@ -6,7 +6,6 @@ import javax.swing.ImageIcon;
 import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.ABML;
 import interfaceUsuario.Listado;
-import interfaceUsuario.ListadoDoble;
 import modelo.DtosAcceso;
 import modelo.DtosConfiguracion;
 
@@ -113,7 +112,7 @@ public class CtrlAlumnos implements ActionListener {
 			
 			if(acceso.chkAcceso("Alumnos", "Grupo familiar")) {
 			
-				ListadoDoble ventanaGrupoFamiliar = new ListadoDoble("Gestión de grupos familiares");
+				ABML ventanaGrupoFamiliar = new ABML("Gestión de grupos familiares");
 				CtrlGrupoFamiliar ctrlGrupoFamiliar = new CtrlGrupoFamiliar(ventanaGrupoFamiliar);
 				ctrlGrupoFamiliar.iniciar();
 			}
