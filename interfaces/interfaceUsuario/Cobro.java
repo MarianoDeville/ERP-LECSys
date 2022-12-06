@@ -13,16 +13,20 @@ public class Cobro extends VentanaModelo {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
-	private JScrollPane scrollTabla;
-	public JTable tabla;
+	private JScrollPane scrollTabla1;
+	public JScrollPane scrollTabla2;
+	public JTable tabla1;
+	public JTable tabla2;
 	public JLabel lblNombre;
 	public JLabel lblDescGrupo;
 	public JLabel lblInscripción;
 	public JLabel lblDescEfectivo;
 	public JLabel lblTotalPagar;
 	public JLabel lblEmail;
+	public JLabel lblFactura;
 	public JLabel lblMsgError;
 	public JCheckBox chckbxEnviarEmail;
+	public JCheckBox chckbxTabla2;
 	public JTextField txtNombre;
 	public JTextField txtDescuento;
 	public JTextField txtInscripción;
@@ -30,6 +34,7 @@ public class Cobro extends VentanaModelo {
 	public JTextField txtTotalPagar;
 	public JTextField txtFactura;
 	public JTextField txtEmail;
+	public JTextField txtTabla2;
 	public JButton btnCobrar;
 	public JButton btnVolver;
 
@@ -41,42 +46,42 @@ public class Cobro extends VentanaModelo {
 		SpringLayout contenedor = new SpringLayout();
 		panel.setLayout(contenedor);
 		
-		scrollTabla = new JScrollPane();
-		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla, 20, SpringLayout.NORTH, panel);
-		contenedor.putConstraint(SpringLayout.WEST, scrollTabla, 15, SpringLayout.WEST, panel);
-		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla, -410, SpringLayout.SOUTH, panel);
-		contenedor.putConstraint(SpringLayout.EAST, scrollTabla, -20, SpringLayout.EAST, panel);
-		panel.add(scrollTabla);
-		tabla = new JTable();
-		scrollTabla.setViewportView(tabla);
+		scrollTabla1 = new JScrollPane();
+		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla1, 20, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, scrollTabla1, 15, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla1, -410, SpringLayout.SOUTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, scrollTabla1, -20, SpringLayout.EAST, panel);
+		panel.add(scrollTabla1);
+		tabla1 = new JTable();
+		scrollTabla1.setViewportView(tabla1);
 		
 		lblNombre = new JLabel("Nombre de familia:");
-		contenedor.putConstraint(SpringLayout.NORTH, lblNombre, 54, SpringLayout.SOUTH, scrollTabla);
+		contenedor.putConstraint(SpringLayout.NORTH, lblNombre, 20, SpringLayout.SOUTH, scrollTabla1);
 		contenedor.putConstraint(SpringLayout.WEST, lblNombre, 35, SpringLayout.WEST, panel);
 		panel.add(lblNombre);
 		
 		txtNombre = new JTextField();
 		contenedor.putConstraint(SpringLayout.NORTH, txtNombre, 0, SpringLayout.NORTH, lblNombre);
-		contenedor.putConstraint(SpringLayout.WEST, txtNombre, 35, SpringLayout.EAST, lblNombre);
+		contenedor.putConstraint(SpringLayout.WEST, txtNombre, 40, SpringLayout.EAST, lblNombre);
 		txtNombre.setEditable(false);
 		panel.add(txtNombre);
 		txtNombre.setColumns(20);
 		
 		lblDescGrupo = new JLabel("Porcentage de descunto:");
-		contenedor.putConstraint(SpringLayout.NORTH, lblDescGrupo, 0, SpringLayout.NORTH, lblNombre);
-		contenedor.putConstraint(SpringLayout.WEST, lblDescGrupo, 20, SpringLayout.EAST, txtNombre);
+		contenedor.putConstraint(SpringLayout.NORTH, lblDescGrupo, 20, SpringLayout.SOUTH, lblNombre);
+		contenedor.putConstraint(SpringLayout.WEST, lblDescGrupo, 0, SpringLayout.WEST, lblNombre);
 		lblDescGrupo.setVisible(false);
 		panel.add(lblDescGrupo);
 		
 		txtDescuento = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txtDescuento, 0, SpringLayout.NORTH, lblNombre);
-		contenedor.putConstraint(SpringLayout.WEST, txtDescuento, 10, SpringLayout.EAST, lblDescGrupo);
+		contenedor.putConstraint(SpringLayout.NORTH, txtDescuento, 0, SpringLayout.NORTH, lblDescGrupo);
+		contenedor.putConstraint(SpringLayout.WEST, txtDescuento, 0, SpringLayout.WEST, txtNombre);
 		txtDescuento.setVisible(false);
 		panel.add(txtDescuento);
 		txtDescuento.setColumns(3);
 		
 		lblInscripción = new JLabel("Inscripción:");
-		contenedor.putConstraint(SpringLayout.NORTH, lblInscripción, 20, SpringLayout.SOUTH, lblNombre);
+		contenedor.putConstraint(SpringLayout.NORTH, lblInscripción, 20, SpringLayout.SOUTH, lblDescGrupo);
 		contenedor.putConstraint(SpringLayout.WEST, lblInscripción, 0, SpringLayout.WEST, lblNombre);
 		panel.add(lblInscripción);
 		
@@ -109,7 +114,7 @@ public class Cobro extends VentanaModelo {
 		panel.add(txtTotalPagar);
 		txtTotalPagar.setColumns(10);
 		
-		JLabel lblFactura = new JLabel("Factura nro.:");
+		lblFactura = new JLabel("Factura nro.:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblFactura, 20, SpringLayout.SOUTH, lblTotalPagar);
 		contenedor.putConstraint(SpringLayout.WEST, lblFactura, 0, SpringLayout.WEST, lblNombre);
 		panel.add(lblFactura);
@@ -138,9 +143,30 @@ public class Cobro extends VentanaModelo {
 		txtEmail.setVisible(false);
 		txtEmail.setColumns(25);		
 
+		chckbxTabla2 = new JCheckBox("Agragar a grupo");
+		contenedor.putConstraint(SpringLayout.NORTH, chckbxTabla2, 20, SpringLayout.SOUTH, scrollTabla1);
+		contenedor.putConstraint(SpringLayout.WEST, chckbxTabla2, 15, SpringLayout.EAST, txtNombre);
+		panel.add(chckbxTabla2);	
+		
+		txtTabla2 = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txtTabla2, 15, SpringLayout.SOUTH, chckbxTabla2);
+		contenedor.putConstraint(SpringLayout.WEST, txtTabla2, 0, SpringLayout.WEST, chckbxTabla2);
+		panel.add(txtTabla2);
+		txtTabla2.setColumns(15);
+
+		scrollTabla2 = new JScrollPane();
+		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla2, 15, SpringLayout.SOUTH, txtTabla2);
+		contenedor.putConstraint(SpringLayout.WEST, scrollTabla2, 15, SpringLayout.EAST, txtNombre);
+		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla2, -50, SpringLayout.SOUTH, panel);
+		contenedor.putConstraint(SpringLayout.EAST, scrollTabla2, -20, SpringLayout.EAST, panel);
+		panel.add(scrollTabla2);
+		tabla2 = new JTable();
+		scrollTabla2.setViewportView(tabla2);
+
 		lblMsgError = new JLabel();
 		contenedor.putConstraint(SpringLayout.NORTH, lblMsgError, 20, SpringLayout.SOUTH, lblEmail);
 		contenedor.putConstraint(SpringLayout.WEST, lblMsgError, 0, SpringLayout.WEST, lblEmail);
+		contenedor.putConstraint(SpringLayout.EAST, lblMsgError, 0, SpringLayout.EAST, txtNombre);
 		panel.add(lblMsgError);
 			
 		btnCobrar = new JButton("Cobrar");

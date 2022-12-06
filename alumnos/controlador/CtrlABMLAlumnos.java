@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -19,6 +21,7 @@ public class CtrlABMLAlumnos implements ActionListener {
 	private Nuevo ventanaNuevoAlumno;
 	private Nuevo ventanaEditarAlumno;
 	private DtosAcceso acceso;
+	private int elemento;
 			
 	public CtrlABMLAlumnos(ABML vista) {
 		
@@ -38,6 +41,15 @@ public class CtrlABMLAlumnos implements ActionListener {
 				actualizar();
 			}
 		});
+		this.ventanaABML.tabla.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		        if (e.getClickCount() == 1) {
+
+					elemento = ventanaABML.tabla.getSelectedRow();
+					limpiarOtros();
+		        }
+		      }
+		  });
 	}
 	
 	public void iniciar() {
@@ -66,6 +78,15 @@ public class CtrlABMLAlumnos implements ActionListener {
 		ventanaABML.tabla.getColumnModel().getColumn(8).setPreferredWidth(30);
 		ventanaABML.tabla.getColumnModel().getColumn(8).setMaxWidth(30);
 		dtosABMLAlumnos.setEstado(ventanaABML.chckbx1.isSelected());
+	}
+	
+	private void limpiarOtros() {
+		
+		for(int i = 0; i < ventanaABML.tabla.getRowCount(); i++) {
+			
+			if(i != elemento)
+				ventanaABML.tabla.setValueAt((boolean) false, i, 8);
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) {

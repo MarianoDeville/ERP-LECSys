@@ -16,6 +16,11 @@ public class ListadoDoble extends VentanaModelo {
 	private JPanel listado;
 	private JScrollPane scrollTabla1;
 	private JScrollPane scrollTabla2;
+	public JLabel lblTxt1Tabla1;
+	public JLabel lblTxt2Tabla1;
+	public JLabel lblTxt2Tabla2;
+	public JLabel lblTituloTabla1;
+	public JLabel lblTituloTabla2;
 	public JTextField txt1Tabla1;
 	public JTextField txt2Tabla1;
 	public JTextField txt1Tabla2;
@@ -34,8 +39,32 @@ public class ListadoDoble extends VentanaModelo {
 		setContentPane(listado);
 		SpringLayout contenedor = new SpringLayout();
 		listado.setLayout(contenedor);
-
-		JLabel lblTxt1Tabla1 = new JLabel("Nombre familia:");
+		
+		scrollTabla1 = new JScrollPane();
+		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla1, 75, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, scrollTabla1, 15, SpringLayout.WEST, listado);
+		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla1, -60, SpringLayout.SOUTH, listado);
+		contenedor.putConstraint(SpringLayout.EAST, scrollTabla1, 300, SpringLayout.WEST, scrollTabla1);
+		listado.add(scrollTabla1);
+		tabla1 = new JTable();
+		scrollTabla1.setViewportView(tabla1);
+		
+		btnAgregar = new JButton("Agregar");
+		contenedor.putConstraint(SpringLayout.NORTH, btnAgregar, 50, SpringLayout.NORTH, scrollTabla1);
+		contenedor.putConstraint(SpringLayout.WEST, btnAgregar, 5, SpringLayout.EAST, scrollTabla1);
+		contenedor.putConstraint(SpringLayout.EAST, btnAgregar, 90, SpringLayout.WEST, btnAgregar);
+		listado.add(btnAgregar);
+		
+		scrollTabla2 = new JScrollPane();
+		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla2, 75, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, scrollTabla2, 5, SpringLayout.EAST, btnAgregar);
+		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla2, -60, SpringLayout.SOUTH, listado);
+		contenedor.putConstraint(SpringLayout.EAST, scrollTabla2, -10, SpringLayout.EAST, listado);
+		listado.add(scrollTabla2);
+		tabla2 = new JTable();
+		scrollTabla2.setViewportView(tabla2);
+		
+		lblTxt1Tabla1 = new JLabel("Nombre flia:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblTxt1Tabla1, 25, SpringLayout.NORTH, listado);
 		contenedor.putConstraint(SpringLayout.WEST, lblTxt1Tabla1, 15, SpringLayout.WEST, listado);
 		listado.add(lblTxt1Tabla1);
@@ -46,7 +75,7 @@ public class ListadoDoble extends VentanaModelo {
 		txt1Tabla1.setColumns(15);
 		listado.add(txt1Tabla1);
 		
-		JLabel lblTxt2Tabla1 = new JLabel("Descuento:");
+		lblTxt2Tabla1 = new JLabel("Descuento:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblTxt2Tabla1, 0, SpringLayout.NORTH, lblTxt1Tabla1);
 		contenedor.putConstraint(SpringLayout.WEST, lblTxt2Tabla1, 15, SpringLayout.EAST, txt1Tabla1);
 		listado.add(lblTxt2Tabla1);
@@ -54,15 +83,15 @@ public class ListadoDoble extends VentanaModelo {
 		txt2Tabla1 = new JTextField();
 		contenedor.putConstraint(SpringLayout.NORTH, txt2Tabla1, -3, SpringLayout.NORTH, lblTxt2Tabla1);
 		contenedor.putConstraint(SpringLayout.WEST, txt2Tabla1, 5, SpringLayout.EAST, lblTxt2Tabla1);
-		txt2Tabla1.setColumns(5);
+		txt2Tabla1.setColumns(3);
 		listado.add(txt2Tabla1);
 		
 		checkBoxActivos = new JCheckBox("Activos");
 		contenedor.putConstraint(SpringLayout.NORTH, checkBoxActivos, -3, SpringLayout.NORTH, lblTxt1Tabla1);
-		contenedor.putConstraint(SpringLayout.WEST, checkBoxActivos, 100, SpringLayout.EAST, txt2Tabla1);
+		contenedor.putConstraint(SpringLayout.WEST, checkBoxActivos, 0, SpringLayout.WEST, scrollTabla2);
 		listado.add(checkBoxActivos);
 		
-		JLabel lblTxt2Tabla2 = new JLabel();
+		lblTxt2Tabla2 = new JLabel();
 		contenedor.putConstraint(SpringLayout.NORTH, lblTxt2Tabla2, 0, SpringLayout.NORTH, lblTxt2Tabla1);
 		contenedor.putConstraint(SpringLayout.WEST, lblTxt2Tabla2, 15, SpringLayout.EAST, checkBoxActivos);
 		listado.add(lblTxt2Tabla2);
@@ -73,62 +102,36 @@ public class ListadoDoble extends VentanaModelo {
 		txt1Tabla2.setColumns(10);
 		listado.add(txt1Tabla2);
 
-		scrollTabla1 = new JScrollPane();
-		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla1, 70, SpringLayout.NORTH, listado);
-		contenedor.putConstraint(SpringLayout.WEST, scrollTabla1, 15, SpringLayout.WEST, listado);
-		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla1, -60, SpringLayout.SOUTH, listado);
-		contenedor.putConstraint(SpringLayout.EAST, scrollTabla1, -489, SpringLayout.EAST, listado);
-		listado.add(scrollTabla1);
-		tabla1 = new JTable();
-		scrollTabla1.setViewportView(tabla1);
-		
-		
-		
-		JLabel lblTituloTabla1 = new JLabel("Integrantes del grupo familiar:");
+		lblTituloTabla1 = new JLabel("Integrantes del grupo familiar:");
 		lblTituloTabla1.setHorizontalAlignment(SwingConstants.CENTER);
 		contenedor.putConstraint(SpringLayout.NORTH, lblTituloTabla1, 15, SpringLayout.SOUTH, lblTxt2Tabla1);
 		contenedor.putConstraint(SpringLayout.WEST, lblTituloTabla1, 0, SpringLayout.WEST, scrollTabla1);
 		contenedor.putConstraint(SpringLayout.EAST, lblTituloTabla1, 0, SpringLayout.EAST, scrollTabla1);
 		listado.add(lblTituloTabla1);
 
-		btnAgregar = new JButton("Agregar");
-		contenedor.putConstraint(SpringLayout.NORTH, btnAgregar, 86, SpringLayout.SOUTH, txt2Tabla1);
-		contenedor.putConstraint(SpringLayout.WEST, btnAgregar, 6, SpringLayout.EAST, scrollTabla1);
-//		contenedor.putConstraint(SpringLayout.EAST, btnAgregar, 90, SpringLayout.WEST, btnAgregar);
-		listado.add(btnAgregar);
-		
-		scrollTabla2 = new JScrollPane();
-		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla2, 70, SpringLayout.NORTH, listado);
-		contenedor.putConstraint(SpringLayout.WEST, scrollTabla2, 14, SpringLayout.EAST, btnAgregar);
-		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla2, -60, SpringLayout.SOUTH, listado);
-		contenedor.putConstraint(SpringLayout.EAST, scrollTabla2, -10, SpringLayout.EAST, listado);
-		listado.add(scrollTabla2);
-		tabla2 = new JTable();
-		scrollTabla2.setViewportView(tabla2);
-
-		JLabel lblTituloTabla2 = new JLabel("Listado de alumnos:");
+		lblTituloTabla2 = new JLabel("Listado de alumnos:");
 		lblTituloTabla2.setHorizontalAlignment(SwingConstants.CENTER);
 		contenedor.putConstraint(SpringLayout.NORTH, lblTituloTabla2, 15, SpringLayout.SOUTH, lblTxt2Tabla1);
 		contenedor.putConstraint(SpringLayout.WEST, lblTituloTabla2, 0, SpringLayout.WEST, scrollTabla2);
 		contenedor.putConstraint(SpringLayout.EAST, lblTituloTabla2, 0, SpringLayout.EAST, scrollTabla2);
 		listado.add(lblTituloTabla2);
 
-		btnEditar = new JButton("Editar");
-		contenedor.putConstraint(SpringLayout.EAST, btnEditar, 0, SpringLayout.EAST, lblTxt1Tabla1);
-//		contenedor.putConstraint(SpringLayout.EAST, btnEditar, 90, SpringLayout.WEST, btnEditar);
+		btnEditar = new JButton("Eliminar");
+		contenedor.putConstraint(SpringLayout.NORTH, btnEditar, 15, SpringLayout.SOUTH, scrollTabla1);
+		contenedor.putConstraint(SpringLayout.WEST, btnEditar, 60, SpringLayout.WEST, listado);
+		contenedor.putConstraint(SpringLayout.EAST, btnEditar, 90, SpringLayout.WEST, btnEditar);
 		listado.add(btnEditar);
 		
 		btnGuafrdar = new JButton("Guardar");
-		contenedor.putConstraint(SpringLayout.NORTH, btnEditar, 0, SpringLayout.NORTH, btnGuafrdar);
-		contenedor.putConstraint(SpringLayout.EAST, btnGuafrdar, 0, SpringLayout.EAST, lblTxt2Tabla1);
-//		contenedor.putConstraint(SpringLayout.EAST, btnGuafrdar, 90, SpringLayout.WEST, btnGuafrdar);
+		contenedor.putConstraint(SpringLayout.NORTH, btnGuafrdar, 0, SpringLayout.NORTH, btnEditar);
+		contenedor.putConstraint(SpringLayout.WEST, btnGuafrdar, 60, SpringLayout.EAST, btnEditar);
+		contenedor.putConstraint(SpringLayout.EAST, btnGuafrdar, 90, SpringLayout.WEST, btnGuafrdar);
 		listado.add(btnGuafrdar);
 		
 		btnVolver = new JButton("Volver");
-		contenedor.putConstraint(SpringLayout.NORTH, btnGuafrdar, 0, SpringLayout.NORTH, btnVolver);
-		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -10, SpringLayout.SOUTH, listado);
+		contenedor.putConstraint(SpringLayout.NORTH, btnVolver, 15, SpringLayout.SOUTH, scrollTabla1);
 		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -10, SpringLayout.EAST, listado);
-//		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -90, SpringLayout.EAST, btnVolver);
+		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -90, SpringLayout.EAST, btnVolver);
 		listado.add(btnVolver);
 	}
 }

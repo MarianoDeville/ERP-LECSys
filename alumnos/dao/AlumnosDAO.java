@@ -11,6 +11,37 @@ import modelo.DtosAlumno;
 
 public class AlumnosDAO extends Conexion {
 
+	public boolean setActualizarIdFamila(String idFamilia, String idAlumnos[]) {
+		
+		boolean bandera = true;
+		DtosActividad dtosActividad = new DtosActividad();
+		
+		try {
+
+			this.conectar();
+			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.alumnos "
+																 + "SET estado = 1, idGrupoFamiliar = ? "
+																 + "WHERE idAlumno = ?");
+			stm.setString(1, idFamilia);
+			
+			for(int i = 0; i < idAlumnos.length; i++) {
+				
+				stm.setString(2, idAlumnos[i]);
+				stm.executeUpdate();
+			}
+		} catch (Exception e) {
+	
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("GrupoFamiliarDAO, setActualizarGrupo()");
+			bandera = false;
+		} finally {
+			
+			this.cerrar();
+		}
+		dtosActividad.registrarActividad("Actualización datos grupo familiar.", "Administración");
+		return bandera;
+	}
+	
 	public boolean setExamen() {
 		
 		boolean bandera = true;
@@ -210,7 +241,51 @@ public class AlumnosDAO extends Conexion {
 		}
 		return matriz;
 	}
-	
+
+	public String [][] getListadoAlumnos( boolean estado, String fuera, String busqueda) {
+		
+		String matriz[][]=null;
+		String comandoStatement = "SELECT idAlumno, nombre, apellido, dirección, nivel, año, idGrupoFamiliar "
+								+ "FROM lecsys1.alumnos "
+				 				+ "JOIN lecsys1.persona on alumnos.idPersona = persona.idPersona "
+				 				+ "JOIN lecsys1.curso ON curso.idCurso = alumnos.idCurso " 
+							 	+ "WHERE (alumnos.estado = " + (estado? "1 ":"0 ") 
+							 	+ "AND idGrupoFamiliar != " + fuera
+								+ " AND (apellido LIKE '" + busqueda
+								+ "%' OR nombre LIKE '" + busqueda
+								+ "%')) ORDER BY idAlumno";
+
+		try {
+			
+			this.conectar();
+			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery(comandoStatement);
+			rs.last();	
+			matriz = new String[rs.getRow()][17];
+			rs.beforeFirst();
+			int i=0;
+
+			while (rs.next()) {
+					
+				matriz[i][0] = rs.getString(1);	
+				matriz[i][1] = rs.getString(3) + ", " + rs.getString(2);	
+				matriz[i][2] = rs.getString(4);	
+				matriz[i][3] = rs.getString(5) + " " + rs.getString(6);	
+				matriz[i][4] = rs.getString(7);	
+				i++;
+			}
+		}catch (Exception e) {
+			
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AlumnosDAO, getListadoAlumnos()");
+			CtrlLogErrores.guardarError(comandoStatement);
+		} finally {
+			
+			this.cerrar();
+		}
+		return matriz;
+	}
+
 	public boolean setAsistencia(int fila) {
 		
 		boolean bandera = true;
@@ -268,20 +343,17 @@ public class AlumnosDAO extends Conexion {
 	public String [][] tablaAsistenciasAlumnos(String idCurso, boolean reducido, int mes) {
 		
 		String matriz[][]=null;
-		String comandoStatement = "SELECT * FROM lecsys1.faltas WHERE "; 
+		String comandoStatement = "SELECT idFaltas, idAlumnos, DATE_FORMAT(fecha, '%d/%m/%Y'), estado, idCurso FROM lecsys1.faltas WHERE "; 
 		
-		if(mes == 0) {
-			
+		if(mes == 0)
 			comandoStatement += "idCurso = " + idCurso;
-		} else {
-			
+		else
 			comandoStatement += "(idCurso = " + idCurso + " AND MONTH(fecha)= " + mes + ") ";
-		}
 	
 		if(reducido)
 			comandoStatement += " GROUP BY fecha";
 
-		comandoStatement += " ORDER BY fecha";
+		comandoStatement += " ORDER BY fecha DESC";
 		
 		try {
 			
@@ -295,11 +367,11 @@ public class AlumnosDAO extends Conexion {
 
 			while (rs.next()) {
 					
-				matriz[i][0] = rs.getInt(1) + "";	
-				matriz[i][1] = rs.getInt(2) + "";
+				matriz[i][0] = rs.getString(1);	
+				matriz[i][1] = rs.getString(2);
 				matriz[i][2] = rs.getString(3);
-				matriz[i][3] = rs.getInt(4) + "";
-				matriz[i][4] = rs.getInt(5) + "";
+				matriz[i][3] = rs.getString(4);
+				matriz[i][4] = rs.getString(5);
 				i++;
 			}
 		}catch (Exception e) {

@@ -1,6 +1,8 @@
 package modelo;
 
 import javax.swing.table.DefaultTableModel;
+
+import dao.AlumnosDAO;
 import dao.GrupoFamiliarDAO;
 
 public class DtosGrupoFamiliar {
@@ -13,6 +15,89 @@ public class DtosGrupoFamiliar {
 	private static String email;
 	private static String descuento;
 	private static int elementoSeleccionado;
+		
+	public DefaultTableModel getTablaAlumnos(String valor, boolean estado) {
+		
+		AlumnosDAO alumnosDAO = new AlumnosDAO();
+		String titulo[] = {"Leg.", "Apellido, nombre", "Dirección", "Curso", "Sel."};
+		String respuesta[][] = alumnosDAO.getListadoAlumnos( estado, idGrupoFamiliar, valor);
+		Object cuerpo[][] = null;
+
+		if(respuesta != null) {
+			
+			cuerpo = new Object[respuesta.length][5];
+			
+			for(int i = 0 ; i < respuesta.length ; i++) {
+				
+				cuerpo[i][0] = respuesta[i][0];
+				cuerpo[i][1] = respuesta[i][1];
+				cuerpo[i][2] = respuesta[i][2];
+				cuerpo[i][3] = respuesta[i][3];
+				cuerpo[i][4] = false;
+			}
+		} else
+			cuerpo = null;
+		
+		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo){
+
+			private static final long serialVersionUID = 1L;
+			
+			boolean[] columnEditables = new boolean[] {
+					false, false, false, false, true
+			};
+			
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+			
+			public Class<?> getColumnClass(int column) {
+				
+		        if(column == 4)
+		        	return Boolean.class;
+		        else
+		        	return String.class;
+		    }
+		};
+		return tablaModelo;
+	}
+	
+	public DefaultTableModel getTablaFamilia() {
+
+		AlumnosDAO alumnosDAO = new AlumnosDAO();
+		String titulo[] = {"Leg.", "Apellido, nombre", "Curso", "Sel."};
+		respuesta = alumnosDAO.getAlumnos("GF", idGrupoFamiliar, true, "idAlumno", "");
+		Object cuerpo[][] = new Object[respuesta.length][4];
+		
+		for(int i = 0; i < cuerpo.length ; i++) {
+			
+			cuerpo[i][0] = respuesta[i][0];
+			cuerpo[i][1] = respuesta[i][2] + ", " + respuesta[i][1];
+			cuerpo[i][2] = respuesta[i][7];
+			cuerpo[i][3] = false;
+		}
+	
+		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo){
+
+			private static final long serialVersionUID = 1L;
+			
+			boolean[] columnEditables = new boolean[] {
+					false, false, false, true
+			};
+			
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+			
+			public Class<?> getColumnClass(int column) {
+				
+		        if(column == 3)
+		        	return Boolean.class;
+		        else
+		        	return String.class;
+		    }
+		};
+		return tablaModelo;
+	}
 	
 	public void setInformacionGrupo() {
 		

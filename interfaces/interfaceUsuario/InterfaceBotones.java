@@ -129,8 +129,9 @@ public class InterfaceBotones extends VentanaModelo {
 		panelGeneral.add(btn2C);
 		
 		btnVolver = new JButton("Volver");
-		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -25, SpringLayout.SOUTH, panelGeneral);
-		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -40, SpringLayout.EAST, panelGeneral);
+		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -15, SpringLayout.SOUTH, panelGeneral);
+		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -15, SpringLayout.EAST, panelGeneral);
+		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -90, SpringLayout.EAST, btnVolver);
 		panelGeneral.add(btnVolver);
 	}
 }

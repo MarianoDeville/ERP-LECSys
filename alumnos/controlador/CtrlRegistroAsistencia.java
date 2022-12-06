@@ -37,6 +37,8 @@ public class CtrlRegistroAsistencia implements ActionListener {
 		
 		ventanaRegistroAsistencia.tabla.setModel(dtosAlumno.getTablaRegistroAsistencia(ventanaRegistroAsistencia.comboBox1.getSelectedIndex(), 
 																						ventanaRegistroAsistencia.comboBox2.getSelectedIndex()));
+		ventanaRegistroAsistencia.tabla.getColumnModel().getColumn(0).setPreferredWidth(45);
+		ventanaRegistroAsistencia.tabla.getColumnModel().getColumn(0).setMaxWidth(55);
 		ventanaRegistroAsistencia.tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		ventanaRegistroAsistencia.tabla.doLayout();
 		

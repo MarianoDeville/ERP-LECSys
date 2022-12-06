@@ -1,6 +1,8 @@
 /*****************************************************************************************************************************************************************/
 //										LISTADO DE MÉTODOS
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+//	public void SetIntegrantes(String integrantes)
+//	public boolean guardarCobroGrupoExistente()
 //	public TableModel getTablaAlumnos(boolean reinscripción, boolean todos, String busqueda)
 //	public TableModel getTablaSeleccionados()
 //	public String getEmail()
@@ -60,12 +62,45 @@ public class DtosCobros {
 	private static int sumaCuotas;
 	private static int inscripcion;
 	private static int nroCobro;
+	private static int integrantes;
+
+	public void SetIntegrantes(String integrantes) {
+		
+		DtosCobros.integrantes = Integer.parseInt(integrantes);
+	}
+	
+	public boolean guardarCobroGrupoExistente() {
+		
+		GrupoFamiliarDAO grupoFamiliarDAO = new GrupoFamiliarDAO();
+
+		if(!grupoFamiliarDAO.setActualizarGrupo(idFamilia, nombre, cantElementosSel + integrantes, descuentoGrupo, email))
+			return false;
+		
+		String idAlumnos[] = new String[matrizSelec.length];
+		AlumnosDAO alumnosDAO = new AlumnosDAO();
+		
+		for(int i = 0; i < matrizSelec.length; i++) {
+			
+			idAlumnos[i] = matrizSelec[i][0];
+		}
+
+		if(!alumnosDAO.setActualizarIdFamila(idFamilia+"", idAlumnos))
+			return false;
+		
+		AdministracionDAO administracionDAO = new AdministracionDAO();
+		
+		if(!administracionDAO.setCobro())
+			return false;
+
+		nroCobro = administracionDAO.getUltimoRegistro();
+		return true;
+	}
 	
 	public TableModel getTablaAlumnos(boolean reinscripción, boolean todos, String busqueda) {
 		
 		String titulo[] = null;
 		DtosCobros.reinscripción = reinscripción;
-		
+	
 		if(reinscripción) {
 			
 			titulo = new String[] {"Id", "Nombre", "Cant. Integrantes",  "Email" , "Sel"};
@@ -426,11 +461,11 @@ public class DtosCobros {
 		return reinscripción;
 	}
 
-	public String validarInformación() {
+	public String validarInformación(boolean validarNombre) {
 		
 		GrupoFamiliarDAO grupoFamiliaDAO = new GrupoFamiliarDAO();
-		
-		if(grupoFamiliaDAO.isNombreFamilia(nombre) && !reinscripción)
+	
+		if(grupoFamiliaDAO.isNombreFamilia(nombre) && !reinscripción && validarNombre)
 			return "El nombre de familia ya está en uso.";
 		
 		if(nombre.length() < 5)

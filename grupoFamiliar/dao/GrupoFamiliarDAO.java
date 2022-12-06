@@ -18,7 +18,7 @@ public class GrupoFamiliarDAO extends Conexion {
 
 			this.conectar();
 			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.grupoFamiliar "
-																 + "SET nombreFamilia = ?, integrantes = ?, deuda = 0, estado = 1, descuento = ?, email = ? "
+																 + "SET nombreFamilia = ?, integrantes = ?, estado = 1, descuento = ?, email = ? "
 																 + "WHERE idGrupoFamiliar = ?");
 			stm.setString(1, nombre);
 			stm.setInt(2, integrantes);
