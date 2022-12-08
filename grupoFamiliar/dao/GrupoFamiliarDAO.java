@@ -9,6 +9,32 @@ import modelo.DtosCobros;
 
 public class GrupoFamiliarDAO extends Conexion {
 
+	
+	public boolean setEstado(String idFamilia, String estado) {
+		
+		boolean bandera = true;
+		DtosActividad dtosActividad = new DtosActividad();
+		
+		try {
+
+			this.conectar();
+			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.grupoFamiliar SET estado = ? WHERE idGrupoFamiliar = ?");
+			stm.setString(1, estado);
+			stm.setString(2, idFamilia);
+		} catch (Exception e) {
+	
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("GrupoFamiliarDAO, setEstado()");
+			bandera = false;
+		} finally {
+			
+			this.cerrar();
+		}
+		dtosActividad.registrarActividad("Actualización del estado del grupo familiar.", "Alumnos");
+		return bandera;
+	}
+	
+	
 	public boolean setActualizarGrupo(int idFamilia, String nombre, int integrantes, int descuentoGrupo, String email) {
 		
 		boolean bandera = true;

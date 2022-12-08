@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
+import javax.swing.JOptionPane;
 import interfaceUsuario.ABML;
 import interfaceUsuario.ListadoDoble;
 import modelo.DtosGrupoFamiliar;
@@ -45,21 +46,11 @@ public class CtrlGrupoFamiliar implements ActionListener {
 
 	public void iniciar() {
 	
-		ventanaFamilia.panel.remove(ventanaFamilia.btnNuevo);
-		ventanaFamilia.chckbx1.setVisible(true);
+		ventanaFamilia.panelABML.remove(ventanaFamilia.btnNuevo);
+		ventanaFamilia.chckbx1.setVisible(false);
 		ventanaFamilia.txt1.setVisible(true);
 		actualizar();
 		ventanaFamilia.setVisible(true);
-	}
-	
-	private void actualizar() {
-
-		ventanaFamilia.tabla.setModel(dtosGrupoFamiliar.getTablaGrupoFamiliar(ventanaFamilia.chckbx1.isSelected(), 
-																			  ventanaFamilia.txt1.getText()));
-		ventanaFamilia.tabla.getColumnModel().getColumn(0).setPreferredWidth(200);
-		ventanaFamilia.tabla.getColumnModel().getColumn(0).setMaxWidth(250);
-		ventanaFamilia.tabla.getColumnModel().getColumn(2).setPreferredWidth(40);
-		ventanaFamilia.tabla.getColumnModel().getColumn(2).setMaxWidth(50);
 	}
 	
 	private void limpiarOtros() {
@@ -91,23 +82,7 @@ public class CtrlGrupoFamiliar implements ActionListener {
 		
 		if(e.getSource() == ventanaFamilia.btnEditar) {
 
-			int i = 0;
-			
-			while(i < ventanaFamilia.tabla.getRowCount()) {
-				
-				if((boolean)ventanaFamilia.tabla.getValueAt(i, 2)) {
-					
-					dtosGrupoFamiliar.setElementoSeleccionado(i);
-					break;
-				}
-				i++;
-			}
-			
-			dtosGrupoFamiliar.setInformacionGrupo();
-			ventanaEditarGrupo = new ListadoDoble("Edicion de la información del grupo.");
-			CtrlEditarGrupoFamiliar ctrlEditarGrupo = new CtrlEditarGrupoFamiliar(ventanaEditarGrupo);
-			ctrlEditarGrupo.iniciar();
-			ventanaEditarGrupo.btnVolver.addActionListener(this);
+			editarElementoSeleccionado();
 		}
 		
 		if(ventanaEditarGrupo != null) {
@@ -121,6 +96,45 @@ public class CtrlGrupoFamiliar implements ActionListener {
 		if(e.getSource() == ventanaFamilia.btnVolver) {
 
 			ventanaFamilia.dispose();
+		}
+	}
+	
+	private void actualizar() {
+
+		ventanaFamilia.tabla.setModel(dtosGrupoFamiliar.getTablaGrupoFamiliar(ventanaFamilia.chckbx1.isSelected(), 
+																			  ventanaFamilia.txt1.getText()));
+		ventanaFamilia.tabla.getColumnModel().getColumn(0).setPreferredWidth(200);
+		ventanaFamilia.tabla.getColumnModel().getColumn(0).setMaxWidth(250);
+		ventanaFamilia.tabla.getColumnModel().getColumn(2).setPreferredWidth(40);
+		ventanaFamilia.tabla.getColumnModel().getColumn(2).setMaxWidth(50);
+	}
+	
+	private void editarElementoSeleccionado() {
+		
+		boolean bandera = false;
+		int i = 0;
+		
+		while(i < ventanaFamilia.tabla.getRowCount()) {
+			
+			if((boolean)ventanaFamilia.tabla.getValueAt(i, 2)) {
+				
+				dtosGrupoFamiliar.setElementoSeleccionado(i);
+				bandera = true;
+				break;
+			}
+			i++;
+		}
+		
+		if(bandera) {
+			
+			dtosGrupoFamiliar.setInformacionGrupo();
+			ventanaEditarGrupo = new ListadoDoble("Edicion de la información del grupo.");
+			CtrlEditarGrupoFamiliar ctrlEditarGrupo = new CtrlEditarGrupoFamiliar(ventanaEditarGrupo);
+			ctrlEditarGrupo.iniciar();
+			ventanaEditarGrupo.btnVolver.addActionListener(this);
+		} else {
+			
+			JOptionPane.showMessageDialog(null, "No ha seleccionado ningún elemento.");
 		}
 	}
 }

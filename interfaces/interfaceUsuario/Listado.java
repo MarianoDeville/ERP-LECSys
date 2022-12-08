@@ -88,7 +88,7 @@ public class Listado extends VentanaModelo {
 		scrollTabla = new JScrollPane();
 		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla, 50, SpringLayout.NORTH, listado);
 		contenedor.putConstraint(SpringLayout.WEST, scrollTabla, 15, SpringLayout.WEST, listado);
-		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla, -10, SpringLayout.SOUTH, listado);
+		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla, -20, SpringLayout.SOUTH, listado);
 		contenedor.putConstraint(SpringLayout.EAST, scrollTabla, -120, SpringLayout.EAST, listado);
 		listado.add(scrollTabla);
 		tabla = new JTable();
@@ -132,7 +132,7 @@ public class Listado extends VentanaModelo {
 		listado.add(txt2);
 		
 		btnVolver = new JButton("Volver");
-		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -10, SpringLayout.SOUTH, listado);
+		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -20, SpringLayout.SOUTH, listado);
 		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -20, SpringLayout.EAST, listado);
 		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -90, SpringLayout.EAST, btnVolver);
 		listado.add(btnVolver);

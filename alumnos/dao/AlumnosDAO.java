@@ -11,6 +11,31 @@ import modelo.DtosAlumno;
 
 public class AlumnosDAO extends Conexion {
 
+	
+	public boolean setEstado(String idAlumno, String estado) {
+		
+		boolean bandera = true;
+		DtosActividad dtosActividad = new DtosActividad();
+		
+		try {
+
+			this.conectar();
+			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.alumnos SET estado = ? WHERE idAlumno = ?");
+			stm.setString(1, estado);
+			stm.setString(2, idAlumno);
+		} catch (Exception e) {
+	
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AlumnosDAO, setEstado()");
+			bandera = false;
+		} finally {
+			
+			this.cerrar();
+		}
+		dtosActividad.registrarActividad("Actualización del estado de los alumnos.", "Alumnos");
+		return bandera;
+	}
+	
 	public boolean setActualizarIdFamila(String idFamilia, String idAlumnos[]) {
 		
 		boolean bandera = true;
@@ -32,13 +57,13 @@ public class AlumnosDAO extends Conexion {
 		} catch (Exception e) {
 	
 			CtrlLogErrores.guardarError(e.getMessage());
-			CtrlLogErrores.guardarError("GrupoFamiliarDAO, setActualizarGrupo()");
+			CtrlLogErrores.guardarError("AlumnosDAO, setActualizarIdFamila()");
 			bandera = false;
 		} finally {
 			
 			this.cerrar();
 		}
-		dtosActividad.registrarActividad("Actualización datos grupo familiar.", "Administración");
+		dtosActividad.registrarActividad("Actualización del grupo familiar de un grupo de alumnos.", "Administración");
 		return bandera;
 	}
 	
@@ -261,7 +286,7 @@ public class AlumnosDAO extends Conexion {
 			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stm.executeQuery(comandoStatement);
 			rs.last();	
-			matriz = new String[rs.getRow()][17];
+			matriz = new String[rs.getRow()][5];
 			rs.beforeFirst();
 			int i=0;
 

@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 public class ABML extends VentanaModelo {
 
 	private static final long serialVersionUID = 1L;
-	public JPanel panel;
+	public JPanel panelABML;
 	private JScrollPane scrollTabla;
 	public JTable tabla;
 	public JTextField txt1;
@@ -26,64 +26,64 @@ public class ABML extends VentanaModelo {
 	public ABML(String nombreVentana) {
 		
 		super(nombreVentana);
-		panel = new JPanel();
-		setContentPane(panel);
+		panelABML = new JPanel();
+		setContentPane(panelABML);
 		SpringLayout contenedor = new SpringLayout();
-		panel.setLayout(contenedor);
+		panelABML.setLayout(contenedor);
 		
 		scrollTabla = new JScrollPane();
-		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla, 15, SpringLayout.NORTH, panel);
-		contenedor.putConstraint(SpringLayout.WEST, scrollTabla, 15, SpringLayout.WEST, panel);
-		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla, -10, SpringLayout.SOUTH, panel);
-		contenedor.putConstraint(SpringLayout.EAST, scrollTabla, -120, SpringLayout.EAST, panel);
-		panel.add(scrollTabla);
+		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla, 15, SpringLayout.NORTH, panelABML);
+		contenedor.putConstraint(SpringLayout.WEST, scrollTabla, 15, SpringLayout.WEST, panelABML);
+		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla, -20, SpringLayout.SOUTH, panelABML);
+		contenedor.putConstraint(SpringLayout.EAST, scrollTabla, -120, SpringLayout.EAST, panelABML);
+		panelABML.add(scrollTabla);
 		tabla = new JTable();
 		scrollTabla.setViewportView(tabla);
 		
 		btnNuevo = new JButton("Nuevo");
-		contenedor.putConstraint(SpringLayout.NORTH, btnNuevo, 15, SpringLayout.NORTH, panel);
-		contenedor.putConstraint(SpringLayout.EAST, btnNuevo, -10, SpringLayout.EAST, panel);
+		contenedor.putConstraint(SpringLayout.NORTH, btnNuevo, 15, SpringLayout.NORTH, panelABML);
+		contenedor.putConstraint(SpringLayout.EAST, btnNuevo, -10, SpringLayout.EAST, panelABML);
 		contenedor.putConstraint(SpringLayout.WEST, btnNuevo, -105, SpringLayout.EAST, btnNuevo);
-		panel.add(btnNuevo);
+		panelABML.add(btnNuevo);
 		
 		btnEditar = new JButton("Editar");
 		contenedor.putConstraint(SpringLayout.NORTH, btnEditar, 25, SpringLayout.SOUTH, btnNuevo);
-		contenedor.putConstraint(SpringLayout.EAST, btnEditar, -10, SpringLayout.EAST, panel);
+		contenedor.putConstraint(SpringLayout.EAST, btnEditar, -10, SpringLayout.EAST, panelABML);
 		contenedor.putConstraint(SpringLayout.WEST, btnEditar, -105, SpringLayout.EAST, btnEditar);
-		panel.add(btnEditar);
+		panelABML.add(btnEditar);
 		
 		chckbx1 = new JCheckBox("Activo");
 		chckbx1.setSelected(true);
 		contenedor.putConstraint(SpringLayout.NORTH, chckbx1, 25, SpringLayout.SOUTH, btnEditar);
-		contenedor.putConstraint(SpringLayout.EAST, chckbx1, -10, SpringLayout.EAST, panel);
+		contenedor.putConstraint(SpringLayout.EAST, chckbx1, -10, SpringLayout.EAST, panelABML);
 		contenedor.putConstraint(SpringLayout.WEST, chckbx1, -105, SpringLayout.EAST, chckbx1);
 		chckbx1.setVisible(false);
-		panel.add(chckbx1);
+		panelABML.add(chckbx1);
 		
 		txt1 = new JTextField();
 		contenedor.putConstraint(SpringLayout.NORTH, txt1, 25, SpringLayout.SOUTH, chckbx1);
-		contenedor.putConstraint(SpringLayout.EAST, txt1, -10, SpringLayout.EAST, panel);
+		contenedor.putConstraint(SpringLayout.EAST, txt1, -10, SpringLayout.EAST, panelABML);
 		contenedor.putConstraint(SpringLayout.WEST, txt1, -105, SpringLayout.EAST, txt1);
 		txt1.setVisible(false);
-		panel.add(txt1);
+		panelABML.add(txt1);
 		
 		comboBox1 = new JComboBox<String>();
 		contenedor.putConstraint(SpringLayout.NORTH, comboBox1, 25, SpringLayout.SOUTH, txt1);
-		contenedor.putConstraint(SpringLayout.EAST, comboBox1, -10, SpringLayout.EAST, panel);
+		contenedor.putConstraint(SpringLayout.EAST, comboBox1, -10, SpringLayout.EAST, panelABML);
 		contenedor.putConstraint(SpringLayout.WEST, comboBox1, -105, SpringLayout.EAST, comboBox1);
 		comboBox1.setVisible(false);
-		panel.add(comboBox1);
+		panelABML.add(comboBox1);
 			
 		btnVolver = new JButton("Volver");
-		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -10, SpringLayout.SOUTH, panel);
-		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -10, SpringLayout.EAST, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -20, SpringLayout.SOUTH, panelABML);
+		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -10, SpringLayout.EAST, panelABML);
 		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -105, SpringLayout.EAST, btnVolver);
-		panel.add(btnVolver);
+		panelABML.add(btnVolver);
 		
 		btnImprimir = new JButton("Imprimir");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnImprimir, -25, SpringLayout.NORTH, btnVolver);
-		contenedor.putConstraint(SpringLayout.EAST, btnImprimir, -10, SpringLayout.EAST, panel);
+		contenedor.putConstraint(SpringLayout.EAST, btnImprimir, -10, SpringLayout.EAST, panelABML);
 		contenedor.putConstraint(SpringLayout.WEST, btnImprimir, -105, SpringLayout.EAST, btnImprimir);
-		panel.add(btnImprimir);
+		panelABML.add(btnImprimir);
 	}
 }

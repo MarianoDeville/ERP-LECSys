@@ -51,15 +51,8 @@ public class CtrolCobrarHabilitar implements ActionListener {
 		ventanaCobrarHabilitar.txt2.setVisible(true);
 		ventanaCobrarHabilitar.txt2.setEnabled(true);
 		ventanaCobrarHabilitar.txt2.setEditable(true);
-		ventanaCobrarHabilitar.setVisible(true);
 		actualizar();
-	}
-	
-	private void actualizar() {
-		
-		ventanaCobrarHabilitar.tabla.setModel(dtosCobros.getTablaAlumnos(ventanaCobrarHabilitar.chckbx1.isSelected(), 
-																		 ventanaCobrarHabilitar.chckbx2.isSelected(), 
-																		 ventanaCobrarHabilitar.txt2.getText()));
+		ventanaCobrarHabilitar.setVisible(true);
 	}
 	
 	private boolean[] itemsSeleccionados() {
@@ -126,5 +119,12 @@ public class CtrolCobrarHabilitar implements ActionListener {
 			
 			ventanaCobrarHabilitar.dispose();
 		}
+	}
+	
+	private void actualizar() {
+		
+		ventanaCobrarHabilitar.tabla.setModel(dtosCobros.getTablaAlumnos(ventanaCobrarHabilitar.chckbx1.isSelected(), 
+																		 ventanaCobrarHabilitar.chckbx2.isSelected(), 
+																		 ventanaCobrarHabilitar.txt2.getText()));
 	}
 }

@@ -105,7 +105,45 @@ public class CtrolCobrarInscripcion implements ActionListener {
 		actualizoSuma();
 		ventanaCobrarInscripcion.setVisible(true);
 	}
+		
+	private void limpiarOtros() {
+		
+		for(int i = 0; i < ventanaCobrarInscripcion.tabla2.getRowCount(); i++) {
+			
+			if(i != elemento || !ventanaCobrarInscripcion.chckbxTabla2.isSelected())
+				ventanaCobrarInscripcion.tabla2.setValueAt((boolean) false, i, 2);
+		}
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		
+		if(e.getSource() == ventanaCobrarInscripcion.chckbxTabla2) {
+			
+			if(!ventanaCobrarInscripcion.chckbxTabla2.isSelected())
+				haySeleccion = false;
 
+			actualizarTabla();
+			actualizarDatos();
+		}
+		
+		if(e.getSource() == ventanaCobrarInscripcion.chckbxEnviarEmail) {
+			
+			ventanaCobrarInscripcion.lblEmail.setVisible(ventanaCobrarInscripcion.chckbxEnviarEmail.isSelected());
+			ventanaCobrarInscripcion.txtEmail.setVisible(ventanaCobrarInscripcion.chckbxEnviarEmail.isSelected());
+		}
+		
+		if(e.getSource() == ventanaCobrarInscripcion.btnCobrar) {
+				
+			registraCobro();
+		}
+
+		if(e.getSource() == ventanaCobrarInscripcion.btnVolver) {
+			
+			dtosCobros.setBorrarSeleccionados();
+			ventanaCobrarInscripcion.dispose();
+		}
+	}
+	
 	private void actualizarDatos() {
 
 		limpiarOtros();
@@ -140,7 +178,7 @@ public class CtrolCobrarInscripcion implements ActionListener {
 			ventanaCobrarInscripcion.txtEmail.setText(dtosGrupoFamiliar.getEmail());
 		}
 	}
-		
+	
 	private void actualizoSuma() {
 		
 		String mensaje = null;
@@ -235,44 +273,6 @@ public class CtrolCobrarInscripcion implements ActionListener {
 			
 			ventanaCobrarInscripcion.lblMsgError.setForeground(Color.RED);
 			ventanaCobrarInscripcion.lblMsgError.setText(error);
-		}
-	}
-	
-	private void limpiarOtros() {
-		
-		for(int i = 0; i < ventanaCobrarInscripcion.tabla2.getRowCount(); i++) {
-			
-			if(i != elemento || !ventanaCobrarInscripcion.chckbxTabla2.isSelected())
-				ventanaCobrarInscripcion.tabla2.setValueAt((boolean) false, i, 2);
-		}
-	}
-	
-	public void actionPerformed(ActionEvent e) {
-		
-		if(e.getSource() == ventanaCobrarInscripcion.chckbxTabla2) {
-			
-			if(!ventanaCobrarInscripcion.chckbxTabla2.isSelected())
-				haySeleccion = false;
-
-			actualizarTabla();
-			actualizarDatos();
-		}
-		
-		if(e.getSource() == ventanaCobrarInscripcion.chckbxEnviarEmail) {
-			
-			ventanaCobrarInscripcion.lblEmail.setVisible(ventanaCobrarInscripcion.chckbxEnviarEmail.isSelected());
-			ventanaCobrarInscripcion.txtEmail.setVisible(ventanaCobrarInscripcion.chckbxEnviarEmail.isSelected());
-		}
-		
-		if(e.getSource() == ventanaCobrarInscripcion.btnCobrar) {
-				
-			registraCobro();
-		}
-
-		if(e.getSource() == ventanaCobrarInscripcion.btnVolver) {
-			
-			dtosCobros.setBorrarSeleccionados();
-			ventanaCobrarInscripcion.dispose();
 		}
 	}
 }
