@@ -1,5 +1,6 @@
 package controlador;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -71,9 +72,7 @@ public class CtrlEditarGrupoFamiliar implements ActionListener {
 		ventanaEditarFamilia.tabla1.getColumnModel().getColumn(3).setMaxWidth(50);
 		ventanaEditarFamilia.tabla1.getColumnModel().getColumn(4).setPreferredWidth(20);
 		ventanaEditarFamilia.tabla1.getColumnModel().getColumn(4).setMaxWidth(25);	
-		
-		ventanaEditarFamilia.tabla2.setModel(dtosGrupoFamiliar.getTablaAlumnos(ventanaEditarFamilia.txt1Tabla2.getText() 
-																		 	  ,true));
+		ventanaEditarFamilia.tabla2.setModel(dtosGrupoFamiliar.getTablaAlumnos(ventanaEditarFamilia.txt1Tabla2.getText(),true));
 		ventanaEditarFamilia.tabla2.getColumnModel().getColumn(0).setPreferredWidth(40);
 		ventanaEditarFamilia.tabla2.getColumnModel().getColumn(0).setMaxWidth(50);
 		ventanaEditarFamilia.tabla2.getColumnModel().getColumn(4).setPreferredWidth(40);
@@ -196,22 +195,25 @@ public class CtrlEditarGrupoFamiliar implements ActionListener {
 		
 		if(JOptionPane.showConfirmDialog(null, "¿Esta seguro?", "Alerta!", JOptionPane.YES_NO_OPTION) == 0) {
 			
-			dtosGrupoFamiliar.guardarCambios();
-			
-			ventanaEditarFamilia.btnGuafrdar.setEnabled(false);
-			
-			
-			
-			
-System.out.println("Acá guardo los cambios en la base de datos");
-		} else {
-			
-			
-			
-			
-System.out.println("Vuelvo sin hacer nada.");			
-		}
-		
-		
+			dtosGrupoFamiliar.setNombreFamilia(ventanaEditarFamilia.txt1Tabla1.getText());
+			dtosGrupoFamiliar.setDescuento(ventanaEditarFamilia.txt2Tabla1.getText());
+
+			if(dtosGrupoFamiliar.guardarCambios()) {
+				
+				ventanaEditarFamilia.lblMsgError.setForeground(Color.BLUE);
+				ventanaEditarFamilia.lblMsgError.setText("Se han guardado los cambios en la base de datos.");
+				ventanaEditarFamilia.btnGuafrdar.setEnabled(false);
+				ventanaEditarFamilia.btnEliminar.setEnabled(false);
+				ventanaEditarFamilia.btnAgregar.setEnabled(false);
+				ventanaEditarFamilia.txt1Tabla1.setEditable(false);
+				ventanaEditarFamilia.txt2Tabla1.setEditable(false);
+				ventanaEditarFamilia.txt3Tabla1.setEditable(false);
+				ventanaEditarFamilia.txt1Tabla2.setEditable(false);
+			} else {
+				
+				ventanaEditarFamilia.lblMsgError.setForeground(Color.RED);
+				ventanaEditarFamilia.lblMsgError.setText(dtosGrupoFamiliar.getMsgError());
+			}
+		}			
 	}
 }

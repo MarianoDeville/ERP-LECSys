@@ -9,48 +9,66 @@ import modelo.DtosCobros;
 
 public class GrupoFamiliarDAO extends Conexion {
 
-	
-	public boolean setEstado(String idFamilia, String estado) {
+	public boolean setEliminarIntegrante(String idGrupo) {
 		
 		boolean bandera = true;
 		DtosActividad dtosActividad = new DtosActividad();
-		
-		try {
+		String comandoStatement = "SELECT integrantes FROM lecsys1.grupoFamiliar WHERE idGrupoFamiliar = ?";
+		int cant = 0;
 
+		try {
+			
 			this.conectar();
-			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.grupoFamiliar SET estado = ? WHERE idGrupoFamiliar = ?");
-			stm.setString(1, estado);
-			stm.setString(2, idFamilia);
+			PreparedStatement stm = this.conexion.prepareStatement(comandoStatement);
+			stm.setString(1, idGrupo);			
+			ResultSet rs = stm.executeQuery();
+			
+			if(rs.next())
+				cant = rs.getInt(1) - 1;
+
+			if(cant > 0) {
+				
+				comandoStatement = "UPDATE lecsys1.grupoFamiliar SET integrantes = ? WHERE idGrupoFamiliar = ?";
+			} else {
+				
+				comandoStatement = "UPDATE lecsys1.grupoFamiliar SET integrantes = ?, estado = 0 WHERE idGrupoFamiliar = ?";
+			}
+			stm = this.conexion.prepareStatement(comandoStatement);
+			stm.setInt(1, cant);
+			stm.setString(2, idGrupo);
+			stm.executeUpdate();
+			
 		} catch (Exception e) {
 	
 			CtrlLogErrores.guardarError(e.getMessage());
-			CtrlLogErrores.guardarError("GrupoFamiliarDAO, setEstado()");
+			CtrlLogErrores.guardarError("GrupoFamiliarDAO, setEliminarIntegrante()");
+			CtrlLogErrores.guardarError(comandoStatement);
 			bandera = false;
 		} finally {
 			
 			this.cerrar();
 		}
-		dtosActividad.registrarActividad("Actualización del estado del grupo familiar.", "Alumnos");
+		dtosActividad.registrarActividad("Actualización de la cantidad de integrantes del grupo familiar.", "Alumnos");
 		return bandera;
 	}
-	
-	
-	public boolean setActualizarGrupo(int idFamilia, String nombre, int integrantes, int descuentoGrupo, String email) {
+
+	public boolean setActualizarGrupo(int idFamilia, String nombre, int integrantes, int descuentoGrupo, String email, String estado) {
 		
 		boolean bandera = true;
 		DtosActividad dtosActividad = new DtosActividad();
-		
+
 		try {
 
 			this.conectar();
 			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.grupoFamiliar "
-																 + "SET nombreFamilia = ?, integrantes = ?, estado = 1, descuento = ?, email = ? "
+																 + "SET nombreFamilia = ?, integrantes = ?, estado = ?, descuento = ?, email = ? "
 																 + "WHERE idGrupoFamiliar = ?");
 			stm.setString(1, nombre);
 			stm.setInt(2, integrantes);
-			stm.setInt(3, descuentoGrupo);
-			stm.setString(4, email);
-			stm.setInt(5, idFamilia);
+			stm.setInt(3, Integer.parseInt(estado));
+			stm.setInt(4, descuentoGrupo);
+			stm.setString(5, email);
+			stm.setInt(6, idFamilia);
 			stm.executeUpdate();
 		} catch (Exception e) {
 	

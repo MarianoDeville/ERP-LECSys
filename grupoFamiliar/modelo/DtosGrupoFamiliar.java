@@ -6,10 +6,11 @@ import dao.GrupoFamiliarDAO;
 
 public class DtosGrupoFamiliar {
 
-	private static String listaIntegrantes[][];
-	private static String listaAlumnos[][];
+	private String listaIntegrantes[][];
+	private String listaAlumnos[][];
 	private String eliminarElementos[];
 	private String agregarElementos[][];
+	private String listaElementosAgregar[];
 	private String listaAcciones[];
 	private static String nombreFamilia;
 	private static String idGrupoFamiliar;
@@ -17,32 +18,93 @@ public class DtosGrupoFamiliar {
 	private static String estado;
 	private static String email;
 	private static String descuento;
+	private String msgError;
 	private int elementoSeleccionado;
 
 	public boolean guardarCambios() {
-		
-		boolean bandera = false;
-		
-	// listo los cambios///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		
-		if(eliminarElementos != null) {
-		for(int i = 0; i<eliminarElementos.length;i++) {
+
+		boolean bandera = true;
+		GrupoFamiliarDAO grupoFamiliarDAO = new GrupoFamiliarDAO();
+		AlumnosDAO alumnosDAO = new AlumnosDAO();
 			
-			System.out.println("id "+eliminarElementos[i] + " idFamilia " + idGrupoFamiliar);
-		}
-		}
-		if(agregarElementos != null) {
-		for(int i = 0; i<agregarElementos.length;i++) {
+		if(agregarElementos.length > 0) {
+
+			bandera = alumnosDAO.setActualizarIdFamila(idGrupoFamiliar, listaElementosAgregar, "1");
 			
-			System.out.println("id " +agregarElementos[i][0] + " idFamilia " + idGrupoFamiliar + " viene de la flia " + agregarElementos[i][4]);
+			if(bandera) {
+				
+				integrantes = (Integer.parseInt(integrantes) + listaElementosAgregar.length) + "";				
+				bandera = grupoFamiliarDAO.setActualizarGrupo(Integer.parseInt(idGrupoFamiliar),  nombreFamilia, 
+															  Integer.parseInt(integrantes),  Integer.parseInt(descuento), 
+															  email,  estado);
+			}
+
+			for(int i = 0; i < agregarElementos.length; i++) {
+				
+				if(!grupoFamiliarDAO.setEliminarIntegrante(agregarElementos[i][8]))
+					bandera = false;
+			}
+
+			if(!bandera) {
+
+				msgError = "Error al guardar los elementos agregados.";
+				bandera=false;
+			}
 		}
+
+		if(eliminarElementos != null && bandera) {
+
+			bandera = alumnosDAO.setActualizarIdFamila(null, eliminarElementos, "0");
+
+			if(bandera) {
+				
+				int i = Integer.parseInt(integrantes); 
+				
+				if(i > eliminarElementos.length) {
+					
+					estado = "1";
+				} else {
+					
+					estado = "0";
+				}
+				
+				i -= eliminarElementos.length;
+				integrantes = i + "";
+				bandera = grupoFamiliarDAO.setActualizarGrupo(Integer.parseInt(idGrupoFamiliar), nombreFamilia, 
+															  Integer.parseInt(integrantes), Integer.parseInt(descuento), 
+															  email, estado);
+			}
+			
+			if(!bandera) {
+				
+				msgError = "Error al guardar los elementos eliminados.";
+				estado = "1";
+			}	
 		}
 		
-		return bandera;
-		
+		if(agregarElementos.length == 0 && eliminarElementos == null) {
+			
+			bandera = grupoFamiliarDAO.setActualizarGrupo(Integer.parseInt(idGrupoFamiliar), nombreFamilia, 
+														  Integer.parseInt(integrantes),  Integer.parseInt(descuento), 
+														  email, estado);
+			
+			if(!bandera) {
+				msgError = "Error al guardar los elementos.";
+			}
+		}
+
+		if(bandera) {
+			
+			eliminarElementos = null;	
+			agregarElementos = null;
+			return true;
+			
+		} else {
+			
+			return false;
+		}
 	}
-	
+
 	public boolean isRepetido(Object idAlumno) {
 	
 		for(int i = 0; i < agregarElementos.length; i++) {
@@ -66,6 +128,13 @@ public class DtosGrupoFamiliar {
 		agregarElementos[temp.length][1] = "";
 		agregarElementos[temp.length][2] = listaAlumnos[elementoSeleccionado][1];
 		agregarElementos[temp.length][7] = listaAlumnos[elementoSeleccionado][3];
+		agregarElementos[temp.length][8] = listaAlumnos[elementoSeleccionado][4];
+		listaElementosAgregar = new String[agregarElementos.length];
+		
+		for(int i = 0; i < agregarElementos.length; i++) {
+
+			listaElementosAgregar[i] = agregarElementos[i][0];
+		}
 	}
 	
 	public void setEliminarElementos() {
@@ -93,7 +162,7 @@ public class DtosGrupoFamiliar {
 		
 		AlumnosDAO alumnosDAO = new AlumnosDAO();
 		String titulo[] = {"Leg.", "Apellido, nombre", "Dirección", "Curso", "Sel."};
-		listaAlumnos = alumnosDAO.getListadoAlumnos( estado, idGrupoFamiliar, valor);
+		listaAlumnos = alumnosDAO.getListadoAlumnos(estado, idGrupoFamiliar, valor);
 		Object cuerpo[][] = null;
 
 		if(listaAlumnos != null) {
@@ -139,12 +208,11 @@ public class DtosGrupoFamiliar {
 		AlumnosDAO alumnosDAO = new AlumnosDAO();
 		String titulo[] = {"Leg.", "Apellido, nombre", "Curso", "Sel.", ""};
 		listaIntegrantes = alumnosDAO.getAlumnos("GF", idGrupoFamiliar, true, "idAlumno", "");
-		/////////////////////////////////////////////////////////////////////////////////////////// si no está inicializado lo inicializo con el tamaño que debo.	
+
 		if(agregarElementos == null) {
 
 			agregarElementos = new String[0][0];
 		}
-
 		String temp[][];
 		
 		if(agregarElementos.length > 0) {
@@ -166,10 +234,8 @@ public class DtosGrupoFamiliar {
 				listaAcciones[i] = "";
 			}
 		}
-
 		Object cuerpo[][] = new Object[temp.length][5];
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+	
 		for(int i = 0; i < cuerpo.length ; i++) {
 	
 			cuerpo[i][0] = temp[i][0];
@@ -178,7 +244,6 @@ public class DtosGrupoFamiliar {
 			cuerpo[i][3] = false;
 			cuerpo[i][4] = listaAcciones[i];
 		}
-	
 		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo){
 
 			private static final long serialVersionUID = 1L;
@@ -211,12 +276,12 @@ public class DtosGrupoFamiliar {
 		descuento = listaIntegrantes[elementoSeleccionado][5];
 	}
 	
-	public DefaultTableModel getTablaGrupoFamiliar(boolean estado, String busqueda) {
+	public DefaultTableModel getTablaGrupoFamiliar(boolean est, String busqueda) {
 		
-		DtosGrupoFamiliar.estado = estado?"1":"0";
+		estado = est?"1":"0";
 		GrupoFamiliarDAO grupoFamiliarDAO = new GrupoFamiliarDAO();
 		String titulo[] = {"Nombre", "Integrantes", "Sel."};
-		listaIntegrantes = grupoFamiliarDAO.getGruposFamilias("", "", estado, busqueda);
+		listaIntegrantes = grupoFamiliarDAO.getGruposFamilias("", "", est, busqueda);
 		Object cuerpo[][] = new Object[listaIntegrantes.length][3];
 		
 		for(int i = 0 ; i < listaIntegrantes.length ; i++) {
@@ -256,7 +321,6 @@ public class DtosGrupoFamiliar {
 		        	return String.class;
 		    }
 		};
-		
 		return tablaModelo;
 	}
 
@@ -274,6 +338,11 @@ public class DtosGrupoFamiliar {
 		
 		return nombreFamilia;
 	}
+	
+	public void setNombreFamilia(String nombre) {
+		
+		nombreFamilia = nombre;
+	}
 
 	public String getIntegrantes() {
 		
@@ -289,9 +358,19 @@ public class DtosGrupoFamiliar {
 		
 		return descuento;
 	}
+	
+	public void setDescuento(String descuento) {
+		
+		DtosGrupoFamiliar.descuento = descuento;
+	}
 
 	public String getEmail() {
 		
 		return email;
+	}
+
+	public String getMsgError() {
+		
+		return msgError;
 	}
 }

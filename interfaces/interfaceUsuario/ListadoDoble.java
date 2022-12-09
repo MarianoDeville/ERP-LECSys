@@ -22,6 +22,7 @@ public class ListadoDoble extends VentanaModelo {
 	public JLabel lblTxt2Tabla2;
 	public JLabel lblTituloTabla1;
 	public JLabel lblTituloTabla2;
+	public JLabel lblMsgError;
 	public JTextField txt1Tabla1;
 	public JTextField txt2Tabla1;
 	public JTextField txt3Tabla1;
@@ -140,6 +141,11 @@ public class ListadoDoble extends VentanaModelo {
 		contenedor.putConstraint(SpringLayout.WEST, btnGuafrdar, 60, SpringLayout.EAST, btnEliminar);
 		contenedor.putConstraint(SpringLayout.EAST, btnGuafrdar, 90, SpringLayout.WEST, btnGuafrdar);
 		panelListado.add(btnGuafrdar);
+		
+		lblMsgError = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblMsgError, 3, SpringLayout.NORTH, btnGuafrdar);
+		contenedor.putConstraint(SpringLayout.WEST, lblMsgError, 10, SpringLayout.EAST, btnGuafrdar);
+		panelListado.add(lblMsgError);
 		
 		btnVolver = new JButton("Volver");
 		contenedor.putConstraint(SpringLayout.NORTH, btnVolver, 15, SpringLayout.SOUTH, scrollTabla1);

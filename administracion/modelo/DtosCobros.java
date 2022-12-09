@@ -73,7 +73,7 @@ public class DtosCobros {
 		
 		GrupoFamiliarDAO grupoFamiliarDAO = new GrupoFamiliarDAO();
 
-		if(!grupoFamiliarDAO.setActualizarGrupo(idFamilia, nombre, cantElementosSel + integrantes, descuentoGrupo, email))
+		if(!grupoFamiliarDAO.setActualizarGrupo(idFamilia, nombre, cantElementosSel + integrantes, descuentoGrupo, email, "1"))
 			return false;
 		
 		String idAlumnos[] = new String[matrizSelec.length];
@@ -84,7 +84,7 @@ public class DtosCobros {
 			idAlumnos[i] = matrizSelec[i][0];
 		}
 
-		if(!alumnosDAO.setActualizarIdFamila(idFamilia+"", idAlumnos))
+		if(!alumnosDAO.setActualizarIdFamila(idFamilia+"", idAlumnos, "1"))
 			return false;
 		
 		AdministracionDAO administracionDAO = new AdministracionDAO();
@@ -440,7 +440,7 @@ public class DtosCobros {
 		AdministracionDAO administracionDAO = new AdministracionDAO();
 		
 		if(reinscripción) {
-			if(!grupoFamiliarDAO.setActualizarGrupo(idFamilia, nombre, cantElementosSel, descuentoGrupo, email))
+			if(!grupoFamiliarDAO.setActualizarGrupo(idFamilia, nombre, cantElementosSel, descuentoGrupo, email, "1"))
 				return false;
 			
 		}else {

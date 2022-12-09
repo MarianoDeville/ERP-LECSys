@@ -109,7 +109,7 @@ public class Principal extends VentanaModelo{
 		
 		JLabel lblConfig = new JLabel("Configuración");
 		lblConfig.setHorizontalAlignment(SwingConstants.CENTER);
-		contenedor.putConstraint(SpringLayout.SOUTH, lblConfig, -100, SpringLayout.SOUTH, principal);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblConfig, -90, SpringLayout.SOUTH, principal);
 		contenedor.putConstraint(SpringLayout.WEST, lblConfig, 50, SpringLayout.WEST, principal);
 		contenedor.putConstraint(SpringLayout.EAST, lblConfig, 84, SpringLayout.WEST, lblConfig);
 		principal.add(lblConfig);
@@ -140,7 +140,7 @@ public class Principal extends VentanaModelo{
 		JLabel lblSalir = new JLabel("Salir");
 		lblSalir.setHorizontalAlignment(SwingConstants.CENTER);
 		contenedor.putConstraint(SpringLayout.SOUTH, lblSalir, 0, SpringLayout.SOUTH, lblRelogin);
-		contenedor.putConstraint(SpringLayout.EAST, lblSalir, -60, SpringLayout.EAST, principal);
+		contenedor.putConstraint(SpringLayout.EAST, lblSalir, -30, SpringLayout.EAST, principal);
 		contenedor.putConstraint(SpringLayout.WEST, lblSalir, -76, SpringLayout.EAST, lblSalir);
 		principal.add(lblSalir);
 		

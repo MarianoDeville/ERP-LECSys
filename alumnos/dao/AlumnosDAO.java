@@ -11,32 +11,7 @@ import modelo.DtosAlumno;
 
 public class AlumnosDAO extends Conexion {
 
-	
-	public boolean setEstado(String idAlumno, String estado) {
-		
-		boolean bandera = true;
-		DtosActividad dtosActividad = new DtosActividad();
-		
-		try {
-
-			this.conectar();
-			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.alumnos SET estado = ? WHERE idAlumno = ?");
-			stm.setString(1, estado);
-			stm.setString(2, idAlumno);
-		} catch (Exception e) {
-	
-			CtrlLogErrores.guardarError(e.getMessage());
-			CtrlLogErrores.guardarError("AlumnosDAO, setEstado()");
-			bandera = false;
-		} finally {
-			
-			this.cerrar();
-		}
-		dtosActividad.registrarActividad("Actualización del estado de los alumnos.", "Alumnos");
-		return bandera;
-	}
-	
-	public boolean setActualizarIdFamila(String idFamilia, String idAlumnos[]) {
+	public boolean setActualizarIdFamila(String idFamilia, String idAlumnos[], String estado) {
 		
 		boolean bandera = true;
 		DtosActividad dtosActividad = new DtosActividad();
@@ -45,13 +20,19 @@ public class AlumnosDAO extends Conexion {
 
 			this.conectar();
 			PreparedStatement stm = this.conexion.prepareStatement("UPDATE lecsys1.alumnos "
-																 + "SET estado = 1, idGrupoFamiliar = ? "
+																 + "SET estado = ?, idGrupoFamiliar = ? "
 																 + "WHERE idAlumno = ?");
-			stm.setString(1, idFamilia);
+			stm.setString(1, estado);
+
+			if(isNúmero(idFamilia))
+				stm.setInt(2, Integer.parseInt(idFamilia));
+			
+			else
+				stm.setString(2, idFamilia);
 			
 			for(int i = 0; i < idAlumnos.length; i++) {
 				
-				stm.setString(2, idAlumnos[i]);
+				stm.setString(3, idAlumnos[i]);
 				stm.executeUpdate();
 			}
 		} catch (Exception e) {
@@ -215,8 +196,8 @@ public class AlumnosDAO extends Conexion {
 					  + "%')) ORDER BY " + orden ;
 		}
 		
-		String comandoStatement = "SELECT idAlumno, nombre, apellido, dni, dirección, teléfono, email, nivel, año"
-								+ ", idGrupoFamiliar, alumnos.estado, alumnos.idCurso, alumnos.estado, fechaNacimiento , "
+		String comandoStatement = "SELECT idAlumno, nombre, apellido, dni, dirección, teléfono, email, nivel, año, "
+								+ "idGrupoFamiliar, alumnos.estado, alumnos.idCurso, alumnos.estado, fechaNacimiento , "
 								+ "alumnos.idPersona, date_format(fechaIngreso, '%d/%m/%Y'), año, nivel, precio "
 								+ "FROM lecsys1.alumnos "
 				 				+ "JOIN lecsys1.persona on alumnos.idPersona = persona.idPersona "
@@ -409,5 +390,18 @@ public class AlumnosDAO extends Conexion {
 			this.cerrar();
 		}
 		return matriz;
+	}
+	
+	private boolean isNúmero(String número) {
+		
+		try {
+			
+			@SuppressWarnings("unused")
+			int a = Integer.parseInt(número);
+		} catch (Exception e) {
+			
+			return false;
+		}
+		return true;
 	}
 }
