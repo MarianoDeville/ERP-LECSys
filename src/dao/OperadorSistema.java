@@ -3,6 +3,7 @@ package dao;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Arrays;
+import javax.swing.JPasswordField;
 import controlador.CtrlLogErrores;
 import interfaceUsuario.IngresoUsuario;
 
@@ -12,6 +13,8 @@ public class OperadorSistema extends Conexion {
 	private static int nivelAcceso;
 	private static int idUsuarioActual;
 	private static boolean actualizarContraseña;
+	private String nombre;
+	private String pass;
 		
 	public String getNombreUsuario() {
 		
@@ -62,9 +65,8 @@ public class OperadorSistema extends Conexion {
 		
 			if(!bandera) {
 				
-				String palabraClave = Arrays.toString(IngresoUsuario.txtPassword.getPassword());		
 				armoStatement = "SELECT idUsuarios, nombre, nivelAcceso FROM lecsys1.usuarios "
-							  + "WHERE(estado = 1 AND nombre = BINARY'" + IngresoUsuario.txtUsuario.getText() + "' AND contraseña = SHA('" + palabraClave + "'))";
+							  + "WHERE(estado = 1 AND nombre = BINARY'" + nombre + "' AND contraseña = SHA('" + pass + "'))";
 				rs = stm.executeQuery(armoStatement);
 	
 				if(rs.next()) {
@@ -83,5 +85,15 @@ public class OperadorSistema extends Conexion {
 			this.cerrar();
 		}
 		return bandera;
+	}
+
+	public void setNombre(String nombre) {
+		
+		this.nombre = nombre;
+	}
+
+	public void setPass(JPasswordField pass) {
+		
+		this.pass =  Arrays.toString(pass.getPassword());
 	}
 }

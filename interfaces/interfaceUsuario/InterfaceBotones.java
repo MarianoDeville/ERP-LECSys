@@ -11,17 +11,21 @@ public class InterfaceBotones extends VentanaModelo {
 	private static final long serialVersionUID = 1L;
 	private JPanel panelGeneral;
 	public JLabel lbl1A;
-	public JButton btn1A;
 	public JLabel lbl1B;
-	public JButton btn1B;
 	public JLabel lbl1C;
-	public JButton btn1C;
+	public JLabel lbl1D;
 	public JLabel lbl2A;
-	public JButton btn2A;
 	public JLabel lbl2B;
-	public JButton btn2B;
 	public JLabel lbl2C;
+	public JLabel lbl2D;
+	public JButton btn1A;
+	public JButton btn1B;
+	public JButton btn1C;
+	public JButton btn1D;
+	public JButton btn2A;
+	public JButton btn2B;
 	public JButton btn2C;
+	public JButton btn2D;
 	public JButton btnVolver;
 
 	public InterfaceBotones(String nombreVentana) {
@@ -35,7 +39,7 @@ public class InterfaceBotones extends VentanaModelo {
 		lbl1A = new JLabel();
 		lbl1A.setHorizontalAlignment(SwingConstants.CENTER);
 		contenedor.putConstraint(SpringLayout.NORTH, lbl1A, 100, SpringLayout.NORTH, panelGeneral);
-		contenedor.putConstraint(SpringLayout.WEST, lbl1A, 75, SpringLayout.WEST, panelGeneral);
+		contenedor.putConstraint(SpringLayout.WEST, lbl1A, 50, SpringLayout.WEST, panelGeneral);
 		contenedor.putConstraint(SpringLayout.EAST, lbl1A, 116, SpringLayout.WEST, lbl1A);
 		lbl1A.setVisible(false);
 		panelGeneral.add(lbl1A);
@@ -80,10 +84,26 @@ public class InterfaceBotones extends VentanaModelo {
 		btn1C.setVisible(false);
 		panelGeneral.add(btn1C);
 		
+		lbl1D = new JLabel();
+		lbl1D.setHorizontalAlignment(SwingConstants.CENTER);
+		contenedor.putConstraint(SpringLayout.NORTH, lbl1D, 100, SpringLayout.NORTH, panelGeneral);
+		contenedor.putConstraint(SpringLayout.WEST, lbl1D, 75, SpringLayout.EAST, lbl1C);
+		contenedor.putConstraint(SpringLayout.EAST, lbl1D, 116, SpringLayout.WEST, lbl1D);
+		lbl1D.setVisible(false);
+		panelGeneral.add(lbl1D);
+		
+		btn1D = new JButton();
+		contenedor.putConstraint(SpringLayout.NORTH, btn1D, 15, SpringLayout.NORTH, lbl1D);
+		contenedor.putConstraint(SpringLayout.WEST, btn1D, 6, SpringLayout.WEST, lbl1D);
+		contenedor.putConstraint(SpringLayout.SOUTH, btn1D, 94, SpringLayout.NORTH, btn1D);
+		contenedor.putConstraint(SpringLayout.EAST, btn1D, 104, SpringLayout.WEST, btn1D);
+		btn1D.setVisible(false);
+		panelGeneral.add(btn1D);
+		
 		lbl2A = new JLabel();
 		lbl2A.setHorizontalAlignment(SwingConstants.CENTER);
 		contenedor.putConstraint(SpringLayout.NORTH, lbl2A, 100, SpringLayout.SOUTH, btn1A);
-		contenedor.putConstraint(SpringLayout.WEST, lbl2A, 75, SpringLayout.WEST, panelGeneral);
+		contenedor.putConstraint(SpringLayout.WEST, lbl2A, 50, SpringLayout.WEST, panelGeneral);
 		contenedor.putConstraint(SpringLayout.EAST, lbl2A, 116, SpringLayout.WEST, lbl2A);
 		lbl2A.setVisible(false);
 		panelGeneral.add(lbl2A);
@@ -127,6 +147,23 @@ public class InterfaceBotones extends VentanaModelo {
 		contenedor.putConstraint(SpringLayout.EAST, btn2C, 104, SpringLayout.WEST, btn2C);
 		btn2C.setVisible(false);
 		panelGeneral.add(btn2C);
+		
+		lbl2D = new JLabel();
+		lbl2D.setHorizontalAlignment(SwingConstants.CENTER);
+		contenedor.putConstraint(SpringLayout.NORTH, lbl2D, 100, SpringLayout.SOUTH, btn1D);
+		contenedor.putConstraint(SpringLayout.WEST, lbl2D, 75, SpringLayout.EAST, lbl2C);
+		contenedor.putConstraint(SpringLayout.EAST, lbl2D, 116, SpringLayout.WEST, lbl2D);
+		lbl2D.setVisible(false);
+		panelGeneral.add(lbl2D);
+		
+		btn2D = new JButton();
+		contenedor.putConstraint(SpringLayout.NORTH, btn2D, 15, SpringLayout.NORTH, lbl2D);
+		contenedor.putConstraint(SpringLayout.WEST, btn2D, 6, SpringLayout.WEST, lbl2D);
+		contenedor.putConstraint(SpringLayout.SOUTH, btn2D, 94, SpringLayout.NORTH, btn2D);
+		contenedor.putConstraint(SpringLayout.EAST, btn2D, 104, SpringLayout.WEST, btn2D);
+		btn2D.setVisible(false);
+		panelGeneral.add(btn2D);
+		
 		
 		btnVolver = new JButton("Volver");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -15, SpringLayout.SOUTH, panelGeneral);

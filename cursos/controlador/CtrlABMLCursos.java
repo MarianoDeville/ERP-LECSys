@@ -37,6 +37,12 @@ public class CtrlABMLCursos implements ActionListener {
 	private void actualizar() {
 		
 		ventanaABMLCursos.tabla.setModel(dtosAMBLCurso.getTablaCursos());
+		ventanaABMLCursos.tabla.getColumnModel().getColumn(0).setPreferredWidth(40);
+		ventanaABMLCursos.tabla.getColumnModel().getColumn(0).setMaxWidth(50);
+		ventanaABMLCursos.tabla.getColumnModel().getColumn(3).setPreferredWidth(40);
+		ventanaABMLCursos.tabla.getColumnModel().getColumn(3).setMaxWidth(50);
+		ventanaABMLCursos.tabla.getColumnModel().getColumn(6).setPreferredWidth(40);
+		ventanaABMLCursos.tabla.getColumnModel().getColumn(6).setMaxWidth(50);
 	}
 	
 	public void actionPerformed(ActionEvent e) {

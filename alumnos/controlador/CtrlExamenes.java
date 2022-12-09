@@ -18,6 +18,7 @@ public class CtrlExamenes implements ActionListener {
 		this.ventanaExamenes = vista;
 		this.dtosAlumno = new DtosAlumno();
 		this.ventanaExamenes.comboBox1.addActionListener(this);
+		this.ventanaExamenes.comboBox2.addActionListener(this);
 		this.ventanaExamenes.btnImprimir.addActionListener(this);
 		this.ventanaExamenes.btn1B.addActionListener(this);
 		this.ventanaExamenes.btnVolver.addActionListener(this);
@@ -48,6 +49,9 @@ public class CtrlExamenes implements ActionListener {
 	private void actualizar() {
 		
 		ventanaExamenes.tabla.setModel(dtosAlumno.getTablaExamenes(ventanaExamenes.comboBox1.getSelectedIndex()));
+		ventanaExamenes.tabla.getColumnModel().getColumn(0).setPreferredWidth(40);
+		ventanaExamenes.tabla.getColumnModel().getColumn(0).setMaxWidth(50);
+		ventanaExamenes.btn1B.setEnabled(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -55,6 +59,11 @@ public class CtrlExamenes implements ActionListener {
 		if(e.getSource() == ventanaExamenes.comboBox1) {
 			
 			actualizar();
+		}
+		
+		if(e.getSource() == ventanaExamenes.comboBox2) {
+			
+			ventanaExamenes.btn1B.setEnabled(true);
 		}
 		
 		if(e.getSource() == ventanaExamenes.btn1B) {
@@ -78,6 +87,7 @@ public class CtrlExamenes implements ActionListener {
 				}
 				
 				dtosAlumno.guardarResultados(notas);
+				ventanaExamenes.btn1B.setEnabled(false);
 				JOptionPane.showMessageDialog(null,dtosAlumno.getMsg());
 			} else {
 				

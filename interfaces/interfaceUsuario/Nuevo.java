@@ -74,7 +74,7 @@ public class Nuevo extends VentanaModelo {
 		chkbox1.setVisible(false);
 		panel.add(chkbox1);
 				
-		JLabel lblNombre = new JLabel("Nombre:");
+		JLabel lblNombre = new JLabel("Nombres:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblNombre, 15, SpringLayout.SOUTH, lblLegajo);
 		contenedor.putConstraint(SpringLayout.WEST, lblNombre, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblNombre, 70, SpringLayout.WEST, lblNombre);
@@ -87,7 +87,7 @@ public class Nuevo extends VentanaModelo {
 		panel.add(txtNombre);
 		configurarJTextField(txtNombre, 20);
 		
-		JLabel lblApellido = new JLabel("Apellido:");
+		JLabel lblApellido = new JLabel("Apellidos:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblApellido, 15, SpringLayout.SOUTH, lblNombre);
 		contenedor.putConstraint(SpringLayout.WEST, lblApellido, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblApellido, 70, SpringLayout.WEST, lblApellido);

@@ -92,7 +92,7 @@ public class DtosEmpleado {
 	public DefaultTableModel getTablaEmpleados(String tipo, boolean estado, String filtro) {
 		
 		EmpleadosDAO empleados = new EmpleadosDAO();
-		String titulo[] = {"Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Sector", "Cargo", "Tipo,", "Sel."};
+		String titulo[] = {"Leg.", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Sector", "Cargo", "Tipo,", "Sel."};
 		String respuesta[][]=empleados.getEmpleados(tipo, estado, filtro);
 		Object cuerpo[][]=null;
 		

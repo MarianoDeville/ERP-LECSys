@@ -21,6 +21,7 @@ public class CtrlAlumnos implements ActionListener {
 		this.ventanaAlumnos.btn1A.addActionListener(this);
 		this.ventanaAlumnos.btn1B.addActionListener(this);
 		this.ventanaAlumnos.btn1C.addActionListener(this);
+		this.ventanaAlumnos.btn1D.addActionListener(this);
 		this.ventanaAlumnos.btn2A.addActionListener(this);
 		this.ventanaAlumnos.btn2B.addActionListener(this);
 		this.ventanaAlumnos.btn2C.addActionListener(this);
@@ -41,6 +42,10 @@ public class CtrlAlumnos implements ActionListener {
 		ventanaAlumnos.lbl1C.setVisible(true);
 		ventanaAlumnos.btn1C.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Examenes.png"));
 		ventanaAlumnos.btn1C.setVisible(true);
+		ventanaAlumnos.lbl1D.setText("Grupo familiar");
+		ventanaAlumnos.lbl1D.setVisible(true);
+		ventanaAlumnos.btn1D.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Grupo familiar.png"));
+		ventanaAlumnos.btn1D.setVisible(true);
 		ventanaAlumnos.lbl2A.setText("Tomar asistencia");
 		ventanaAlumnos.lbl2A.setVisible(true);
 		ventanaAlumnos.btn2A.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Asistencia.png"));
@@ -49,10 +54,6 @@ public class CtrlAlumnos implements ActionListener {
 		ventanaAlumnos.lbl2B.setVisible(true);
 		ventanaAlumnos.btn2B.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Registro asistencia.png"));
 		ventanaAlumnos.btn2B.setVisible(true);
-		ventanaAlumnos.lbl2C.setText("Grupo familiar");
-		ventanaAlumnos.lbl2C.setVisible(true);
-		ventanaAlumnos.btn2C.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Grupo familiar.png"));
-		ventanaAlumnos.btn2C.setVisible(true);
 		ventanaAlumnos.setVisible(true);
 	}
 	
@@ -88,6 +89,16 @@ public class CtrlAlumnos implements ActionListener {
 			}
 		}
 		
+		if(e.getSource() == ventanaAlumnos.btn1D) {
+			
+			if(acceso.chkAcceso("Alumnos", "Grupo familiar")) {
+			
+				ABML ventanaGrupoFamiliar = new ABML("Gestión de grupos familiares");
+				CtrlGrupoFamiliar ctrlGrupoFamiliar = new CtrlGrupoFamiliar(ventanaGrupoFamiliar);
+				ctrlGrupoFamiliar.iniciar();
+			}
+		}
+		
 		if(e.getSource() == ventanaAlumnos.btn2A) {
 			
 			if(acceso.chkAcceso("Alumnos", "Tomar asistencia")) {
@@ -105,16 +116,6 @@ public class CtrlAlumnos implements ActionListener {
 				Listado ventanaRegistroAsistencia = new Listado("Registro asistencia");
 				CtrlRegistroAsistencia ctrlRegistroAsistencias = new CtrlRegistroAsistencia(ventanaRegistroAsistencia);
 				ctrlRegistroAsistencias.iniciar();
-			}
-		}
-		
-		if(e.getSource() == ventanaAlumnos.btn2C) {
-			
-			if(acceso.chkAcceso("Alumnos", "Grupo familiar")) {
-			
-				ABML ventanaGrupoFamiliar = new ABML("Gestión de grupos familiares");
-				CtrlGrupoFamiliar ctrlGrupoFamiliar = new CtrlGrupoFamiliar(ventanaGrupoFamiliar);
-				ctrlGrupoFamiliar.iniciar();
 			}
 		}
 		

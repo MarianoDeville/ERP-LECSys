@@ -45,6 +45,10 @@ public class CtrlListado implements ActionListener {
 		ventanaListado.tabla.setModel(dtosAlumno.getListadoAlumnos((String)ventanaListado.comboBox1.getSelectedItem() 
 																,dtosAlumno.getIdValorCriterio((String)ventanaListado.comboBox1.getSelectedItem()
 																,ventanaListado.comboBox2.getSelectedIndex())));
+		ventanaListado.tabla.getColumnModel().getColumn(0).setPreferredWidth(40);
+		ventanaListado.tabla.getColumnModel().getColumn(0).setMaxWidth(50);
+		ventanaListado.tabla.getColumnModel().getColumn(8).setPreferredWidth(40);
+		ventanaListado.tabla.getColumnModel().getColumn(8).setMaxWidth(50);
 		ventanaListado.txt1.setText(dtosAlumno.getCantAlumnos());
 	}
 	

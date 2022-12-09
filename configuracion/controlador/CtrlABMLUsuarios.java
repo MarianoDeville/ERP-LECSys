@@ -36,6 +36,8 @@ public class CtrlABMLUsuarios implements ActionListener {
 	public void actualizar() {
 		
 		ventanaABMLUsuarios.tabla.setModel(dtosUsuario.getTablaUsuarios());
+		ventanaABMLUsuarios.tabla.getColumnModel().getColumn(3).setPreferredWidth(40);
+		ventanaABMLUsuarios.tabla.getColumnModel().getColumn(3).setMaxWidth(50);
 	}
 	
 	

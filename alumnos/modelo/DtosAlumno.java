@@ -1,6 +1,7 @@
 /*****************************************************************************************************************************************************************/
 //										LISTADO DE MÉTODOS
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+//	public String getNombreProfesor()
 //	public int getAsistencia(String campo, int fila)
 //	public int getCursoSeleccionado()
 //	public boolean getEstado()
@@ -69,7 +70,6 @@ package modelo;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.table.DefaultTableModel;
-
 import controlador.CtrlLogErrores;
 import dao.AlumnosDAO;
 import dao.CursosDAO;
@@ -97,12 +97,18 @@ public class DtosAlumno {
 	private static String cantAlumnos;
 	private static String resultadoExamen;
 	private static String tipoExamen;
-	private static String msg; 
+	private static String msg;
 	private static String [] idCursos;
 	private static String [] nombreCursos;
 	private static String [] idProfesores;
 	private static String [][] horariosCursos;
 	private static Object [][] tablaAsistencia;
+	
+	public String getNombreProfesor() {
+
+		String temp[] = nombreCursos[getCursoSeleccionado()].split(" ");
+		return temp[2] + " " + temp[3];
+	}
 	
 	public int getAsistencia(String campo, int fila) {
 		
@@ -145,7 +151,7 @@ public class DtosAlumno {
 	public DefaultTableModel getTablaAsistencia(int cursoSeleccionado) {
 		
 		alumnosDAO = new AlumnosDAO();
-		String titulo[] = {"Legajo", "Nombre", "Apellido", "Presente", "Tarde"};
+		String titulo[] = {"Leg.", "Nombre", "Apellido", "Presente", "Tarde"};
 		String respuesta[][] = alumnosDAO.getAlumnos("Curso", idCursos[cursoSeleccionado], true, "", "");
 		tablaAsistencia = null;
 		cantAlumnos = "0";
@@ -191,7 +197,7 @@ public class DtosAlumno {
 	public DefaultTableModel getListadoAlumnos(String campo, String valor) {
 		
 		alumnosDAO = new AlumnosDAO();
-		String titulo[] = {"Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Curso", "Sel."};
+		String titulo[] = {"Leg.", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Curso", "Sel."};
 		String respuesta[][] = alumnosDAO.getAlumnos(campo, valor, true, "", "");
 		Object cuerpo[][] = null;
 		cantAlumnos = "0";
@@ -241,7 +247,7 @@ public class DtosAlumno {
 	public DefaultTableModel getTablaAlumnos(String campo, String valor, boolean estado, int pos) {
 		
 		alumnosDAO = new AlumnosDAO();
-		String titulo[] = {"Legajo", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Curso", "Sel."};
+		String titulo[] = {"Leg.", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Curso", "Sel."};
 		String ordenado[] = {"idAlumno", "nombre", "apellido", "dni", "dirección", "alumnos.idCurso"};
 		String respuesta[][] = alumnosDAO.getAlumnos(campo, "", estado, ordenado[pos], valor);
 		Object cuerpo[][] = null;
@@ -336,7 +342,7 @@ public class DtosAlumno {
 		
 		alumnosDAO = new AlumnosDAO();
 		msg = "";
-		String titulo1[] = {"Legajo", "Nombre", "Apellido"};
+		String titulo1[] = {"Leg.", "Nombre", "Apellido"};
 		String cuerpo[][] = null;
 		String respuesta[][] = alumnosDAO.tablaAsistenciasAlumnos(idCursos[cursoSeleccionado], true, mesSeleccionado);
 		String titulo2[] = new String [respuesta.length];
@@ -413,7 +419,7 @@ public class DtosAlumno {
 
 		alumnosDAO = new AlumnosDAO();
 		String cuerpo[][] = null;
-		String titulo[] = {"Legajo", "Nombre", "Apellido", "Resultado"};
+		String titulo[] = {"Leg.", "Nombre", "Apellido", "Resultado"};
 		String respuesta[][] = alumnosDAO.getAlumnos("Curso", idCursos[cursoSeleccionado], true, "", "");
 
 		if(respuesta != null) {
@@ -540,8 +546,9 @@ public class DtosAlumno {
 	}
 	
 	public String getNombreCurso() {
-		
-		return (String)nombreCursos[getCursoSeleccionado()];
+	
+		String temp[] = nombreCursos[getCursoSeleccionado()].split(" ");
+		return temp[0] + " " + temp[1];
 	}
 	
 	public String getIdPersona() {
@@ -799,7 +806,6 @@ public class DtosAlumno {
 				}
 			}
 		}
-		
 		CursosDAO cursosDAO = new CursosDAO();
 		
 		if(cursosDAO.isExamenCargado(idCurso, tipoExamen)) {

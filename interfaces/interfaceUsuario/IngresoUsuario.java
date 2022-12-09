@@ -6,9 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import modelo.DtosConfiguracion;
-
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -24,8 +22,8 @@ public class IngresoUsuario extends JDialog {
 	public JButton btnOk;
 	public JButton btnCancelar;
 	public JLabel txtError;
-	public static JTextField txtUsuario;
-	public static JPasswordField txtPassword;
+	public JTextField txtUsuario;
+	public JPasswordField txtPassword;
 
 	public IngresoUsuario() {
 		

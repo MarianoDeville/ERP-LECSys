@@ -33,6 +33,8 @@ public class CtrlInformeAlumno implements ActionListener {
 		ventanaInforme.txtApellido.setText(dtosAlumno.getApellido());
 		ventanaInforme.txtCurso.setEditable(false);
 		ventanaInforme.txtCurso.setText(dtosAlumno.getNombreCurso());
+		ventanaInforme.txtProfesor.setEditable(false);
+		ventanaInforme.txtProfesor.setText(dtosAlumno.getNombreProfesor());
 		ventanaInforme.txtPresentismo.setEditable(false);
 		ventanaInforme.txtFaltas.setEditable(false);
 		ventanaInforme.txtTotal.setEditable(false);

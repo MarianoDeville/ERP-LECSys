@@ -66,6 +66,10 @@ public class CtrlABMLEmpleados implements ActionListener {
 		ventanaABML.tabla.setModel(dtosABMLEmpleados.getTablaEmpleados((String)ventanaABML.comboBox1.getSelectedItem(), 
 																		ventanaABML.chckbx1.isSelected(), 
 																		ventanaABML.txt1.getText()));
+		ventanaABML.tabla.getColumnModel().getColumn(0).setPreferredWidth(40);
+		ventanaABML.tabla.getColumnModel().getColumn(0).setMaxWidth(50);
+		ventanaABML.tabla.getColumnModel().getColumn(10).setPreferredWidth(40);
+		ventanaABML.tabla.getColumnModel().getColumn(10).setMaxWidth(50);
 	}
 	
 	private void limpiarOtros() {
