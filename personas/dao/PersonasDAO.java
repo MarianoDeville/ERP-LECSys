@@ -119,7 +119,11 @@ public class PersonasDAO extends Conexion {
 			this.conectar();
 			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stm.executeQuery("SELECT nombre, apellido FROM lecsys1.persona "
-										  + "WHERE DAY(fechaNacimiento)=DAY(NOW()) AND MONTH(fechaNacimiento)=MONTH(NOW())");
+										  + "JOIN lecsys1.alumnos ON alumnos.idPersona = persona.idPersona "
+										  + "JOIN lecsys1.empleados ON empleados.idPersona = empleados.idPersona "
+										  + "WHERE (DAY(fechaNacimiento) = DAY(NOW()) AND MONTH(fechaNacimiento) = MONTH(NOW()) "
+										  + "AND alumnos.estado = 1 AND empleados.estado = 1) "
+										  + "GROUP BY persona.idPersona");
 			rs.last();
 			
 			if(rs.getRow() > 0) {

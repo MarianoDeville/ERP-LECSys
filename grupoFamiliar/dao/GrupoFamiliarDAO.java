@@ -9,6 +9,41 @@ import modelo.DtosCobros;
 
 public class GrupoFamiliarDAO extends Conexion {
 
+	public boolean setActualizarDeuda(int idGrupo, int modificarDeuda) {
+		
+		boolean bandera = true;
+		int nuevaDeuda = 0;
+		DtosActividad dtosActividad = new DtosActividad();
+		String where = idGrupo == 0? "WHERE estado = '1'" : "WHERE idGrupoFamiliar = '" + idGrupo + "'";
+		String comandoStatement = "SELECT deuda FROM lecsys1.grupoFamiliar " + where;
+		
+		try {
+			
+			this.conectar();
+			PreparedStatement stm = this.conexion.prepareStatement(comandoStatement);
+			ResultSet rs = stm.executeQuery();
+			
+			if(rs.next()) 
+				nuevaDeuda = rs.getInt(1) + modificarDeuda;
+
+			comandoStatement = "UPDATE lecsys1.grupoFamiliar SET deuda = ? " + where;
+			stm = this.conexion.prepareStatement(comandoStatement);
+			stm.setInt(1, nuevaDeuda);
+			stm.executeUpdate();
+		} catch (Exception e) {
+	
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("GrupoFamiliarDAO, setActualizarDeuda()");
+			CtrlLogErrores.guardarError(comandoStatement);
+			bandera = false;
+		} finally {
+			
+			this.cerrar();
+		}
+		dtosActividad.registrarActividad("Actualización de la deuda del grupo familiar.", "Adminnistración");
+		return bandera;
+	}
+	
 	public boolean setEliminarIntegrante(String idGrupo) {
 		
 		boolean bandera = true;
@@ -145,7 +180,7 @@ public class GrupoFamiliarDAO extends Conexion {
 			armoWhere = "WHERE (grupoFamiliar.estado = " + valor + " AND deuda " + (sinDeuda? "= 0":"> 0") + ") ";
 		} else {
 		
-			armoWhere = "WHERE (grupoFamiliar.estado = 1 AND deuda " + (sinDeuda? "= 0":"> 0") + " AND nombreFamilia LIKE '" + campoBusqueda + "%') ";
+			armoWhere = "WHERE (grupoFamiliar.estado = 1 AND deuda " + (sinDeuda? "= 0":"> 0") + " AND nombreFamilia LIKE '%" + campoBusqueda + "%') ";
 		}
 		
 		String comandoStatement = "SELECT grupoFamiliar.idGrupoFamiliar, nombreFamilia, integrantes, deuda, SUM(precio), descuento , grupoFamiliar.email " +

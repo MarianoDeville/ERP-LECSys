@@ -40,14 +40,14 @@ public class CtrolCobrarInscripcion implements ActionListener {
 		        }
 		      }
 		  });
-		this.ventanaCobrarInscripcion.txtDescuento.addKeyListener(new KeyAdapter() {
+		this.ventanaCobrarInscripcion.txt1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				
 				actualizoSuma();
 			}
 		});
-		this.ventanaCobrarInscripcion.txtDescEfectivo.addKeyListener(new KeyAdapter() {
+		this.ventanaCobrarInscripcion.txt3.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				
@@ -55,7 +55,7 @@ public class CtrolCobrarInscripcion implements ActionListener {
 				actualizoSuma();
 			}
 		});
-		this.ventanaCobrarInscripcion.txtInscripción.addKeyListener(new KeyAdapter() {
+		this.ventanaCobrarInscripcion.txt2.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				
@@ -90,6 +90,10 @@ public class CtrolCobrarInscripcion implements ActionListener {
 		
 		checkInfo = false; 
 		haySeleccion = false;
+		ventanaCobrarInscripcion.lbl1.setText("Porcentage descuento:");
+		ventanaCobrarInscripcion.lbl2.setText("Inscripción:");
+		ventanaCobrarInscripcion.lbl3.setText("Descuento pago efectivo:");
+		ventanaCobrarInscripcion.lbl4.setText("Total a pagar:");
 
 		if(dtosCobros.getEmail().length() > 2) {
 			
@@ -119,8 +123,11 @@ public class CtrolCobrarInscripcion implements ActionListener {
 		
 		if(e.getSource() == ventanaCobrarInscripcion.chckbxTabla2) {
 			
-			if(!ventanaCobrarInscripcion.chckbxTabla2.isSelected())
+			if(!ventanaCobrarInscripcion.chckbxTabla2.isSelected()) {
+				
+				ventanaCobrarInscripcion.txt1.setText(dtosCobros.getDescuentoGrupo() + "");
 				haySeleccion = false;
+			}
 
 			actualizarTabla();
 			actualizarDatos();
@@ -148,25 +155,30 @@ public class CtrolCobrarInscripcion implements ActionListener {
 
 		limpiarOtros();
 		ventanaCobrarInscripcion.txtNombre.setText(dtosCobros.getNombre());
-		ventanaCobrarInscripcion.txtDescuento.setText(dtosCobros.getDescuentoGrupo() + "");
+		
+		if(!haySeleccion) {
+			
+			ventanaCobrarInscripcion.lbl1.setVisible(false);
+			ventanaCobrarInscripcion.txt1.setVisible(false);
+		}
 
 		if(dtosCobros.getCantidadElementosSeleccionados() == 1) {
 			
 			ventanaCobrarInscripcion.txtNombre.setEditable(false);
-			ventanaCobrarInscripcion.lblDescGrupo.setVisible(false);
-			ventanaCobrarInscripcion.txtDescuento.setVisible(false);
+			ventanaCobrarInscripcion.lbl1.setVisible(false);
+			ventanaCobrarInscripcion.txt1.setVisible(false);
 			ventanaCobrarInscripcion.txtEmail.setText(dtosCobros.getEmail());
 		} else {
 
 			ventanaCobrarInscripcion.txtNombre.setEditable(true);
-			ventanaCobrarInscripcion.lblDescGrupo.setVisible(true);
-			ventanaCobrarInscripcion.txtDescuento.setVisible(true);
+			ventanaCobrarInscripcion.lbl1.setVisible(true);
+			ventanaCobrarInscripcion.txt1.setVisible(true);
 		}
 
 		if(ventanaCobrarInscripcion.chckbxTabla2.isSelected()) {
 			
-			ventanaCobrarInscripcion.lblDescGrupo.setVisible(true);
-			ventanaCobrarInscripcion.txtDescuento.setVisible(true);
+			ventanaCobrarInscripcion.lbl1.setVisible(true);
+			ventanaCobrarInscripcion.txt1.setVisible(true);
 		}
 		
 		if(haySeleccion) {
@@ -174,7 +186,7 @@ public class CtrolCobrarInscripcion implements ActionListener {
 			dtosGrupoFamiliar.setElementoSeleccionado(elemento);
 			dtosGrupoFamiliar.setInformacionGrupo();
 			ventanaCobrarInscripcion.txtNombre.setText(dtosGrupoFamiliar.getNombreFamilia());
-			ventanaCobrarInscripcion.txtDescuento.setText(dtosGrupoFamiliar.getDescuento());
+			ventanaCobrarInscripcion.txt1.setText(dtosGrupoFamiliar.getDescuento());
 			ventanaCobrarInscripcion.txtEmail.setText(dtosGrupoFamiliar.getEmail());
 		}
 	}
@@ -184,18 +196,18 @@ public class CtrolCobrarInscripcion implements ActionListener {
 		String mensaje = null;
 		ventanaCobrarInscripcion.lblMsgError.setForeground(Color.RED);
 		ventanaCobrarInscripcion.lblMsgError.setText("");
-		mensaje = dtosCobros.setDescuentoGrupo(ventanaCobrarInscripcion.txtDescuento.getText());
+		mensaje = dtosCobros.setDescuentoGrupo(ventanaCobrarInscripcion.txt1.getText());
 		
 		if(mensaje == null)
-			mensaje = dtosCobros.setDescuentoContado(ventanaCobrarInscripcion.txtDescEfectivo.getText());
+			mensaje = dtosCobros.setDescuentoContado(ventanaCobrarInscripcion.txt3.getText());
 		
 		if(mensaje == null)
-			mensaje = dtosCobros.setInscripcion(ventanaCobrarInscripcion.txtInscripción.getText());
+			mensaje = dtosCobros.setInscripcion(ventanaCobrarInscripcion.txt2.getText());
 		
 		if(checkInfo)
 			ventanaCobrarInscripcion.lblMsgError.setText(mensaje);
 		
-		ventanaCobrarInscripcion.txtTotalPagar.setText(dtosCobros.getMontoTotal() + "");
+		ventanaCobrarInscripcion.txt4.setText(dtosCobros.getCalculoMontoTotal() + "");
 	}
 
 	private void actualizarTabla() {

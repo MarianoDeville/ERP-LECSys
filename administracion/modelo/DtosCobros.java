@@ -1,6 +1,13 @@
 /*****************************************************************************************************************************************************************/
 //										LISTADO DE MÉTODOS
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+//	public int getMontoTotal()
+//	public String getCalculoCobro()
+//	public void setCantidadCuotasSeleccionadas(String cantidad)
+//	public String setRecargoMora(String recargo)
+//	public String [] getListadoConceptos()
+//	public int getIntegrantes()
+//	public TableModel getTablaDeudores(String busqueda, boolean pagoAdelantado)
 //	public void SetIntegrantes(String integrantes)
 //	public boolean guardarCobroGrupoExistente()
 //	public TableModel getTablaAlumnos(boolean reinscripción, boolean todos, String busqueda)
@@ -16,7 +23,7 @@
 //	public String [] getIdElementosSeleccionados()
 //	public int getIdFamilia()
 //	public int getSumaCuotas()
-//	public int getMontoTotal()
+//	public int getCalculoMontoTotal()
 //	public int getDescuentoGrupo()
 //	public int getCantidadElementos()
 //	public int getCantidadElementosSeleccionados()
@@ -33,6 +40,7 @@
 //	public boolean guardarCobroGrupo()
 //	public boolean isReinscripcion()
 //	public String validarInformación()
+//	public void setElementoSeleccionado(int elemento)
 /*****************************************************************************************************************************************************************/
 package modelo;
 
@@ -46,7 +54,6 @@ import dao.GrupoFamiliarDAO;
 
 public class DtosCobros {
 	
-	private String tablaRespuesta[][];
 	private static String matrizSelec[][] = null;
 	private static String email;
 	private static String nombre;
@@ -60,10 +67,178 @@ public class DtosCobros {
 	private static int descuentoContado;
 	private static int montoTotal;
 	private static int sumaCuotas;
-	private static int inscripcion;
-	private static int nroCobro;
+	private static int cantidadCuotas;
 	private static int integrantes;
+	private String tablaRespuesta[][];
+	private int recargoMora;
+	private int inscripcion;
+	private int nroCobro;
+	private int elementoSeleccionado;
+	private int cantidadCuotasSeleccionadas = 1;
+	
+	public int getMontoTotal() {
+		
+		return montoTotal;
+	}
+	
+	public boolean guardarCobroCuota() {
 
+		GrupoFamiliarDAO grupoFamiliarDAO = new GrupoFamiliarDAO();
+
+		if(!grupoFamiliarDAO.setActualizarDeuda(idFamilia, -cantidadCuotasSeleccionadas))
+			return false;
+		
+		AdministracionDAO administracionDAO = new AdministracionDAO();
+		
+		if(!administracionDAO.setCobro())
+			return false;
+		
+		nroCobro = administracionDAO.getUltimoRegistro();
+		return true;
+	}
+	
+	public String getCalculoCobro(String concepto) {
+		
+		int descuentoDeGrupo = 0;
+		montoTotal = sumaCuotas * cantidadCuotasSeleccionadas;
+		descripcion = "Cuota correspondiente a " + concepto + ": " + montoTotal;
+		descuentoDeGrupo = montoTotal * descuentoGrupo / 100;
+		montoTotal -= descuentoDeGrupo; 
+		
+		if(descuentoGrupo > 0)
+			descripcion += ", descuento grupo familiar: " + descuentoDeGrupo;
+
+		if(recargoMora > 0)
+			descripcion += ", recargo por pago fuera de término: " + recargoMora;		
+		
+		if(descuentoContado > 0)
+			descripcion += ", descuento pago contado: " + descuentoContado;
+
+		montoTotal -= descuentoContado + recargoMora;
+		descripcion += ", suma total: " + montoTotal;
+		return montoTotal + "";
+	}
+	
+	public void setCantidadCuotasSeleccionadas(int cantidad) {
+		
+		cantidadCuotasSeleccionadas = cantidad;
+	}
+
+	public String setRecargoMora(String recargo) {
+		
+		String mensaje = null;
+		
+		try {
+			
+			if(recargo.length() > 0)
+				recargoMora = Integer.parseInt(recargo);
+		} catch (Exception e) {
+			
+			mensaje = "El valor debe ser numérico.";
+		}
+		return mensaje;
+	}
+	
+	public String [] getListadoConceptos() {
+	
+		Calendar fechaSistema = new GregorianCalendar();
+		int mesActual = fechaSistema.get(Calendar.MONTH);
+		String meses[] = new String[] {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+		String listaCuotasDeuda[] = new String[cantidadCuotas == 0? 2 : cantidadCuotas + 1];
+		listaCuotasDeuda[0] = "Seleccione uno";
+
+		if(cantidadCuotas > 0) {
+
+			if(mesActual + 1 >= cantidadCuotas) {
+
+				listaCuotasDeuda[1] = meses[mesActual-cantidadCuotas+1];
+				
+				for(int aux = 2; aux < listaCuotasDeuda.length; aux++) {
+					
+					for(int i = 0; i < aux; i++) {
+					
+						if(i == 0)
+							listaCuotasDeuda[aux] = meses[mesActual - cantidadCuotas+1];
+						else
+							listaCuotasDeuda[aux] += ", " + meses[mesActual + 1 + i - cantidadCuotas];
+					}
+				}
+			} else {
+			
+				for(int aux = 1; aux < listaCuotasDeuda.length; aux++) {
+					
+					String temp = (aux == 1)? " mes.":" meses."; 	
+					listaCuotasDeuda[aux] =aux + temp;
+				}
+			}
+		} else {
+			
+			listaCuotasDeuda[1] = meses[mesActual == 11? 0 : mesActual + 1];	
+		}
+		return listaCuotasDeuda;
+	}
+
+	public int getIntegrantes() {
+		
+		return integrantes;
+	}
+	
+	public void setInfoCobro() {
+
+		idFamilia = Integer.parseInt(tablaRespuesta[elementoSeleccionado][0]);
+		nombre = tablaRespuesta[elementoSeleccionado][1];
+		cantidadCuotas = Integer.parseInt(tablaRespuesta[elementoSeleccionado][3]);
+		sumaCuotas = Integer.parseInt(tablaRespuesta[elementoSeleccionado][4]);
+		descuentoGrupo = Integer.parseInt(tablaRespuesta[elementoSeleccionado][5]);		
+		GrupoFamiliarDAO grupoFamiliarDAO = new GrupoFamiliarDAO();
+		matrizSelec = grupoFamiliarDAO.getIntegrantes(idFamilia + "");	
+		integrantes = matrizSelec.length;
+		email = matrizSelec[0][7];
+	}
+
+	public TableModel getTablaDeudores(String busqueda, boolean pagoAdelantado) {
+		
+		GrupoFamiliarDAO grupoFamiliarDAO = new GrupoFamiliarDAO();
+		String titulo[] = new String[] {"Nombre", "Integrantes",  "Cuotas" ,"Valor cuota", "Desc.", "Total" , "Sel"};
+		tablaRespuesta = grupoFamiliarDAO.getGruposFamilias("", "", pagoAdelantado, busqueda);
+		Object cuerpo[][] = new Object[tablaRespuesta.length][8];
+		
+		for(int i = 0; i < cuerpo.length; i ++) {
+			
+			int calculo = Integer.parseInt(tablaRespuesta[i][3]) * Integer.parseInt(tablaRespuesta[i][4]);
+			calculo -= calculo * Integer.parseInt(tablaRespuesta[i][5]) /100;			
+			cuerpo[i][0] = tablaRespuesta[i][1];
+			cuerpo[i][1] = tablaRespuesta[i][2];
+			cuerpo[i][2] = tablaRespuesta[i][3];
+			cuerpo[i][3] = tablaRespuesta[i][4];
+			cuerpo[i][4] = tablaRespuesta[i][5];
+			cuerpo[i][5] = calculo;			
+			cuerpo[i][6] = false;
+		}
+		DefaultTableModel tablaModelo;
+		tablaModelo = new DefaultTableModel(cuerpo, titulo){
+
+			private static final long serialVersionUID = 1L;
+			
+			boolean[] columnEditables = new boolean[] {
+				false, false, false,false, false, false, true
+			};
+			
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+			
+			public Class<?> getColumnClass(int column) {
+				
+		        if(column == 6)
+		        	return Boolean.class;
+		        else
+		        	return String.class;
+		    }
+		};
+		return tablaModelo;
+	}
+	
 	public void SetIntegrantes(String integrantes) {
 		
 		DtosCobros.integrantes = Integer.parseInt(integrantes);
@@ -108,7 +283,7 @@ public class DtosCobros {
 			tablaRespuesta = grupoFamiliarDAO.getGruposFamilias("ESTADO", "0", true, busqueda);
 		} else {
 		
-			titulo = new String[] {"Legajo","Apellido","Nombre", "Dirección", "Sel"};
+			titulo = new String[] {"Leg.","Apellido","Nombre", "Dirección", "Sel"};
 			AlumnosDAO alumnosDAO = new AlumnosDAO();
 			tablaRespuesta = alumnosDAO.getAlumnos("GF", "", false, "apellido", busqueda);
 		}
@@ -149,7 +324,7 @@ public class DtosCobros {
 	
 	public TableModel getTablaSeleccionados() {
 		
-		String titulo[] = {"Legajo", "Apellido", "Nombre", "Drirección", "Curso", "Valor cuota"};
+		String titulo[] = {"Leg.", "Apellido", "Nombre", "Drirección", "Curso", "Valor cuota"};
 		DefaultTableModel tabla = new DefaultTableModel(matrizSelec,titulo);
 		return tabla;
 	}
@@ -238,18 +413,20 @@ public class DtosCobros {
 		return sumaCuotas;
 	}
 	
-	public int getMontoTotal() {
+	public int getCalculoMontoTotal() {
 
+		int descuentoDeGrupo = 0;
 		descripcion = "Inscripción: " + inscripcion + ", primer cuota: " + sumaCuotas;
 		
 		if(descuentoContado > 0)
 			descripcion += ", descuento pago contado: " + descuentoContado;
 		
 		montoTotal = sumaCuotas + inscripcion;
-		montoTotal -= montoTotal * descuentoGrupo /100; 
+		descuentoDeGrupo = montoTotal * descuentoGrupo / 100;
+		montoTotal -= descuentoDeGrupo; 
 		
 		if(descuentoGrupo > 0)
-			descripcion += ", descuento grupo familiar: " + (montoTotal * descuentoGrupo /100);
+			descripcion += ", descuento grupo familiar: " + descuentoDeGrupo;
 		
 		montoTotal -= descuentoContado;
 		return montoTotal;
@@ -496,5 +673,10 @@ public class DtosCobros {
 			return "La inscripción debe tener un valor.";
 		
 		return "";
+	}
+
+	public void setElementoSeleccionado(int elemento) {
+		
+		elementoSeleccionado = elemento;
 	}
 }

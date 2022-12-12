@@ -8,6 +8,7 @@ import javax.swing.SpringLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 
 public class Cobro extends VentanaModelo {
 
@@ -18,20 +19,24 @@ public class Cobro extends VentanaModelo {
 	public JTable tabla1;
 	public JTable tabla2;
 	public JLabel lblNombre;
-	public JLabel lblDescGrupo;
-	public JLabel lblInscripción;
-	public JLabel lblDescEfectivo;
-	public JLabel lblTotalPagar;
+	public JLabel lbl1;
+	public JLabel lbl2;
+	public JLabel lbl3;
+	public JLabel lbl4;
+	public JLabel lbl5;
+	public JLabel lblComboBox;
 	public JLabel lblEmail;
 	public JLabel lblFactura;
 	public JLabel lblMsgError;
 	public JCheckBox chckbxEnviarEmail;
 	public JCheckBox chckbxTabla2;
+	public JComboBox<String> comboBox;
 	public JTextField txtNombre;
-	public JTextField txtDescuento;
-	public JTextField txtInscripción;
-	public JTextField txtDescEfectivo;
-	public JTextField txtTotalPagar;
+	public JTextField txt1;
+	public JTextField txt2;
+	public JTextField txt3;
+	public JTextField txt4;
+	public JTextField txt5;
 	public JTextField txtFactura;
 	public JTextField txtEmail;
 	public JTextField txtTabla2;
@@ -67,55 +72,68 @@ public class Cobro extends VentanaModelo {
 		panel.add(txtNombre);
 		txtNombre.setColumns(20);
 		
-		lblDescGrupo = new JLabel("Porcentage de descunto:");
-		contenedor.putConstraint(SpringLayout.NORTH, lblDescGrupo, 20, SpringLayout.SOUTH, lblNombre);
-		contenedor.putConstraint(SpringLayout.WEST, lblDescGrupo, 0, SpringLayout.WEST, lblNombre);
-		lblDescGrupo.setVisible(false);
-		panel.add(lblDescGrupo);
+		lbl1 = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lbl1, 20, SpringLayout.SOUTH, lblNombre);
+		contenedor.putConstraint(SpringLayout.WEST, lbl1, 0, SpringLayout.WEST, lblNombre);
+		lbl1.setVisible(false);
+		panel.add(lbl1);
 		
-		txtDescuento = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txtDescuento, 0, SpringLayout.NORTH, lblDescGrupo);
-		contenedor.putConstraint(SpringLayout.WEST, txtDescuento, 0, SpringLayout.WEST, txtNombre);
-		txtDescuento.setVisible(false);
-		panel.add(txtDescuento);
-		txtDescuento.setColumns(3);
+		txt1 = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txt1, 0, SpringLayout.NORTH, lbl1);
+		contenedor.putConstraint(SpringLayout.WEST, txt1, 0, SpringLayout.WEST, txtNombre);
+		txt1.setVisible(false);
+		panel.add(txt1);
+		txt1.setColumns(3);
 		
-		lblInscripción = new JLabel("Inscripción:");
-		contenedor.putConstraint(SpringLayout.NORTH, lblInscripción, 20, SpringLayout.SOUTH, lblDescGrupo);
-		contenedor.putConstraint(SpringLayout.WEST, lblInscripción, 0, SpringLayout.WEST, lblNombre);
-		panel.add(lblInscripción);
+		lbl2 = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lbl2, 20, SpringLayout.SOUTH, lbl1);
+		contenedor.putConstraint(SpringLayout.WEST, lbl2, 0, SpringLayout.WEST, lblNombre);
+		panel.add(lbl2);
 		
-		txtInscripción = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txtInscripción, 0, SpringLayout.NORTH, lblInscripción);
-		contenedor.putConstraint(SpringLayout.WEST, txtInscripción, 0, SpringLayout.WEST, txtNombre);
-		panel.add(txtInscripción);
-		txtInscripción.setColumns(7);
+		txt2 = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txt2, 0, SpringLayout.NORTH, lbl2);
+		contenedor.putConstraint(SpringLayout.WEST, txt2, 0, SpringLayout.WEST, txtNombre);
+		panel.add(txt2);
+		txt2.setColumns(7);
 		
-		lblDescEfectivo = new JLabel("Decuento pago efectivo:");
-		contenedor.putConstraint(SpringLayout.NORTH, lblDescEfectivo, 20, SpringLayout.SOUTH, lblInscripción);
-		contenedor.putConstraint(SpringLayout.WEST, lblDescEfectivo, 0, SpringLayout.WEST, lblInscripción);
-		panel.add(lblDescEfectivo);
+		lbl3 = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lbl3, 20, SpringLayout.SOUTH, lbl2);
+		contenedor.putConstraint(SpringLayout.WEST, lbl3, 0, SpringLayout.WEST, lbl2);
+		panel.add(lbl3);
 		
-		txtDescEfectivo = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txtDescEfectivo, 0, SpringLayout.NORTH, lblDescEfectivo);
-		contenedor.putConstraint(SpringLayout.WEST, txtDescEfectivo, 0, SpringLayout.WEST, txtNombre);
-		panel.add(txtDescEfectivo);
-		txtDescEfectivo.setColumns(7);
+		txt3 = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txt3, 0, SpringLayout.NORTH, lbl3);
+		contenedor.putConstraint(SpringLayout.WEST, txt3, 0, SpringLayout.WEST, txtNombre);
+		panel.add(txt3);
+		txt3.setColumns(7);
 		
-		lblTotalPagar = new JLabel("Total a pagar:");
-		contenedor.putConstraint(SpringLayout.NORTH, lblTotalPagar, 20, SpringLayout.SOUTH, lblDescEfectivo);
-		contenedor.putConstraint(SpringLayout.WEST, lblTotalPagar, 0, SpringLayout.WEST, lblDescEfectivo);
-		panel.add(lblTotalPagar);
+		lbl4 = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lbl4, 20, SpringLayout.SOUTH, lbl3);
+		contenedor.putConstraint(SpringLayout.WEST, lbl4, 0, SpringLayout.WEST, lbl3);
+		panel.add(lbl4);
 		
-		txtTotalPagar = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txtTotalPagar, 0, SpringLayout.NORTH, lblTotalPagar);
-		contenedor.putConstraint(SpringLayout.WEST, txtTotalPagar, 0, SpringLayout.WEST, txtNombre);
-		txtTotalPagar.setEditable(false);
-		panel.add(txtTotalPagar);
-		txtTotalPagar.setColumns(10);
+		txt4 = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txt4, 0, SpringLayout.NORTH, lbl4);
+		contenedor.putConstraint(SpringLayout.WEST, txt4, 0, SpringLayout.WEST, txtNombre);
+		txt4.setEditable(false);
+		panel.add(txt4);
+		txt4.setColumns(10);
+
+		lbl5 = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lbl5, 20, SpringLayout.SOUTH, lbl4);
+		contenedor.putConstraint(SpringLayout.WEST, lbl5, 0, SpringLayout.WEST, lbl4);
+		lbl5.setVisible(false);
+		panel.add(lbl5);
+		
+		txt5 = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txt5, 0, SpringLayout.NORTH, lbl5);
+		contenedor.putConstraint(SpringLayout.WEST, txt5, 0, SpringLayout.WEST, txtNombre);
+		txt5.setVisible(false);
+		panel.add(txt5);
+		txt5.setColumns(10);
 		
 		lblFactura = new JLabel("Factura nro.:");
-		contenedor.putConstraint(SpringLayout.NORTH, lblFactura, 20, SpringLayout.SOUTH, lblTotalPagar);
+		contenedor.putConstraint(SpringLayout.NORTH, lblFactura, 20, SpringLayout.SOUTH, lbl5);
 		contenedor.putConstraint(SpringLayout.WEST, lblFactura, 0, SpringLayout.WEST, lblNombre);
 		panel.add(lblFactura);
 		
@@ -146,7 +164,19 @@ public class Cobro extends VentanaModelo {
 		chckbxTabla2 = new JCheckBox("Agragar a grupo");
 		contenedor.putConstraint(SpringLayout.NORTH, chckbxTabla2, 20, SpringLayout.SOUTH, scrollTabla1);
 		contenedor.putConstraint(SpringLayout.WEST, chckbxTabla2, 15, SpringLayout.EAST, txtNombre);
-		panel.add(chckbxTabla2);	
+		panel.add(chckbxTabla2);
+		
+		lblComboBox = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblComboBox, 20, SpringLayout.SOUTH, scrollTabla1);
+		contenedor.putConstraint(SpringLayout.WEST, lblComboBox, 15, SpringLayout.EAST, txtNombre);
+		lblComboBox.setVisible(false);
+		panel.add(lblComboBox);
+		
+		comboBox = new JComboBox<>();
+		contenedor.putConstraint(SpringLayout.NORTH, comboBox, -2, SpringLayout.NORTH, lblComboBox);
+		contenedor.putConstraint(SpringLayout.WEST, comboBox, 5, SpringLayout.EAST, lblComboBox);
+		comboBox.setVisible(false);
+		panel.add(comboBox);
 		
 		txtTabla2 = new JTextField();
 		contenedor.putConstraint(SpringLayout.NORTH, txtTabla2, 15, SpringLayout.SOUTH, chckbxTabla2);

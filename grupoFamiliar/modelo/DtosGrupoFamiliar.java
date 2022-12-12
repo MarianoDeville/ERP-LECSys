@@ -6,12 +6,12 @@ import dao.GrupoFamiliarDAO;
 
 public class DtosGrupoFamiliar {
 
-	private String listaIntegrantes[][];
-	private String listaAlumnos[][];
-	private String eliminarElementos[];
-	private String agregarElementos[][];
-	private String listaElementosAgregar[];
-	private String listaAcciones[];
+	private static String listaIntegrantes[][];
+	private static String listaAlumnos[][];
+	private static String eliminarElementos[];
+	private static String agregarElementos[][];
+	private static String listaElementosAgregar[];
+	private static String listaAcciones[];
 	private static String nombreFamilia;
 	private static String idGrupoFamiliar;
 	private static String integrantes;

@@ -85,11 +85,17 @@ public class CtrolCobrarHabilitar implements ActionListener {
 			
 			if(e.getSource() == cobrarInscripción.btnVolver) {
 				
+				ventanaCobrarHabilitar.txt2.setText("");
+				ventanaCobrarHabilitar.chckbx1.setSelected(false);
+				ventanaCobrarHabilitar.chckbx2.setSelected(false);
 				actualizar();
 			}
 			
 			if(e.getSource() == cobrarInscripción.btnCobrar) {
 				
+				ventanaCobrarHabilitar.txt2.setText("");
+				ventanaCobrarHabilitar.chckbx1.setSelected(false);
+				ventanaCobrarHabilitar.chckbx2.setSelected(false);
 				actualizar();
 			}
 		}
@@ -126,5 +132,9 @@ public class CtrolCobrarHabilitar implements ActionListener {
 		ventanaCobrarHabilitar.tabla.setModel(dtosCobros.getTablaAlumnos(ventanaCobrarHabilitar.chckbx1.isSelected(), 
 																		 ventanaCobrarHabilitar.chckbx2.isSelected(), 
 																		 ventanaCobrarHabilitar.txt2.getText()));
+		ventanaCobrarHabilitar.tabla.getColumnModel().getColumn(0).setPreferredWidth(45);
+		ventanaCobrarHabilitar.tabla.getColumnModel().getColumn(0).setMaxWidth(55);	
+		ventanaCobrarHabilitar.tabla.getColumnModel().getColumn(4).setPreferredWidth(45);
+		ventanaCobrarHabilitar.tabla.getColumnModel().getColumn(4).setMaxWidth(55);	
 	}
 }

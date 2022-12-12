@@ -46,7 +46,9 @@ public class CtrlCobros implements ActionListener {
 
 		if(e.getSource() == ventanaCobros.btn1A) {
 			
-			
+			Listado ventanaCobrarCuota = new Listado("Cobro de cuota");
+			CtrolCobrarCuota ctrlCobrarCuota = new CtrolCobrarCuota(ventanaCobrarCuota);
+			ctrlCobrarCuota.iniciar();
 		}
 		
 		if(e.getSource() == ventanaCobros.btn1B) {
