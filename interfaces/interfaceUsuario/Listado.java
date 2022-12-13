@@ -18,9 +18,11 @@ public class Listado extends VentanaModelo {
 	public JLabel lblComboBox1;
 	public JLabel lblComboBox2;
 	public JLabel lblTxt1;
-	public JLabel lblTxt1Izq;
+	public JLabel lblTxt2;
+	public JLabel lblTxt1Der;
 	public JTextField txt1;
 	public JTextField txt2;
+	public JTextField txt3;
 	public JTable tabla;
 	public JCheckBox chckbx1;
 	public JCheckBox chckbx2;
@@ -48,7 +50,6 @@ public class Listado extends VentanaModelo {
 		comboBox1 = new JComboBox<String>();
 		contenedor.putConstraint(SpringLayout.NORTH, comboBox1, -2, SpringLayout.NORTH, lblComboBox1);
 		contenedor.putConstraint(SpringLayout.WEST, comboBox1, 5, SpringLayout.EAST, lblComboBox1);
-		contenedor.putConstraint(SpringLayout.EAST, comboBox1, 150, SpringLayout.WEST, comboBox1);
 		comboBox1.setVisible(false);
 		listado.add(comboBox1);
 		
@@ -61,7 +62,6 @@ public class Listado extends VentanaModelo {
 		comboBox2 = new JComboBox<String>();
 		contenedor.putConstraint(SpringLayout.NORTH, comboBox2, -2, SpringLayout.NORTH, lblComboBox2);
 		contenedor.putConstraint(SpringLayout.WEST, comboBox2, 5, SpringLayout.EAST, lblComboBox2);
-		contenedor.putConstraint(SpringLayout.EAST, comboBox2, 150, SpringLayout.WEST, comboBox2);
 		comboBox2.setVisible(false);
 		listado.add(comboBox2);
 		
@@ -74,16 +74,30 @@ public class Listado extends VentanaModelo {
 		txt1 = new JTextField();
 		contenedor.putConstraint(SpringLayout.NORTH, txt1, 15, SpringLayout.NORTH, listado);
 		contenedor.putConstraint(SpringLayout.WEST, txt1, 5, SpringLayout.EAST, lblTxt1);
-		contenedor.putConstraint(SpringLayout.EAST, txt1, 80, SpringLayout.WEST, txt1);
+		txt1.setColumns(10);
 		txt1.setEditable(false);
 		txt1.setVisible(false);
 		listado.add(txt1);
 		
-		lblTxt1Izq = new JLabel();
-		contenedor.putConstraint(SpringLayout.NORTH, lblTxt1Izq, 17, SpringLayout.NORTH, listado);
-		contenedor.putConstraint(SpringLayout.WEST, lblTxt1Izq, 5, SpringLayout.EAST, txt1);
-		lblTxt1Izq.setVisible(false);
-		listado.add(lblTxt1Izq);
+		lblTxt1Der = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblTxt1Der, 17, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, lblTxt1Der, 5, SpringLayout.EAST, txt1);
+		lblTxt1Der.setVisible(false);
+		listado.add(lblTxt1Der);
+		
+		lblTxt2 = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblTxt2, 17, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, lblTxt2, 25, SpringLayout.EAST, lblTxt1Der);
+		lblTxt2.setVisible(false);
+		listado.add(lblTxt2);
+		
+		txt2 = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txt2, 15, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, txt2, 5, SpringLayout.EAST, lblTxt2);
+		txt2.setColumns(10);
+		txt2.setEditable(false);
+		txt2.setVisible(false);
+		listado.add(txt2);
 		
 		scrollTabla = new JScrollPane();
 		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla, 50, SpringLayout.NORTH, listado);
@@ -123,13 +137,13 @@ public class Listado extends VentanaModelo {
 		chckbx2.setVisible(false);
 		listado.add(chckbx2);
 
-		txt2 = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txt2, 25, SpringLayout.SOUTH, chckbx2);
-		contenedor.putConstraint(SpringLayout.EAST, txt2, 0, SpringLayout.EAST, chckbx2);
-		contenedor.putConstraint(SpringLayout.WEST, txt2, -90, SpringLayout.EAST, txt2);
-		txt2.setEditable(false);
-		txt2.setVisible(false);
-		listado.add(txt2);
+		txt3 = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txt3, 25, SpringLayout.SOUTH, chckbx2);
+		contenedor.putConstraint(SpringLayout.EAST, txt3, 0, SpringLayout.EAST, chckbx2);
+		contenedor.putConstraint(SpringLayout.WEST, txt3, -90, SpringLayout.EAST, txt3);
+		txt3.setEditable(false);
+		txt3.setVisible(false);
+		listado.add(txt3);
 		
 		btnVolver = new JButton("Volver");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -20, SpringLayout.SOUTH, listado);

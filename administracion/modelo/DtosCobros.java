@@ -1,6 +1,11 @@
 /*****************************************************************************************************************************************************************/
 //										LISTADO DE MÉTODOS
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+//	public boolean setActualizarFacturas(String listaFacturas[])
+// 	public int getMesActual()
+//	public String [] getMeses()
+//	public String [] getAños()
+//	public TableModel getTablaCobros()
 //	public int getMontoTotal()
 //	public String getCalculoCobro()
 //	public void setCantidadCuotasSeleccionadas(String cantidad)
@@ -48,6 +53,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import controlador.CtrlLogErrores;
 import dao.AdministracionDAO;
 import dao.AlumnosDAO;
 import dao.GrupoFamiliarDAO;
@@ -75,6 +81,94 @@ public class DtosCobros {
 	private int nroCobro;
 	private int elementoSeleccionado;
 	private int cantidadCuotasSeleccionadas = 1;
+	private Calendar fechaSistema;
+	
+	public boolean setActualizarFacturas(String listaFacturas[]) {
+		
+		int e = 0;
+		AdministracionDAO administracionDAO = new AdministracionDAO();
+		
+		for(int i = 0; i < listaFacturas.length; i++) {
+			
+			if(!listaFacturas[i].equals(tablaRespuesta[i][5]))
+				e++;
+		}
+		matrizSelec = new String[e][2];
+		e = 0;
+		
+		for(int i = 0; i < tablaRespuesta.length; i++) {
+			
+			if(!listaFacturas[i].equals(tablaRespuesta[i][5])) {
+				
+				matrizSelec[e][0] = tablaRespuesta[i][6];
+				matrizSelec[e][1] = listaFacturas[i];
+				e++;
+			}
+		}
+		return administracionDAO.setActualizarFacturas(matrizSelec);
+	}
+	
+	public int getMesActual() {
+		
+		fechaSistema = new GregorianCalendar();
+		return fechaSistema.get(Calendar.MONTH) + 1;
+	}
+	
+	public String [] getMeses() {
+		
+		return new String[] {"- - - - -", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+							 "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+	}
+	
+	public String [] getAños() {
+		
+		fechaSistema = new GregorianCalendar();
+		String respuesta[] = new String[5];
+		
+		for(int i = 4 ; i >= 0 ; i--) {
+			
+			respuesta[i] = fechaSistema.get(Calendar.YEAR) - i +""; 
+		}
+		return respuesta;
+	}
+	
+	public TableModel getTablaCobros(int mes, Object año) {
+		
+		String titulo[] = new String[] {"Nombre", "Concepto", "Fecha", "Hora", "Monto", "Factura"};
+		AdministracionDAO administracionDAO = new AdministracionDAO();
+		int temp = 0;
+		montoTotal = 0;
+		
+		try {
+			
+			temp = Integer.parseInt((String)año);
+		} catch (Exception e) {
+			CtrlLogErrores.guardarError("Error al convertir 'Object' año a 'int' en la clase: DtosCobros método: getTablaCobros()");
+		}
+		tablaRespuesta = administracionDAO.getTablaCobros(temp, mes);
+		
+		if(tablaRespuesta != null) {
+			
+			cantElementosSel = tablaRespuesta.length;
+			
+			for(int i = 0; i < tablaRespuesta.length; i++) {
+				montoTotal += Integer.parseInt(tablaRespuesta[i][4]);
+			}
+		}
+		DefaultTableModel tablaModelo = new DefaultTableModel(tablaRespuesta, titulo){
+
+			private static final long serialVersionUID = 1L;
+			
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, true
+			};
+			
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		};
+		return tablaModelo;
+	}
 	
 	public int getMontoTotal() {
 		
@@ -141,7 +235,7 @@ public class DtosCobros {
 	
 	public String [] getListadoConceptos() {
 	
-		Calendar fechaSistema = new GregorianCalendar();
+		fechaSistema = new GregorianCalendar();
 		int mesActual = fechaSistema.get(Calendar.MONTH);
 		String meses[] = new String[] {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
 		String listaCuotasDeuda[] = new String[cantidadCuotas == 0? 2 : cantidadCuotas + 1];
@@ -215,8 +309,7 @@ public class DtosCobros {
 			cuerpo[i][5] = calculo;			
 			cuerpo[i][6] = false;
 		}
-		DefaultTableModel tablaModelo;
-		tablaModelo = new DefaultTableModel(cuerpo, titulo){
+		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo){
 
 			private static final long serialVersionUID = 1L;
 			
@@ -298,8 +391,7 @@ public class DtosCobros {
 			cuerpo[i][4] = todos;
 
 		}
-		DefaultTableModel tablaModelo;
-		tablaModelo = new DefaultTableModel(cuerpo, titulo){
+		DefaultTableModel tablaModelo = new DefaultTableModel(cuerpo, titulo){
 
 			private static final long serialVersionUID = 1L;
 			
@@ -346,7 +438,7 @@ public class DtosCobros {
 	
 	public String getHoraActual() {
 		
-		Calendar fechaSistema = new GregorianCalendar();
+		fechaSistema = new GregorianCalendar();
 	    String hora = (fechaSistema.get(Calendar.AM_PM)==0? fechaSistema.get(Calendar.HOUR):fechaSistema.get(Calendar.HOUR)+12) + ":" 
 					+ (fechaSistema.get(Calendar.MINUTE)<10? "0" + fechaSistema.get(Calendar.MINUTE):fechaSistema.get(Calendar.MINUTE)) + ":" 
 					+ (fechaSistema.get(Calendar.SECOND)<10? "0" + fechaSistema.get(Calendar.SECOND):fechaSistema.get(Calendar.SECOND));		
@@ -376,7 +468,7 @@ public class DtosCobros {
 	
 	public String getFechaActual(String formato) {
 		
-		Calendar fechaSistema = new GregorianCalendar();
+		fechaSistema = new GregorianCalendar();
 		String fecha = null;
 		if(formato.equals("A")) {
 		

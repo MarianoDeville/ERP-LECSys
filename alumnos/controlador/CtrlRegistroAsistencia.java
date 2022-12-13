@@ -25,8 +25,12 @@ public class CtrlRegistroAsistencia implements ActionListener {
 	
 	public void iniciar() {
 		
+		ventanaRegistroAsistencia.lblComboBox1.setVisible(true);
+		ventanaRegistroAsistencia.lblComboBox1.setText("Curso:");
 		ventanaRegistroAsistencia.comboBox1.setVisible(true);
 		ventanaRegistroAsistencia.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosAlumno.getListaCursos()));
+		ventanaRegistroAsistencia.lblComboBox2.setVisible(true);
+		ventanaRegistroAsistencia.lblComboBox2.setText("Mes:");
 		ventanaRegistroAsistencia.comboBox2.setVisible(true);
 		ventanaRegistroAsistencia.comboBox2.setModel(new DefaultComboBoxModel<String>(dtosAlumno.getListaMeses()));
 		ventanaRegistroAsistencia.setVisible(true);

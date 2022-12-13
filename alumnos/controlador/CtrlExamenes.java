@@ -40,8 +40,8 @@ public class CtrlExamenes implements ActionListener {
 		ventanaExamenes.lblTxt1.setText("Fecha");
 		ventanaExamenes.txt1.setVisible(true);
 		ventanaExamenes.txt1.setEditable(true);
-		ventanaExamenes.lblTxt1Izq.setVisible(true);
-		ventanaExamenes.lblTxt1Izq.setText("DD-MM-AAAA");
+		ventanaExamenes.lblTxt1Der.setVisible(true);
+		ventanaExamenes.lblTxt1Der.setText("DD-MM-AAAA");
 		actualizar();
 		ventanaExamenes.setVisible(true);
 	}

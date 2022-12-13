@@ -24,7 +24,7 @@ public class CtrolCobrarHabilitar implements ActionListener {
 		this.dtosCobros = new DtosCobros();
 		this.ventanaCobrarHabilitar.chckbx1.addActionListener(this);
 		this.ventanaCobrarHabilitar.chckbx2.addActionListener(this);
-		this.ventanaCobrarHabilitar.txt2.addKeyListener(new KeyAdapter() {
+		this.ventanaCobrarHabilitar.txt3.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				
@@ -48,9 +48,9 @@ public class CtrolCobrarHabilitar implements ActionListener {
 		ventanaCobrarHabilitar.chckbx2.setEnabled(true);
 		ventanaCobrarHabilitar.chckbx2.setSelected(false);
 		ventanaCobrarHabilitar.chckbx2.setText("Todos");		
-		ventanaCobrarHabilitar.txt2.setVisible(true);
-		ventanaCobrarHabilitar.txt2.setEnabled(true);
-		ventanaCobrarHabilitar.txt2.setEditable(true);
+		ventanaCobrarHabilitar.txt3.setVisible(true);
+		ventanaCobrarHabilitar.txt3.setEnabled(true);
+		ventanaCobrarHabilitar.txt3.setEditable(true);
 		actualizar();
 		ventanaCobrarHabilitar.setVisible(true);
 	}
@@ -85,7 +85,7 @@ public class CtrolCobrarHabilitar implements ActionListener {
 			
 			if(e.getSource() == cobrarInscripción.btnVolver) {
 				
-				ventanaCobrarHabilitar.txt2.setText("");
+				ventanaCobrarHabilitar.txt3.setText("");
 				ventanaCobrarHabilitar.chckbx1.setSelected(false);
 				ventanaCobrarHabilitar.chckbx2.setSelected(false);
 				actualizar();
@@ -93,7 +93,7 @@ public class CtrolCobrarHabilitar implements ActionListener {
 			
 			if(e.getSource() == cobrarInscripción.btnCobrar) {
 				
-				ventanaCobrarHabilitar.txt2.setText("");
+				ventanaCobrarHabilitar.txt3.setText("");
 				ventanaCobrarHabilitar.chckbx1.setSelected(false);
 				ventanaCobrarHabilitar.chckbx2.setSelected(false);
 				actualizar();
@@ -131,7 +131,7 @@ public class CtrolCobrarHabilitar implements ActionListener {
 		
 		ventanaCobrarHabilitar.tabla.setModel(dtosCobros.getTablaAlumnos(ventanaCobrarHabilitar.chckbx1.isSelected(), 
 																		 ventanaCobrarHabilitar.chckbx2.isSelected(), 
-																		 ventanaCobrarHabilitar.txt2.getText()));
+																		 ventanaCobrarHabilitar.txt3.getText()));
 		ventanaCobrarHabilitar.tabla.getColumnModel().getColumn(0).setPreferredWidth(45);
 		ventanaCobrarHabilitar.tabla.getColumnModel().getColumn(0).setMaxWidth(55);	
 		ventanaCobrarHabilitar.tabla.getColumnModel().getColumn(4).setPreferredWidth(45);

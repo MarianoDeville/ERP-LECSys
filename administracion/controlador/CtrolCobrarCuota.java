@@ -40,7 +40,7 @@ public class CtrolCobrarCuota implements ActionListener {
 		        }
 		      }
 		  });
-		this.ventanaCobros.txt2.addKeyListener(new KeyAdapter() {
+		this.ventanaCobros.txt3.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				
@@ -58,8 +58,8 @@ public class CtrolCobrarCuota implements ActionListener {
 		ventanaCobros.lblTxt1.setText("Elementos listados:");
 		ventanaCobros.txt1.setVisible(true);
 		ventanaCobros.txt1.setEditable(false);
-		ventanaCobros.txt2.setVisible(true);
-		ventanaCobros.txt2.setEditable(true);
+		ventanaCobros.txt3.setVisible(true);
+		ventanaCobros.txt3.setEditable(true);
 		ventanaCobros.btn1A.setVisible(true);
 		ventanaCobros.btn1A.setText("Cobrar");
 		ventanaCobros.chckbx1.setVisible(true);
@@ -120,7 +120,7 @@ public class CtrolCobrarCuota implements ActionListener {
 	
 	private void actualizar() {
 		
-		ventanaCobros.tabla.setModel(dtosCobros.getTablaDeudores(ventanaCobros.txt2.getText(), 
+		ventanaCobros.tabla.setModel(dtosCobros.getTablaDeudores(ventanaCobros.txt3.getText(), 
 																 ventanaCobros.chckbx1.isSelected()));
 		DefaultTableCellRenderer derecha = new DefaultTableCellRenderer();
 		derecha.setHorizontalAlignment(JLabel.RIGHT);
