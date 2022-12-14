@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import interfaceUsuario.Cobro;
 import interfaceUsuario.ReciboCobro;
 import modelo.DtosCobros;
@@ -22,6 +23,7 @@ public class CtrolRealizarCobro implements ActionListener {
 		this.dtosCobros = new DtosCobros();
 		this.ventanaCobrarCuota.btnVolver.addActionListener(this);
 		this.ventanaCobrarCuota.btnCobrar.addActionListener(this);
+		this.ventanaCobrarCuota.btnCentral.addActionListener(this);
 		this.ventanaCobrarCuota.txt3.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -63,6 +65,9 @@ public class CtrolRealizarCobro implements ActionListener {
 		ventanaCobrarCuota.txt5.setEditable(false);
 		ventanaCobrarCuota.txtNombre.setText(dtosCobros.getNombre());		
 		ventanaCobrarCuota.btnCobrar.setEnabled(false);
+		ventanaCobrarCuota.btnCentral.setVisible(true);
+		ventanaCobrarCuota.btnCentral.setText("Borrar");
+		ventanaCobrarCuota.btnCentral.setEnabled(false);
 		ventanaCobrarCuota.comboBox.setVisible(true);
 		ventanaCobrarCuota.comboBox.setModel(new DefaultComboBoxModel<String>(dtosCobros.getListadoConceptos()));
 		ventanaCobrarCuota.tabla1.setModel(dtosCobros.getTablaSeleccionados());
@@ -92,11 +97,13 @@ public class CtrolRealizarCobro implements ActionListener {
 			ventanaCobrarCuota.txt4.setEditable(false);
 			ventanaCobrarCuota.txt5.setText("0");
 			ventanaCobrarCuota.btnCobrar.setEnabled(false);
+			ventanaCobrarCuota.btnCentral.setEnabled(false);
 			return;
 		}
 		ventanaCobrarCuota.txt3.setEditable(true);
 		ventanaCobrarCuota.txt4.setEditable(true);
-		ventanaCobrarCuota.btnCobrar.setEnabled(true);		
+		ventanaCobrarCuota.btnCobrar.setEnabled(true);
+		ventanaCobrarCuota.btnCentral.setEnabled(true);
 		ventanaCobrarCuota.lblMsgError.setForeground(Color.RED);
 		ventanaCobrarCuota.lblMsgError.setText("");
 		mensaje = dtosCobros.setRecargoMora(ventanaCobrarCuota.txt3.getText());
@@ -116,17 +123,22 @@ public class CtrolRealizarCobro implements ActionListener {
 			actualizar();
 		}
 		
-		if(e.getSource() == ventanaCobrarCuota.btnCobrar) {
-			
-			registraCobro();
-		}
-		
 		if(e.getSource() == ventanaCobrarCuota.chckbxEnviarEmail) {
 			
 			ventanaCobrarCuota.chckbxEnviarEmail.setSelected(ventanaCobrarCuota.chckbxEnviarEmail.isSelected());
 			ventanaCobrarCuota.lblEmail.setVisible(ventanaCobrarCuota.chckbxEnviarEmail.isSelected());
 			ventanaCobrarCuota.txtEmail.setVisible(ventanaCobrarCuota.chckbxEnviarEmail.isSelected());
 			ventanaCobrarCuota.txtEmail.setText(dtosCobros.getEmail());
+		}
+		
+		if(e.getSource() == ventanaCobrarCuota.btnCobrar) {
+			
+			registraCobro();
+		}
+		
+		if(e.getSource() == ventanaCobrarCuota.btnCentral) {
+			
+			eliminarDeuda();	
 		}
 
 		if(e.getSource() == ventanaCobrarCuota.btnVolver) {
@@ -141,18 +153,32 @@ public class CtrolRealizarCobro implements ActionListener {
 		dtosCobros.setFactura(ventanaCobrarCuota.txtFactura.getText());
 		ventanaCobrarCuota.lblMsgError.setForeground(Color.BLUE);
 		ventanaCobrarCuota.lblMsgError.setText("Procesando la operación.");
+		dtosCobros.setEnviarEmail(ventanaCobrarCuota.chckbxEnviarEmail.isSelected());
 
 		if(ventanaCobrarCuota.chckbxEnviarEmail.isSelected())
 			dtosCobros.setEmail(ventanaCobrarCuota.txtEmail.getText());
 		else 
 			dtosCobros.setEmail("");
 
+		String error = dtosCobros.validarInformación(false, false);
+		
+		if(error.length() > 0) {
+			
+			ventanaCobrarCuota.lblMsgError.setForeground(Color.RED);
+			ventanaCobrarCuota.lblMsgError.setText(error);
+			return;
+		}
+		
 		if(dtosCobros.guardarCobroCuota()) {
 	
 			if(ventanaCobrarCuota.chckbxEnviarEmail.isSelected()) {
 				
 				EmailSenderService emailService = new EmailSenderService();
-				emailService.mandarCorreo(dtosCobros.getEmail(), "Recibo de pago", dtosCobros.getCuerpoEmail());
+				if(emailService.mandarCorreo(dtosCobros.getEmail(), "Recibo de pago", dtosCobros.getCuerpoEmail())) {
+					
+					ventanaCobrarCuota.lblMsgError.setForeground(Color.RED);
+					ventanaCobrarCuota.lblMsgError.setText("Error en el emvío del email.");		
+				}
 			} else {
 			
 				ReciboCobro ventanaReciboPago = new ReciboCobro("Comprobante de pago");
@@ -162,10 +188,29 @@ public class CtrolRealizarCobro implements ActionListener {
 			ventanaCobrarCuota.lblMsgError.setForeground(Color.BLUE);
 			ventanaCobrarCuota.lblMsgError.setText("Operación almacenada en la base de datos.");
 			ventanaCobrarCuota.btnCobrar.setEnabled(false);
+			ventanaCobrarCuota.btnCentral.setEnabled(false);
 			ventanaCobrarCuota.comboBox.setEnabled(false);
 			dtosCobros.setBorrarSeleccionados();
-		}else {
-			
+			return;
+		}
+		ventanaCobrarCuota.lblMsgError.setForeground(Color.RED);
+		ventanaCobrarCuota.lblMsgError.setText("Error al intentar guardar la información en la base de datos.");
+	}
+	
+	private void eliminarDeuda() {
+
+		if(JOptionPane.showConfirmDialog(null, "¿Esta seguro de borrar la deuda seleccionada?", "Alerta!", JOptionPane.YES_NO_OPTION) == 0) {
+		
+			if(dtosCobros.setBorrarDeuda()) {
+				
+				ventanaCobrarCuota.lblMsgError.setForeground(Color.BLUE);
+				ventanaCobrarCuota.lblMsgError.setText("Operación almacenada en la base de datos.");
+				ventanaCobrarCuota.btnCobrar.setEnabled(false);
+				ventanaCobrarCuota.btnCentral.setEnabled(false);
+				ventanaCobrarCuota.comboBox.setEnabled(false);
+				dtosCobros.setBorrarSeleccionados();
+				return;
+			} 
 			ventanaCobrarCuota.lblMsgError.setForeground(Color.RED);
 			ventanaCobrarCuota.lblMsgError.setText("Error al intentar guardar la información en la base de datos.");
 		}

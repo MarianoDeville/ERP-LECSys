@@ -2,6 +2,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import interfaceUsuario.InformeAlumno;
@@ -12,6 +14,7 @@ public class CtrlListado implements ActionListener {
 
 	private Listado ventanaListado;
 	private DtosAlumno dtosAlumno;
+	private int elemento;
 	
 	public CtrlListado(Listado vista) {
 		
@@ -22,6 +25,15 @@ public class CtrlListado implements ActionListener {
 		this.ventanaListado.btnImprimir.addActionListener(this);
 		this.ventanaListado.btn1A.addActionListener(this);
 		this.ventanaListado.btnVolver.addActionListener(this);
+		this.ventanaListado.tabla.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		        if (e.getClickCount() == 1) {
+
+					elemento = ventanaListado.tabla.getSelectedRow();
+					limpiarOtros();
+		        }
+		      }
+		  });
 	}
 
 	public void iniciar() {
@@ -50,6 +62,15 @@ public class CtrlListado implements ActionListener {
 		ventanaListado.tabla.getColumnModel().getColumn(8).setPreferredWidth(40);
 		ventanaListado.tabla.getColumnModel().getColumn(8).setMaxWidth(50);
 		ventanaListado.txt1.setText(dtosAlumno.getCantAlumnos());
+	}
+	
+	private void limpiarOtros() {
+			
+		for(int i = 0; i < ventanaListado.tabla.getRowCount(); i++) {
+			
+			if(i != elemento)
+				ventanaListado.tabla.setValueAt((boolean) false, i, 8);
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) {

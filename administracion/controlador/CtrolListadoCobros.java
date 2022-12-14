@@ -96,6 +96,19 @@ public class CtrolListadoCobros implements ActionListener {
 		}
 		ventanaListadoCobros.tabla.setModel(dtosCobros.getTablaCobros(ventanaListadoCobros.comboBox2.getSelectedIndex(),
 																	  ventanaListadoCobros.comboBox1.getSelectedItem()));
+		ventanaListadoCobros.tabla.getColumnModel().getColumn(0).setMaxWidth(90);
+		ventanaListadoCobros.tabla.getColumnModel().getColumn(0).setPreferredWidth(70);
+		
+		ventanaListadoCobros.tabla.getColumnModel().getColumn(1).setMaxWidth(250);
+		ventanaListadoCobros.tabla.getColumnModel().getColumn(1).setPreferredWidth(200);
+		
+		
+		ventanaListadoCobros.tabla.getColumnModel().getColumn(3).setMaxWidth(70);
+		ventanaListadoCobros.tabla.getColumnModel().getColumn(3).setPreferredWidth(60);
+		ventanaListadoCobros.tabla.getColumnModel().getColumn(4).setMaxWidth(60);
+		ventanaListadoCobros.tabla.getColumnModel().getColumn(4).setPreferredWidth(40);
+		ventanaListadoCobros.tabla.getColumnModel().getColumn(5).setMaxWidth(100);
+		ventanaListadoCobros.tabla.getColumnModel().getColumn(5).setPreferredWidth(95);
 		ventanaListadoCobros.txt2.setText(dtosCobros.getCantidadElementosSeleccionados() + "");
 		ventanaListadoCobros.txt1.setText(dtosCobros.getMontoTotal() + "");
 	}

@@ -1,6 +1,7 @@
 /*****************************************************************************************************************************************************************/
 //										LISTADO DE MÉTODOS
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+//	public boolean setBorrarDeuda()
 //	public boolean setActualizarFacturas(String listaFacturas[])
 // 	public int getMesActual()
 //	public String [] getMeses()
@@ -82,7 +83,19 @@ public class DtosCobros {
 	private int elementoSeleccionado;
 	private int cantidadCuotasSeleccionadas = 1;
 	private Calendar fechaSistema;
-	
+
+	public boolean setBorrarDeuda() {
+		
+		GrupoFamiliarDAO grupoFamiliarDAO = new GrupoFamiliarDAO();
+
+		if(!grupoFamiliarDAO.setActualizarDeuda(idFamilia, -cantidadCuotasSeleccionadas))
+			return false;
+
+		DtosActividad dtosActividad = new DtosActividad();
+		dtosActividad.registrarActividad("Borrado de deuda. Familia: " + nombre, "Administración");
+		return true;
+	}
+
 	public boolean setActualizarFacturas(String listaFacturas[]) {
 		
 		int e = 0;
@@ -134,7 +147,7 @@ public class DtosCobros {
 	
 	public TableModel getTablaCobros(int mes, Object año) {
 		
-		String titulo[] = new String[] {"Nombre", "Concepto", "Fecha", "Hora", "Monto", "Factura"};
+		String titulo[] = new String[] {"Fecha", "Nombre", "Concepto", "Hora", "Monto", "Factura"};
 		AdministracionDAO administracionDAO = new AdministracionDAO();
 		int temp = 0;
 		montoTotal = 0;
@@ -208,7 +221,8 @@ public class DtosCobros {
 		if(descuentoContado > 0)
 			descripcion += ", descuento pago contado: " + descuentoContado;
 
-		montoTotal -= descuentoContado + recargoMora;
+		montoTotal += recargoMora;
+		montoTotal -= descuentoContado;
 		descripcion += ", suma total: " + montoTotal;
 		return montoTotal + "";
 	}
@@ -730,7 +744,7 @@ public class DtosCobros {
 		return reinscripción;
 	}
 
-	public String validarInformación(boolean validarNombre) {
+	public String validarInformación(boolean validarNombre, boolean validarInscripcion) {
 		
 		GrupoFamiliarDAO grupoFamiliaDAO = new GrupoFamiliarDAO();
 	
@@ -761,7 +775,7 @@ public class DtosCobros {
 			}
 		}
 		
-		if(inscripcion < 1)
+		if(inscripcion < 1 && validarInscripcion)
 			return "La inscripción debe tener un valor.";
 		
 		return "";

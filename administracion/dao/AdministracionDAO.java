@@ -43,13 +43,13 @@ public class AdministracionDAO extends Conexion {
 	public String[][] getTablaCobros(int año, int mes) {
 
 		String respuesta[][] = null;
-		String comandoStatement = "SELECT nombre, concepto, DATE_FORMAT(fecha, '%d/%m/%Y'), hora, monto, factura, idCobros "
-								+ "FROM  lecsys1.cobros ";
+		String comandoStatement = "SELECT DATE_FORMAT(fecha, '%d/%m/%Y'), nombre, concepto, hora, monto, factura, idCobros "
+								+ "FROM  lecsys1.cobros WHERE (YEAR(fecha) = " + año;
 								
-		if(mes == 0)
-			comandoStatement += "WHERE YEAR(fecha) = " + año;
-		else
-			comandoStatement += "WHERE (YEAR(fecha) = " + año + " AND MONTH(fecha) = " + mes + ")";
+		if(mes != 0)
+			comandoStatement += " AND MONTH(fecha) = " + mes;
+		
+		comandoStatement += ") ORDER BY idCobros DESC";
 		
 		try {
 

@@ -48,6 +48,7 @@ public class CtrlDiagramaCursos implements ActionListener {
 		ventanaDiagramaCursos.tabla.setModel(dtosCurso.getDiagramacion(
 								(String)ventanaDiagramaCursos.comboBox1.getSelectedItem(), 
 								ventanaDiagramaCursos.comboBox2.getSelectedIndex()));
+		ventanaDiagramaCursos.tabla.setEnabled(false);
 		
 		for(int i = 1 ; i < 33 ; i++) {
 			

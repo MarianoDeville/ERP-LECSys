@@ -21,7 +21,7 @@ public class InformeAlumno extends VentanaModelo {
 	public JTextField txtProfesor;
 	public JTextField txtPresentismo;
 	public JTextField txtFaltas;
-	public JTextField txtTotal;
+	public JTextField txtTarde;
 	public JTextField txtEscrito1;
 	public JTextField txtEscrito2;
 	public JTextField txtOral1;
@@ -136,19 +136,19 @@ public class InformeAlumno extends VentanaModelo {
 		panel.add(txtFaltas);
 		txtFaltas.setColumns(5);
 		
-		JLabel lblTotal = new JLabel("Cantida de clases:");
-		contenedor.putConstraint(SpringLayout.NORTH, lblTotal, 0, SpringLayout.NORTH, lblFaltas);
-		contenedor.putConstraint(SpringLayout.WEST, lblTotal, 5, SpringLayout.EAST, txtFaltas);
-		panel.add(lblTotal);
+		JLabel lblTarde = new JLabel("Llegadas tarde:");
+		contenedor.putConstraint(SpringLayout.NORTH, lblTarde, 0, SpringLayout.NORTH, lblFaltas);
+		contenedor.putConstraint(SpringLayout.WEST, lblTarde, 5, SpringLayout.EAST, txtFaltas);
+		panel.add(lblTarde);
 			
-		txtTotal = new JTextField();
-		contenedor.putConstraint(SpringLayout.NORTH, txtTotal, -2, SpringLayout.NORTH, lblTotal);
-		contenedor.putConstraint(SpringLayout.WEST, txtTotal, 5, SpringLayout.EAST, lblTotal);
-		panel.add(txtTotal);
-		txtTotal.setColumns(5);
+		txtTarde = new JTextField();
+		contenedor.putConstraint(SpringLayout.NORTH, txtTarde, -2, SpringLayout.NORTH, lblTarde);
+		contenedor.putConstraint(SpringLayout.WEST, txtTarde, 5, SpringLayout.EAST, lblTarde);
+		panel.add(txtTarde);
+		txtTarde.setColumns(5);
 		
 		JLabel lblNotas = new JLabel("Notas");
-		contenedor.putConstraint(SpringLayout.NORTH, lblNotas, 30, SpringLayout.SOUTH, lblTotal);
+		contenedor.putConstraint(SpringLayout.NORTH, lblNotas, 30, SpringLayout.SOUTH, lblTarde);
 		contenedor.putConstraint(SpringLayout.WEST, lblNotas, 0, SpringLayout.WEST, lblAsistencia);
 		panel.add(lblNotas);
 

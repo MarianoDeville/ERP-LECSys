@@ -41,6 +41,7 @@ public class Cobro extends VentanaModelo {
 	public JTextField txtEmail;
 	public JTextField txtTabla2;
 	public JButton btnCobrar;
+	public JButton btnCentral;
 	public JButton btnVolver;
 
 	public Cobro(String nombreVentana) {
@@ -204,6 +205,13 @@ public class Cobro extends VentanaModelo {
 		contenedor.putConstraint(SpringLayout.WEST, btnCobrar, 20, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, btnCobrar, 90, SpringLayout.WEST, btnCobrar);
 		panel.add(btnCobrar);
+		
+		btnCentral = new JButton();
+		contenedor.putConstraint(SpringLayout.SOUTH, btnCentral, -10, SpringLayout.SOUTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, btnCentral, 60, SpringLayout.EAST, btnCobrar);
+		contenedor.putConstraint(SpringLayout.EAST, btnCentral, 90, SpringLayout.WEST, btnCentral);
+		btnCentral.setVisible(false);
+		panel.add(btnCentral);
 		
 		btnVolver = new JButton("Volver");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -10, SpringLayout.SOUTH, panel);

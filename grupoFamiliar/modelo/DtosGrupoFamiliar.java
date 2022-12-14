@@ -11,13 +11,13 @@ public class DtosGrupoFamiliar {
 	private static String eliminarElementos[];
 	private static String agregarElementos[][];
 	private static String listaElementosAgregar[];
-	private static String listaAcciones[];
 	private static String nombreFamilia;
 	private static String idGrupoFamiliar;
 	private static String integrantes;
 	private static String estado;
 	private static String email;
 	private static String descuento;
+	private String listaAcciones[];
 	private String msgError;
 	private int elementoSeleccionado;
 
@@ -283,7 +283,7 @@ public class DtosGrupoFamiliar {
 		String titulo[] = {"Nombre", "Integrantes", "Sel."};
 		listaIntegrantes = grupoFamiliarDAO.getGruposFamilias("", "", est, busqueda);
 		Object cuerpo[][] = new Object[listaIntegrantes.length][3];
-		
+
 		for(int i = 0 ; i < listaIntegrantes.length ; i++) {
 			
 			cuerpo[i][0] = listaIntegrantes[i][1];

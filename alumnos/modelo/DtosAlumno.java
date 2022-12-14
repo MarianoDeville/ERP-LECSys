@@ -1,6 +1,9 @@
 /*****************************************************************************************************************************************************************/
 //										LISTADO DE MÉTODOS
 /*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+//	public void cargarAsistencia()
+//	public void cargarNotas()
+//	private int conviertoInt(String valor)
 //	public String getNombreProfesor()
 //	public int getAsistencia(String campo, int fila)
 //	public int getCursoSeleccionado()
@@ -64,6 +67,18 @@
 //	public String checkInformacion(boolean checDNI)
 //	public boolean guardoAsistencia()
 //	private boolean isNumeric(String cadena)
+//	public String getEscrito1()
+//	public String getEscrito2()
+//	public String getOral1()
+//	public String getOral2()
+//	public String getComportamiento1()
+//	public String getComportamiento2()
+//	public String getFinalEscrito()
+//	public String getFinalComportamiento()
+//	public String getFinalOral()
+//	public String getAusente()
+//	public String getPresente()
+//	public String getTarde()
 /*****************************************************************************************************************************************************************/
 package modelo;
 
@@ -103,6 +118,90 @@ public class DtosAlumno {
 	private static String [] idProfesores;
 	private static String [][] horariosCursos;
 	private static Object [][] tablaAsistencia;
+	private int escrito1;
+	private int escrito2;
+	private int finalEscrito;
+	private int comportamiento1;
+	private int comportamiento2;
+	private int finalComportamiento;
+	private int oral1;
+	private int oral2;
+	private int finalOral;
+	private String ausente;
+	private String presente;
+	private String tarde;
+
+	public void cargarAsistencia() {
+		
+		alumnosDAO = new AlumnosDAO();
+		alumnosDAO.getInfoAsistencia(legajo);
+		ausente = alumnosDAO.getFaltas();
+		presente = alumnosDAO.getPresente();
+		tarde = alumnosDAO.getTarde();
+	}
+	
+	public void cargarNotas() {
+		
+		alumnosDAO = new AlumnosDAO();
+		String respuest[][] = alumnosDAO.getExamen(legajo);
+		
+		for(int i = 0; i < respuest.length; i++) {
+			
+			switch (respuest[i][1]) {
+			
+				case "1º Escrito": {
+					
+					escrito1 = conviertoInt(respuest[i][2]);
+					break;	
+				}
+				
+				case "2º Escrito": {
+					
+					escrito2 = conviertoInt(respuest[i][2]);
+					break;	
+				}
+				
+				case "1º Oral": {
+					
+					oral1 = conviertoInt(respuest[i][2]);
+					break;	
+				}
+				
+				case "2º Oral": {
+					
+					oral2 = conviertoInt(respuest[i][2]);
+					break;	
+				}
+				
+				case "1º Comportamiento": {
+					
+					comportamiento1 = conviertoInt(respuest[i][2]);
+					break;	
+				}
+				
+				case "2º Comportamiento": {
+					
+					comportamiento2 = conviertoInt(respuest[i][2]);
+					break;	
+				}
+			}	
+			
+			finalEscrito = (escrito1 + escrito2) / 2;
+			finalComportamiento = (comportamiento1 + comportamiento2) / 2;
+			finalOral = (oral1 + oral2) / 2;
+		}
+	}
+	
+	private int conviertoInt(String valor) {
+
+		try {
+			
+			return Integer.parseInt(valor);
+		} catch (Exception e) {
+		
+		}
+		return 0;
+	}
 	
 	public String getNombreProfesor() {
 
@@ -197,7 +296,7 @@ public class DtosAlumno {
 	public DefaultTableModel getListadoAlumnos(String campo, String valor) {
 		
 		alumnosDAO = new AlumnosDAO();
-		String titulo[] = {"Leg.", "Nombre", "Apellido", "DNI", "Dirección", "Teléfono", "E-mail", "Curso", "Sel."};
+		String titulo[] = {"Leg.", "Apellido", "Nombre", "DNI", "Dirección", "Teléfono", "E-mail", "Curso", "Sel."};
 		String respuesta[][] = alumnosDAO.getAlumnos(campo, valor, true, "", "");
 		Object cuerpo[][] = null;
 		cantAlumnos = "0";
@@ -209,8 +308,8 @@ public class DtosAlumno {
 			for(int i = 0 ; i < respuesta.length ; i++) {
 				
 				cuerpo[i][0] = respuesta[i][0];
-				cuerpo[i][1] = respuesta[i][1];
-				cuerpo[i][2] = respuesta[i][2];
+				cuerpo[i][1] = respuesta[i][2];
+				cuerpo[i][2] = respuesta[i][1];
 				cuerpo[i][3] = respuesta[i][3];
 				cuerpo[i][4] = respuesta[i][4];
 				cuerpo[i][5] = respuesta[i][5];
@@ -643,7 +742,7 @@ public class DtosAlumno {
 	
 	public String [] getListaTipoExamen() {
 		
-		return new String[] {"1º Escrito","2º Escrito","1º Oral", "2º Oral","Recuperatorio","Final"};
+		return new String[] {"1º Escrito","2º Escrito","1º Oral", "2º Oral", "1º Comportamiento", "2º Comportamiento"};
 	}
 
 	public String [][] getHorariosCursos() {
@@ -913,5 +1012,65 @@ public class DtosAlumno {
 			
 			return false;
 		}
+	}
+	
+	public String getEscrito1() {
+		
+		return escrito1 + "";
+	}
+	
+	public String getEscrito2() {
+		
+		return escrito2 + "";
+	}
+	
+	public String getOral1() {
+		
+		return oral1 + "";
+	}
+	
+	public String getOral2() {
+		
+		return oral2 + "";
+	}
+	
+	public String getComportamiento1() {
+		
+		return comportamiento1 + "";
+	}
+	
+	public String getComportamiento2() {
+		
+		return comportamiento2 + "";
+	}
+	
+	public String getFinalEscrito() {
+		
+		return finalEscrito + "";
+	}
+	
+	public String getFinalComportamiento() {
+		
+		return finalComportamiento + "";
+	}
+	
+	public String getFinalOral() {
+		
+		return finalOral + "";
+	}
+
+	public String getAusente() {
+		
+		return ausente;
+	}
+
+	public String getPresente() {
+		
+		return presente;
+	}
+
+	public String getTarde() {
+		
+		return tarde;
 	}
 }

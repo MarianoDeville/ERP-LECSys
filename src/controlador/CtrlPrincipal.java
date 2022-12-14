@@ -11,6 +11,7 @@ import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.Principal;
 import modelo.DtosAcceso;
 import modelo.DtosActividad;
+import modelo.DtosPrincipal;
 
 public class CtrlPrincipal implements ActionListener {
 	
@@ -36,20 +37,23 @@ public class CtrlPrincipal implements ActionListener {
 	
 	public void iniciar() {
 		
-		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.00\nRev. 12122022.2301");
+		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.00\nRev. 13122022.2216");
 		actividad.registrarActividad("Inicio del sistema", "Principal");
 		ventanaPrincipal.setVisible(true);
 		acceso = new OperadorSistema();
-		
 		if(acceso.getActualizarContraseña()) {
 			
 			CambioContraseña ventanaCambioPass = new CambioContraseña();
 			CtrlCambioPassword ctrlCambioPass = new CtrlCambioPassword(ventanaCambioPass);
 			ctrlCambioPass.iniciar();
 		}
+		
 		Cumpleaños ventanaCumpleaños = new Cumpleaños("Recordatorio de cumpleaños");
 		CtrlCumpleaños ctrlCumpleaños = new CtrlCumpleaños(ventanaCumpleaños);
 		ctrlCumpleaños.iniciar();
+		DtosPrincipal dtosPrincipal = new DtosPrincipal();
+		dtosPrincipal.inicializar();
+
 	}
 
 	public void actionPerformed(ActionEvent e) {

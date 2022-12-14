@@ -232,12 +232,13 @@ public class CtrolCobrarInscripcion implements ActionListener {
 		else 
 			dtosCobros.setEmail("");
 		
-		ventanaCobrarInscripcion.lblMsgError.setForeground(Color.BLUE);
-		ventanaCobrarInscripcion.lblMsgError.setText("Procesando la operación.");
-		String error = dtosCobros.validarInformación(!haySeleccion);
+		String error = dtosCobros.validarInformación(!haySeleccion, true);
 		
 		if(error.length() == 0) {
 
+			ventanaCobrarInscripcion.lblMsgError.setForeground(Color.BLUE);
+			ventanaCobrarInscripcion.lblMsgError.setText("Procesando la operación.");
+			
 			if(ventanaCobrarInscripcion.chckbxTabla2.isSelected()) {
 				
 				int i = 0;
@@ -265,7 +266,11 @@ public class CtrolCobrarInscripcion implements ActionListener {
 				if(ventanaCobrarInscripcion.chckbxEnviarEmail.isSelected()) {
 					
 					EmailSenderService emailService = new EmailSenderService();
-					emailService.mandarCorreo(dtosCobros.getEmail(), "Recibo de pago", dtosCobros.getCuerpoEmail());
+					if(!emailService.mandarCorreo(dtosCobros.getEmail(), "Recibo de pago", dtosCobros.getCuerpoEmail())) {
+						
+						ventanaCobrarInscripcion.lblMsgError.setForeground(Color.RED);
+						ventanaCobrarInscripcion.lblMsgError.setText("Error en el emvío del email.");
+					}
 				} else {
 				
 					ReciboCobro ventanaReciboPago = new ReciboCobro("Comprobante de pago");

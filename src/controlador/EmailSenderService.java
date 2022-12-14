@@ -10,7 +10,7 @@ import modelo.DtosConfiguracion;
 
 public class EmailSenderService {
 
-	public void mandarCorreo(String destinatario, String asunto, String mensaje) {
+	public boolean mandarCorreo(String destinatario, String asunto, String mensaje) {
 		
 		DtosConfiguracion config = new DtosConfiguracion();
 		Properties propiedad = new Properties();
@@ -45,6 +45,8 @@ System.out.println("Mensaje: \n" + mensaje);
 			
 			System.out.println("Error al intentar enviar el email.");
 			CtrlLogErrores.guardarError(e.getMessage());
+			return false;
 		}
+		return true;
 	}
 }

@@ -10,6 +10,89 @@ import modelo.DtosActividad;
 import modelo.DtosAlumno;
 
 public class AlumnosDAO extends Conexion {
+	
+	private int faltas;
+	private int presente;
+	private int tarde;
+	
+	public String getFaltas() {
+		
+		return faltas + "";
+	}
+	
+	public String getPresente() {
+		
+		return presente + "";
+	}
+	
+	public String getTarde() {
+		
+		return tarde + "";
+	}
+	
+	public void getInfoAsistencia(String idAlumno) {
+		
+		String comando = "SELECT COUNT(*) FROM lecsys1.faltas WHERE (idAlumnos = " + idAlumno + " AND YEAR(fecha) = YEAR(NOW())";
+		try {
+			
+			this.conectar();
+			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery(comando + " AND estado = 0)");
+			
+			if (rs.next()) 
+				faltas = rs.getInt(1);	
+
+			rs = stm.executeQuery(comando + " AND estado = 1)");
+			
+			if (rs.next()) 
+				presente = rs.getInt(1);
+			
+			rs = stm.executeQuery(comando + " AND estado = 2)");
+			
+			if (rs.next()) 
+				tarde = rs.getInt(1);
+			
+		}catch (Exception e) {
+			
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AlumnosDAO, getInfoAsistencia()");
+		} finally {
+			
+			this.cerrar();
+		}
+	}
+
+	public String [][] getExamen(String idAlumno) {
+		
+		String matriz[][]=null;
+
+		try {
+			
+			this.conectar();
+			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			ResultSet rs = stm.executeQuery("SELECT fecha, tipo, nota FROM lecsys1.examenes WHERE idAlumno = " + idAlumno);
+			rs.last();	
+			matriz = new String[rs.getRow()][3];
+			rs.beforeFirst();
+			int i=0;
+
+			while (rs.next()) {
+					
+				matriz[i][0] = rs.getString(1);	
+				matriz[i][1] = rs.getString(2);	
+				matriz[i][2] = rs.getString(3);	
+				i++;
+			}
+		}catch (Exception e) {
+			
+			CtrlLogErrores.guardarError(e.getMessage());
+			CtrlLogErrores.guardarError("AlumnosDAO, getExamen()");
+		} finally {
+			
+			this.cerrar();
+		}
+		return matriz;	
+	}
 
 	public boolean setActualizarIdFamila(String idFamilia, String idAlumnos[], String estado) {
 		

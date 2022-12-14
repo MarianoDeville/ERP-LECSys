@@ -46,10 +46,12 @@ public class CtrlActividad implements ActionListener {
 		tabla = dtosActividad.getActividad(ventanaActividad.comboBox1.getSelectedIndex() + 1 + "", (String)ventanaActividad.comboBox2.getSelectedItem());
 		tablaModelo = new DefaultTableModel(tabla, dtosActividad.getTituloTabla());
 		ventanaActividad.tabla.setModel(tablaModelo);
-		ventanaActividad.tabla.getColumnModel().getColumn(0).setMaxWidth(30);
-		ventanaActividad.tabla.getColumnModel().getColumn(1).setMaxWidth(90);
+		ventanaActividad.tabla.getColumnModel().getColumn(0).setMaxWidth(45);
+		ventanaActividad.tabla.getColumnModel().getColumn(1).setMaxWidth(120);
 		ventanaActividad.tabla.getColumnModel().getColumn(2).setMaxWidth(90);
 		ventanaActividad.tabla.getColumnModel().getColumn(3).setMaxWidth(70);
+		ventanaActividad.tabla.getColumnModel().getColumn(5).setMaxWidth(170);
+		ventanaActividad.tabla.getColumnModel().getColumn(5).setPreferredWidth(130);
 		ventanaActividad.tabla.getColumnModel().getColumn(6).setMaxWidth(110);
 	}
 	

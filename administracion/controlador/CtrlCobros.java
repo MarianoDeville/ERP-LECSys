@@ -3,6 +3,8 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+
+import interfaceUsuario.ABML;
 import interfaceUsuario.InterfaceBotones;
 import interfaceUsuario.Listado;
 import modelo.DtosConfiguracion;
@@ -67,7 +69,9 @@ public class CtrlCobros implements ActionListener {
 		
 		if(e.getSource() == ventanaCobros.btn2B) {
 			
-			
+			ABML ventanaGrupoFamiliar = new ABML("Gestión de grupos familiares");
+			CtrlGrupoFamiliar ctrlGrupoFamiliar = new CtrlGrupoFamiliar(ventanaGrupoFamiliar);
+			ctrlGrupoFamiliar.iniciar();
 		}
 		
 		if(e.getSource() == ventanaCobros.btnVolver) {

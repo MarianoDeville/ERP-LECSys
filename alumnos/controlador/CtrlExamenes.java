@@ -72,10 +72,12 @@ public class CtrlExamenes implements ActionListener {
 			String notas [][] = new String [cantAlumnos][3];
 			dtosAlumno.setCurso(ventanaExamenes.comboBox1.getSelectedIndex());
 			dtosAlumno.setTipoExamen((String)ventanaExamenes.comboBox2.getSelectedItem());
+			String fechaCargada = ventanaExamenes.txt1.getText();
+			fechaCargada = fechaCargada.replaceAll("/","-");
 
-			if(ventanaExamenes.txt1.getText().length() == 10 && ventanaExamenes.txt1.getText().contains("-")) {
+			if(fechaCargada.length() == 10 && fechaCargada.contains("-")) {
 
-				String[] fecha = ventanaExamenes.txt1.getText().split("-");
+				String[] fecha = fechaCargada.split("-");
 				dtosAlumno.setFechaDia(fecha[0]);
 				dtosAlumno.setFechaMes(fecha[1]);
 				dtosAlumno.setFechaAño(fecha[2]);
