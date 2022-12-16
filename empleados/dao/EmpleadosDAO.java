@@ -99,19 +99,22 @@ public class EmpleadosDAO extends Conexion {
 	public String [][] getEmpleados(String tipo,boolean estado, String filtrado) {
 		
 		String matriz[][]=null;
-		String where = null;
+		String where = " AND (apellido LIKE '" + filtrado + "%' OR nombre LIKE '" + filtrado + "%')) ";
 		
-		if(tipo.equals("Todos")) {
+		switch (tipo) {
+		
+			case "Todos":
+				where = "WHERE (empleados.estado = " + (estado? "1 ":"0 ") + where;
+				break;
+				
+			case "ID":
+				where = "WHERE empleados.idEmpleado = '" + filtrado + "'";
+				break;
+			
+			default:
+				where = "WHERE (empleados.estado = " + (estado? "1":"0") + " AND sector = '" + tipo + "'" + where;
 
-			where = "WHERE (empleados.estado = " + (estado? "1 ":"0 ") + "AND apellido LIKE '" + filtrado + "%')";
-		} else if(tipo.equals("ID")) {
-			
-			where = "WHERE empleados.idEmpleado = '" + filtrado + "'";
-		} else {
-			
-			where = "WHERE (empleados.estado = " + (estado? "1":"0") + " AND sector = '" + tipo + "' AND apellido LIKE '" + filtrado + "%')";
 		}
-		
 		String comandoStatement = "SELECT empleados.idEmpleado, persona.nombre, apellido, dni, dirección, teléfono, email, sector, "
 								+ "cargo , sueldo, tipo, estado, fechaNacimiento, empleados.idPersona "
 								+ "FROM lecsys1.empleados "
@@ -151,11 +154,11 @@ public class EmpleadosDAO extends Conexion {
 			
 			CtrlLogErrores.guardarError(e.getMessage());
 			CtrlLogErrores.guardarError("EmpleadosDAO, getEmpleados()");
+			CtrlLogErrores.guardarError(comandoStatement);
 		} finally {
 			
 			this.cerrar();
 		}
 		return matriz;
 	}
-
 }

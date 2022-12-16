@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import interfaceUsuario.InterfaceBotones;
+import interfaceUsuario.ListadoDoble2;
 import modelo.DtosAcceso;
 import modelo.DtosConfiguracion;
 import interfaceUsuario.ABML;
@@ -65,8 +66,9 @@ public class CtrlEmpleados implements ActionListener {
 			
 			if(acceso.chkAcceso("Empleados", "Horarios")) {
 
-				
-				
+				ListadoDoble2 ventanaHorariosPersonal = new ListadoDoble2("Horarios Personal");
+				CtrlHorariosEmpleados ctrlHorariosEmpleados = new CtrlHorariosEmpleados(ventanaHorariosPersonal);
+				ctrlHorariosEmpleados.iniciar();
 			}
 		}
 		

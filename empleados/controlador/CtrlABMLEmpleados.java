@@ -129,7 +129,8 @@ public class CtrlABMLEmpleados implements ActionListener {
 					i++;
 				}
 				if(legajo != null) {
-					
+
+					dtosABMLEmpleados.getInformacionEmpleado(i);
 					ventanaEditarEmpleado = new Nuevo("Editar datos empleado");
 					CtrlEditarEmpleado ctrlEditarEmpleado = new CtrlEditarEmpleado(ventanaEditarEmpleado);
 					ctrlEditarEmpleado.iniciar(legajo);

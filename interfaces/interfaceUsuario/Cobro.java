@@ -150,7 +150,7 @@ public class Cobro extends VentanaModelo {
 		panel.add(chckbxEnviarEmail);
 				
 		lblEmail = new JLabel("E-mail:");
-		contenedor.putConstraint(SpringLayout.NORTH, lblEmail, 20, SpringLayout.SOUTH, chckbxEnviarEmail);
+		contenedor.putConstraint(SpringLayout.NORTH, lblEmail, 15, SpringLayout.SOUTH, chckbxEnviarEmail);
 		contenedor.putConstraint(SpringLayout.WEST, lblEmail, 0, SpringLayout.WEST, lblNombre);
 		lblEmail.setVisible(false);
 		panel.add(lblEmail);
@@ -195,26 +195,26 @@ public class Cobro extends VentanaModelo {
 		scrollTabla2.setViewportView(tabla2);
 
 		lblMsgError = new JLabel();
-		contenedor.putConstraint(SpringLayout.NORTH, lblMsgError, 20, SpringLayout.SOUTH, lblEmail);
+		contenedor.putConstraint(SpringLayout.NORTH, lblMsgError, 15, SpringLayout.SOUTH, lblEmail);
 		contenedor.putConstraint(SpringLayout.WEST, lblMsgError, 0, SpringLayout.WEST, lblEmail);
 		contenedor.putConstraint(SpringLayout.EAST, lblMsgError, 0, SpringLayout.EAST, txtNombre);
 		panel.add(lblMsgError);
 			
 		btnCobrar = new JButton("Cobrar");
-		contenedor.putConstraint(SpringLayout.SOUTH, btnCobrar, -10, SpringLayout.SOUTH, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, btnCobrar, -15, SpringLayout.SOUTH, panel);
 		contenedor.putConstraint(SpringLayout.WEST, btnCobrar, 20, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, btnCobrar, 90, SpringLayout.WEST, btnCobrar);
 		panel.add(btnCobrar);
 		
 		btnCentral = new JButton();
-		contenedor.putConstraint(SpringLayout.SOUTH, btnCentral, -10, SpringLayout.SOUTH, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, btnCentral, -15, SpringLayout.SOUTH, panel);
 		contenedor.putConstraint(SpringLayout.WEST, btnCentral, 60, SpringLayout.EAST, btnCobrar);
 		contenedor.putConstraint(SpringLayout.EAST, btnCentral, 90, SpringLayout.WEST, btnCentral);
 		btnCentral.setVisible(false);
 		panel.add(btnCentral);
 		
 		btnVolver = new JButton("Volver");
-		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -10, SpringLayout.SOUTH, panel);
+		contenedor.putConstraint(SpringLayout.SOUTH, btnVolver, -15, SpringLayout.SOUTH, panel);
 		contenedor.putConstraint(SpringLayout.EAST, btnVolver, -20, SpringLayout.EAST, panel);
 		contenedor.putConstraint(SpringLayout.WEST, btnVolver, -90, SpringLayout.EAST, btnVolver);
 		panel.add(btnVolver);

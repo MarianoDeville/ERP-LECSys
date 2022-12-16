@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import interfaceUsuario.Nuevo;
@@ -45,7 +44,6 @@ public class CtrlEditarEmpleado implements ActionListener {
 		ventanaEditarEmpleado.btnImprimir.setVisible(true);
 		ventanaEditarEmpleado.chkbox1.setVisible(true);
 		ventanaEditarEmpleado.setMinimumSize(new Dimension(450, 580));
-		dtosEditarEmpleado.getInformacionEmpleado(legajo);
 		ventanaEditarEmpleado.txtLegajo.setText(dtosEditarEmpleado.getLegajo());
 		ventanaEditarEmpleado.txtNombre.setText(dtosEditarEmpleado.getNombre());
 		ventanaEditarEmpleado.txtApellido.setText(dtosEditarEmpleado.getApellido());
