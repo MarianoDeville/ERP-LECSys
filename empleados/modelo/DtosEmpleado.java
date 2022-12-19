@@ -1,5 +1,6 @@
 package modelo;
 
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import dao.CursosDAO;
 import dao.EmpleadosDAO;
@@ -26,6 +27,44 @@ public class DtosEmpleado {
 	private boolean editable[][];
 	private float cantidadHoras;
 
+	public JTable autocompletar(JTable tabla) {
+		
+		for(int i = 0; i < tabla.getRowCount(); i++) {
+
+			int buclesLlenado = 0;
+			int buclesVaciado = 0;
+			
+			for(int e = 0; e < tabla.getColumnCount(); e++) {
+				
+				if(tabla.getValueAt(i, e).equals("C")) {
+					
+					buclesLlenado++;
+				} else if(tabla.getValueAt(i, e).equals("F")) {
+				
+					tabla.setValueAt("O", i, e);
+					buclesLlenado--;
+				} else if(tabla.getValueAt(i, e).equals("CE")) {
+					
+					buclesVaciado++;
+				} else if(tabla.getValueAt(i, e).equals("FE")) {
+				
+					tabla.setValueAt(" ", i, e);
+					buclesVaciado--;
+				}
+
+				if(buclesLlenado > 0) {
+					
+					tabla.setValueAt("O", i, e);
+				}
+	
+				if(buclesVaciado > 0) {
+					
+					tabla.setValueAt(" ", i, e);
+				}
+			}
+		}
+		return tabla;
+	}
 	
 	private String [] listaHorarios(int granularidad) {
 		
@@ -96,8 +135,9 @@ public class DtosEmpleado {
 		int sumaHoras = 0;
 		String titulo[] = listaHorarios(granularidad);
 		String dia[] = new String[] {"Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"};
-		editable = cursoDAO.getCronogramaDias(0, conviertoString(legajo), 100);
-		Object cronograma[][] = new Object[6][33];
+		cursoDAO.getCronogramaDias(0, conviertoString(legajo), 100);
+		editable = cursoDAO.getmatrizDiasHorarios();
+		String cronograma[][] = new String[6][titulo.length];
 
 		for(int i = 0 ; i < 6 ; i++) {
 			
@@ -116,7 +156,14 @@ public class DtosEmpleado {
 				}
 			}
 		}
-		DefaultTableModel tablaModelo = new DefaultTableModel(cronograma, titulo);
+		DefaultTableModel tablaModelo = new DefaultTableModel(cronograma, titulo){
+
+			private static final long serialVersionUID = 1L;
+			
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 		cantidadHoras = sumaHoras/2;
 		return tablaModelo;
 	}
@@ -147,7 +194,7 @@ public class DtosEmpleado {
 			private static final long serialVersionUID = 1L;
 			
 			boolean[] columnEditables = new boolean[] {
-					false, false, false
+					false, false, false, false
 			};
 			
 			public boolean isCellEditable(int row, int column) {
@@ -183,6 +230,7 @@ public class DtosEmpleado {
 
 	public void limpiarInformacion() {
 		
+		legajo = "";
 		nombre = "";
 		apellido = "";
 		dni = "";

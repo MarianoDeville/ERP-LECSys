@@ -13,30 +13,40 @@ import modelo.DtosEmpleado;
 
 public class CtrlHorariosEmpleados implements ActionListener {
 
-	private ListadoDoble2 ventanaHorarios;
+	private ListadoDoble2 ventana;
 	private DtosEmpleado dtosEmpleado;
-	boolean refresco = false;
+	private boolean refresco = false;
+	private boolean estado = false;
+	private boolean puntaA;
+	private boolean puntaB;
 	
 	public CtrlHorariosEmpleados(ListadoDoble2 vista) {
 		
-		this.ventanaHorarios = vista;
+		this.ventana = vista;
 		this.dtosEmpleado = new DtosEmpleado();
-		this.ventanaHorarios.btnVolver.addActionListener(this);
-		this.ventanaHorarios.btnGuardar.addActionListener(this);
-		this.ventanaHorarios.btnImprimir.addActionListener(this);
-		this.ventanaHorarios.btnCompletar.addActionListener(this);
-		this.ventanaHorarios.cmbBoxSector.addActionListener(this);
-		this.ventanaHorarios.cmbBoxGranularidad.addActionListener(this);
-		this.ventanaHorarios.tabla1.addMouseListener(new MouseAdapter() {
+		this.ventana.btnVolver.addActionListener(this);
+		this.ventana.btnGuardar.addActionListener(this);
+		this.ventana.btnImprimir.addActionListener(this);
+		this.ventana.btnCompletar.addActionListener(this);
+		this.ventana.cmbBoxSector.addActionListener(this);
+		this.ventana.cmbBoxGranularidad.addActionListener(this);
+		this.ventana.tabla1.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent e) {
 		        if (e.getClickCount() == 1) {
 
-		    		dtosEmpleado.getInformacionEmpleado(ventanaHorarios.tabla1.getSelectedRow());
+		    		dtosEmpleado.getInformacionEmpleado(ventana.tabla1.getSelectedRow());
 		        	actualizaInfoEmpleado();
 		        }
 		      }
 		  });
-		this.ventanaHorarios.txtSuperior.addKeyListener(new KeyAdapter() {
+		this.ventana.tabla2.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		    	
+		        if (e.getClickCount() == 2 && estado)
+		        	selección(ventana.tabla2.getSelectedRow(), ventana.tabla2.getSelectedColumn());
+		      }
+		  });
+		this.ventana.txtSuperior.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				
@@ -47,64 +57,28 @@ public class CtrlHorariosEmpleados implements ActionListener {
 	
 	public void iniciar() {
 		
-		ventanaHorarios.cmbBoxSector.setModel(new DefaultComboBoxModel<>(dtosEmpleado.getListaSectores()));
-		ventanaHorarios.cmbBoxGranularidad.setModel(new DefaultComboBoxModel<>(dtosEmpleado.getGranularidad()));
-		ventanaHorarios.cmbBoxGranularidad.setSelectedItem("30 min.");
-		ventanaHorarios.lblTxtMedio1.setText("Nombre:");
-		ventanaHorarios.lblTxtMedio2.setText("Carga horaria semanal:");
-		ventanaHorarios.lblTxtMedio3.setVisible(false);
-		ventanaHorarios.txtMedio3.setVisible(false);
+		puntaA = false;
+		puntaB = false;
+		ventana.cmbBoxSector.setModel(new DefaultComboBoxModel<>(dtosEmpleado.getListaSectores()));
+		ventana.cmbBoxGranularidad.setModel(new DefaultComboBoxModel<>(dtosEmpleado.getGranularidad()));
+		ventana.cmbBoxGranularidad.setSelectedItem("30 min.");
+		ventana.lblTxtMedio1.setText("Nombre:");
+		ventana.lblTxtMedio2.setText("Carga horaria semanal:");
+		ventana.lblTxtMedio3.setVisible(false);
+		ventana.txtMedio3.setVisible(false);
 		dtosEmpleado.limpiarInformacion();
 		actualizaEmpleados();
-		ventanaHorarios.setVisible(true);
-	}
-	
-	private void actualizaEmpleados(){
-		
-		ventanaHorarios.tabla1.setModel(dtosEmpleado.getListadoEmpleados((String)ventanaHorarios.cmbBoxSector.getSelectedItem(),
-																				 ventanaHorarios.txtSuperior.getText()));
-		ventanaHorarios.tabla1.getColumnModel().getColumn(0).setPreferredWidth(40);
-		ventanaHorarios.tabla1.getColumnModel().getColumn(0).setMaxWidth(50);
-		dtosEmpleado.limpiarInformacion();
-		actualizaInfoEmpleado();
-	}
-	
-	private void actualizaInfoEmpleado() {
-		
-		String nombre = dtosEmpleado.getApellido().length() > 0? dtosEmpleado.getApellido() + ", " + dtosEmpleado.getNombre():"";
-		ventanaHorarios.txtMedio1.setText(nombre);
-		ventanaHorarios.txtMedio2.setText(String.format("%.2f",dtosEmpleado.getCantidadHoras()));
-		ventanaHorarios.tabla2.setModel(dtosEmpleado.getHorarios(ventanaHorarios.cmbBoxGranularidad.getSelectedIndex()));
-		ventanaHorarios.tabla2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		ventanaHorarios.tabla2.doLayout();
-		
-		if(ventanaHorarios.cmbBoxSector.getSelectedItem().equals("Docente")) {
-			
-			ventanaHorarios.tabla2.setEnabled(false);
-			ventanaHorarios.btnCompletar.setVisible(false);
-			ventanaHorarios.cmbBoxGranularidad.setVisible(false);
-			ventanaHorarios.cmbBoxGranularidad.setSelectedItem("30 min.");
-		} else {
-	
-			ventanaHorarios.tabla2.setEnabled(true);
-			ventanaHorarios.btnCompletar.setVisible(true);
-			ventanaHorarios.cmbBoxGranularidad.setVisible(true);
-		}
-
-		for(int i = 1 ; i < ventanaHorarios.tabla2.getColumnCount() ; i++) {
-			
-			ventanaHorarios.tabla2.getColumnModel().getColumn(i).setPreferredWidth(40);
-		}
+		ventana.setVisible(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		
-		if(e.getSource() == ventanaHorarios.cmbBoxSector) {
+		if(e.getSource() == ventana.cmbBoxSector) {
 			
 			actualizaEmpleados();
 		}
 		
-		if(e.getSource() == ventanaHorarios.cmbBoxGranularidad) {
+		if(e.getSource() == ventana.cmbBoxGranularidad) {
 		
 			if(refresco)
 				actualizaInfoEmpleado();
@@ -112,28 +86,100 @@ public class CtrlHorariosEmpleados implements ActionListener {
 				refresco = true;
 		}
 		
-		if(e.getSource() == ventanaHorarios.btnCompletar) {
+		if(e.getSource() == ventana.btnCompletar) {
 			
+			ventana.tabla2 = dtosEmpleado.autocompletar(ventana.tabla2);
+		}
+		
+		if(e.getSource() == ventana.btnVolver) {
+			
+			ventana.dispose();
+		}
+		
+		if(e.getSource() == ventana.btnGuardar) {
 			
 			
 			
 		}
 		
-		if(e.getSource() == ventanaHorarios.btnVolver) {
-			
-			ventanaHorarios.dispose();
-		}
-		
-		if(e.getSource() == ventanaHorarios.btnGuardar) {
+		if(e.getSource() == ventana.btnImprimir) {
 			
 			
 			
 		}
+	}
+	
+	private void actualizaEmpleados(){
 		
-		if(e.getSource() == ventanaHorarios.btnImprimir) {
+		ventana.tabla1.setModel(dtosEmpleado.getListadoEmpleados((String)ventana.cmbBoxSector.getSelectedItem(),
+																				 ventana.txtSuperior.getText()));
+		ventana.tabla1.getColumnModel().getColumn(0).setPreferredWidth(40);
+		ventana.tabla1.getColumnModel().getColumn(0).setMaxWidth(50);
+		dtosEmpleado.limpiarInformacion();
+		actualizaInfoEmpleado();
+	}
+	
+	private void actualizaInfoEmpleado() {
+		
+		
+		estado = ventana.cmbBoxSector.getSelectedItem().equals("Docente")?false:true;
+		ventana.tabla2.setEnabled(estado);
+		ventana.btnGuardar.setEnabled(estado);
+		ventana.btnCompletar.setVisible(estado);
+		ventana.cmbBoxGranularidad.setVisible(estado);
 			
+		if(dtosEmpleado.getApellido().length() > 0) {
 			
+			ventana.txtMedio1.setText(dtosEmpleado.getApellido() + ", " + dtosEmpleado.getNombre());	
+			ventana.txtMedio2.setText(String.format("%.2f",dtosEmpleado.getCantidadHoras()));
+			ventana.tabla2.setEnabled(estado);
+			ventana.btnCompletar.setEnabled(estado);
+			ventana.btnGuardar.setEnabled(estado);
+		} else {
 			
+			ventana.txtMedio1.setText("");	
+			ventana.txtMedio2.setText("");
+			ventana.tabla2.setEnabled(false);
+			ventana.btnCompletar.setEnabled(false);
+			ventana.btnGuardar.setEnabled(false);
+		}
+		ventana.tabla2.setModel(dtosEmpleado.getHorarios(ventana.cmbBoxGranularidad.getSelectedIndex()));
+		ventana.tabla2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		ventana.tabla2.doLayout();
+
+		for(int i = 1 ; i < ventana.tabla2.getColumnCount() ; i++) {
+			
+			ventana.tabla2.getColumnModel().getColumn(i).setPreferredWidth(40);
+		}
+	}
+
+	private void selección(int fila, int columna) {
+
+		if(ventana.tabla2.getValueAt(fila, columna).equals(" ")) {
+		
+			if(!puntaA) {
+	    	
+				ventana.tabla2.setValueAt("C", fila, columna);
+				puntaA = true;
+			} else {
+				
+				ventana.tabla2.setValueAt("F", fila, columna);
+				puntaA = false;			
+			}
+		} else if(ventana.tabla2.getValueAt(fila, columna).equals("O")) {
+			
+			if(!puntaB) {
+		    	
+				ventana.tabla2.setValueAt("CE", fila, columna);
+				puntaB = true;
+			} else {
+				
+				ventana.tabla2.setValueAt("FE", fila, columna);
+				puntaB = false;			
+			}
+		} else {
+			
+			ventana.tabla2.setValueAt(" ", fila, columna);
 		}
 	}
 }

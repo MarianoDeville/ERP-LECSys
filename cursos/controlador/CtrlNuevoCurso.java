@@ -3,103 +3,173 @@ package controlador;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
 import interfaceUsuario.CrearCurso;
 import modelo.DtosCurso;
 
 public class CtrlNuevoCurso implements ActionListener {
 	
-	private CrearCurso ventanaCrearCursos;
+	private CrearCurso ventana;
 	private DtosCurso dtosCurso;
-		
+			
 	public CtrlNuevoCurso(CrearCurso vista) {
 		
-		this.ventanaCrearCursos = vista;
+		this.ventana = vista;
 		this.dtosCurso = new DtosCurso();
-		this.ventanaCrearCursos.comboBoxNivel.addActionListener(this);
-		this.ventanaCrearCursos.comboBoxAula.addActionListener(this);
-		this.ventanaCrearCursos.comboBoxProfesor.addActionListener(this);
-		this.ventanaCrearCursos.btnGuardar.addActionListener(this);
-		this.ventanaCrearCursos.btnVolver.addActionListener(this);
+		this.ventana.comboBoxNivel.addActionListener(this);
+		this.ventana.comboBoxAula.addActionListener(this);
+		this.ventana.comboBoxProfesor.addActionListener(this);
+		this.ventana.btnGuardar.addActionListener(this);
+		this.ventana.btnValidar.addActionListener(this);
+		this.ventana.btnVolver.addActionListener(this);
+		this.ventana.tablaHorarios.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+				if (e.getClickCount() == 2)
+					selección(ventana.tablaHorarios.getSelectedRow(), ventana.tablaHorarios.getSelectedColumn());
+			}        
+		});
 	}
 	
 	public void iniciar() {
 		
-		ventanaCrearCursos.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaNivel()));
-		ventanaCrearCursos.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaProfesores()));
-		ventanaCrearCursos.comboBoxAula.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAulas()));
-		ventanaCrearCursos.comboBoxAño.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAños((String)ventanaCrearCursos.comboBoxNivel.getSelectedItem())));
+		ventana.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaNivel()));
+		ventana.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaProfesores()));
+		ventana.comboBoxAula.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAulas()));
+		ventana.comboBoxAño.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAños((String)ventana.comboBoxNivel.getSelectedItem())));
 		actualizar();
-		ventanaCrearCursos.setVisible(true);
-	}
-
-	private void actualizar() {
-
-		dtosCurso.setCurso("0");
-		ventanaCrearCursos.tablaHorarios.setModel(dtosCurso.getHorariosCurso(ventanaCrearCursos.comboBoxAula.getSelectedIndex(),
-																			 ventanaCrearCursos.comboBoxProfesor.getSelectedIndex()));
-
-		for(int i = 0 ; i < 32 ; i++) {
-			
-			ventanaCrearCursos.tablaHorarios.getColumnModel().getColumn(i).setPreferredWidth(40);
-		}
-		ventanaCrearCursos.tablaHorarios.setRowHeight(25);
-	}
-	
-	private void limpiarCampos() {
-		
-		ventanaCrearCursos.txtCuota.setText("");
-		actualizar();
+		ventana.setVisible(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 
-		if(e.getSource() == ventanaCrearCursos.comboBoxNivel) {
+		if(e.getSource() == ventana.comboBoxNivel) {
 			
-			ventanaCrearCursos.comboBoxAño.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAños((String)ventanaCrearCursos.comboBoxNivel.getSelectedItem())));
+			ventana.comboBoxAño.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAños((String)ventana.comboBoxNivel.getSelectedItem())));
 			actualizar();
 		}		
 		
-		if(e.getSource() == ventanaCrearCursos.comboBoxAula) {
+		if(e.getSource() == ventana.comboBoxAula) {
 			
 			actualizar();
 		}	
 		
-		if(e.getSource() == ventanaCrearCursos.comboBoxProfesor) {
+		if(e.getSource() == ventana.comboBoxProfesor) {
 			
 			actualizar();
 		}
 		
-		if(e.getSource() == ventanaCrearCursos.btnGuardar) {
-		
-			dtosCurso.setAño((String)ventanaCrearCursos.comboBoxAño.getSelectedItem());
-			dtosCurso.setNivel((String)ventanaCrearCursos.comboBoxNivel.getSelectedItem());
-			dtosCurso.setIdProfesor(ventanaCrearCursos.comboBoxProfesor.getSelectedIndex());
-			dtosCurso.setValorCuota(ventanaCrearCursos.txtCuota.getText());
-			dtosCurso.setAula(ventanaCrearCursos.comboBoxAula.getSelectedIndex());
-			dtosCurso.setHorarios(ventanaCrearCursos.tablaHorarios);
-			String msgError = dtosCurso.checkInformacion(); 
-			ventanaCrearCursos.lblMensageError.setForeground(Color.RED);
-			ventanaCrearCursos.lblMensageError.setText(msgError);
+		if(e.getSource() == ventana.btnValidar) {
 			
-			if(msgError.equals("")) {
+			if(!dtosCurso.autocompletar(ventana.tablaHorarios)) {
 				
-				if(dtosCurso.setNuevoCurso()) {
-					
-					ventanaCrearCursos.lblMensageError.setForeground(Color.BLUE);
-					limpiarCampos();
-					ventanaCrearCursos.lblMensageError.setText("Registro guardado con éxito.");
-				} else {
-					
-					ventanaCrearCursos.lblMensageError.setForeground(Color.RED);
-					ventanaCrearCursos.lblMensageError.setText("No se pudo guardar en la base de datos.");
-				}
+				ventana.lblMensageError.setForeground(Color.RED);
+				ventana.lblMensageError.setText(dtosCurso.getMsgError());
 			}
 		}
 		
-		if(e.getSource() == ventanaCrearCursos.btnVolver) {
+		if(e.getSource() == ventana.btnGuardar) {
+		
+			guardar();
+		}
+		
+		if(e.getSource() == ventana.btnVolver) {
 			
-			ventanaCrearCursos.dispose();
+			ventana.dispose();
+		}
+	}
+	
+	private void actualizar() {
+
+		ventana.lblMensageError.setText("");
+		dtosCurso.setCurso("0");
+		ventana.tablaHorarios.setModel(dtosCurso.getHorariosCurso(ventana.comboBoxAula.getSelectedIndex(),
+																  ventana.comboBoxProfesor.getSelectedIndex()));
+		DefaultTableCellRenderer centrado = new DefaultTableCellRenderer();
+		centrado.setHorizontalAlignment(JLabel.CENTER);
+		
+		for(int i = 0 ; i < ventana.tablaHorarios.getColumnCount() ; i++) {
+			
+			ventana.tablaHorarios.getColumnModel().getColumn(i).setPreferredWidth(40);
+			ventana.tablaHorarios.getColumnModel().getColumn(i).setCellRenderer(centrado);
+		}
+		ventana.tablaHorarios.setRowHeight(25);
+	}
+	
+	private void selección(int fila, int columna) {
+
+		ventana.lblMensageError.setText("");
+		boolean comienzo;
+		int cont = 0;
+		
+		for(int i = 0; i < ventana.tablaHorarios.getColumnCount();i++) {
+			
+			if(ventana.tablaHorarios.getValueAt(fila, i).equals("C") || 
+					ventana.tablaHorarios.getValueAt(fila, i).equals("C "))
+				cont++;
+			
+			if(ventana.tablaHorarios.getValueAt(fila, i).equals("F") || 
+					ventana.tablaHorarios.getValueAt(fila, i).equals("F "))
+				cont--;
+		}
+
+		comienzo = cont == 0? true:false;
+		
+		if(ventana.tablaHorarios.getValueAt(fila, columna).equals(" ")) {
+		
+			if(comienzo) 
+				ventana.tablaHorarios.setValueAt("C", fila, columna);
+			else 
+				ventana.tablaHorarios.setValueAt("F", fila, columna);
+
+		} else if(ventana.tablaHorarios.getValueAt(fila, columna).equals("X ")){
+		
+			if(comienzo)
+				ventana.tablaHorarios.setValueAt("C ", fila, columna);
+			else
+				ventana.tablaHorarios.setValueAt("F ", fila, columna);
+
+		} else if(ventana.tablaHorarios.getValueAt(fila, columna).equals("C") || 
+				ventana.tablaHorarios.getValueAt(fila, columna).equals("F")) {
+			
+			ventana.tablaHorarios.setValueAt(" ", fila, columna);
+		} else if(ventana.tablaHorarios.getValueAt(fila, columna).equals("C ") || 
+				ventana.tablaHorarios.getValueAt(fila, columna).equals("F ")) {
+			
+			ventana.tablaHorarios.setValueAt("X ", fila, columna);
+		}
+	}
+	
+	private void guardar() {
+		
+		dtosCurso.setAño((String)ventana.comboBoxAño.getSelectedItem());
+		dtosCurso.setNivel((String)ventana.comboBoxNivel.getSelectedItem());
+		dtosCurso.setIdProfesor(ventana.comboBoxProfesor.getSelectedIndex());
+		dtosCurso.setValorCuota(ventana.txtCuota.getText());
+		dtosCurso.setAula(ventana.comboBoxAula.getSelectedIndex());
+		dtosCurso.setHorarios(ventana.tablaHorarios);
+		
+		if(!dtosCurso.isCheckInfo()) {
+		
+			ventana.lblMensageError.setForeground(Color.RED);
+			ventana.lblMensageError.setText(dtosCurso.getMsgError());
+			return;
+		}
+		
+		if(dtosCurso.setNuevoCurso()) {
+			
+			ventana.lblMensageError.setForeground(Color.BLUE);
+			ventana.txtCuota.setText("");
+			actualizar();
+			ventana.lblMensageError.setText("Registro guardado con éxito.");
+		} else {
+			
+			ventana.lblMensageError.setForeground(Color.RED);
+			ventana.lblMensageError.setText("No se pudo guardar en la base de datos.");
 		}
 	}
 }

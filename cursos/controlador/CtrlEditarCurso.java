@@ -3,131 +3,217 @@ package controlador;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableCellRenderer;
+
 import interfaceUsuario.CrearCurso;
 import modelo.DtosCurso;
 
 public class CtrlEditarCurso implements ActionListener{
 	
-	private CrearCurso ventanaEditarCursos;
+	private CrearCurso ventana;
 	private DtosCurso dtosCurso;
-	private String curso;
 		
 	public CtrlEditarCurso(CrearCurso vista) {
 		
-		this.ventanaEditarCursos = vista;
+		this.ventana = vista;
 		this.dtosCurso = new DtosCurso();
-		this.ventanaEditarCursos.comboBoxAula.addActionListener(this);
-		this.ventanaEditarCursos.comboBoxNivel.addActionListener(this);
-		this.ventanaEditarCursos.comboBoxAula.addActionListener(this);
-		this.ventanaEditarCursos.comboBoxProfesor.addActionListener(this);
-		this.ventanaEditarCursos.btnGuardar.addActionListener(this);
-		this.ventanaEditarCursos.btnBorrar.addActionListener(this);
-		this.ventanaEditarCursos.btnVolver.addActionListener(this);
+		this.ventana.comboBoxAula.addActionListener(this);
+		this.ventana.comboBoxNivel.addActionListener(this);
+		this.ventana.comboBoxAula.addActionListener(this);
+		this.ventana.comboBoxProfesor.addActionListener(this);
+		this.ventana.btnGuardar.addActionListener(this);
+		this.ventana.btnBorrar.addActionListener(this);
+		this.ventana.btnVolver.addActionListener(this);
+		this.ventana.tablaHorarios.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+				if (e.getClickCount() == 2)
+					selección(ventana.tablaHorarios.getSelectedRow(), ventana.tablaHorarios.getSelectedColumn());
+			}        
+		});
 	}
 	
 	public void iniciar(String idCurso) {
 		
 		dtosCurso.setCurso(idCurso);
-		curso = idCurso;
 		dtosCurso.getInformacionCurso();
-		ventanaEditarCursos.btnBorrar.setVisible(true);
-		ventanaEditarCursos.comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String [] {dtosCurso.getAño()}));
-		ventanaEditarCursos.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String [] {dtosCurso.getNivel()}));
-		ventanaEditarCursos.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaProfesores()));
-		ventanaEditarCursos.comboBoxAula.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAulas()));
-		ventanaEditarCursos.txtCuota.setText(dtosCurso.getValorCuota());
-		ventanaEditarCursos.comboBoxAula.setSelectedIndex(dtosCurso.getAula());
-		ventanaEditarCursos.comboBoxAño.setSelectedItem(dtosCurso.getAño());
-		ventanaEditarCursos.comboBoxProfesor.setSelectedItem(dtosCurso.getNombreProfesor());
-		ventanaEditarCursos.comboBoxNivel.setSelectedItem(dtosCurso.getNivel());
+		ventana.btnBorrar.setVisible(true);
+		ventana.comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String [] {dtosCurso.getAño()}));
+		ventana.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String [] {dtosCurso.getNivel()}));
+		ventana.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaProfesores()));
+		ventana.comboBoxAula.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAulas()));
+		ventana.txtCuota.setText(dtosCurso.getValorCuota());
+		ventana.comboBoxAula.setSelectedIndex(dtosCurso.getAula());
+		ventana.comboBoxAño.setSelectedItem(dtosCurso.getAño());
+		ventana.comboBoxProfesor.setSelectedItem(dtosCurso.getNombreProfesor());
+		ventana.comboBoxNivel.setSelectedItem(dtosCurso.getNivel());
 		actualizar();
-		ventanaEditarCursos.setVisible(true);
-	}
-
-	private void actualizar() {
-
-		if(ventanaEditarCursos.comboBoxAula.getSelectedIndex() == dtosCurso.getAula()) {
-			
-			dtosCurso.setCurso(curso);	
-			ventanaEditarCursos.tablaHorarios.setModel(dtosCurso.getHorariosCurso(ventanaEditarCursos.comboBoxAula.getSelectedIndex(),
-																				  ventanaEditarCursos.comboBoxProfesor.getSelectedIndex()));
-		} else {
-			
-			dtosCurso.setCurso("0");
-			ventanaEditarCursos.tablaHorarios.setModel(dtosCurso.getHorariosCurso(ventanaEditarCursos.comboBoxAula.getSelectedIndex(),
-																			 ventanaEditarCursos.comboBoxProfesor.getSelectedIndex()));
-		}
-
-		for(int i = 0 ; i < 32 ; i++) {
-			
-			ventanaEditarCursos.tablaHorarios.getColumnModel().getColumn(i).setPreferredWidth(40);
-		}
-
-		ventanaEditarCursos.tablaHorarios.setRowHeight(25);
+		ventana.setVisible(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 
-		if(e.getSource() == ventanaEditarCursos.comboBoxAula) {
+		if(e.getSource() == ventana.comboBoxAula) {
 			
 			actualizar();
 		}	
 		
-		if(e.getSource() == ventanaEditarCursos.comboBoxProfesor) {
+		if(e.getSource() == ventana.comboBoxProfesor) {
 			
 			actualizar();
 		}
 		
-		if(e.getSource() == ventanaEditarCursos.btnGuardar) {
+		if(e.getSource() == ventana.btnGuardar) {
 		
-			dtosCurso.setAño((String)ventanaEditarCursos.comboBoxAño.getSelectedItem());
-			dtosCurso.setNivel((String)ventanaEditarCursos.comboBoxNivel.getSelectedItem());
-			dtosCurso.setIdProfesor(ventanaEditarCursos.comboBoxProfesor.getSelectedIndex());
-			dtosCurso.setValorCuota(ventanaEditarCursos.txtCuota.getText());
-			dtosCurso.setAula(ventanaEditarCursos.comboBoxAula.getSelectedIndex());
-			dtosCurso.setHorarios(ventanaEditarCursos.tablaHorarios);
-			String msgError = dtosCurso.checkInformacion(); 
-			ventanaEditarCursos.lblMensageError.setForeground(Color.RED);
-			ventanaEditarCursos.lblMensageError.setText(msgError);
-			
-			if(msgError.equals("")) {
-				
-				if(dtosCurso.setActualizarCurso()) {
-					
-					ventanaEditarCursos.lblMensageError.setForeground(Color.BLUE);
-					ventanaEditarCursos.lblMensageError.setText("Registro guardado con éxito.");
-				} else {
-					
-					ventanaEditarCursos.lblMensageError.setForeground(Color.RED);
-					ventanaEditarCursos.lblMensageError.setText("No se pudo guardar en la base de datos.");
-				}
-			}
+			guardar();
 		}
 		
-		if(e.getSource() == ventanaEditarCursos.btnBorrar) {
+		if(e.getSource() == ventana.btnBorrar) {
 			
-			dtosCurso.setEstado(0);
-			
-			if(dtosCurso.setActualizarCurso()) {
-				
-				ventanaEditarCursos.comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String [] {}));
-				ventanaEditarCursos.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String [] {}));		
-				ventanaEditarCursos.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(new String [] {}));
-				ventanaEditarCursos.comboBoxAula.setModel(new DefaultComboBoxModel<String>(new String [] {}));
-				ventanaEditarCursos.txtCuota.setText("");
-				ventanaEditarCursos.lblMensageError.setForeground(Color.BLUE);
-				ventanaEditarCursos.lblMensageError.setText("El registro se borro exitosamente.");
-			} else {
-				
-				ventanaEditarCursos.lblMensageError.setForeground(Color.RED);
-				ventanaEditarCursos.lblMensageError.setText("Error al acceder a la base de datos.");
-			}
+			borrar();
 		}
 		
-		if(e.getSource() == ventanaEditarCursos.btnVolver) {
+		if(e.getSource() == ventana.btnVolver) {
 			
-			ventanaEditarCursos.dispose();
+			ventana.dispose();
+		}
+	}
+
+	private void actualizar() {
+
+		ventana.tablaHorarios.setModel(dtosCurso.getHorariosCurso(ventana.comboBoxAula.getSelectedIndex(),
+																  ventana.comboBoxProfesor.getSelectedIndex()));
+		DefaultTableCellRenderer centrado = new DefaultTableCellRenderer();
+		centrado.setHorizontalAlignment(JLabel.CENTER);
+		
+		for(int i = 0 ; i < ventana.tablaHorarios.getColumnCount() ; i++) {
+			
+			ventana.tablaHorarios.getColumnModel().getColumn(i).setPreferredWidth(40);
+			ventana.tablaHorarios.getColumnModel().getColumn(i).setCellRenderer(centrado);
+		}
+
+		ventana.tablaHorarios.setRowHeight(25);
+	}
+	
+	private void borrar() {
+		
+		dtosCurso.setEstado(0);
+		
+		if(dtosCurso.setActualizarCurso()) {
+			
+			ventana.comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String [] {}));
+			ventana.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String [] {}));		
+			ventana.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(new String [] {}));
+			ventana.comboBoxAula.setModel(new DefaultComboBoxModel<String>(new String [] {}));
+			ventana.txtCuota.setText("");
+			ventana.lblMensageError.setForeground(Color.BLUE);
+			ventana.lblMensageError.setText("El registro se borro exitosamente.");
+		} else {
+			
+			ventana.lblMensageError.setForeground(Color.RED);
+			ventana.lblMensageError.setText("Error al acceder a la base de datos.");
+		}
+	}
+	
+	
+	private void selección(int fila, int columna) {
+		
+		ventana.lblMensageError.setText("");
+		boolean comienzo;
+		boolean comienzoEliminar;
+		int cont = 0;
+		int contE = 0;
+		
+		for(int i = 0; i < ventana.tablaHorarios.getColumnCount();i++) {
+			
+			if(ventana.tablaHorarios.getValueAt(fila, i).equals("C") || 
+					ventana.tablaHorarios.getValueAt(fila, i).equals("C "))
+				cont++;
+			
+			if(ventana.tablaHorarios.getValueAt(fila, i).equals("F") || 
+					ventana.tablaHorarios.getValueAt(fila, i).equals("F "))
+				cont--;
+			
+			if(ventana.tablaHorarios.getValueAt(fila, i).equals("CE") || 
+					ventana.tablaHorarios.getValueAt(fila, i).equals("CE "))
+				contE++;
+			
+			if(ventana.tablaHorarios.getValueAt(fila, i).equals("FE") || 
+					ventana.tablaHorarios.getValueAt(fila, i).equals("FE "))
+				contE--;
+		}
+		comienzo = cont == 0? true:false;
+		comienzoEliminar = contE == 0? true:false;
+
+		switch((String)ventana.tablaHorarios.getValueAt(fila, columna)) {
+		
+			case " ":
+				ventana.tablaHorarios.setValueAt(comienzo?"C":"F", fila, columna);
+				break;
+	
+			case "X ":
+				ventana.tablaHorarios.setValueAt(comienzo?"C ":"F ", fila, columna);
+				break;
+				
+			case "O":
+				ventana.tablaHorarios.setValueAt(comienzoEliminar?"CE":"FE", fila, columna);
+				break;
+			
+			case "O ":
+				ventana.tablaHorarios.setValueAt(comienzoEliminar?"CE ":"FE ", fila, columna);
+				break;
+				
+			case "C":
+			case "F":
+				ventana.tablaHorarios.setValueAt(" ", fila, columna);
+				break;
+				
+			case "CE":
+			case "FE":
+				ventana.tablaHorarios.setValueAt("O", fila, columna);
+				break;
+			
+			case "C ":
+			case "F ":
+				ventana.tablaHorarios.setValueAt("X ", fila, columna);
+				break;
+				
+			case "CE ":
+			case "FE ":
+				ventana.tablaHorarios.setValueAt("O ", fila, columna);
+				break;
+		}
+	}
+	
+	private void guardar() {
+		
+		dtosCurso.setAño((String)ventana.comboBoxAño.getSelectedItem());
+		dtosCurso.setNivel((String)ventana.comboBoxNivel.getSelectedItem());
+		dtosCurso.setIdProfesor(ventana.comboBoxProfesor.getSelectedIndex());
+		dtosCurso.setValorCuota(ventana.txtCuota.getText());
+		dtosCurso.setAula(ventana.comboBoxAula.getSelectedIndex());
+		dtosCurso.setHorarios(ventana.tablaHorarios);
+
+		if(!dtosCurso.isCheckInfo()) {
+		
+			ventana.lblMensageError.setForeground(Color.RED);
+			ventana.lblMensageError.setText(dtosCurso.getMsgError());
+			return;
+		}		
+
+		if(dtosCurso.setActualizarCurso()) {
+			
+			ventana.lblMensageError.setForeground(Color.BLUE);
+			ventana.lblMensageError.setText("Registro guardado con éxito.");
+		} else {
+			
+			ventana.lblMensageError.setForeground(Color.RED);
+			ventana.lblMensageError.setText("No se pudo guardar en la base de datos.");
 		}
 	}
 }

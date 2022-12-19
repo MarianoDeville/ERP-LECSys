@@ -23,6 +23,7 @@ public class CrearCurso extends VentanaModelo{
 	public JTable tablaHorarios;
 	public JLabel lblMensageError;
 	public JButton btnGuardar;
+	public JButton btnValidar;
 	public JButton btnBorrar;
 	public JButton btnVolver;
 		
@@ -183,21 +184,27 @@ public class CrearCurso extends VentanaModelo{
 		
 		btnGuardar = new JButton("Guardar");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnGuardar, -15, SpringLayout.SOUTH, panel);
-		contenedor.putConstraint(SpringLayout.WEST, btnGuardar, 60, SpringLayout.WEST, panel);
-		contenedor.putConstraint(SpringLayout.EAST, btnGuardar, 85, SpringLayout.WEST, btnGuardar);
+		contenedor.putConstraint(SpringLayout.WEST, btnGuardar, 40, SpringLayout.WEST, panel);
+		contenedor.putConstraint(SpringLayout.EAST, btnGuardar, 100, SpringLayout.WEST, btnGuardar);
 		panel.add(btnGuardar);
+		
+		btnValidar = new JButton("Validar");
+		contenedor.putConstraint(SpringLayout.NORTH, btnValidar, 0, SpringLayout.NORTH, btnGuardar);
+		contenedor.putConstraint(SpringLayout.WEST, btnValidar, 50, SpringLayout.EAST, btnGuardar);
+		contenedor.putConstraint(SpringLayout.EAST, btnValidar, 100, SpringLayout.WEST, btnValidar);
+		panel.add(btnValidar);
 
 		btnBorrar = new JButton("Borrar");
-		contenedor.putConstraint(SpringLayout.NORTH, btnBorrar, 0, SpringLayout.NORTH, btnGuardar);
-		contenedor.putConstraint(SpringLayout.WEST, btnBorrar, 60, SpringLayout.EAST, btnGuardar);
-		contenedor.putConstraint(SpringLayout.EAST, btnBorrar, 85, SpringLayout.WEST, btnBorrar);
+		contenedor.putConstraint(SpringLayout.NORTH, btnBorrar, 0, SpringLayout.NORTH, btnValidar);
+		contenedor.putConstraint(SpringLayout.WEST, btnBorrar, 50, SpringLayout.EAST, btnValidar);
+		contenedor.putConstraint(SpringLayout.EAST, btnBorrar, 100, SpringLayout.WEST, btnBorrar);
 		btnBorrar.setVisible(false);
 		panel.add(btnBorrar);
 		
 		btnVolver = new JButton("Volver");
 		contenedor.putConstraint(SpringLayout.NORTH, btnVolver, 0, SpringLayout.NORTH, btnBorrar);
-		contenedor.putConstraint(SpringLayout.WEST, btnVolver, 60, SpringLayout.EAST, btnBorrar);
-		contenedor.putConstraint(SpringLayout.EAST, btnVolver, 85, SpringLayout.WEST, btnVolver);
+		contenedor.putConstraint(SpringLayout.WEST, btnVolver, 50, SpringLayout.EAST, btnBorrar);
+		contenedor.putConstraint(SpringLayout.EAST, btnVolver, 100, SpringLayout.WEST, btnVolver);
 		panel.add(btnVolver);
 		
 	}
