@@ -38,20 +38,27 @@ public class DtosCurso {
 			
 			for(int e = 0; e < tablaOcupacion.getColumnCount(); e++) {
 				
-				if(tablaOcupacion.getValueAt(i, e).equals("C") || tablaOcupacion.getValueAt(i, e).equals("C ")) {
-					
-					buclesLlenado++;
-				} else if(tablaOcupacion.getValueAt(i, e).equals("F") || tablaOcupacion.getValueAt(i, e).equals("F ")) {
-
-					tablaOcupacion.setValueAt("O", i, e);
-					buclesLlenado--;
-				} else if(tablaOcupacion.getValueAt(i, e).equals("CE")) {
-					
-					buclesVaciado++;
-				} else if(tablaOcupacion.getValueAt(i, e).equals("FE")) {
+				switch ((String)tablaOcupacion.getValueAt(i, e)) {
 				
-					tablaOcupacion.setValueAt(" ", i, e);
-					buclesVaciado--;
+					case "C":
+					case "C ":
+						buclesLlenado++;	
+						break;
+
+					case "F":
+					case "F ":
+						tablaOcupacion.setValueAt("O ", i, e);
+						buclesLlenado--;	
+						break;
+					
+					case "CE":
+						buclesVaciado++;	
+						break;
+						
+					case "FE":
+						tablaOcupacion.setValueAt(" ", i, e);
+						buclesVaciado--;	
+						break;	
 				}
 
 				if(buclesLlenado > 0 && tablaOcupacion.getValueAt(i, e).equals("X")) {
@@ -61,8 +68,10 @@ public class DtosCurso {
 				}
 				
 				if(buclesLlenado > 0) {
-					
-					tablaOcupacion.setValueAt("O", i, e);
+					if(e == 0)
+						tablaOcupacion.setValueAt("O ", i, e);
+					else
+						tablaOcupacion.setValueAt(tablaOcupacion.getValueAt(i, e-1).equals(" ")?"O ":"O", i, e);
 				}				
 	
 				if(buclesVaciado > 0) {
@@ -77,20 +86,19 @@ public class DtosCurso {
 	public DefaultTableModel getHorariosCurso(int aula, int profesor) {
 		
 		CursosDAO cursoDAO = new CursosDAO();
-		String titulo[] = getListadoHorarios();
 		cursoDAO.getCronogramaDias(0, Integer.parseInt(idProfesores[profesor]), aula);
 		ocupado = cursoDAO.getmatrizDiasHorarios();
-		String cronograma[][] = new String[6][titulo.length];
+		String cronograma[][] = new String[6][getListadoHorarios().length];
 
 		for(int i = 0 ; i < 6 ; i++) {
 			
-			for(int e = 0 ; e < titulo.length ; e++) {
+			for(int e = 0 ; e < getListadoHorarios().length ; e++) {
 				
 				if(ocupado[i][e]) {
 					
 					cronograma[i][e] = "X";
 					
-					if(e > 0 && e < titulo.length - 1) { 
+					if(e > 0 && e < getListadoHorarios().length - 1) { 
 						
 						if(!ocupado[i][e-1] || !ocupado[i][e+1])
 							cronograma[i][e] = "X ";
@@ -103,20 +111,20 @@ public class DtosCurso {
 			}
 		}
 
-		if(this.aula == aula) {
+		if(this.aula == aula && !idCurso.equals("0")) {
 		
 			cursoDAO.getCronogramaDias(Integer.parseInt(idCurso), 0, 0);
 			ocupado = cursoDAO.getmatrizDiasHorarios();
 	
 			for(int i = 0 ; i < 6 ; i++) {
 				
-				for(int e = 0 ; e < titulo.length ; e++) {
+				for(int e = 0 ; e < getListadoHorarios().length ; e++) {
 					
 					if(ocupado[i][e]) {
 						
 						cronograma[i][e] = "O";
 						
-						if(e > 0 && e < titulo.length - 1) { 
+						if(e > 0 && e < getListadoHorarios().length - 1) { 
 							
 							if(!ocupado[i][e-1] || !ocupado[i][e+1])
 								cronograma[i][e] = "O ";
@@ -126,7 +134,7 @@ public class DtosCurso {
 				}
 			}
 		}
-		DefaultTableModel tablaModelo = new DefaultTableModel(cronograma, titulo){
+		DefaultTableModel tablaModelo = new DefaultTableModel(cronograma, getListadoHorarios()){
 			
 			private static final long serialVersionUID = 1L;
 			
@@ -211,15 +219,10 @@ public class DtosCurso {
 		
 		CursosDAO cursoDAO = new CursosDAO();
 		int sumaHoras = 0;
-		String titulo[] = new String[] {"", "7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", 
-										"13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", 
-										"18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"};
-		String dia[] = new String[] {"Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"};
 
 		if(criterio.equals("Profesor")) {
 			
 			cursoDAO.getCronogramaDias(0, Integer.parseInt(idProfesores[valor]), 100);
-		
 		} else if(criterio.equals("Curso")) {
 			
 			cursoDAO.getCronogramaDias(Integer.parseInt(idCursos[valor]), 0, 100);
@@ -228,55 +231,43 @@ public class DtosCurso {
 			cursoDAO.getCronogramaDias(0, 0, valor);
 		}
 		ocupado = cursoDAO.getmatrizDiasHorarios();
-		Object cronograma[][] = new Object[6][33];
+		String cronograma[][] = new String[6][getListadoHorarios().length];
 
 		for(int i = 0 ; i < 6 ; i++) {
 			
 			for(int e = 0 ; e < 33 ; e++) {
 				
-				if(e == 0) {
-					
-					cronograma[i][e] = dia[i];
-				} else {
-					
-					cronograma[i][e] = ocupado[i][e-1]? " ":"   O ";
-				}
-				if(cronograma[i][e].equals("   O ")) {
+				cronograma[i][e] = ocupado[i][e]? "X":" ";
+
+				if(cronograma[i][e].equals("X")) {
 					
 					sumaHoras++;
 				}
 			}
 		}
-		cantHoras = (float)sumaHoras / 2 + "";
-		DefaultTableModel tablaModelo = new DefaultTableModel(cronograma, titulo);
+		cantHoras = (float)((sumaHoras - 1) / 2) + "";
+		DefaultTableModel tablaModelo = new DefaultTableModel(cronograma, getListadoHorarios());
 		return tablaModelo;	
 	}
 	
-	public String [] getListadoHorarios() {
-		
-		return new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", 
-							 "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", 
-							 "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"};
-	}
-
 	public void setHorarios(JTable tablaHorarios) {
 
 		int cant = 0;
 		boolean comienzo;
-		
+
 		for(int i = 0; i < tablaHorarios.getRowCount(); i++) {
 			
 			comienzo = false;
 			
 			for(int e = 0; e < tablaHorarios.getColumnCount(); e++) {
-			
-				if(tablaHorarios.getValueAt(i, e).equals("O") && !comienzo) {
+
+				if(tablaHorarios.getValueAt(i, e).equals("O ") && !comienzo) {
 				
 					comienzo = true;
 					cant++;
 				} 
 				
-				if(!tablaHorarios.getValueAt(i, e).equals("O"))
+				if(!tablaHorarios.getValueAt(i, e).equals("O") && !tablaHorarios.getValueAt(i, e).equals("O "))
 					comienzo = false;
 			}
 		}
@@ -289,21 +280,20 @@ public class DtosCurso {
 			
 			for(int e = 0; e < tablaHorarios.getColumnCount(); e++) {
 
-				if(tablaHorarios.getValueAt(i, e).equals("O") && !comienzo) {
+				if(tablaHorarios.getValueAt(i, e).equals("O ") && !comienzo) {
 					
 					pos++;
 					comienzo = true;
-					String horas[] = getListadoHorarios();
 					horarios[pos][0] = i + "";
-					horarios[pos][1] = horas[e];
+					horarios[pos][1] = getListadoHorarios()[e];
 					cant = 0;
 				}
-				
-				if(!tablaHorarios.getValueAt(i, e).equals("O"))
+		
+				if(!tablaHorarios.getValueAt(i, e).equals("O") && !tablaHorarios.getValueAt(i, e).equals("O "))
 					comienzo = false;
 				
 				if(comienzo) {
-			
+
 					cant++;
 					horarios[pos][2] = cant + "";
 				}
@@ -325,16 +315,6 @@ public class DtosCurso {
 			return false;
 		}
 		return true;
-	}
-	
-	public String [] getListaNivel() {
-		
-		return new String [] {"Kinder", "Children", "Junior", "Teens", "Adults"};
-	}
-
-	public String [] getListaCriterios() {
-		
-		return new String [] {"Aula", "Curso", "Profesor"};
 	}
 	
 	public String [] getListadoOpciones(String valor) {
@@ -365,6 +345,23 @@ public class DtosCurso {
 			nombreCursos[i] = respuesta[i][0] + " " + respuesta[i][1] + " " + respuesta[i][2];
 		}
 		return nombreCursos;
+	}
+	
+	public String [] getListadoHorarios() {
+		
+		return new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", 
+							 "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", 
+							 "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"};
+	}
+	
+	public String [] getListaNivel() {
+		
+		return new String [] {"Kinder", "Children", "Junior", "Teens", "Adults"};
+	}
+
+	public String [] getListaCriterios() {
+		
+		return new String [] {"Aula", "Curso", "Profesor"};
 	}
 
 	public String [] getListaAulas() {
@@ -460,11 +457,6 @@ public class DtosCurso {
 		this.valorCuota = valorCuota;
 	}
 
-	public String getIdProfesor() {
-		
-		return idProfesor;
-	}
-	
 	public void setIdProfesor(int orden) {
 		
 		this.idProfesor = idProfesores[orden];
@@ -485,19 +477,9 @@ public class DtosCurso {
 		return nombreProfesor;
 	}
 
-	public String getCurso() {
-		
-		return idCurso;
-	}
-
 	public void setCurso(String curso) {
 		
 		this.idCurso = curso;
-	}
-
-	public int getEstado() {
-		
-		return estado;
 	}
 
 	public void setEstado(int estado) {

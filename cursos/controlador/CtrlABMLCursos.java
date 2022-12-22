@@ -2,6 +2,8 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
 import javax.swing.JOptionPane;
 import interfaceUsuario.ABML;
@@ -16,6 +18,7 @@ public class CtrlABMLCursos implements ActionListener {
 	private CrearCurso ventanaCrearCurso;
 	private CrearCurso ventanaEditarCurso;
 	private DtosAcceso acceso;
+	private int elemento;
 
 	public CtrlABMLCursos(ABML vista) {
 		
@@ -26,6 +29,15 @@ public class CtrlABMLCursos implements ActionListener {
 		this.ventanaABMLCursos.btnEditar.addActionListener(this);
 		this.ventanaABMLCursos.btnImprimir.addActionListener(this);
 		this.ventanaABMLCursos.btnVolver.addActionListener(this);
+		this.ventanaABMLCursos.tabla.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		        if (e.getClickCount() == 1) {
+
+					elemento = ventanaABMLCursos.tabla.getSelectedRow();
+					limpiarOtros();
+		        }
+		      }
+		  });
 	}
 	
 	public void iniciar() {
@@ -43,6 +55,15 @@ public class CtrlABMLCursos implements ActionListener {
 		ventanaABMLCursos.tabla.getColumnModel().getColumn(3).setMaxWidth(50);
 		ventanaABMLCursos.tabla.getColumnModel().getColumn(6).setPreferredWidth(40);
 		ventanaABMLCursos.tabla.getColumnModel().getColumn(6).setMaxWidth(50);
+	}
+	
+	private void limpiarOtros() {
+		
+		for(int i = 0; i < ventanaABMLCursos.tabla.getRowCount(); i++) {
+			
+			if(i != elemento)
+				ventanaABMLCursos.tabla.setValueAt((boolean) false, i, 6);
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) {

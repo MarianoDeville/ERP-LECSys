@@ -4,78 +4,96 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.print.PrinterException;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+
 import interfaceUsuario.Listado;
 import modelo.DtosCurso;
 
 public class CtrlDiagramaCursos implements ActionListener {
 	
-	private Listado ventanaDiagramaCursos;
+	private Listado ventana;
 	private DtosCurso dtosCurso;
 		
 	public CtrlDiagramaCursos(Listado vista) {
 		
-		this.ventanaDiagramaCursos = vista;
+		this.ventana = vista;
 		this.dtosCurso = new DtosCurso();
-		this.ventanaDiagramaCursos.comboBox1.setVisible(true);
-		this.ventanaDiagramaCursos.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaCriterios()));
-		this.ventanaDiagramaCursos.comboBox2.setVisible(true);
-		this.ventanaDiagramaCursos.lblTxt1.setVisible(true);
-		this.ventanaDiagramaCursos.lblTxt1.setText("Cantidad de horas:");
-		this.ventanaDiagramaCursos.txt1.setVisible(true);
-		this.ventanaDiagramaCursos.comboBox1.addActionListener(this);
-		this.ventanaDiagramaCursos.comboBox2.addActionListener(this);
-		this.ventanaDiagramaCursos.btnVolver.addActionListener(this);
+		this.ventana.comboBox1.setVisible(true);
+		this.ventana.comboBox1.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaCriterios()));
+		this.ventana.comboBox2.setVisible(true);
+		this.ventana.lblTxt1.setVisible(true);
+		this.ventana.lblTxt1.setText("Cantidad de horas:");
+		this.ventana.txt1.setVisible(true);
+		this.ventana.comboBox1.addActionListener(this);
+		this.ventana.comboBox2.addActionListener(this);
+		this.ventana.btnVolver.addActionListener(this);
 	}
 
 	public void iniciar() {
 		
-		ventanaDiagramaCursos.tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		ventanaDiagramaCursos.tabla.doLayout();
+		ventana.lblHorario.setVisible(true);
+		ventana.lblHorario.setText("Horario:");
+		ventana.lblLunes.setVisible(true);
+		ventana.lblLunes.setText("Lunes");
+		ventana.lblMartes.setVisible(true);
+		ventana.lblMartes.setText("Martes");
+		ventana.lblMiercoles.setVisible(true);
+		ventana.lblMiercoles.setText("Miercoles");
+		ventana.lblJueves.setVisible(true);
+		ventana.lblJueves.setText("Jueves");
+		ventana.lblViernes.setVisible(true);
+		ventana.lblViernes.setText("Viernes");
+		ventana.lblSabado.setVisible(true);
+		ventana.lblSabado.setText("Sábado");
+		ventana.tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		ventana.tabla.doLayout();
 		actualizar();
-		ventanaDiagramaCursos.setVisible(true);
+		ventana.setVisible(true);
 	}
 
 	private void actualizar() {
 
-		ventanaDiagramaCursos.comboBox2.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListadoOpciones((String)ventanaDiagramaCursos.comboBox1.getSelectedItem())));
+		ventana.comboBox2.setModel(new DefaultComboBoxModel<>(dtosCurso.getListadoOpciones((String)ventana.comboBox1.getSelectedItem())));
 		actualizarTabla();
 	}
 	
 	private void actualizarTabla() {
 		
-		ventanaDiagramaCursos.tabla.setModel(dtosCurso.getDiagramacion(
-								(String)ventanaDiagramaCursos.comboBox1.getSelectedItem(), 
-								ventanaDiagramaCursos.comboBox2.getSelectedIndex()));
-		ventanaDiagramaCursos.tabla.setEnabled(false);
+		ventana.tabla.setModel(dtosCurso.getDiagramacion((String)ventana.comboBox1.getSelectedItem(), 
+																 ventana.comboBox2.getSelectedIndex()));
+		ventana.tabla.setEnabled(false);
+		DefaultTableCellRenderer centrado = new DefaultTableCellRenderer();
+		centrado.setHorizontalAlignment(JLabel.CENTER);
 		
-		for(int i = 1 ; i < 33 ; i++) {
+		for(int i = 0 ; i < ventana.tabla.getColumnCount() ; i++) {
 			
-			ventanaDiagramaCursos.tabla.getColumnModel().getColumn(i).setPreferredWidth(40);
+			ventana.tabla.getColumnModel().getColumn(i).setPreferredWidth(40);
+			ventana.tabla.getColumnModel().getColumn(i).setCellRenderer(centrado);
 		}
-
-		ventanaDiagramaCursos.tabla.setRowHeight(25);
-		ventanaDiagramaCursos.txt1.setText(dtosCurso.getCantHoras());
+		ventana.tabla.setRowHeight(25);
+		ventana.txt1.setText(dtosCurso.getCantHoras());
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 
-		if(e.getSource() == ventanaDiagramaCursos.comboBox1) {
+		if(e.getSource() == ventana.comboBox1) {
 			
 			actualizar();
 		}
 		
-		if(e.getSource() == ventanaDiagramaCursos.comboBox2) {
+		if(e.getSource() == ventana.comboBox2) {
 			
 			actualizarTabla();
 		}
 		
-		if(e.getSource() == ventanaDiagramaCursos.btnImprimir) {
+		if(e.getSource() == ventana.btnImprimir) {
 			
 			try {
 				
-				ventanaDiagramaCursos.tabla.print();
+				ventana.tabla.print();
 			} catch (PrinterException f) {
 				
 				JOptionPane.showMessageDialog(null, "Error al intentar imprimir.");
@@ -83,9 +101,9 @@ public class CtrlDiagramaCursos implements ActionListener {
 			}
 		}
 		
-		if(e.getSource() == ventanaDiagramaCursos.btnVolver) {
+		if(e.getSource() == ventana.btnVolver) {
 			
-			ventanaDiagramaCursos.dispose();
+			ventana.dispose();
 		}
 	}
 }

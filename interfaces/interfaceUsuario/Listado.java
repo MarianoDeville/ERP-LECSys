@@ -9,6 +9,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 
 public class Listado extends VentanaModelo {
 
@@ -20,6 +21,13 @@ public class Listado extends VentanaModelo {
 	public JLabel lblTxt1;
 	public JLabel lblTxt2;
 	public JLabel lblTxt1Der;
+	public JLabel lblHorario;
+	public JLabel lblLunes;
+	public JLabel lblMartes;
+	public JLabel lblMiercoles;
+	public JLabel lblJueves;
+	public JLabel lblViernes;
+	public JLabel lblSabado;
 	public JTextField txt1;
 	public JTextField txt2;
 	public JTextField txt3;
@@ -98,10 +106,65 @@ public class Listado extends VentanaModelo {
 		txt2.setEditable(false);
 		txt2.setVisible(false);
 		listado.add(txt2);
+	
+		lblHorario = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblHorario, 48, SpringLayout.NORTH, listado);
+		contenedor.putConstraint(SpringLayout.WEST, lblHorario, 20, SpringLayout.WEST, listado);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblHorario, 25, SpringLayout.NORTH, lblHorario);
+		lblHorario.setVisible(false);
+		listado.add(lblHorario);
+		
+		lblLunes = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblLunes, 0, SpringLayout.SOUTH, lblHorario);
+		contenedor.putConstraint(SpringLayout.EAST, lblLunes, 0, SpringLayout.EAST, lblHorario);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblLunes, 24, SpringLayout.NORTH, lblLunes);
+		lblLunes.setHorizontalAlignment(SwingConstants.LEFT);
+		lblLunes.setVisible(false);
+		listado.add(lblLunes);
+		
+		lblMartes = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblMartes, 0, SpringLayout.SOUTH, lblLunes);
+		contenedor.putConstraint(SpringLayout.EAST, lblMartes, 0, SpringLayout.EAST, lblHorario);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblMartes, 24, SpringLayout.NORTH, lblMartes);
+		lblMartes.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMartes.setVisible(false);
+		listado.add(lblMartes);
+		
+		lblMiercoles = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblMiercoles, 0, SpringLayout.SOUTH, lblMartes);
+		contenedor.putConstraint(SpringLayout.EAST, lblMiercoles, 0, SpringLayout.EAST, lblHorario);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblMiercoles, 24, SpringLayout.NORTH, lblMiercoles);
+		lblMiercoles.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMiercoles.setVisible(false);
+		listado.add(lblMiercoles);
+		
+		lblJueves = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblJueves, 0, SpringLayout.SOUTH, lblMiercoles);
+		contenedor.putConstraint(SpringLayout.EAST, lblJueves, 0, SpringLayout.EAST, lblHorario);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblJueves, 24, SpringLayout.NORTH, lblJueves);
+		lblJueves.setHorizontalAlignment(SwingConstants.LEFT);
+		lblJueves.setVisible(false);
+		listado.add(lblJueves);
+		
+		lblViernes = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblViernes, 0, SpringLayout.SOUTH, lblJueves);
+		contenedor.putConstraint(SpringLayout.EAST, lblViernes, 0, SpringLayout.EAST, lblHorario);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblViernes, 24, SpringLayout.NORTH, lblViernes);
+		lblViernes.setHorizontalAlignment(SwingConstants.LEFT);
+		lblViernes.setVisible(false);
+		listado.add(lblViernes);
+		
+		lblSabado = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblSabado, 0, SpringLayout.SOUTH, lblViernes);
+		contenedor.putConstraint(SpringLayout.EAST, lblSabado, 0, SpringLayout.EAST, lblHorario);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblSabado, 24, SpringLayout.NORTH, lblSabado);
+		lblSabado.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSabado.setVisible(false);
+		listado.add(lblSabado);
 		
 		scrollTabla = new JScrollPane();
 		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla, 50, SpringLayout.NORTH, listado);
-		contenedor.putConstraint(SpringLayout.WEST, scrollTabla, 15, SpringLayout.WEST, listado);
+		contenedor.putConstraint(SpringLayout.WEST, scrollTabla, 5, SpringLayout.EAST, lblLunes);
 		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla, -20, SpringLayout.SOUTH, listado);
 		contenedor.putConstraint(SpringLayout.EAST, scrollTabla, -120, SpringLayout.EAST, listado);
 		listado.add(scrollTabla);

@@ -37,6 +37,8 @@ public class CtrlNuevoCurso implements ActionListener {
 	
 	public void iniciar() {
 		
+		ventana.btnValidar.setEnabled(false);
+		ventana.btnGuardar.setEnabled(false);
 		ventana.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaNivel()));
 		ventana.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaProfesores()));
 		ventana.comboBoxAula.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAulas()));
@@ -102,6 +104,8 @@ public class CtrlNuevoCurso implements ActionListener {
 	
 	private void selección(int fila, int columna) {
 
+		ventana.btnValidar.setEnabled(true);
+		ventana.btnGuardar.setEnabled(true);
 		ventana.lblMensageError.setText("");
 		boolean comienzo;
 		int cont = 0;
@@ -166,6 +170,8 @@ public class CtrlNuevoCurso implements ActionListener {
 			ventana.txtCuota.setText("");
 			actualizar();
 			ventana.lblMensageError.setText("Registro guardado con éxito.");
+			ventana.btnGuardar.setEnabled(false);
+			ventana.btnValidar.setEnabled(false);
 		} else {
 			
 			ventana.lblMensageError.setForeground(Color.RED);

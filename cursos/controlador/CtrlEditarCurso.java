@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import interfaceUsuario.CrearCurso;
@@ -29,6 +30,7 @@ public class CtrlEditarCurso implements ActionListener{
 		this.ventana.btnGuardar.addActionListener(this);
 		this.ventana.btnBorrar.addActionListener(this);
 		this.ventana.btnVolver.addActionListener(this);
+		this.ventana.btnValidar.addActionListener(this);
 		this.ventana.tablaHorarios.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				
@@ -43,6 +45,7 @@ public class CtrlEditarCurso implements ActionListener{
 		dtosCurso.setCurso(idCurso);
 		dtosCurso.getInformacionCurso();
 		ventana.btnBorrar.setVisible(true);
+		ventana.btnValidar.setEnabled(false);
 		ventana.comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String [] {dtosCurso.getAño()}));
 		ventana.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String [] {dtosCurso.getNivel()}));
 		ventana.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaProfesores()));
@@ -78,6 +81,15 @@ public class CtrlEditarCurso implements ActionListener{
 			borrar();
 		}
 		
+		if(e.getSource() == ventana.btnValidar) {
+			
+			if(!dtosCurso.autocompletar(ventana.tablaHorarios)) {
+				
+				ventana.lblMensageError.setForeground(Color.RED);
+				ventana.lblMensageError.setText(dtosCurso.getMsgError());
+			}
+		}
+		
 		if(e.getSource() == ventana.btnVolver) {
 			
 			ventana.dispose();
@@ -104,25 +116,29 @@ public class CtrlEditarCurso implements ActionListener{
 		
 		dtosCurso.setEstado(0);
 		
-		if(dtosCurso.setActualizarCurso()) {
+		if(JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar el curso?", "Alerta!", JOptionPane.YES_NO_OPTION) == 0) {
 			
-			ventana.comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String [] {}));
-			ventana.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String [] {}));		
-			ventana.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(new String [] {}));
-			ventana.comboBoxAula.setModel(new DefaultComboBoxModel<String>(new String [] {}));
-			ventana.txtCuota.setText("");
-			ventana.lblMensageError.setForeground(Color.BLUE);
-			ventana.lblMensageError.setText("El registro se borro exitosamente.");
-		} else {
-			
-			ventana.lblMensageError.setForeground(Color.RED);
-			ventana.lblMensageError.setText("Error al acceder a la base de datos.");
+			if(dtosCurso.setActualizarCurso()) {
+				
+				ventana.comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String [] {}));
+				ventana.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String [] {}));		
+				ventana.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(new String [] {}));
+				ventana.comboBoxAula.setModel(new DefaultComboBoxModel<String>(new String [] {}));
+				ventana.txtCuota.setText("");
+				ventana.lblMensageError.setForeground(Color.BLUE);
+				ventana.lblMensageError.setText("El registro se borro exitosamente.");
+			} else {
+				
+				ventana.lblMensageError.setForeground(Color.RED);
+				ventana.lblMensageError.setText("Error al acceder a la base de datos.");
+			}
 		}
 	}
 	
 	
 	private void selección(int fila, int columna) {
 		
+		ventana.btnValidar.setEnabled(true);
 		ventana.lblMensageError.setText("");
 		boolean comienzo;
 		boolean comienzoEliminar;
@@ -210,6 +226,9 @@ public class CtrlEditarCurso implements ActionListener{
 			
 			ventana.lblMensageError.setForeground(Color.BLUE);
 			ventana.lblMensageError.setText("Registro guardado con éxito.");
+			ventana.btnBorrar.setEnabled(false);
+			ventana.btnGuardar.setEnabled(false);
+			ventana.btnValidar.setEnabled(false);
 		} else {
 			
 			ventana.lblMensageError.setForeground(Color.RED);
