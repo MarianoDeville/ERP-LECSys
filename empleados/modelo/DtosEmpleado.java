@@ -24,46 +24,125 @@ public class DtosEmpleado {
 	private static String estado;
 	private static String idPersona;
 	private String respuesta[][];
-	private boolean editable[][];
-	private float cantidadHoras;
-
-	public JTable autocompletar(JTable tabla) {
+	private String horarios[][];
+	private String msgError;
+	
+	public boolean setHorarios(int granularidad, JTable tablaOcupacion) {//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		for(int i = 0; i < tabla.getRowCount(); i++) {
+		int cant = 0;
+		boolean comienzo;
+		boolean bandera = false;
+		
+		for(int i = 0; i < tablaOcupacion.getRowCount(); i++) {
+			
+			comienzo = false;
+			
+			for(int e = 0; e < tablaOcupacion.getColumnCount(); e++) {
+
+				if(tablaOcupacion.getValueAt(i, e).equals("O ") && !comienzo) {
+				
+					comienzo = true;
+					cant++;
+				} 
+				
+				if(!tablaOcupacion.getValueAt(i, e).equals("O") && !tablaOcupacion.getValueAt(i, e).equals("O "))
+					comienzo = false;
+			}
+		}
+		horarios = new String [cant][3];
+		int pos = -1;
+		
+		for(int i = 0; i < tablaOcupacion.getRowCount(); i++) {
+		
+			comienzo = false;
+			
+			for(int e = 0; e < tablaOcupacion.getColumnCount(); e++) {
+
+				if(tablaOcupacion.getValueAt(i, e).equals("O ") && !comienzo) {
+					
+					pos++;
+					comienzo = true;
+					horarios[pos][0] = i + "";
+					horarios[pos][1] = listaHorarios(granularidad)[e];
+					cant = 0;
+				}
+		
+				if(!tablaOcupacion.getValueAt(i, e).equals("O") && !tablaOcupacion.getValueAt(i, e).equals("O "))
+					comienzo = false;
+				
+				if(comienzo) {
+
+					cant++;
+					horarios[pos][2] = cant + "";
+				}
+			}
+		}
+		EmpleadosDAO empleadoDAO = new EmpleadosDAO();
+		bandera = empleadoDAO.setCronogramaDias(conviertoString(legajo), horarios, granularidad);
+		return bandera;
+	}
+
+	public String getMsgError() {
+		
+		return msgError;
+	}
+
+	public boolean autocompletar(JTable tablaOcupacion) {
+
+		msgError = null;
+		
+		for(int i = 0; i < tablaOcupacion.getRowCount(); i++) {
 
 			int buclesLlenado = 0;
 			int buclesVaciado = 0;
 			
-			for(int e = 0; e < tabla.getColumnCount(); e++) {
+			for(int e = 0; e < tablaOcupacion.getColumnCount(); e++) {
+
+				switch ((String)tablaOcupacion.getValueAt(i, e)) {
 				
-				if(tabla.getValueAt(i, e).equals("C")) {
+					case "C":
+					case "C ":
+						buclesLlenado++;	
+						break;
+
+					case "F":
+					case "F ":
+						tablaOcupacion.setValueAt("O ", i, e);
+						buclesLlenado--;	
+						break;
 					
-					buclesLlenado++;
-				} else if(tabla.getValueAt(i, e).equals("F")) {
-				
-					tabla.setValueAt("O", i, e);
-					buclesLlenado--;
-				} else if(tabla.getValueAt(i, e).equals("CE")) {
-					
-					buclesVaciado++;
-				} else if(tabla.getValueAt(i, e).equals("FE")) {
-				
-					tabla.setValueAt(" ", i, e);
-					buclesVaciado--;
+					case "CE":
+					case "CE ":
+						buclesVaciado++;	
+						break;
+						
+					case "FE":
+					case "FE ":
+						tablaOcupacion.setValueAt(" ", i, e);
+						buclesVaciado--;	
+						break;	
 				}
 
-				if(buclesLlenado > 0) {
-					
-					tabla.setValueAt("O", i, e);
+				if(buclesLlenado > 0 && tablaOcupacion.getValueAt(i, e).equals("X")) {
+				
+					msgError = "No es posible reservar en el rango seleccionado.";
+					return false;
 				}
+				
+				if(buclesLlenado > 0) {
+					if(e == 0)
+						tablaOcupacion.setValueAt("O ", i, e);
+					else
+						tablaOcupacion.setValueAt(tablaOcupacion.getValueAt(i, e-1).equals(" ")?"O ":"O", i, e);
+				}				
 	
 				if(buclesVaciado > 0) {
-					
-					tabla.setValueAt(" ", i, e);
+	
+					tablaOcupacion.setValueAt(" ", i, e);
 				}
 			}
 		}
-		return tabla;
+		return msgError==null;
 	}
 	
 	private String [] listaHorarios(int granularidad) {
@@ -71,31 +150,32 @@ public class DtosEmpleado {
 		String listado[] = null;
 		int incremento = 0;
 		
-		switch (granularidad) {
+		switch(granularidad) {
 		
 			case 0: 
 				listado = new String[97];
 				incremento = 10;
 				break;
+				
 			case 1:
 				listado = new String[65];
 				incremento = 15;
 				break;
+				
 			case 2:
 				listado = new String[33];
 				incremento = 30;
-				break;				
+				break;	
+				
 			default:
 				listado = new String[17];
 				incremento = 60;
 		}
-		
-		listado[0] = "";
-		listado[1] = "7:00";
 		int hora = 7;
 		int minutos = 0;
+		listado[0] = "7:00";
 		
-		for(int i = 2; i < listado.length; i++) {
+		for(int i = 1; i < listado.length; i++) {
 			
 			if((minutos + incremento) < 60) {
 				
@@ -105,13 +185,11 @@ public class DtosEmpleado {
 				minutos = 0;
 				hora++;
 			}
-			
 			String min = minutos == 0? "00":minutos+"";
 			listado[i] = hora + ":" + min;
 		}
 		return listado;
 	}
-	
 	
 	public String [] getGranularidad() {
 		
@@ -129,30 +207,57 @@ public class DtosEmpleado {
 		}
 	}
 	
-	public DefaultTableModel getHorarios(int granularidad) {
+	public DefaultTableModel getHorarios(int granularidad) {//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		CursosDAO cursoDAO = new CursosDAO();
-		int sumaHoras = 0;
+		EmpleadosDAO empleadosDAO = new EmpleadosDAO();
+		boolean ocupado[][];
+		
+		
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		if(sector.equals("Docente")) {
+			
+			cursoDAO.getCronogramaDias(0, conviertoString(legajo), 100);
+			ocupado = cursoDAO.getmatrizDiasHorarios();
+		} else {
+			
+			empleadosDAO.getCronogramaDias(conviertoString(legajo));
+			ocupado = empleadosDAO.getmatrizDiasHorarios();
+			granularidad = empleadosDAO.getGranularidad();
+		}
+		
 		String titulo[] = listaHorarios(granularidad);
-		String dia[] = new String[] {"Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"};
-		cursoDAO.getCronogramaDias(0, conviertoString(legajo), 100);
-		editable = cursoDAO.getmatrizDiasHorarios();
+		
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		String cronograma[][] = new String[6][titulo.length];
 
-		for(int i = 0 ; i < 6 ; i++) {
+		for(int i = 0 ;i < 6 ;i++) {
 			
-			for(int e = 0 ; e < titulo.length ; e++) {
-				
-				if(e == 0) {
+			for(int e = 0 ; e< titulo.length ;e++) {
+
+				if(ocupado != null) {
 					
-					cronograma[i][e] = dia[i];
+					if(ocupado[i][e]) {
+						
+						cronograma[i][e] = "O";
+						
+						if(e > 0 && e < titulo.length - 1) { 
+						
+							if(!ocupado[i][e-1] || !ocupado[i][e+1])
+								cronograma[i][e] = "O ";
+						}
+					} else {
+						
+						cronograma[i][e] = " ";
+					}
 				} else {
 					
-					cronograma[i][e] = editable[i][e-1]? " ":"   O ";
-				}
-				if(cronograma[i][e].equals("   O ")) {
-					
-					sumaHoras++;
+					cronograma[i][e] = " ";
 				}
 			}
 		}
@@ -164,9 +269,10 @@ public class DtosEmpleado {
 				return false;
 			}
 		};
-		cantidadHoras = sumaHoras/2;
 		return tablaModelo;
-	}
+	}//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	
 	public DefaultTableModel getListadoEmpleados(String tipo, String filtro) {
 		
@@ -246,7 +352,7 @@ public class DtosEmpleado {
 		salario = "";
 	}
 	
-	public boolean setNuevoEmpleado () {
+	public boolean setNuevoEmpleado() {
 		
 		boolean bandera = false;
 		EmpleadosDAO empleadoDAO = new EmpleadosDAO();
@@ -528,8 +634,32 @@ public class DtosEmpleado {
 		return idPersona;
 	}
 
-	public float getCantidadHoras() {
+	public String getCantidadHoras(JTable tablaOcupacion, int granularidad) {
 		
+		int cant = 0;
+		int tiempo[] = new int [] {6, 4, 2, 1};
+		boolean bandera = false;
+		
+		for(int i = 0; i < tablaOcupacion.getRowCount(); i++) {
+
+			for(int e = 0; e < tablaOcupacion.getColumnCount(); e++) {
+				
+				if(tablaOcupacion.getValueAt(i, e).equals("O"))
+					cant++;
+					
+				if(tablaOcupacion.getValueAt(i, e).equals("O ") ) {
+					
+					bandera = !bandera;
+					
+					if(bandera)
+						cant++;
+				}
+			}
+		}
+
+		int resto = cant % tiempo[granularidad];
+		String cantidadHoras = (cant / tiempo[granularidad]) + ":";
+		cantidadHoras += resto > 0 ?  resto * 60 / tiempo[granularidad]:"00";
 		return cantidadHoras;
 	}
 }

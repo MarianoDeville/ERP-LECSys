@@ -8,17 +8,17 @@ import dao.EmpleadosDAO;
 public class DtosCurso {
 	
 	private boolean ocupado[][];
-	private  int aula;
+	private String horarios[][];
+	private String idProfesores[];
+	private String idCursos[];
+	private int aula;
 	private int estado;
 	private String año;
 	private String nivel;
-	private String [] idProfesores;
 	private String idProfesor;
 	private String valorCuota;
 	private String nombreProfesor;
-	private String[][] horarios;
 	private String idCurso;
-	private String [] idCursos;
 	private String cantHoras;
 	private String msgError;
 	
@@ -129,7 +129,6 @@ public class DtosCurso {
 							if(!ocupado[i][e-1] || !ocupado[i][e+1])
 								cronograma[i][e] = "O ";
 						}
-	
 					}
 				}
 			}

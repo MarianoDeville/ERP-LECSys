@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.SwingConstants;
 
 public class ListadoDoble2 extends VentanaModelo {
 	
@@ -22,6 +23,13 @@ public class ListadoDoble2 extends VentanaModelo {
 	public JLabel lblTxtMedio1;
 	public JLabel lblTxtMedio2;
 	public JLabel lblTxtMedio3;
+	public JLabel lblHorario;
+	public JLabel lblLunes;
+	public JLabel lblMartes;
+	public JLabel lblMiercoles;
+	public JLabel lblJueves;
+	public JLabel lblViernes;
+	public JLabel lblSabado;
 	public JTextField txtSuperior;
 	public JTextField txtMedio1;
 	public JTextField txtMedio2;
@@ -49,7 +57,7 @@ public class ListadoDoble2 extends VentanaModelo {
 		contenedor.putConstraint(SpringLayout.WEST, txtSuperior, 10, SpringLayout.EAST, cmbBoxSector);
 		txtSuperior.setColumns(7);
 		panelListado.add(txtSuperior);
-
+		
 		scrollTabla1 = new JScrollPane();
 		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla1, 15, SpringLayout.SOUTH, cmbBoxSector);
 		contenedor.putConstraint(SpringLayout.WEST, scrollTabla1, 15, SpringLayout.WEST, panelListado);
@@ -103,9 +111,64 @@ public class ListadoDoble2 extends VentanaModelo {
 		contenedor.putConstraint(SpringLayout.EAST, btnCompletar, 120, SpringLayout.WEST, btnCompletar);
 		panelListado.add(btnCompletar);
 		
+		lblHorario = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblHorario, 15, SpringLayout.SOUTH, cmbBoxGranularidad);
+		contenedor.putConstraint(SpringLayout.WEST, lblHorario, 15, SpringLayout.WEST, panelListado);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblHorario, 17, SpringLayout.NORTH, lblHorario);
+		lblHorario.setVisible(false);
+		panelListado.add(lblHorario);
+		
+		lblLunes = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblLunes, 0, SpringLayout.SOUTH, lblHorario);
+		contenedor.putConstraint(SpringLayout.EAST, lblLunes, 0, SpringLayout.EAST, lblHorario);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblLunes, 17, SpringLayout.NORTH, lblLunes);
+		lblLunes.setHorizontalAlignment(SwingConstants.LEFT);
+		lblLunes.setVisible(false);
+		panelListado.add(lblLunes);
+		
+		lblMartes = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblMartes, 0, SpringLayout.SOUTH, lblLunes);
+		contenedor.putConstraint(SpringLayout.EAST, lblMartes, 0, SpringLayout.EAST, lblHorario);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblMartes, 17, SpringLayout.NORTH, lblMartes);
+		lblMartes.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMartes.setVisible(false);
+		panelListado.add(lblMartes);
+		
+		lblMiercoles = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblMiercoles, 0, SpringLayout.SOUTH, lblMartes);
+		contenedor.putConstraint(SpringLayout.EAST, lblMiercoles, 0, SpringLayout.EAST, lblHorario);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblMiercoles, 17, SpringLayout.NORTH, lblMiercoles);
+		lblMiercoles.setHorizontalAlignment(SwingConstants.LEFT);
+		lblMiercoles.setVisible(false);
+		panelListado.add(lblMiercoles);
+		
+		lblJueves = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblJueves, 0, SpringLayout.SOUTH, lblMiercoles);
+		contenedor.putConstraint(SpringLayout.EAST, lblJueves, 0, SpringLayout.EAST, lblHorario);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblJueves, 17, SpringLayout.NORTH, lblJueves);
+		lblJueves.setHorizontalAlignment(SwingConstants.LEFT);
+		lblJueves.setVisible(false);
+		panelListado.add(lblJueves);
+		
+		lblViernes = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblViernes, 0, SpringLayout.SOUTH, lblJueves);
+		contenedor.putConstraint(SpringLayout.EAST, lblViernes, 0, SpringLayout.EAST, lblHorario);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblViernes, 17, SpringLayout.NORTH, lblViernes);
+		lblViernes.setHorizontalAlignment(SwingConstants.LEFT);
+		lblViernes.setVisible(false);
+		panelListado.add(lblViernes);
+		
+		lblSabado = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblSabado, 0, SpringLayout.SOUTH, lblViernes);
+		contenedor.putConstraint(SpringLayout.EAST, lblSabado, 0, SpringLayout.EAST, lblHorario);
+		contenedor.putConstraint(SpringLayout.SOUTH, lblSabado, 17, SpringLayout.NORTH, lblSabado);
+		lblSabado.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSabado.setVisible(false);
+		panelListado.add(lblSabado);
+		
 		scrollTabla2 = new JScrollPane();
 		contenedor.putConstraint(SpringLayout.NORTH, scrollTabla2, 15, SpringLayout.SOUTH, cmbBoxGranularidad);
-		contenedor.putConstraint(SpringLayout.WEST, scrollTabla2, 15, SpringLayout.WEST, panelListado);
+		contenedor.putConstraint(SpringLayout.WEST, scrollTabla2, 10, SpringLayout.EAST, lblHorario);
 		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla2, -60, SpringLayout.SOUTH, panelListado);
 		contenedor.putConstraint(SpringLayout.EAST, scrollTabla2, -10, SpringLayout.EAST, panelListado);
 		panelListado.add(scrollTabla2);

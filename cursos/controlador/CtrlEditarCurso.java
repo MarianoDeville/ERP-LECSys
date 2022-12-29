@@ -108,7 +108,6 @@ public class CtrlEditarCurso implements ActionListener{
 			ventana.tablaHorarios.getColumnModel().getColumn(i).setPreferredWidth(40);
 			ventana.tablaHorarios.getColumnModel().getColumn(i).setCellRenderer(centrado);
 		}
-
 		ventana.tablaHorarios.setRowHeight(25);
 	}
 	

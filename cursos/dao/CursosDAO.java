@@ -17,22 +17,17 @@ public class CursosDAO extends Conexion {
 	
 	public boolean getCronogramaDias(int idCurso, int idProfesor, int aula){
 
-		boolean bandera = false;
+		boolean bandera = true;
 		String where = null;
 		matrizDiasHorarios = new boolean[6][33];
 		
 		if(idCurso == 0) {
 			
-			where = "WHERE (curso.estado = 1 AND (curso.aula = "
-					+ aula 
-					+ " OR curso.idProfesor = "
-					+ idProfesor
-					+ "))";
+			where = "WHERE (curso.estado = 1 AND (curso.aula = " + aula 
+					+ " OR curso.idProfesor = " + idProfesor + "))";
 		} else {
 			
-			where = "WHERE (curso.estado = 1 AND curso.idCurso = "
-					+ idCurso 
-					+ ")";
+			where = "WHERE (curso.estado = 1 AND curso.idCurso = " + idCurso + ")";
 		}
 		
 		String comandoStatement = "SELECT día, HOUR(hora), MINUTE(hora), duración "
@@ -66,9 +61,9 @@ public class CursosDAO extends Conexion {
 					matrizDiasHorarios[dia][pos++] = true;
 				}
 			}
-			
 		} catch (Exception e) {
 			
+			bandera = false;
 			CtrlLogErrores.guardarError(e.getMessage());
 			CtrlLogErrores.guardarError("CursosDAO, getCronogramaDias()");
 			CtrlLogErrores.guardarError(comandoStatement);
@@ -102,7 +97,6 @@ public class CursosDAO extends Conexion {
 				matriz[i][2] = rs.getInt(3) + "";
 				i++;
 			}
-			
 		} catch (Exception e) {
 		
 			CtrlLogErrores.guardarError(e.getMessage());
@@ -113,20 +107,17 @@ public class CursosDAO extends Conexion {
 		}
 		return matriz;
 	}
-
 	
 	public String [][] getListado(String idCurso) {
 		
 		String matriz[][] = null;
 		String where = null;
 		
-		if(idCurso.equals("")) {
-		
+		if(idCurso.equals(""))
 			where = "WHERE curso.estado = 1 ";
-		} else {
-			
+		else
 			where = "WHERE ( curso.estado = 1 AND curso.idCurso = " + idCurso + ")";
-		}
+
 		String comandoStatement = "SELECT curso.idCurso, año, nivel, nombre, apellido, precio, curso.idProfesor, aula "
 								+ "FROM lecsys1.curso "
 								+ "JOIN lecsys1.empleados ON curso.idProfesor = empleados.idEmpleado "
@@ -181,7 +172,7 @@ public class CursosDAO extends Conexion {
 				}
 				i++;
 			}			
-		}catch (Exception e) {
+		} catch (Exception e) {
 			
 			CtrlLogErrores.guardarError(e.getMessage());
 			CtrlLogErrores.guardarError("CursosDAO, getListado()");
@@ -209,8 +200,7 @@ public class CursosDAO extends Conexion {
 
 			if(rs.next())
 				bandera =true;
-
-		}catch (Exception e) {
+		} catch (Exception e) {
 			
 			CtrlLogErrores.guardarError(e.getMessage());
 			CtrlLogErrores.guardarError("CursosDAO, isExamenCargado()");
@@ -257,7 +247,6 @@ public class CursosDAO extends Conexion {
 				stm.setInt(4, idCurso);
 				stm.executeUpdate();				
 			}
-
 		} catch (Exception e) {
 			
 			bandera = false;
@@ -305,7 +294,6 @@ public class CursosDAO extends Conexion {
 					stm.executeUpdate();				
 				}
 			}
-
 		} catch (Exception e) {
 			
 			bandera = false;
@@ -336,8 +324,7 @@ public class CursosDAO extends Conexion {
 				
 				respuesta = rs.getString(1);
 			}
-			
-		}catch (Exception e) {
+		} catch (Exception e) {
 			
 			CtrlLogErrores.guardarError(e.getMessage());
 			CtrlLogErrores.guardarError("CursosDAO, getValorCuota()");

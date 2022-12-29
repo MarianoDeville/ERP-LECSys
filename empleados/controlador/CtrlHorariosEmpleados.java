@@ -7,7 +7,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
 import interfaceUsuario.ListadoDoble2;
 import modelo.DtosEmpleado;
 
@@ -17,8 +21,6 @@ public class CtrlHorariosEmpleados implements ActionListener {
 	private DtosEmpleado dtosEmpleado;
 	private boolean refresco = false;
 	private boolean estado = false;
-	private boolean puntaA;
-	private boolean puntaB;
 	
 	public CtrlHorariosEmpleados(ListadoDoble2 vista) {
 		
@@ -57,8 +59,20 @@ public class CtrlHorariosEmpleados implements ActionListener {
 	
 	public void iniciar() {
 		
-		puntaA = false;
-		puntaB = false;
+		ventana.lblHorario.setVisible(true);
+		ventana.lblHorario.setText("Horarios:");
+		ventana.lblLunes.setVisible(true);
+		ventana.lblLunes.setText("Lunes");
+		ventana.lblMartes.setVisible(true);
+		ventana.lblMartes.setText("Martes");
+		ventana.lblMiercoles.setVisible(true);
+		ventana.lblMiercoles.setText("Miércoles");
+		ventana.lblJueves.setVisible(true);
+		ventana.lblJueves.setText("Jueves");
+		ventana.lblViernes.setVisible(true);
+		ventana.lblViernes.setText("Viernes");
+		ventana.lblSabado.setVisible(true);
+		ventana.lblSabado.setText("Sábado");
 		ventana.cmbBoxSector.setModel(new DefaultComboBoxModel<>(dtosEmpleado.getListaSectores()));
 		ventana.cmbBoxGranularidad.setModel(new DefaultComboBoxModel<>(dtosEmpleado.getGranularidad()));
 		ventana.cmbBoxGranularidad.setSelectedItem("30 min.");
@@ -88,7 +102,8 @@ public class CtrlHorariosEmpleados implements ActionListener {
 		
 		if(e.getSource() == ventana.btnCompletar) {
 			
-			ventana.tabla2 = dtosEmpleado.autocompletar(ventana.tabla2);
+			dtosEmpleado.autocompletar(ventana.tabla2);
+			ventana.txtMedio2.setText(dtosEmpleado.getCantidadHoras(ventana.tabla2, ventana.cmbBoxGranularidad.getSelectedIndex()));
 		}
 		
 		if(e.getSource() == ventana.btnVolver) {
@@ -98,8 +113,7 @@ public class CtrlHorariosEmpleados implements ActionListener {
 		
 		if(e.getSource() == ventana.btnGuardar) {
 			
-			
-			
+			dtosEmpleado.setHorarios(ventana.cmbBoxGranularidad.getSelectedIndex(), ventana.tabla2);
 		}
 		
 		if(e.getSource() == ventana.btnImprimir) {
@@ -120,66 +134,109 @@ public class CtrlHorariosEmpleados implements ActionListener {
 	}
 	
 	private void actualizaInfoEmpleado() {
-		
-		
+
+		ventana.tabla2.setModel(new DefaultTableModel());
 		estado = ventana.cmbBoxSector.getSelectedItem().equals("Docente")?false:true;
-		ventana.tabla2.setEnabled(estado);
-		ventana.btnGuardar.setEnabled(estado);
-		ventana.btnCompletar.setVisible(estado);
-		ventana.cmbBoxGranularidad.setVisible(estado);
-			
+		
 		if(dtosEmpleado.getApellido().length() > 0) {
 			
 			ventana.txtMedio1.setText(dtosEmpleado.getApellido() + ", " + dtosEmpleado.getNombre());	
-			ventana.txtMedio2.setText(String.format("%.2f",dtosEmpleado.getCantidadHoras()));
 			ventana.tabla2.setEnabled(estado);
 			ventana.btnCompletar.setEnabled(estado);
 			ventana.btnGuardar.setEnabled(estado);
 		} else {
-			
+
 			ventana.txtMedio1.setText("");	
 			ventana.txtMedio2.setText("");
 			ventana.tabla2.setEnabled(false);
-			ventana.btnCompletar.setEnabled(false);
+			ventana.cmbBoxGranularidad.setVisible(false);
+			ventana.btnCompletar.setVisible(false);
 			ventana.btnGuardar.setEnabled(false);
+			return;
 		}
+		ventana.tabla2.setEnabled(estado);
+		ventana.btnGuardar.setEnabled(estado);
+		ventana.btnCompletar.setVisible(estado);
+		ventana.cmbBoxGranularidad.setVisible(estado);
 		ventana.tabla2.setModel(dtosEmpleado.getHorarios(ventana.cmbBoxGranularidad.getSelectedIndex()));
+		ventana.txtMedio2.setText(dtosEmpleado.getCantidadHoras(ventana.tabla2, ventana.cmbBoxGranularidad.getSelectedIndex()));
 		ventana.tabla2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		ventana.tabla2.doLayout();
+		DefaultTableCellRenderer centrado = new DefaultTableCellRenderer();
+		centrado.setHorizontalAlignment(JLabel.CENTER);
 
-		for(int i = 1 ; i < ventana.tabla2.getColumnCount() ; i++) {
+		for(int i = 0 ;i < ventana.tabla2.getColumnCount() ;i++) {
 			
 			ventana.tabla2.getColumnModel().getColumn(i).setPreferredWidth(40);
+			ventana.tabla2.getColumnModel().getColumn(i).setCellRenderer(centrado);
 		}
 	}
 
 	private void selección(int fila, int columna) {
-
-		if(ventana.tabla2.getValueAt(fila, columna).equals(" ")) {
 		
-			if(!puntaA) {
-	    	
-				ventana.tabla2.setValueAt("C", fila, columna);
-				puntaA = true;
-			} else {
-				
-				ventana.tabla2.setValueAt("F", fila, columna);
-				puntaA = false;			
-			}
-		} else if(ventana.tabla2.getValueAt(fila, columna).equals("O")) {
+		boolean comienzo;
+		boolean comienzoEliminar;
+		int cont = 0;
+		int contE = 0;
+
+		for(int i = 0; i < ventana.tabla2.getColumnCount();i++) {
 			
-			if(!puntaB) {
-		    	
-				ventana.tabla2.setValueAt("CE", fila, columna);
-				puntaB = true;
-			} else {
-				
-				ventana.tabla2.setValueAt("FE", fila, columna);
-				puntaB = false;			
-			}
-		} else {
+			if(ventana.tabla2.getValueAt(fila, i).equals("C") || 
+					ventana.tabla2.getValueAt(fila, i).equals("C "))
+				cont++;
 			
-			ventana.tabla2.setValueAt(" ", fila, columna);
+			if(ventana.tabla2.getValueAt(fila, i).equals("F") || 
+					ventana.tabla2.getValueAt(fila, i).equals("F "))
+				cont--;
+			
+			if(ventana.tabla2.getValueAt(fila, i).equals("CE") || 
+					ventana.tabla2.getValueAt(fila, i).equals("CE "))
+				contE++;
+			
+			if(ventana.tabla2.getValueAt(fila, i).equals("FE") || 
+					ventana.tabla2.getValueAt(fila, i).equals("FE "))
+				contE--;
+		}
+		comienzo = cont == 0? true:false;
+		comienzoEliminar = contE == 0? true:false;
+		
+		switch((String)ventana.tabla2.getValueAt(fila, columna)) {
+		
+			case " ":
+				ventana.tabla2.setValueAt(comienzo?"C":"F", fila, columna);
+				break;
+	
+			case "X ":
+				ventana.tabla2.setValueAt(comienzo?"C ":"F ", fila, columna);
+				break;
+				
+			case "O":
+				ventana.tabla2.setValueAt(comienzoEliminar?"CE":"FE", fila, columna);
+				break;
+			
+			case "O ":
+				ventana.tabla2.setValueAt(comienzoEliminar?"CE ":"FE ", fila, columna);
+				break;
+				
+			case "C":
+			case "F":
+				ventana.tabla2.setValueAt(" ", fila, columna);
+				break;
+				
+			case "CE":
+			case "FE":
+				ventana.tabla2.setValueAt("O", fila, columna);
+				break;
+			
+			case "C ":
+			case "F ":
+				ventana.tabla2.setValueAt("X ", fila, columna);
+				break;
+				
+			case "CE ":
+			case "FE ":
+				ventana.tabla2.setValueAt("O ", fila, columna);
+				break;
 		}
 	}
 }
