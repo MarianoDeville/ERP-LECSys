@@ -1,3 +1,57 @@
+/*****************************************************************************************************************************************************************/
+//										LISTADO DE MÉTODOS
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+//	public void getInformacionEmpleado(int pos)
+//	public void limpiarInformacion()
+//	public void setNombre(String nombre)
+//	public void setApellido(String apellido)
+//	public void setDni(String dni)
+//	public void setTelefono(String telefono)
+//	public void setDireccion(String direccion)
+//	public void setEmail(String email)
+//	public void setSalario(String salario)
+//	public void setRelacion(String relacion)
+//	public void setSector(String sector)
+//	public void setCargo(String cargo)
+//	public void setFechaNacimientoMes(String fechaNacimientoMes)
+//	public void setFechaNacimientoDia(String fechaNacimientoDia)
+//	public void setFechaNacimientoAño(String fechaNacimientoAño)
+//	public void setEstado(String estado)
+//	public int getGranAlmacenada()
+//	public boolean setHorarios(int granularidad, JTable tablaOcupacion)
+//	public boolean autocompletar(JTable tablaOcupacion)
+//	public boolean getEstado()
+//	public boolean setNuevoEmpleado()
+//	public boolean setActualizarEmpleado()
+//	public DefaultTableModel getTablaEmpleados(String tipo, boolean estado, String filtro)
+//	public DefaultTableModel getHorarios(int granularidad)
+//	public DefaultTableModel getListadoEmpleados(String tipo, String filtro)
+//	public String [] getGranularidad()
+//	public String [] getFiltro()
+//	public String [] getListaSectores()
+//	public String [] getListaTipos ()
+//	public String getMsgError()
+//	public String checkInformacion()
+//	public String getNombre()
+//	public String getApellido()
+//	public String getDni()
+//	public String getTelefono()
+//	public String getDireccion()
+//	public String getEmail()
+//	public String getSalario()
+//	public String getRelacion()
+//	public String getSector()
+//	public String getCargo()
+//	public String getFechaNacimientoMes()
+//	public String getFechaNacimientoDia()
+//	public String getFechaNacimientoAño()
+//	public String getLegajo()
+//	public String getIdPersona()
+//	public String getCantidadHoras(JTable tablaOcupacion)
+//	private boolean isNumeric(String cadena)
+//	private String [] listaHorarios(int granularidad)
+//	private int conviertoString(String valor)
+/*****************************************************************************************************************************************************************/
 package modelo;
 
 import javax.swing.JTable;
@@ -26,8 +80,15 @@ public class DtosEmpleado {
 	private String respuesta[][];
 	private String horarios[][];
 	private String msgError;
+	private int granAlmacenada;
+	private boolean actualizar;
 	
-	public boolean setHorarios(int granularidad, JTable tablaOcupacion) {//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public int getGranAlmacenada() {
+		
+		return granAlmacenada;
+	}
+	
+	public boolean setHorarios(int granularidad, JTable tablaOcupacion) {
 		
 		int cant = 0;
 		boolean comienzo;
@@ -136,59 +197,11 @@ public class DtosEmpleado {
 						tablaOcupacion.setValueAt(tablaOcupacion.getValueAt(i, e-1).equals(" ")?"O ":"O", i, e);
 				}				
 	
-				if(buclesVaciado > 0) {
-	
+				if(buclesVaciado > 0)
 					tablaOcupacion.setValueAt(" ", i, e);
-				}
 			}
 		}
 		return msgError==null;
-	}
-	
-	private String [] listaHorarios(int granularidad) {
-		
-		String listado[] = null;
-		int incremento = 0;
-		
-		switch(granularidad) {
-		
-			case 0: 
-				listado = new String[97];
-				incremento = 10;
-				break;
-				
-			case 1:
-				listado = new String[65];
-				incremento = 15;
-				break;
-				
-			case 2:
-				listado = new String[33];
-				incremento = 30;
-				break;	
-				
-			default:
-				listado = new String[17];
-				incremento = 60;
-		}
-		int hora = 7;
-		int minutos = 0;
-		listado[0] = "7:00";
-		
-		for(int i = 1; i < listado.length; i++) {
-			
-			if((minutos + incremento) < 60) {
-				
-				minutos += incremento;
-			} else {
-				
-				minutos = 0;
-				hora++;
-			}
-			String min = minutos == 0? "00":minutos+"";
-			listado[i] = hora + ":" + min;
-		}
-		return listado;
 	}
 	
 	public String [] getGranularidad() {
@@ -196,44 +209,34 @@ public class DtosEmpleado {
 		return new String [] {"10 min.", "15 min.", "30 min.", "1 hora"};
 	}
 	
-	private int conviertoString(String valor) {
-		
-		try {
-			
-			return Integer.parseInt(valor);
-		} catch (Exception e) {
-			
-			return 0;
-		}
-	}
-	
-	public DefaultTableModel getHorarios(int granularidad) {//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public DefaultTableModel getHorarios(int granularidad) {
 		
 		CursosDAO cursoDAO = new CursosDAO();
 		EmpleadosDAO empleadosDAO = new EmpleadosDAO();
-		boolean ocupado[][];
-		
-		
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		
+		boolean ocupado[][] = null;
+	
 		if(sector.equals("Docente")) {
 			
 			cursoDAO.getCronogramaDias(0, conviertoString(legajo), 100);
 			ocupado = cursoDAO.getmatrizDiasHorarios();
+			granAlmacenada = granularidad;
 		} else {
 			
-			empleadosDAO.getCronogramaDias(conviertoString(legajo));
-			ocupado = empleadosDAO.getmatrizDiasHorarios();
-			granularidad = empleadosDAO.getGranularidad();
+			if(actualizar) {
+			
+				empleadosDAO.getCronogramaDias(conviertoString(legajo));
+				ocupado = empleadosDAO.getmatrizDiasHorarios();
+				granAlmacenada = empleadosDAO.getGranularidad();
+				
+				if(granAlmacenada == -1)
+					granAlmacenada = granularidad;
+				actualizar = false;
+			} else {
+				
+				granAlmacenada = granularidad;
+			}
 		}
-		
-		String titulo[] = listaHorarios(granularidad);
-		
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
+		String titulo[] = listaHorarios(granAlmacenada);
 		String cronograma[][] = new String[6][titulo.length];
 
 		for(int i = 0 ;i < 6 ;i++) {
@@ -270,9 +273,7 @@ public class DtosEmpleado {
 			}
 		};
 		return tablaModelo;
-	}//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+	}
 	
 	public DefaultTableModel getListadoEmpleados(String tipo, String filtro) {
 		
@@ -331,6 +332,7 @@ public class DtosEmpleado {
 			fechaNacimientoMes = fecha[1];
 			fechaNacimientoDia = fecha[2];
 			idPersona = respuesta[pos][13];
+			actualizar = true;
 		}
 	}
 
@@ -470,18 +472,6 @@ public class DtosEmpleado {
 			return "Error en el formato del salario (solamente números).";
 		}
 		return "";
-	}
-	
-	private static boolean isNumeric(String cadena) {
-		
-		try {
-			
-			Double.parseDouble(cadena);
-			return true;
-		} catch (NumberFormatException e){
-			
-			return false;
-		}
 	}
 
 	public String getNombre() {
@@ -634,7 +624,7 @@ public class DtosEmpleado {
 		return idPersona;
 	}
 
-	public String getCantidadHoras(JTable tablaOcupacion, int granularidad) {
+	public String getCantidadHoras(JTable tablaOcupacion) {
 		
 		int cant = 0;
 		int tiempo[] = new int [] {6, 4, 2, 1};
@@ -657,9 +647,78 @@ public class DtosEmpleado {
 			}
 		}
 
-		int resto = cant % tiempo[granularidad];
-		String cantidadHoras = (cant / tiempo[granularidad]) + ":";
-		cantidadHoras += resto > 0 ?  resto * 60 / tiempo[granularidad]:"00";
+		int resto = cant % tiempo[granAlmacenada];
+		String cantidadHoras = (cant / tiempo[granAlmacenada]) + ":";
+		cantidadHoras += resto > 0 ?  resto * 60 / tiempo[granAlmacenada]:"00";
 		return cantidadHoras;
+	}
+	
+	private boolean isNumeric(String cadena) {
+		
+		try {
+			
+			Double.parseDouble(cadena);
+			return true;
+		} catch (NumberFormatException e){
+			
+			return false;
+		}
+	}
+	
+	private String [] listaHorarios(int granularidad) {
+		
+		String listado[] = null;
+		int incremento = 0;
+		
+		switch(granularidad) {
+		
+			case 0: 
+				listado = new String[97];
+				incremento = 10;
+				break;
+				
+			case 1:
+				listado = new String[65];
+				incremento = 15;
+				break;
+				
+			case 2:
+				listado = new String[33];
+				incremento = 30;
+				break;	
+				
+			default:
+				listado = new String[17];
+				incremento = 60;
+		}
+		int hora = 7;
+		int minutos = 0;
+		listado[0] = "7:00";
+		
+		for(int i = 1; i < listado.length; i++) {
+			
+			if((minutos + incremento) < 60) {
+				
+				minutos += incremento;
+			} else {
+				
+				minutos = 0;
+				hora++;
+			}
+			String min = minutos == 0? "00":minutos+"";
+			listado[i] = hora + ":" + min;
+		}
+		return listado;
+	}
+	
+	private int conviertoString(String valor) {
+		
+		try {
+			
+			return Integer.parseInt(valor);
+		} catch (Exception e) {
+			
+			return 0;
+		}
 	}
 }

@@ -78,10 +78,14 @@ public class EmpleadosDAO extends Conexion {
 			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stm.executeQuery(comandoStatement);
 
-			if(rs.next())		
+			if(rs.next()) {
+				
 				granularidad = rs.getInt(5);
-			else
+			} else {
+				
+				granularidad = -1;
 				return false;
+			}
 			
 			rs.beforeFirst();
 			int tiempo[] = new int[] {97, 65, 33, 17};

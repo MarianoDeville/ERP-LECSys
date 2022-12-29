@@ -30,6 +30,7 @@ public class ListadoDoble2 extends VentanaModelo {
 	public JLabel lblJueves;
 	public JLabel lblViernes;
 	public JLabel lblSabado;
+	public JLabel lblMsgError;
 	public JTextField txtSuperior;
 	public JTextField txtMedio1;
 	public JTextField txtMedio2;
@@ -110,6 +111,11 @@ public class ListadoDoble2 extends VentanaModelo {
 		contenedor.putConstraint(SpringLayout.WEST, btnCompletar, 20, SpringLayout.EAST, cmbBoxGranularidad);
 		contenedor.putConstraint(SpringLayout.EAST, btnCompletar, 120, SpringLayout.WEST, btnCompletar);
 		panelListado.add(btnCompletar);
+		
+		lblMsgError = new JLabel();
+		contenedor.putConstraint(SpringLayout.NORTH, lblMsgError, 3, SpringLayout.NORTH, btnCompletar);
+		contenedor.putConstraint(SpringLayout.WEST, lblMsgError, 10, SpringLayout.EAST, btnCompletar);
+		panelListado.add(lblMsgError);
 		
 		lblHorario = new JLabel();
 		contenedor.putConstraint(SpringLayout.NORTH, lblHorario, 15, SpringLayout.SOUTH, cmbBoxGranularidad);

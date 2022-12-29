@@ -1,5 +1,6 @@
 package controlador;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -11,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-
 import interfaceUsuario.ListadoDoble2;
 import modelo.DtosEmpleado;
 
@@ -28,7 +28,6 @@ public class CtrlHorariosEmpleados implements ActionListener {
 		this.dtosEmpleado = new DtosEmpleado();
 		this.ventana.btnVolver.addActionListener(this);
 		this.ventana.btnGuardar.addActionListener(this);
-		this.ventana.btnImprimir.addActionListener(this);
 		this.ventana.btnCompletar.addActionListener(this);
 		this.ventana.cmbBoxSector.addActionListener(this);
 		this.ventana.cmbBoxGranularidad.addActionListener(this);
@@ -59,6 +58,7 @@ public class CtrlHorariosEmpleados implements ActionListener {
 	
 	public void iniciar() {
 		
+		ventana.btnImprimir.setVisible(false);
 		ventana.lblHorario.setVisible(true);
 		ventana.lblHorario.setText("Horarios:");
 		ventana.lblLunes.setVisible(true);
@@ -103,7 +103,16 @@ public class CtrlHorariosEmpleados implements ActionListener {
 		if(e.getSource() == ventana.btnCompletar) {
 			
 			dtosEmpleado.autocompletar(ventana.tabla2);
-			ventana.txtMedio2.setText(dtosEmpleado.getCantidadHoras(ventana.tabla2, ventana.cmbBoxGranularidad.getSelectedIndex()));
+			ventana.txtMedio2.setText(dtosEmpleado.getCantidadHoras(ventana.tabla2));
+			
+			if(ventana.txtMedio2.getText().equals("0:00")) {
+				
+				ventana.cmbBoxGranularidad.setEnabled(true);
+				ventana.cmbBoxGranularidad.setSelectedIndex(dtosEmpleado.getGranAlmacenada());
+			} else {
+				
+				ventana.cmbBoxGranularidad.setEnabled(false);
+			}
 		}
 		
 		if(e.getSource() == ventana.btnVolver) {
@@ -113,13 +122,15 @@ public class CtrlHorariosEmpleados implements ActionListener {
 		
 		if(e.getSource() == ventana.btnGuardar) {
 			
-			dtosEmpleado.setHorarios(ventana.cmbBoxGranularidad.getSelectedIndex(), ventana.tabla2);
-		}
-		
-		if(e.getSource() == ventana.btnImprimir) {
-			
-			
-			
+			if(dtosEmpleado.setHorarios(ventana.cmbBoxGranularidad.getSelectedIndex(), ventana.tabla2)) {
+				
+				ventana.lblMsgError.setForeground(Color.BLUE);
+				ventana.lblMsgError.setText("La información se actualizó.");
+			} else {
+				
+				ventana.lblMsgError.setForeground(Color.RED);
+				ventana.lblMsgError.setText("Hubo un problema al intentar actualizar la información.");
+			}
 		}
 	}
 	
@@ -135,31 +146,32 @@ public class CtrlHorariosEmpleados implements ActionListener {
 	
 	private void actualizaInfoEmpleado() {
 
+		ventana.lblMsgError.setText("");
 		ventana.tabla2.setModel(new DefaultTableModel());
 		estado = ventana.cmbBoxSector.getSelectedItem().equals("Docente")?false:true;
 		
-		if(dtosEmpleado.getApellido().length() > 0) {
-			
-			ventana.txtMedio1.setText(dtosEmpleado.getApellido() + ", " + dtosEmpleado.getNombre());	
-			ventana.tabla2.setEnabled(estado);
-			ventana.btnCompletar.setEnabled(estado);
-			ventana.btnGuardar.setEnabled(estado);
-		} else {
+		if(dtosEmpleado.getApellido().length() == 0) {
 
 			ventana.txtMedio1.setText("");	
 			ventana.txtMedio2.setText("");
-			ventana.tabla2.setEnabled(false);
 			ventana.cmbBoxGranularidad.setVisible(false);
 			ventana.btnCompletar.setVisible(false);
 			ventana.btnGuardar.setEnabled(false);
 			return;
 		}
+		ventana.txtMedio1.setText(dtosEmpleado.getApellido() + ", " + dtosEmpleado.getNombre());
 		ventana.tabla2.setEnabled(estado);
 		ventana.btnGuardar.setEnabled(estado);
 		ventana.btnCompletar.setVisible(estado);
 		ventana.cmbBoxGranularidad.setVisible(estado);
 		ventana.tabla2.setModel(dtosEmpleado.getHorarios(ventana.cmbBoxGranularidad.getSelectedIndex()));
-		ventana.txtMedio2.setText(dtosEmpleado.getCantidadHoras(ventana.tabla2, ventana.cmbBoxGranularidad.getSelectedIndex()));
+		ventana.txtMedio2.setText(dtosEmpleado.getCantidadHoras(ventana.tabla2));
+		
+		if(ventana.txtMedio2.getText().equals("0:00"))
+			ventana.cmbBoxGranularidad.setEnabled(true);
+		else
+			ventana.cmbBoxGranularidad.setEnabled(false);
+		
 		ventana.tabla2.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		ventana.tabla2.doLayout();
 		DefaultTableCellRenderer centrado = new DefaultTableCellRenderer();
