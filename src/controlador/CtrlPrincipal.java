@@ -37,7 +37,7 @@ public class CtrlPrincipal implements ActionListener {
 	
 	public void iniciar() {
 		
-		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.00\nRev. 29122022.1812");
+		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.00\nRev. 01012023.1028");
 		actividad.registrarActividad("Inicio del sistema", "Principal");
 		ventanaPrincipal.setVisible(true);
 		acceso = new OperadorSistema();

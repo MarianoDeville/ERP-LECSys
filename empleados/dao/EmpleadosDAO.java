@@ -3,8 +3,6 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import controlador.CtrlLogErrores;
 import modelo.DtosActividad;
 import modelo.DtosEmpleado;
@@ -134,7 +132,9 @@ public class EmpleadosDAO extends Conexion {
 											 dtosEmpleado.getApellido(), 
 											 dtosEmpleado.getDni(), 
 											 dtosEmpleado.getDireccion(), 
-											 dtosEmpleado.getFechaNacimientoAño() + "-" + dtosEmpleado.getFechaNacimientoMes() + "-" + dtosEmpleado.getFechaNacimientoDia(), 
+											 dtosEmpleado.getFechaNacimientoAño() + "-" 
+													 + dtosEmpleado.getFechaNacimientoMes() + "-" 
+													 + dtosEmpleado.getFechaNacimientoDia(), 
 											 dtosEmpleado.getTelefono(), 
 											 dtosEmpleado.getEmail(), 
 											 dtosEmpleado.getIdPersona()};
@@ -173,10 +173,6 @@ public class EmpleadosDAO extends Conexion {
 		DtosActividad dtosActividad = new DtosActividad();
 		PersonasDAO dtosPersona = new PersonasDAO();
 		DtosEmpleado dtosEmpleado = new DtosEmpleado();
-		Calendar fechaSistema = new GregorianCalendar();
-		String fechaActual = fechaSistema.get(Calendar.YEAR) + "/" 
-				 + (fechaSistema.get(Calendar.MONTH)+1) + "/" 
-				 + fechaSistema.get(Calendar.DAY_OF_MONTH);
 		String infoPersona[] = new String[] {dtosEmpleado.getNombre(), dtosEmpleado.getApellido(), dtosEmpleado.getDni(),dtosEmpleado.getDireccion(), 
 											dtosEmpleado.getFechaNacimientoAño()+"-"+dtosEmpleado.getFechaNacimientoMes()+"-"+dtosEmpleado.getFechaNacimientoDia(), 
 											dtosEmpleado.getTelefono(), dtosEmpleado.getEmail()};
@@ -186,14 +182,13 @@ public class EmpleadosDAO extends Conexion {
 			
 			this.conectar();
 			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO empleados (idPersona, sueldo, fechaIngreso, estado, sector, cargo, tipo)"
-																 + " VALUES (?, ?, ?, ?, ?, ?, ?)");
+																 + " VALUES (?, ?, DATE(NOW()), ?, ?, ?, ?)");
 			stm.setInt(1, idPersona);
 			stm.setInt(2, Integer.parseInt(dtosEmpleado.getSalario()));
-			stm.setString(3, fechaActual);
-			stm.setInt(4, 1);
-			stm.setString(5, dtosEmpleado.getSector());
-			stm.setString(6, dtosEmpleado.getCargo());
-			stm.setString(7, dtosEmpleado.getRelacion());
+			stm.setInt(3, 1);
+			stm.setString(4, dtosEmpleado.getSector());
+			stm.setString(5, dtosEmpleado.getCargo());
+			stm.setString(6, dtosEmpleado.getRelacion());
 			stm.executeUpdate();
 		} catch (Exception e) {
 			

@@ -3,7 +3,6 @@ package modelo;
 import java.net.InetAddress;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import controlador.CtrlLogErrores;
 import dao.ActividadDAO;
 import dao.OperadorSistema;
@@ -17,24 +16,16 @@ public class DtosActividad {
 		ActividadDAO actividadDAO = new ActividadDAO();
 		OperadorSistema identificacion = new OperadorSistema();
 		String miIP = null;
-		String fecha = null;
-		String hora = null;
+
 		try {
 			
 			miIP = InetAddress.getLocalHost().getHostAddress();
-			fechaSistema = new GregorianCalendar();
-			fecha = fechaSistema.get(Calendar.YEAR) + "/" 
-				  + (fechaSistema.get(Calendar.MONTH)+1) + "/" 
-				  + fechaSistema.get(Calendar.DAY_OF_MONTH);
-			hora = (fechaSistema.get(Calendar.AM_PM)==0? fechaSistema.get(Calendar.HOUR):fechaSistema.get(Calendar.HOUR)+12) 
-				 + ":" +fechaSistema.get(Calendar.MINUTE)
-				 + ":" +fechaSistema.get(Calendar.SECOND);
 			
 		} catch (Exception e) {
 			
 			CtrlLogErrores.guardarError(e.getMessage());
 		} 
-		actividadDAO.setActividad(identificacion.getFichaEmpleado(), fecha, hora, accion, modulo, miIP);
+		actividadDAO.setActividad(identificacion.getFichaEmpleado(), accion, modulo, miIP);
 	}
 	
 	public String [] getTituloTabla() {

@@ -49,21 +49,21 @@ public class CtrlCobros implements ActionListener {
 		if(e.getSource() == ventanaCobros.btn1A) {
 			
 			Listado ventanaCobrarCuota = new Listado("Cobro de cuota");
-			CtrolCobrarCuota ctrlCobrarCuota = new CtrolCobrarCuota(ventanaCobrarCuota);
+			CtrlCobrarCuota ctrlCobrarCuota = new CtrlCobrarCuota(ventanaCobrarCuota);
 			ctrlCobrarCuota.iniciar();
 		}
 		
 		if(e.getSource() == ventanaCobros.btn1B) {
 			
 			Listado ventanaListadoCobros = new Listado("Listado de cobros");
-			CtrolListadoCobros ctrolListadoCobros = new CtrolListadoCobros(ventanaListadoCobros);
+			CtrlListadoCobros ctrolListadoCobros = new CtrlListadoCobros(ventanaListadoCobros);
 			ctrolListadoCobros.iniciar();
 		}
 		
 		if(e.getSource() == ventanaCobros.btn2A) {
 			
 			Listado ventanaCobrarHabilitar = new Listado("Cobro y habilitación");
-			CtrolCobrarHabilitar ctrolCobrarHabilitar = new CtrolCobrarHabilitar(ventanaCobrarHabilitar);
+			CtrlCobrarHabilitar ctrolCobrarHabilitar = new CtrlCobrarHabilitar(ventanaCobrarHabilitar);
 			ctrolCobrarHabilitar.iniciar();
 		}
 		

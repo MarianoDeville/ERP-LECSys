@@ -8,13 +8,13 @@ import javax.swing.JOptionPane;
 import interfaceUsuario.Listado;
 import modelo.DtosCobros;
 
-public class CtrolListadoCobros implements ActionListener {
+public class CtrlListadoCobros implements ActionListener {
 
 	private Listado ventanaListadoCobros;
 	private DtosCobros dtosCobros;
 	private boolean bandera;
 	
-	public CtrolListadoCobros(Listado vista) {
+	public CtrlListadoCobros(Listado vista) {
 		
 		this.ventanaListadoCobros = vista;
 		this.dtosCobros = new DtosCobros();

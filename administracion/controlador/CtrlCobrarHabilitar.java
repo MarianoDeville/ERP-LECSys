@@ -10,14 +10,14 @@ import interfaceUsuario.Listado;
 import modelo.DtosAcceso;
 import modelo.DtosCobros;
 
-public class CtrolCobrarHabilitar implements ActionListener {
+public class CtrlCobrarHabilitar implements ActionListener {
 
 	private Listado ventanaCobrarHabilitar;
 	private Cobro cobrarInscripción;
 	private DtosCobros dtosCobros;
 	private DtosAcceso dtosAcceso;
 	
-	public CtrolCobrarHabilitar(Listado vista) {
+	public CtrlCobrarHabilitar(Listado vista) {
 		
 		this.ventanaCobrarHabilitar = vista;
 		this.dtosAcceso = new DtosAcceso();
@@ -74,7 +74,7 @@ public class CtrolCobrarHabilitar implements ActionListener {
 				
 				dtosCobros.setAlumnosSeleccionados(itemsSeleccionados());
 				cobrarInscripción = new Cobro("Cobrar inscripción y habilitar");
-				CtrolCobrarInscripcion ctrlCobrarInscripción = new CtrolCobrarInscripcion(cobrarInscripción);
+				CtrlCobrarInscripcion ctrlCobrarInscripción = new CtrlCobrarInscripcion(cobrarInscripción);
 				cobrarInscripción.btnVolver.addActionListener(this);
 				cobrarInscripción.btnCobrar.addActionListener(this);
 				ctrlCobrarInscripción.iniciar();

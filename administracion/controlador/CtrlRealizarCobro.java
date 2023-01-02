@@ -11,13 +11,13 @@ import interfaceUsuario.Cobro;
 import interfaceUsuario.ReciboCobro;
 import modelo.DtosCobros;
 
-public class CtrolRealizarCobro implements ActionListener {
+public class CtrlRealizarCobro implements ActionListener {
 	
 	private Cobro ventanaCobrarCuota;
 	private DtosCobros dtosCobros;
 	private int calculoDescuentoGrupo;
 	
-	public CtrolRealizarCobro(Cobro vista) {
+	public CtrlRealizarCobro(Cobro vista) {
 		
 		this.ventanaCobrarCuota = vista;
 		this.dtosCobros = new DtosCobros();
@@ -182,7 +182,7 @@ public class CtrolRealizarCobro implements ActionListener {
 			} else {
 			
 				ReciboCobro ventanaReciboPago = new ReciboCobro("Comprobante de pago");
-				CtrolReciboCobrarInscripcion ctrolReciboInscripcion = new CtrolReciboCobrarInscripcion(ventanaReciboPago);
+				CtrlReciboCobrarInscripcion ctrolReciboInscripcion = new CtrlReciboCobrarInscripcion(ventanaReciboPago);
 				ctrolReciboInscripcion.iniciar();
 			}
 			ventanaCobrarCuota.lblMsgError.setForeground(Color.BLUE);

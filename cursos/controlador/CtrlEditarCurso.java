@@ -5,12 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
-
 import interfaceUsuario.CrearCurso;
 import modelo.DtosCurso;
 
@@ -46,6 +44,8 @@ public class CtrlEditarCurso implements ActionListener{
 		dtosCurso.getInformacionCurso();
 		ventana.btnBorrar.setVisible(true);
 		ventana.btnValidar.setEnabled(false);
+		ventana.lblDescripción.setForeground(Color.GRAY);
+		ventana.lblDescripción.setText("X: No disponible. - O: Asignado al curso actual. - C: Comienzo. - F: Fin. - CE: Comienzo eliminación. - FE: Fin eliminación.");
 		ventana.comboBoxAño.setModel(new DefaultComboBoxModel<String>(new String [] {dtosCurso.getAño()}));
 		ventana.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(new String [] {dtosCurso.getNivel()}));
 		ventana.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaProfesores()));
@@ -134,7 +134,6 @@ public class CtrlEditarCurso implements ActionListener{
 		}
 	}
 	
-	
 	private void selección(int fila, int columna) {
 		
 		ventana.btnValidar.setEnabled(true);
@@ -145,22 +144,36 @@ public class CtrlEditarCurso implements ActionListener{
 		int contE = 0;
 		
 		for(int i = 0; i < ventana.tablaHorarios.getColumnCount();i++) {
+	
+			switch((String)ventana.tablaHorarios.getValueAt(fila, i)) {
 			
-			if(ventana.tablaHorarios.getValueAt(fila, i).equals("C") || 
-					ventana.tablaHorarios.getValueAt(fila, i).equals("C "))
-				cont++;
-			
-			if(ventana.tablaHorarios.getValueAt(fila, i).equals("F") || 
-					ventana.tablaHorarios.getValueAt(fila, i).equals("F "))
-				cont--;
-			
-			if(ventana.tablaHorarios.getValueAt(fila, i).equals("CE") || 
-					ventana.tablaHorarios.getValueAt(fila, i).equals("CE "))
-				contE++;
-			
-			if(ventana.tablaHorarios.getValueAt(fila, i).equals("FE") || 
-					ventana.tablaHorarios.getValueAt(fila, i).equals("FE "))
-				contE--;
+				case "C":
+				case "C ":
+					
+					cont++;	
+					break;
+	
+				case "F":
+				case "F ":
+					
+					cont--;	
+					break;	
+					
+				case "CE":
+				case "CE ":
+					
+					contE++;	
+					break;	
+							
+				case "FE":
+				case "FE ":
+					
+					contE--;	
+					break;
+					
+				default:
+					break;
+			}
 		}
 		comienzo = cont == 0? true:false;
 		comienzoEliminar = contE == 0? true:false;

@@ -86,7 +86,7 @@ public class CtrlConfiguracion implements ActionListener {
 			if(acceso.chkAcceso("Configuración", "Cambiar email")) {
 			
 				NuevoUsuario ventanaEmail = new NuevoUsuario("Edición email del sistema");
-				CtrolEditarEmail ctrolEditarEmail = new CtrolEditarEmail(ventanaEmail);
+				CtrlEditarEmail ctrolEditarEmail = new CtrlEditarEmail(ventanaEmail);
 				ctrolEditarEmail.iniciar();
 			}
 		}

@@ -15,21 +15,23 @@ public class CursosDAO extends Conexion {
 		return matrizDiasHorarios;
 	}
 	
-	public boolean getCronogramaDias(int idCurso, int idProfesor, int aula){
+	public boolean getCronogramaDias(String idCurso, String idProfesor, int aula){
 
 		boolean bandera = true;
 		String where = null;
 		matrizDiasHorarios = new boolean[6][33];
 		
-		if(idCurso == 0) {
-			
-			where = "WHERE (curso.estado = 1 AND (curso.aula = " + aula 
-					+ " OR curso.idProfesor = " + idProfesor + "))";
-		} else {
+		if(idProfesor.equals("0")) {
 			
 			where = "WHERE (curso.estado = 1 AND curso.idCurso = " + idCurso + ")";
+		} else {
+			
+			where = "WHERE (curso.estado = 1 "
+					+ "AND (curso.aula = " + aula 
+					+ " OR (curso.idProfesor = " + idProfesor 
+					+ " AND curso.idCurso != " + idCurso + ")))";
 		}
-		
+
 		String comandoStatement = "SELECT día, HOUR(hora), MINUTE(hora), duración "
 								+ "FROM lecsys1.diasCursado "
 								+ "JOIN lecsys1.curso ON diasCursado.idCurso = curso.idCurso "
@@ -84,7 +86,6 @@ public class CursosDAO extends Conexion {
 			this.conectar();
 			Statement stm = this.conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = stm.executeQuery(comandoStatement);
-			
 			rs.last();	
 			matriz = new String[rs.getRow()][3];
 			rs.beforeFirst();

@@ -3,27 +3,24 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-
 import controlador.CtrlLogErrores;
 
 public class ActividadDAO extends Conexion {
 	
-	public void setActividad( int idUsuario, String fecha, String hora, String accion, String modulo, String miIP) {
+	public void setActividad( int idUsuario, String accion, String modulo, String miIP) {
 		
 		if(idUsuario == 0)
-			
 			return;
 		
 		try {
 			
 			this.conectar();
-			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO lecsys1.registroActividad (idUsuarios, fecha, hora, acción, modulo, ip) VALUES (?, ?, ?, ?, ?, ?)");
+			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO lecsys1.registroActividad (idUsuarios, fecha, hora, acción, modulo, ip) "
+																 + "VALUES (?, DATE(NOW()), TIME(NOW()), ?, ?, ?)");
 			stm.setInt(1, idUsuario);
-			stm.setString(2, fecha);
-			stm.setString(3, hora);
-			stm.setString(4, accion);
-			stm.setString(5, modulo);
-			stm.setString(6, miIP);
+			stm.setString(2, accion);
+			stm.setString(3, modulo);
+			stm.setString(4, miIP);
 			stm.executeUpdate();
 		} catch (Exception e) {
 			

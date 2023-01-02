@@ -14,7 +14,7 @@ import interfaceUsuario.Cobro;
 import interfaceUsuario.Listado;
 import modelo.DtosCobros;
 
-public class CtrolCobrarCuota implements ActionListener {
+public class CtrlCobrarCuota implements ActionListener {
 	
 	private Listado ventanaCobros;
 	private DtosCobros dtosCobros;
@@ -22,7 +22,7 @@ public class CtrolCobrarCuota implements ActionListener {
 	private int elemento;
 	private boolean haySeleccion;
 	
-	public CtrolCobrarCuota(Listado vista) {
+	public CtrlCobrarCuota(Listado vista) {
 		
 		this.ventanaCobros = vista;
 		this.dtosCobros = new DtosCobros();
@@ -87,7 +87,7 @@ public class CtrolCobrarCuota implements ActionListener {
 			if(procesarInfo()) {
 				
 				ventanaCobrar = new Cobro("Cobro de cuota");
-				CtrolRealizarCobro ctrolCobrar = new CtrolRealizarCobro(ventanaCobrar);
+				CtrlRealizarCobro ctrolCobrar = new CtrlRealizarCobro(ventanaCobrar);
 				ctrolCobrar.iniciar();
 				ventanaCobrar.btnVolver.addActionListener(this);
 			}

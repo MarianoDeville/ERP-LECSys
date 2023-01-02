@@ -6,12 +6,12 @@ import java.awt.event.ActionListener;
 import interfaceUsuario.NuevoUsuario;
 import modelo.DtosConfiguracion;
 
-public class CtrolEditarEmail implements ActionListener {
+public class CtrlEditarEmail implements ActionListener {
 
 	private NuevoUsuario ventanaEmail;
 	private DtosConfiguracion dtosEmail;
 
-	public CtrolEditarEmail(NuevoUsuario vista) {
+	public CtrlEditarEmail(NuevoUsuario vista) {
 		
 		this.ventanaEmail = vista;
 		this.dtosEmail = new DtosConfiguracion();

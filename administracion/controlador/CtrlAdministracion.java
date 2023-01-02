@@ -8,94 +8,94 @@ import modelo.DtosConfiguracion;
 
 public class CtrlAdministracion implements ActionListener {
 
-	private InterfaceBotones ventanaAdministracion;
+	private InterfaceBotones ventana;
 	
 	public CtrlAdministracion(InterfaceBotones vista) {
 		
-		this.ventanaAdministracion = vista;
-		this.ventanaAdministracion.btn1A.addActionListener(this);
-		this.ventanaAdministracion.btn1B.addActionListener(this);
-		this.ventanaAdministracion.btn1C.addActionListener(this);
-		this.ventanaAdministracion.btn2A.addActionListener(this);
-		this.ventanaAdministracion.btn2B.addActionListener(this);
-		this.ventanaAdministracion.btn2C.addActionListener(this);
-		this.ventanaAdministracion.btnVolver.addActionListener(this);
+		this.ventana = vista;
+		this.ventana.btn1A.addActionListener(this);
+		this.ventana.btn1B.addActionListener(this);
+		this.ventana.btn1C.addActionListener(this);
+		this.ventana.btn2A.addActionListener(this);
+		this.ventana.btn2B.addActionListener(this);
+		this.ventana.btn2C.addActionListener(this);
+		this.ventana.btnVolver.addActionListener(this);
 	}
 	
 	public void iniciar() {
 		
-		ventanaAdministracion.lbl1A.setText("Cobros");
-		ventanaAdministracion.lbl1A.setVisible(true);
-		ventanaAdministracion.btn1A.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Cobros.png"));
-		ventanaAdministracion.btn1A.setVisible(true);
-		ventanaAdministracion.lbl1B.setText("Pagos");
-		ventanaAdministracion.lbl1B.setVisible(true);
-		ventanaAdministracion.btn1B.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Pagos.png"));
-		ventanaAdministracion.btn1B.setVisible(true);
-		ventanaAdministracion.lbl1C.setText("Compras");
-		ventanaAdministracion.lbl1C.setVisible(true);
-		ventanaAdministracion.btn1C.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Compras.png"));
-		ventanaAdministracion.btn1C.setVisible(true);
-		ventanaAdministracion.lbl2A.setText("EstadÍsticas");
-		ventanaAdministracion.lbl2A.setVisible(true);
-		ventanaAdministracion.btn2A.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Estadisticas.png"));
-		ventanaAdministracion.btn2A.setVisible(true);
-		ventanaAdministracion.lbl2B.setText("Proveedores");
-		ventanaAdministracion.lbl2B.setVisible(true);
-		ventanaAdministracion.btn2B.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Proveedores.png"));
-		ventanaAdministracion.btn2B.setVisible(true);
-		ventanaAdministracion.lbl2C.setText("Cerrar año");
-		ventanaAdministracion.lbl2C.setVisible(true);
-		ventanaAdministracion.btn2C.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Cierre.png"));
-		ventanaAdministracion.btn2C.setVisible(true);
-		ventanaAdministracion.setVisible(true);
+		ventana.lbl1A.setText("Cobros");
+		ventana.lbl1A.setVisible(true);
+		ventana.btn1A.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Cobros.png"));
+		ventana.btn1A.setVisible(true);
+		ventana.lbl1B.setText("Pagos");
+		ventana.lbl1B.setVisible(true);
+		ventana.btn1B.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Pagos.png"));
+		ventana.btn1B.setVisible(true);
+		ventana.lbl1C.setText("Compras");
+		ventana.lbl1C.setVisible(true);
+		ventana.btn1C.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Compras.png"));
+		ventana.btn1C.setVisible(true);
+		ventana.lbl2A.setText("EstadÍsticas");
+		ventana.lbl2A.setVisible(true);
+		ventana.btn2A.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Estadisticas.png"));
+		ventana.btn2A.setVisible(true);
+		ventana.lbl2B.setText("Proveedores");
+		ventana.lbl2B.setVisible(true);
+		ventana.btn2B.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Proveedores.png"));
+		ventana.btn2B.setVisible(true);
+		ventana.lbl2C.setText("Cerrar año");
+		ventana.lbl2C.setVisible(true);
+		ventana.btn2C.setIcon(new ImageIcon(DtosConfiguracion.getDirectorio() + "\\Imagenes\\Cierre.png"));
+		ventana.btn2C.setVisible(true);
+		ventana.setVisible(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 
-		if(e.getSource() == ventanaAdministracion.btn1A) {
+		if(e.getSource() == ventana.btn1A) {
 			
 			InterfaceBotones ventanaCobros = new InterfaceBotones("Gestión de cobros");
 			CtrlCobros ctrlCobros = new CtrlCobros(ventanaCobros);
 			ctrlCobros.iniciar();
 		}
 		
-		if(e.getSource() == ventanaAdministracion.btn1B) {
+		if(e.getSource() == ventana.btn1B) {
 			
 			InterfaceBotones ventanaPagos = new InterfaceBotones("Gestión de pagos");
 			CtrlPagos ctrlPagos = new CtrlPagos(ventanaPagos);
 			ctrlPagos.iniciar();
 		}
 
-		if(e.getSource() == ventanaAdministracion.btn1C) {
+		if(e.getSource() == ventana.btn1C) {
 			
 			InterfaceBotones ventanaCompras = new InterfaceBotones("Gestión de compras");
 			CtrlCompras ctrlCompras = new CtrlCompras(ventanaCompras);
 			ctrlCompras.iniciar();
 		}
 		
-		if(e.getSource() == ventanaAdministracion.btn2A) {
+		if(e.getSource() == ventana.btn2A) {
 			
 			InterfaceBotones ventanaEstadisticas = new InterfaceBotones("Estadísticas");
 			CtrlEstadisticas ctrlEstadisticas = new CtrlEstadisticas(ventanaEstadisticas);
 			ctrlEstadisticas.iniciar();
 		}
 		
-		if(e.getSource() == ventanaAdministracion.btn2B) {
+		if(e.getSource() == ventana.btn2B) {
 			
 			InterfaceBotones ventanaProveedores = new InterfaceBotones("Gestión de proveedores");
 			CtrlProveedores ctrlProveedores = new CtrlProveedores(ventanaProveedores);
 			ctrlProveedores.iniciar();
 		}
 		
-		if(e.getSource() == ventanaAdministracion.btn2C) {
+		if(e.getSource() == ventana.btn2C) {
 			
 			
 		}
 		
-		if(e.getSource() == ventanaAdministracion.btnVolver) {
+		if(e.getSource() == ventana.btnVolver) {
 			
-			ventanaAdministracion.dispose();
+			ventana.dispose();
 		}
 	}
 }

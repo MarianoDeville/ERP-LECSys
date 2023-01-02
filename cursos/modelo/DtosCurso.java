@@ -1,3 +1,40 @@
+/************************************************************************************************************************************************/
+//										LISTADO DE MÉTODOS
+/*----------------------------------------------------------------------------------------------------------------------------------------------*/
+//	public String getMsgError()
+//	public boolean autocompletar(JTable tablaOcupacion)
+//	public DefaultTableModel getHorariosCurso(int aula, int profesor)
+//	public void getInformacionCurso()
+//	public DefaultTableModel getTablaCursos()
+//	public DefaultTableModel getDiagramacion (String criterio, int valor)
+//	public void setHorarios(JTable tablaHorarios)
+//	public boolean isCheckInfo()
+//	public String [] getListadoOpciones(String valor)
+//	public String [] getListaCursos()
+//	public String [] getListadoHorarios()
+//	public String [] getListaNivel()
+//	public String [] getListaCriterios()
+//	public String [] getListaAulas()
+//	public String [] getListaAños(String nivel)
+//	public String [] getListaProfesores()
+//	private static boolean isNumeric(String cadena)
+//	public boolean setNuevoCurso()
+//	public boolean setActualizarCurso()
+//	public String getAño()
+//	public void setAño(String año)
+//	public String getNivel()
+//	public void setNivel(String nivel)
+//	public String getValorCuota()
+//	public void setValorCuota(String valorCuota)
+//	public void setIdProfesor(int orden)
+//	public int getAula()
+//	public void setAula(int aula)
+//	public String getNombreProfesor()
+//	public void setCurso(String curso)
+//	public void setEstado(int estado)
+//	public String getCantHoras()
+/************************************************************************************************************************************************/
+
 package modelo;
 
 import javax.swing.JTable;
@@ -86,7 +123,7 @@ public class DtosCurso {
 	public DefaultTableModel getHorariosCurso(int aula, int profesor) {
 		
 		CursosDAO cursoDAO = new CursosDAO();
-		cursoDAO.getCronogramaDias(0, Integer.parseInt(idProfesores[profesor]), aula);
+		cursoDAO.getCronogramaDias(idCurso, idProfesores[profesor], aula);
 		ocupado = cursoDAO.getmatrizDiasHorarios();
 		String cronograma[][] = new String[6][getListadoHorarios().length];
 
@@ -113,7 +150,7 @@ public class DtosCurso {
 
 		if(this.aula == aula && !idCurso.equals("0")) {
 		
-			cursoDAO.getCronogramaDias(Integer.parseInt(idCurso), 0, 0);
+			cursoDAO.getCronogramaDias(idCurso, "0", 0);
 			ocupado = cursoDAO.getmatrizDiasHorarios();
 	
 			for(int i = 0 ; i < 6 ; i++) {
@@ -221,13 +258,13 @@ public class DtosCurso {
 
 		if(criterio.equals("Profesor")) {
 			
-			cursoDAO.getCronogramaDias(0, Integer.parseInt(idProfesores[valor]), 100);
+			cursoDAO.getCronogramaDias("0", idProfesores[valor], 100);
 		} else if(criterio.equals("Curso")) {
 			
-			cursoDAO.getCronogramaDias(Integer.parseInt(idCursos[valor]), 0, 100);
+			cursoDAO.getCronogramaDias(idCursos[valor], "0", 100);
 		}else {
 			
-			cursoDAO.getCronogramaDias(0, 0, valor);
+			cursoDAO.getCronogramaDias("0", "0", valor);
 		}
 		ocupado = cursoDAO.getmatrizDiasHorarios();
 		String cronograma[][] = new String[6][getListadoHorarios().length];
@@ -347,10 +384,25 @@ public class DtosCurso {
 	}
 	
 	public String [] getListadoHorarios() {
+
+		String listado[] = new String[33];
+		boolean par = true;
+		int hora = 7;
 		
-		return new String[] {"7:00", "7:30", "8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", 
-							 "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", 
-							 "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00"};
+		for(int i = 0; i < listado.length; i++) {
+			
+			if(par) {
+				
+				listado[i] = hora + ":00";
+				par = false;
+			} else {
+				
+				listado[i] = hora + ":30";
+				par = true;
+				hora++;
+			}
+		}
+		return listado;
 	}
 	
 	public String [] getListaNivel() {
@@ -398,7 +450,7 @@ public class DtosCurso {
 			respuesta[i] = matriz[i][1] + " " + matriz[i][2];
 			idProfesores[i] = matriz[i][0];
 		}
-		
+
 		return respuesta;
 	}
 	

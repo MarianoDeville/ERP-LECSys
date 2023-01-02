@@ -166,6 +166,8 @@ public class CtrlHorariosEmpleados implements ActionListener {
 		ventana.cmbBoxGranularidad.setVisible(estado);
 		ventana.tabla2.setModel(dtosEmpleado.getHorarios(ventana.cmbBoxGranularidad.getSelectedIndex()));
 		ventana.txtMedio2.setText(dtosEmpleado.getCantidadHoras(ventana.tabla2));
+		ventana.lblMsgError.setForeground(Color.GRAY);
+		ventana.lblMsgError.setText("O: Ocupado - C: Comienzo - F: Fin - CE: Comienzo elimincación - FE: Fin elimincación");
 		
 		if(ventana.txtMedio2.getText().equals("0:00"))
 			ventana.cmbBoxGranularidad.setEnabled(true);

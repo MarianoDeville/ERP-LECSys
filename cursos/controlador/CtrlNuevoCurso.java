@@ -7,6 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import interfaceUsuario.CrearCurso;
 import modelo.DtosCurso;
@@ -39,8 +40,18 @@ public class CtrlNuevoCurso implements ActionListener {
 		
 		ventana.btnValidar.setEnabled(false);
 		ventana.btnGuardar.setEnabled(false);
+		ventana.lblDescripción.setForeground(Color.GRAY);
+		ventana.lblDescripción.setText("X: No disponible. - O: Asignado al curso actual. - C: Comienzo. - F: Fin.");
 		ventana.comboBoxNivel.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaNivel()));
-		ventana.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaProfesores()));
+		String listaProfesores[] = dtosCurso.getListaProfesores();
+
+		if(listaProfesores.length == 0) {
+			
+			ventana.dispose();
+			JOptionPane.showMessageDialog(null, "Primero debe cargar un profesor.");
+			return;
+		}
+		ventana.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(listaProfesores));
 		ventana.comboBoxAula.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAulas()));
 		ventana.comboBoxAño.setModel(new DefaultComboBoxModel<String>(dtosCurso.getListaAños((String)ventana.comboBoxNivel.getSelectedItem())));
 		actualizar();

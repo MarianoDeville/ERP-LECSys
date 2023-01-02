@@ -3,8 +3,6 @@ package dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import controlador.CtrlLogErrores;
 import modelo.DtosActividad;
 import modelo.DtosAlumno;
@@ -211,10 +209,6 @@ public class AlumnosDAO extends Conexion {
 		DtosAlumno dtosNuevoAlumno = new DtosAlumno();
 		DtosActividad dtosActividad = new DtosActividad();
 		PersonasDAO dtosPersona = new PersonasDAO();
-		Calendar fechaSistema = new GregorianCalendar();
-		String fecha = fechaSistema.get(Calendar.YEAR) + "/" 
-					 + (fechaSistema.get(Calendar.MONTH)+1) + "/" 
-					 + fechaSistema.get(Calendar.DAY_OF_MONTH);
 		String infoPersona[] = new String[] {dtosNuevoAlumno.getNombre(), 
 											 dtosNuevoAlumno.getApellido(), 
 											 dtosNuevoAlumno.getDni(),
@@ -227,11 +221,10 @@ public class AlumnosDAO extends Conexion {
 		try {
 			
 			this.conectar();
-			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO alumnos (idCurso, idPersona, fechaIngreso, estado) VALUES (?, ?, ?, ?)");
+			PreparedStatement stm = this.conexion.prepareStatement("INSERT INTO alumnos (idCurso, idPersona, fechaIngreso, estado) VALUES (?, ?, DATE(NOW()), ?)");
 			stm.setInt(1, Integer.parseInt(dtosNuevoAlumno.getCurso()));
 			stm.setInt(2, idPersona);
-			stm.setString(3, fecha);
-			stm.setInt(4, 0);
+			stm.setInt(3, 0);
 			stm.executeUpdate();
 		} catch (Exception e) {
 	
