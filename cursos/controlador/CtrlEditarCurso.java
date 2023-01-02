@@ -29,11 +29,11 @@ public class CtrlEditarCurso implements ActionListener{
 		this.ventana.btnBorrar.addActionListener(this);
 		this.ventana.btnVolver.addActionListener(this);
 		this.ventana.btnValidar.addActionListener(this);
-		this.ventana.tablaHorarios.addMouseListener(new MouseAdapter() {
+		this.ventana.tabla.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				
 				if (e.getClickCount() == 2)
-					selección(ventana.tablaHorarios.getSelectedRow(), ventana.tablaHorarios.getSelectedColumn());
+					selección(ventana.tabla.getSelectedRow(), ventana.tabla.getSelectedColumn());
 			}        
 		});
 	}
@@ -83,7 +83,7 @@ public class CtrlEditarCurso implements ActionListener{
 		
 		if(e.getSource() == ventana.btnValidar) {
 			
-			if(!dtosCurso.autocompletar(ventana.tablaHorarios)) {
+			if(!dtosCurso.autocompletar(ventana.tabla)) {
 				
 				ventana.lblMensageError.setForeground(Color.RED);
 				ventana.lblMensageError.setText(dtosCurso.getMsgError());
@@ -98,17 +98,17 @@ public class CtrlEditarCurso implements ActionListener{
 
 	private void actualizar() {
 
-		ventana.tablaHorarios.setModel(dtosCurso.getHorariosCurso(ventana.comboBoxAula.getSelectedIndex(),
+		ventana.tabla.setModel(dtosCurso.getHorariosCurso(ventana.comboBoxAula.getSelectedIndex(),
 																  ventana.comboBoxProfesor.getSelectedIndex()));
 		DefaultTableCellRenderer centrado = new DefaultTableCellRenderer();
 		centrado.setHorizontalAlignment(JLabel.CENTER);
 		
-		for(int i = 0 ; i < ventana.tablaHorarios.getColumnCount() ; i++) {
+		for(int i = 0 ; i < ventana.tabla.getColumnCount() ; i++) {
 			
-			ventana.tablaHorarios.getColumnModel().getColumn(i).setPreferredWidth(40);
-			ventana.tablaHorarios.getColumnModel().getColumn(i).setCellRenderer(centrado);
+			ventana.tabla.getColumnModel().getColumn(i).setPreferredWidth(40);
+			ventana.tabla.getColumnModel().getColumn(i).setCellRenderer(centrado);
 		}
-		ventana.tablaHorarios.setRowHeight(25);
+		ventana.tabla.setRowHeight(25);
 	}
 	
 	private void borrar() {
@@ -143,9 +143,9 @@ public class CtrlEditarCurso implements ActionListener{
 		int cont = 0;
 		int contE = 0;
 		
-		for(int i = 0; i < ventana.tablaHorarios.getColumnCount();i++) {
+		for(int i = 0; i < ventana.tabla.getColumnCount();i++) {
 	
-			switch((String)ventana.tablaHorarios.getValueAt(fila, i)) {
+			switch((String)ventana.tabla.getValueAt(fila, i)) {
 			
 				case "C":
 				case "C ":
@@ -178,42 +178,42 @@ public class CtrlEditarCurso implements ActionListener{
 		comienzo = cont == 0? true:false;
 		comienzoEliminar = contE == 0? true:false;
 
-		switch((String)ventana.tablaHorarios.getValueAt(fila, columna)) {
+		switch((String)ventana.tabla.getValueAt(fila, columna)) {
 		
 			case " ":
-				ventana.tablaHorarios.setValueAt(comienzo?"C":"F", fila, columna);
+				ventana.tabla.setValueAt(comienzo?"C":"F", fila, columna);
 				break;
 	
 			case "X ":
-				ventana.tablaHorarios.setValueAt(comienzo?"C ":"F ", fila, columna);
+				ventana.tabla.setValueAt(comienzo?"C ":"F ", fila, columna);
 				break;
 				
 			case "O":
-				ventana.tablaHorarios.setValueAt(comienzoEliminar?"CE":"FE", fila, columna);
+				ventana.tabla.setValueAt(comienzoEliminar?"CE":"FE", fila, columna);
 				break;
 			
 			case "O ":
-				ventana.tablaHorarios.setValueAt(comienzoEliminar?"CE ":"FE ", fila, columna);
+				ventana.tabla.setValueAt(comienzoEliminar?"CE ":"FE ", fila, columna);
 				break;
 				
 			case "C":
 			case "F":
-				ventana.tablaHorarios.setValueAt(" ", fila, columna);
+				ventana.tabla.setValueAt(" ", fila, columna);
 				break;
 				
 			case "CE":
 			case "FE":
-				ventana.tablaHorarios.setValueAt("O", fila, columna);
+				ventana.tabla.setValueAt("O", fila, columna);
 				break;
 			
 			case "C ":
 			case "F ":
-				ventana.tablaHorarios.setValueAt("X ", fila, columna);
+				ventana.tabla.setValueAt("X ", fila, columna);
 				break;
 				
 			case "CE ":
 			case "FE ":
-				ventana.tablaHorarios.setValueAt("O ", fila, columna);
+				ventana.tabla.setValueAt("O ", fila, columna);
 				break;
 		}
 	}
@@ -225,7 +225,7 @@ public class CtrlEditarCurso implements ActionListener{
 		dtosCurso.setIdProfesor(ventana.comboBoxProfesor.getSelectedIndex());
 		dtosCurso.setValorCuota(ventana.txtCuota.getText());
 		dtosCurso.setAula(ventana.comboBoxAula.getSelectedIndex());
-		dtosCurso.setHorarios(ventana.tablaHorarios);
+		dtosCurso.setHorarios(ventana.tabla);
 
 		if(!dtosCurso.isCheckInfo()) {
 		

@@ -15,7 +15,7 @@ import modelo.DtosConfiguracion;
 /*								UMLet 14.3										*/
 /*		Estado:					Desarrollo.										*/
 /*		Fecha creación:			15/09/2022										*/
-/*		Última modificación:	01/01/2023										*/
+/*		Última modificación:	02/01/2023										*/
 /********************************************************************************/
 
 public class LECSys {

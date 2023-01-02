@@ -1,19 +1,19 @@
 package controlador;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.DefaultComboBoxModel;
-
 import interfaceUsuario.CrearCurso;
 import modelo.DtosProveedores;
 
 public class CtrlNuevoProveedor implements ActionListener{
 	
-	
 	private CrearCurso ventana;
 	private DtosProveedores dtosProveedores;
-
 	
 	public CtrlNuevoProveedor(CrearCurso vista) {
 		
@@ -21,8 +21,29 @@ public class CtrlNuevoProveedor implements ActionListener{
 		this.dtosProveedores = new DtosProveedores();
 		this.ventana.btnVolver.addActionListener(this);
 		this.ventana.btnValidar.addActionListener(this);
+		this.ventana.btnBorrar.addActionListener(this);
 		this.ventana.btnGuardar.addActionListener(this);
-		
+		this.ventana.txtNombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				ventana.lblMensageError.setText("");
+			}
+		});
+		this.ventana.txtDirección.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				ventana.lblMensageError.setText("");
+			}
+		});
+		this.ventana.txtCuota.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+				ventana.lblMensageError.setText("");
+			}
+		});
 	}
 	
 	public void iniciar() {
@@ -31,6 +52,7 @@ public class CtrlNuevoProveedor implements ActionListener{
 		ventana.comboBoxAño.setVisible(false);
 		ventana.comboBoxAula.setVisible(false);
 		ventana.lblAula.setVisible(false);
+		ventana.btnBorrar.setVisible(true);
 		ventana.txtNombre.setVisible(true);
 		ventana.txtDirección.setVisible(true);
 		ventana.lblNivel.setText("Nombre:");
@@ -45,19 +67,22 @@ public class CtrlNuevoProveedor implements ActionListener{
 		ventana.lblViernes.setText("");
 		ventana.lblSabado.setText("");
 		ventana.btnValidar.setText("Agregar");
-		
 		ventana.comboBoxProfesor.setModel(new DefaultComboBoxModel<String>(dtosProveedores.getListaCondiciones()));
-		
+		actualizar();
 		ventana.setVisible(true);
 	}
 	
-	
-	
 	public void actionPerformed(ActionEvent e) {
 	
-		
 		if(e.getSource() == ventana.btnValidar) {
 			
+			dtosProveedores.setNuevoContacto("+");
+			actualizar();
+		}
+		
+		if(e.getSource() == ventana.btnBorrar) {
+			
+			dtosProveedores.setNuevoContacto("-");
 			actualizar();
 		}
 	
@@ -68,13 +93,39 @@ public class CtrlNuevoProveedor implements ActionListener{
 	
 		if(e.getSource() == ventana.btnGuardar) {
 			
-			
+			guardar();
 		}
-	
 	}
 	
 	private void actualizar() {
 		
+		ventana.tabla.setModel(dtosProveedores.getTablaContactos(ventana.tabla));
+		ventana.tabla.getColumnModel().getColumn(0).setMinWidth(100);
+		ventana.tabla.getColumnModel().getColumn(0).setPreferredWidth(150);
+		ventana.tabla.getColumnModel().getColumn(1).setMinWidth(100);
+		ventana.tabla.getColumnModel().getColumn(1).setPreferredWidth(150);
+		ventana.tabla.getColumnModel().getColumn(2).setMinWidth(100);
+		ventana.tabla.getColumnModel().getColumn(2).setPreferredWidth(170);
+		ventana.tabla.getColumnModel().getColumn(3).setMinWidth(100);
+		ventana.tabla.getColumnModel().getColumn(3).setPreferredWidth(257);
 	}
+	
+	private void guardar() {
+		
+		dtosProveedores.setNombre(ventana.txtNombre.getText());
+		dtosProveedores.setDirección(ventana.txtDirección.getText());
+		dtosProveedores.setSituaciónFiscal((String)ventana.comboBoxProfesor.getSelectedItem());
+		dtosProveedores.setCuit(ventana.txtCuota.getText());
+		
+		if(dtosProveedores.setGuardar(ventana.tabla)) {
+			
+			ventana.lblMensageError.setForeground(Color.BLUE);
+			ventana.btnGuardar.setEnabled(false);
+			ventana.btnValidar.setEnabled(false);
+		} else {
 
+			ventana.lblMensageError.setForeground(Color.RED);
+		}
+		ventana.lblMensageError.setText(dtosProveedores.getMensageError());
+	}
 }

@@ -28,7 +28,7 @@ public class CrearCurso extends VentanaModelo{
 	public JLabel lblProfesor;
 	public JLabel lblAula;
 	public JLabel lblCuota;
-	public JTable tablaHorarios;
+	public JTable tabla;
 	public JLabel lblDescripción;
 	public JLabel lblMensageError;
 	public JLabel lblHorario;
@@ -205,10 +205,10 @@ public class CrearCurso extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.SOUTH, scrollTabla, 340, SpringLayout.NORTH, panel);
 		contenedor.putConstraint(SpringLayout.EAST, scrollTabla, -25, SpringLayout.EAST, panel);
 		panel.add(scrollTabla);
-		tablaHorarios = new JTable();
-		tablaHorarios.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		tablaHorarios.doLayout();
-		scrollTabla.setViewportView(tablaHorarios); 
+		tabla = new JTable();
+		tabla.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		tabla.doLayout();
+		scrollTabla.setViewportView(tabla); 
 		
 		btnGuardar = new JButton("Guardar");
 		contenedor.putConstraint(SpringLayout.SOUTH, btnGuardar, -15, SpringLayout.SOUTH, panel);

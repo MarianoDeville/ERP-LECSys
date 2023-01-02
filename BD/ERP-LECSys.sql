@@ -223,6 +223,7 @@ CREATE TABLE IF NOT EXISTS `LECSys1`.`proveedores` (
   `direccion` VARCHAR(90) NULL,
   `cuit` VARCHAR(20) NULL,
   `tipo` VARCHAR(45) NULL,
+  `estado` INT NULL,
   PRIMARY KEY (`idProveedores`))
 ENGINE = InnoDB;
 
@@ -449,6 +450,7 @@ CREATE TABLE IF NOT EXISTS `LECSys1`.`contacto` (
   `teléfono` VARCHAR(20) NULL,
   `email` VARCHAR(40) NULL,
   `idProveedores` INT NULL,
+  `sector` VARCHAR(90) NULL,
   PRIMARY KEY (`idcontacto`),
   INDEX `idProveedor_idx` (`idProveedores` ASC) VISIBLE,
   CONSTRAINT `proveedor`

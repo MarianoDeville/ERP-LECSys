@@ -27,11 +27,11 @@ public class CtrlNuevoCurso implements ActionListener {
 		this.ventana.btnGuardar.addActionListener(this);
 		this.ventana.btnValidar.addActionListener(this);
 		this.ventana.btnVolver.addActionListener(this);
-		this.ventana.tablaHorarios.addMouseListener(new MouseAdapter() {
+		this.ventana.tabla.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				
 				if (e.getClickCount() == 2)
-					selección(ventana.tablaHorarios.getSelectedRow(), ventana.tablaHorarios.getSelectedColumn());
+					selección(ventana.tabla.getSelectedRow(), ventana.tabla.getSelectedColumn());
 			}        
 		});
 	}
@@ -78,7 +78,7 @@ public class CtrlNuevoCurso implements ActionListener {
 		
 		if(e.getSource() == ventana.btnValidar) {
 			
-			if(!dtosCurso.autocompletar(ventana.tablaHorarios)) {
+			if(!dtosCurso.autocompletar(ventana.tabla)) {
 				
 				ventana.lblMensageError.setForeground(Color.RED);
 				ventana.lblMensageError.setText(dtosCurso.getMsgError());
@@ -100,17 +100,17 @@ public class CtrlNuevoCurso implements ActionListener {
 
 		ventana.lblMensageError.setText("");
 		dtosCurso.setCurso("0");
-		ventana.tablaHorarios.setModel(dtosCurso.getHorariosCurso(ventana.comboBoxAula.getSelectedIndex(),
+		ventana.tabla.setModel(dtosCurso.getHorariosCurso(ventana.comboBoxAula.getSelectedIndex(),
 																  ventana.comboBoxProfesor.getSelectedIndex()));
 		DefaultTableCellRenderer centrado = new DefaultTableCellRenderer();
 		centrado.setHorizontalAlignment(JLabel.CENTER);
 		
-		for(int i = 0 ; i < ventana.tablaHorarios.getColumnCount() ; i++) {
+		for(int i = 0 ; i < ventana.tabla.getColumnCount() ; i++) {
 			
-			ventana.tablaHorarios.getColumnModel().getColumn(i).setPreferredWidth(40);
-			ventana.tablaHorarios.getColumnModel().getColumn(i).setCellRenderer(centrado);
+			ventana.tabla.getColumnModel().getColumn(i).setPreferredWidth(40);
+			ventana.tabla.getColumnModel().getColumn(i).setCellRenderer(centrado);
 		}
-		ventana.tablaHorarios.setRowHeight(25);
+		ventana.tabla.setRowHeight(25);
 	}
 	
 	private void selección(int fila, int columna) {
@@ -121,41 +121,41 @@ public class CtrlNuevoCurso implements ActionListener {
 		boolean comienzo;
 		int cont = 0;
 		
-		for(int i = 0; i < ventana.tablaHorarios.getColumnCount();i++) {
+		for(int i = 0; i < ventana.tabla.getColumnCount();i++) {
 			
-			if(ventana.tablaHorarios.getValueAt(fila, i).equals("C") || 
-					ventana.tablaHorarios.getValueAt(fila, i).equals("C "))
+			if(ventana.tabla.getValueAt(fila, i).equals("C") || 
+					ventana.tabla.getValueAt(fila, i).equals("C "))
 				cont++;
 			
-			if(ventana.tablaHorarios.getValueAt(fila, i).equals("F") || 
-					ventana.tablaHorarios.getValueAt(fila, i).equals("F "))
+			if(ventana.tabla.getValueAt(fila, i).equals("F") || 
+					ventana.tabla.getValueAt(fila, i).equals("F "))
 				cont--;
 		}
 
 		comienzo = cont == 0? true:false;
 		
-		if(ventana.tablaHorarios.getValueAt(fila, columna).equals(" ")) {
+		if(ventana.tabla.getValueAt(fila, columna).equals(" ")) {
 		
 			if(comienzo) 
-				ventana.tablaHorarios.setValueAt("C", fila, columna);
+				ventana.tabla.setValueAt("C", fila, columna);
 			else 
-				ventana.tablaHorarios.setValueAt("F", fila, columna);
+				ventana.tabla.setValueAt("F", fila, columna);
 
-		} else if(ventana.tablaHorarios.getValueAt(fila, columna).equals("X ")){
+		} else if(ventana.tabla.getValueAt(fila, columna).equals("X ")){
 		
 			if(comienzo)
-				ventana.tablaHorarios.setValueAt("C ", fila, columna);
+				ventana.tabla.setValueAt("C ", fila, columna);
 			else
-				ventana.tablaHorarios.setValueAt("F ", fila, columna);
+				ventana.tabla.setValueAt("F ", fila, columna);
 
-		} else if(ventana.tablaHorarios.getValueAt(fila, columna).equals("C") || 
-				ventana.tablaHorarios.getValueAt(fila, columna).equals("F")) {
+		} else if(ventana.tabla.getValueAt(fila, columna).equals("C") || 
+				ventana.tabla.getValueAt(fila, columna).equals("F")) {
 			
-			ventana.tablaHorarios.setValueAt(" ", fila, columna);
-		} else if(ventana.tablaHorarios.getValueAt(fila, columna).equals("C ") || 
-				ventana.tablaHorarios.getValueAt(fila, columna).equals("F ")) {
+			ventana.tabla.setValueAt(" ", fila, columna);
+		} else if(ventana.tabla.getValueAt(fila, columna).equals("C ") || 
+				ventana.tabla.getValueAt(fila, columna).equals("F ")) {
 			
-			ventana.tablaHorarios.setValueAt("X ", fila, columna);
+			ventana.tabla.setValueAt("X ", fila, columna);
 		}
 	}
 	
@@ -166,7 +166,7 @@ public class CtrlNuevoCurso implements ActionListener {
 		dtosCurso.setIdProfesor(ventana.comboBoxProfesor.getSelectedIndex());
 		dtosCurso.setValorCuota(ventana.txtCuota.getText());
 		dtosCurso.setAula(ventana.comboBoxAula.getSelectedIndex());
-		dtosCurso.setHorarios(ventana.tablaHorarios);
+		dtosCurso.setHorarios(ventana.tabla);
 		
 		if(!dtosCurso.isCheckInfo()) {
 		
