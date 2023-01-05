@@ -55,7 +55,7 @@ public class CtrlEditarProveedor implements ActionListener{
 					bandera = true;
 		        }
 		      }
-		  });
+		});
 	}
 	
 	public void iniciar() {

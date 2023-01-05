@@ -3,6 +3,8 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
+
+import interfaceUsuario.ABML;
 import interfaceUsuario.InterfaceBotones;
 import modelo.DtosConfiguracion;
 
@@ -83,9 +85,9 @@ public class CtrlAdministracion implements ActionListener {
 		
 		if(e.getSource() == ventana.btn2B) {
 			
-			InterfaceBotones ventanaProveedores = new InterfaceBotones("Gestión de proveedores");
-			CtrlProveedores ctrlProveedores = new CtrlProveedores(ventanaProveedores);
-			ctrlProveedores.iniciar();
+			ABML ventanaABMLProveedores = new ABML("ABML proveedores");
+			CtrlABMLProveedores ctrlABMLProveedores = new CtrlABMLProveedores(ventanaABMLProveedores);
+			ctrlABMLProveedores.iniciar();
 		}
 		
 		if(e.getSource() == ventana.btn2C) {
