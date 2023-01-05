@@ -1,6 +1,7 @@
 package interfaceUsuario;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,6 +16,7 @@ public class CrearCurso extends VentanaModelo{
 	private static final long serialVersionUID = 1L;
 	private JPanel panel;
 	public JScrollPane scrollTabla;
+	public JTable tabla;
 	public JTextField txtNombre;
 	public JTextField txtDirección;
 	public JTextField Cuit;
@@ -23,12 +25,12 @@ public class CrearCurso extends VentanaModelo{
 	public JComboBox<String> comboBoxAño;
 	public JComboBox<String> comboBoxProfesor;
 	public JComboBox<String> comboBoxAula;
+	public JCheckBox checkBoxActivo;
 	public JLabel lblNivel;
 	public JLabel lblAño;
 	public JLabel lblProfesor;
 	public JLabel lblAula;
 	public JLabel lblCuota;
-	public JTable tabla;
 	public JLabel lblDescripción;
 	public JLabel lblMensageError;
 	public JLabel lblHorario;
@@ -121,6 +123,12 @@ public class CrearCurso extends VentanaModelo{
 		contenedor.putConstraint(SpringLayout.EAST, comboBoxAula, 215, SpringLayout.WEST, panel);
 		panel.add(comboBoxAula);
 		
+		checkBoxActivo = new JCheckBox();
+		contenedor.putConstraint(SpringLayout.NORTH, checkBoxActivo, 115, SpringLayout.NORTH, panel);
+		contenedor.putConstraint(SpringLayout.WEST, checkBoxActivo, 95, SpringLayout.WEST, panel);
+		checkBoxActivo.setVisible(false);
+		panel.add(checkBoxActivo);		
+		
 		lblHorario = new JLabel("Horario:     ");
 		contenedor.putConstraint(SpringLayout.NORTH, lblHorario, 150, SpringLayout.NORTH, panel);
 		contenedor.putConstraint(SpringLayout.WEST, lblHorario, 25, SpringLayout.WEST, panel);
@@ -180,7 +188,6 @@ public class CrearCurso extends VentanaModelo{
 		lblMensageError = new JLabel();
 		contenedor.putConstraint(SpringLayout.NORTH, lblMensageError, 370, SpringLayout.NORTH, panel);
 		contenedor.putConstraint(SpringLayout.WEST, lblMensageError, 25, SpringLayout.WEST, panel);
-		contenedor.putConstraint(SpringLayout.SOUTH, lblMensageError, 380, SpringLayout.NORTH, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblMensageError, -25, SpringLayout.EAST, panel);
 		lblMensageError.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblMensageError);

@@ -155,8 +155,7 @@ public class CursosDAO extends Conexion {
 			
 			while(i < matriz.length) {		
 				
-				comandoStatement = "SELECT día FROM lecsys1.diasCursado WHERE idCurso = " + Integer.valueOf(matriz[i][6]);
-				
+				comandoStatement = "SELECT día FROM lecsys1.diasCursado WHERE idCurso = " + matriz[i][6];
 				rs = stm.executeQuery(comandoStatement);
 				boolean bandera = true;
 	

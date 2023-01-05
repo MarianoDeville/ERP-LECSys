@@ -11,14 +11,14 @@ import javax.swing.DefaultComboBoxModel;
 import interfaceUsuario.CrearCurso;
 import modelo.DtosProveedores;
 
-public class CtrlNuevoProveedor implements ActionListener{
+public class CtrlEditarProveedor implements ActionListener{
 	
 	private CrearCurso ventana;
 	private DtosProveedores dtosProveedores;
 	private int elemento;
 	private boolean bandera;
 	
-	public CtrlNuevoProveedor(CrearCurso vista) {
+	public CtrlEditarProveedor(CrearCurso vista) {
 		
 		this.ventana = vista;
 		this.dtosProveedores = new DtosProveedores();
@@ -67,6 +67,8 @@ public class CtrlNuevoProveedor implements ActionListener{
 		ventana.btnBorrar.setVisible(true);
 		ventana.txtNombre.setVisible(true);
 		ventana.txtDirección.setVisible(true);
+		ventana.checkBoxActivo.setVisible(true);
+		ventana.checkBoxActivo.setText("Activo");
 		ventana.lblNivel.setText("Nombre:");
 		ventana.lblAño.setText("Dirección:");
 		ventana.lblProfesor.setText("Condición:");
@@ -122,6 +124,11 @@ public class CtrlNuevoProveedor implements ActionListener{
 			elemento = 10000;
 		
 		bandera = false;
+		ventana.txtNombre.setText(dtosProveedores.getNombre());
+		ventana.txtDirección.setText(dtosProveedores.getDirección());
+		ventana.txtCuota.setText(dtosProveedores.getCuit());
+		ventana.comboBoxProfesor.setSelectedItem(dtosProveedores.getSituaciónFiscal());
+		ventana.checkBoxActivo.setSelected(dtosProveedores.isEstado());
 		ventana.tabla.setModel(dtosProveedores.getTablaContactos(ventana.tabla, elemento));
 		ventana.tabla.getColumnModel().getColumn(0).setMinWidth(100);
 		ventana.tabla.getColumnModel().getColumn(0).setPreferredWidth(150);
@@ -141,8 +148,9 @@ public class CtrlNuevoProveedor implements ActionListener{
 		dtosProveedores.setDirección(ventana.txtDirección.getText());
 		dtosProveedores.setSituaciónFiscal((String)ventana.comboBoxProfesor.getSelectedItem());
 		dtosProveedores.setCuit(ventana.txtCuota.getText());
+		dtosProveedores.setEstado(ventana.checkBoxActivo.isSelected());
 		
-		if(dtosProveedores.setGuardar(ventana.tabla)) {
+		if(dtosProveedores.setActualizar(ventana.tabla)) {
 			
 			ventana.lblMensageError.setForeground(Color.BLUE);
 			ventana.btnGuardar.setEnabled(false);

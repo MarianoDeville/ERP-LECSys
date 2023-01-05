@@ -15,6 +15,8 @@ import modelo.DtosProveedores;
 public class CtrlABMLProveedores implements ActionListener{
 	
 	private ABML ventana;
+	private CrearCurso ventanaNuevoProveedor;
+	private CrearCurso ventanaEditarProveedor;
 	private DtosProveedores dtosProveedores;
 	private int elemento;
 	
@@ -26,6 +28,7 @@ public class CtrlABMLProveedores implements ActionListener{
 		this.ventana.btnEditar.addActionListener(this);
 		this.ventana.btnImprimir.addActionListener(this);
 		this.ventana.btnVolver.addActionListener(this);
+		this.ventana.chckbx1.addActionListener(this);
 		this.ventana.txt1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -47,7 +50,7 @@ public class CtrlABMLProveedores implements ActionListener{
 	public void iniciar() {
 
 		ventana.txt1.setVisible(true);
-		
+		ventana.chckbx1.setVisible(true);
 		actualizar();
 		ventana.setVisible(true);
 	}
@@ -63,22 +66,51 @@ public class CtrlABMLProveedores implements ActionListener{
 	
 	private void actualizar() {
 		
-		
-		ventana.tabla.setModel(dtosProveedores.getTablaProveedores(ventana.txt1.getText()));
-		
+		ventana.tabla.setModel(dtosProveedores.getTablaProveedores(ventana.txt1.getText(), ventana.chckbx1.isSelected()));
+		ventana.tabla.getColumnModel().getColumn(5).setMinWidth(20);
+		ventana.tabla.getColumnModel().getColumn(5).setMaxWidth(30);
 	}
+	
 	public void actionPerformed(ActionEvent e) {
 
+		if(e.getSource() == ventana.chckbx1) {
+			
+			actualizar();
+		}
+		
 		if(e.getSource() == ventana.btnNuevo) {
 			
-			CrearCurso ventanaNuevoProveedor = new CrearCurso("Nueno proveedor");
+			ventanaNuevoProveedor = new CrearCurso("Nueno proveedor");
 			CtrlNuevoProveedor ctrlNuevoProveedor = new CtrlNuevoProveedor(ventanaNuevoProveedor);
 			ctrlNuevoProveedor.iniciar();
+			ventanaNuevoProveedor.btnVolver.addActionListener(this);
+		}
+		
+		if(ventanaNuevoProveedor != null) {
+			
+			if(e.getSource() == ventanaNuevoProveedor.btnVolver) {
+				
+				actualizar();
+			}
 		}
 		
 		if(e.getSource() == ventana.btnEditar) {
 			
+			if(elementoSeleccionado()) {
+				
+				ventanaEditarProveedor = new CrearCurso("Editar proveedor");
+				CtrlEditarProveedor ctrlEditarProveedor = new CtrlEditarProveedor(ventanaEditarProveedor);
+				ctrlEditarProveedor.iniciar();
+				ventanaEditarProveedor.btnVolver.addActionListener(this);
+			}
+		}
+		
+		if(ventanaEditarProveedor != null) {
 			
+			if(e.getSource() == ventanaEditarProveedor.btnVolver) {
+				
+				actualizar();
+			}
 		}
 		
 		if(e.getSource() == ventana.btnImprimir) {
@@ -97,5 +129,20 @@ public class CtrlABMLProveedores implements ActionListener{
 			
 			ventana.dispose();
 		}
+	}
+	
+	private boolean elementoSeleccionado() {
+		
+		for(int i = 0; i < ventana.tabla.getRowCount(); i++) {
+			
+			
+			if((boolean)ventana.tabla.getValueAt(i, 5)) {
+				
+				dtosProveedores.setIdProveedor(i, ventana.chckbx1.isSelected());
+				return true;
+			}
+		}
+		JOptionPane.showMessageDialog(null, "Debe seleccionar un elemento para editar.");
+		return false;
 	}
 }
