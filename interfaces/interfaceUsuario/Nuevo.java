@@ -32,6 +32,17 @@ public class Nuevo extends VentanaModelo {
 	public JTextField txtTelefono;
 	public JTextField txt1;
 	public JTextField txt2;
+	public JLabel lblLegajo;
+	public JLabel lblNombre;
+	public JLabel lblApellido;
+	public JLabel lblDNI;
+	public JLabel lblNacimiento;
+	public JLabel separador1;
+	public JLabel separador2;
+	public JLabel formato;
+	public JLabel lblDireccion;
+	public JLabel lblEmail;
+	public JLabel lblTelefono;
 	public JLabel lblcomboBox1;
 	public JLabel lblcomboBox2;
 	public JLabel lblTxt1;
@@ -55,7 +66,7 @@ public class Nuevo extends VentanaModelo {
 		setBounds(10, 10, 460, 530);
 		panel.setLayout(contenedor);
 		
-		JLabel lblLegajo = new JLabel("Legajo:");
+		lblLegajo = new JLabel("Legajo:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblLegajo, 30, SpringLayout.NORTH, panel);
 		contenedor.putConstraint(SpringLayout.WEST, lblLegajo, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblLegajo, 70, SpringLayout.WEST, lblLegajo);
@@ -74,7 +85,7 @@ public class Nuevo extends VentanaModelo {
 		chkbox1.setVisible(false);
 		panel.add(chkbox1);
 				
-		JLabel lblNombre = new JLabel("Nombres:");
+		lblNombre = new JLabel("Nombres:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblNombre, 15, SpringLayout.SOUTH, lblLegajo);
 		contenedor.putConstraint(SpringLayout.WEST, lblNombre, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblNombre, 70, SpringLayout.WEST, lblNombre);
@@ -87,7 +98,7 @@ public class Nuevo extends VentanaModelo {
 		panel.add(txtNombre);
 		configurarJTextField(txtNombre, 20);
 		
-		JLabel lblApellido = new JLabel("Apellidos:");
+		lblApellido = new JLabel("Apellidos:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblApellido, 15, SpringLayout.SOUTH, lblNombre);
 		contenedor.putConstraint(SpringLayout.WEST, lblApellido, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblApellido, 70, SpringLayout.WEST, lblApellido);
@@ -100,7 +111,7 @@ public class Nuevo extends VentanaModelo {
 		panel.add(txtApellido);
 		configurarJTextField(txtApellido, 20);
 		
-		JLabel lblDNI = new JLabel("DNI:");
+		lblDNI = new JLabel("DNI:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblDNI, 15, SpringLayout.SOUTH, lblApellido);
 		contenedor.putConstraint(SpringLayout.WEST, lblDNI, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblDNI, 70, SpringLayout.WEST, lblDNI);
@@ -113,7 +124,7 @@ public class Nuevo extends VentanaModelo {
 		panel.add(txtDNI);
 		configurarJTextField(txtDNI, 10);
 		
-		JLabel lblNacimiento = new JLabel("Nacimiento:");
+		lblNacimiento = new JLabel("Nacimiento:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblNacimiento, 15, SpringLayout.SOUTH, lblDNI);
 		contenedor.putConstraint(SpringLayout.WEST, lblNacimiento, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblNacimiento, 70, SpringLayout.WEST, lblNacimiento);
@@ -126,7 +137,7 @@ public class Nuevo extends VentanaModelo {
 		panel.add(txtDia);
 		configurarJTextField(txtDia, 2);
 		
-		JLabel separador1 = new JLabel("/");
+		separador1 = new JLabel("/");
 		contenedor.putConstraint(SpringLayout.NORTH, separador1, 2, SpringLayout.NORTH, txtDia);
 		contenedor.putConstraint(SpringLayout.WEST, separador1, 5, SpringLayout.EAST, txtDia);
 		panel.add(separador1);
@@ -138,7 +149,7 @@ public class Nuevo extends VentanaModelo {
 		panel.add(txtMes);
 		configurarJTextField(txtMes, 2);
 		
-		JLabel separador2 = new JLabel("/");
+		separador2 = new JLabel("/");
 		contenedor.putConstraint(SpringLayout.NORTH, separador2, 2, SpringLayout.NORTH, txtMes);
 		contenedor.putConstraint(SpringLayout.WEST, separador2, 5, SpringLayout.EAST, txtMes);
 		panel.add(separador2);
@@ -150,12 +161,12 @@ public class Nuevo extends VentanaModelo {
 		panel.add(txtAño);
 		configurarJTextField(txtAño, 4);
 		
-		JLabel formato = new JLabel("DD / MM / AAAA");
+		formato = new JLabel("DD / MM / AAAA");
 		contenedor.putConstraint(SpringLayout.NORTH, formato, 2, SpringLayout.NORTH, txtAño);
 		contenedor.putConstraint(SpringLayout.WEST, formato, 5, SpringLayout.EAST, txtAño);
 		panel.add(formato);
 		
-		JLabel lblDireccion = new JLabel("Dirección:");
+		lblDireccion = new JLabel("Dirección:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblDireccion, 15, SpringLayout.SOUTH, lblNacimiento);
 		contenedor.putConstraint(SpringLayout.WEST, lblDireccion, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblDireccion, 70, SpringLayout.WEST, lblDireccion);
@@ -168,7 +179,7 @@ public class Nuevo extends VentanaModelo {
 		panel.add(txtDireccion);
 		configurarJTextField(txtDireccion, 45);
 		
-		JLabel lblEmail = new JLabel("E-mail:");
+		lblEmail = new JLabel("E-mail:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblEmail, 15, SpringLayout.SOUTH, lblDireccion);
 		contenedor.putConstraint(SpringLayout.WEST, lblEmail, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblEmail, 70, SpringLayout.WEST, lblEmail);
@@ -181,7 +192,7 @@ public class Nuevo extends VentanaModelo {
 		panel.add(txtEmail);
 		configurarJTextField(txtEmail, 40);
 		
-		JLabel lblTelefono = new JLabel("Teléfono:");
+		lblTelefono = new JLabel("Teléfono:");
 		contenedor.putConstraint(SpringLayout.NORTH, lblTelefono, 15, SpringLayout.SOUTH, lblEmail);
 		contenedor.putConstraint(SpringLayout.WEST, lblTelefono, 15, SpringLayout.WEST, panel);
 		contenedor.putConstraint(SpringLayout.EAST, lblTelefono, 70, SpringLayout.WEST, lblTelefono);

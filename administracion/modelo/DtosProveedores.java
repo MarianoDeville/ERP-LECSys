@@ -1,7 +1,7 @@
 /******************************************************************************************************************************************/
 //										LISTADO DE MÉTODOS
 /*----------------------------------------------------------------------------------------------------------------------------------------*/
-//	public DefaultTableModel getTablaProveedores(String filtro, boolean estado, int elemento)
+//	public DefaultTableModel getTablaProveedores(String filtro, boolean estado)
 //	public DefaultTableModel getTablaContactos(JTable contactos, int elemento)
 //	public String[] getListaCondiciones()
 //	public String getSituaciónFiscal()
@@ -45,7 +45,7 @@ public class DtosProveedores {
 	private int cantidadContactos = 0;
 	private boolean actualizar = true;
 	
-	public DefaultTableModel getTablaProveedores(String filtro, boolean estado, int elemento) {
+	public DefaultTableModel getTablaProveedores(String filtro, boolean estado) {
 		
 		limpioVariables();
 		String titulo[] = new String[] {"Razón social", "CUIT", "Dirección", "Teléfonos", "E-mail"};

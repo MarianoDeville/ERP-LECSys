@@ -30,6 +30,7 @@ public class CtrlPrincipal implements ActionListener {
 		this.ventanaPrincipal.btnAlumnos.addActionListener(this);
 		this.ventanaPrincipal.btnPersonal.addActionListener(this);
 		this.ventanaPrincipal.btnCursos.addActionListener(this);
+		this.ventanaPrincipal.btnInsumos.addActionListener(this);
 		this.ventanaPrincipal.btnConfig.addActionListener(this);
 		this.ventanaPrincipal.btnRelogin.addActionListener(this);
 		this.ventanaPrincipal.btnSalir.addActionListener(this);
@@ -37,7 +38,7 @@ public class CtrlPrincipal implements ActionListener {
 	
 	public void iniciar() {
 		
-		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.00\nRev. 05012023.1714");
+		JOptionPane.showMessageDialog(null, "Welcome to LECSys.\nVer.1.00\nRev. 07012023.1934");
 		actividad.registrarActividad("Inicio del sistema", "Principal");
 		ventanaPrincipal.setVisible(true);
 		acceso = new OperadorSistema();
@@ -130,6 +131,13 @@ public class CtrlPrincipal implements ActionListener {
 			CtrlReLogin ctrlIngreso = new CtrlReLogin(ventanaLogin);
 			ctrlIngreso.iniciar();
 			ventanaPrincipal.setTitle("Sistema de gestión - LECSys - " + acceso.getNombreUsuario());
+		}
+		
+		if(e.getSource() == ventanaPrincipal.btnInsumos) {
+			
+			InterfaceBotones ventanaInsumos = new InterfaceBotones("Insumos");
+			CtrlInsumos ctrlInsumos = new CtrlInsumos(ventanaInsumos);
+			ctrlInsumos.iniciar();
 		}
 		
 		if(e.getSource() == ventanaPrincipal.btnSalir) {

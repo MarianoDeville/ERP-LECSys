@@ -9,27 +9,25 @@ import java.awt.event.MouseEvent;
 import java.awt.print.PrinterException;
 import javax.swing.JOptionPane;
 import interfaceUsuario.ABML;
-import interfaceUsuario.CrearCurso;
-import modelo.DtosProveedores;
+import interfaceUsuario.NuevoSimple;
+import modelo.DtosInsumos;
 
-public class CtrlABMLProveedores implements ActionListener{
+public class CtrlABMLInsumos implements ActionListener{
 	
 	private ABML ventana;
-	private CrearCurso ventanaNuevoProveedor;
-	private CrearCurso ventanaEditarProveedor;
-	private DtosProveedores dtosProveedores;
+	private DtosInsumos dtosInsumos;
+	private NuevoSimple ventanaNuevoInsumo;
 	private int elemento;
 	private boolean bandera;
 	
-	public CtrlABMLProveedores(ABML vista) {
+	public CtrlABMLInsumos(ABML vista) {
 		
 		this.ventana = vista;
-		this.dtosProveedores = new DtosProveedores();
+		this.dtosInsumos = new DtosInsumos();
 		this.ventana.btnNuevo.addActionListener(this);
 		this.ventana.btnEditar.addActionListener(this);
 		this.ventana.btnImprimir.addActionListener(this);
 		this.ventana.btnVolver.addActionListener(this);
-		this.ventana.chckbx1.addActionListener(this);
 		this.ventana.txt1.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -56,8 +54,11 @@ public class CtrlABMLProveedores implements ActionListener{
 	
 	public void iniciar() {
 
+
+		
 		ventana.txt1.setVisible(true);
-		ventana.chckbx1.setVisible(true);
+		
+		
 		actualizar();
 		ventana.setVisible(true);
 	}
@@ -68,46 +69,33 @@ public class CtrlABMLProveedores implements ActionListener{
 			elemento = 10000;
 		
 		bandera = false;
-		ventana.tabla.setModel(dtosProveedores.getTablaProveedores(ventana.txt1.getText(), 
-																	ventana.chckbx1.isSelected()));
+		ventana.tabla.setModel(dtosInsumos.getTablaInsumos(ventana.txt1.getText(), elemento));
+		
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 
-		if(e.getSource() == ventana.chckbx1) {
-			
-			actualizar();
-		}
-		
 		if(e.getSource() == ventana.btnNuevo) {
 			
-			ventanaNuevoProveedor = new CrearCurso("Nueno proveedor");
-			CtrlNuevoProveedor ctrlNuevoProveedor = new CtrlNuevoProveedor(ventanaNuevoProveedor);
-			ctrlNuevoProveedor.iniciar();
-			ventanaNuevoProveedor.btnVolver.addActionListener(this);
+			ventanaNuevoInsumo = new NuevoSimple("Cargar nuevo insumo");
+			CtrlNuevoInsumo ctrlNuevoInsumo = new CtrlNuevoInsumo(ventanaNuevoInsumo);
+			ctrlNuevoInsumo.iniciar();
+			ventanaNuevoInsumo.btnVolver.addActionListener(this);
 		}
 		
-		if(ventanaNuevoProveedor != null) {
+		if(ventanaNuevoInsumo != null) {
 			
-			if(e.getSource() == ventanaNuevoProveedor.btnVolver) {
+			if(e.getSource() == ventanaNuevoInsumo.btnVolver) {
 				
 				actualizar();
 			}
 		}
-		
+
 		if(e.getSource() == ventana.btnEditar) {
 			
 			elementoSeleccionado();
 		}
-		
-		if(ventanaEditarProveedor != null) {
-			
-			if(e.getSource() == ventanaEditarProveedor.btnVolver) {
-				
-				actualizar();
-			}
-		}
-		
+	
 		if(e.getSource() == ventana.btnImprimir) {
 			
 			try {
@@ -133,11 +121,7 @@ public class CtrlABMLProveedores implements ActionListener{
 			JOptionPane.showMessageDialog(null, "Debe seleccionar un elemento para editar.");
 			return false;
 		}
-		dtosProveedores.setIdProveedor(elemento, ventana.chckbx1.isSelected());
-		ventanaEditarProveedor = new CrearCurso("Editar proveedor");
-		CtrlEditarProveedor ctrlEditarProveedor = new CtrlEditarProveedor(ventanaEditarProveedor);
-		ctrlEditarProveedor.iniciar();
-		ventanaEditarProveedor.btnVolver.addActionListener(this);
+
 		return true;
 	}
 }
